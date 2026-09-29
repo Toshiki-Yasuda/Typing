@@ -34,11 +34,13 @@ export interface Metrics {
   readonly misses: number;
   /** 正打鍵 / 総打鍵（打鍵ゼロなら 1） */
   readonly accuracy: number;
-  /** 最初の打鍵から最後の正打までのミリ秒 */
+  /** 最初の打鍵から最後の正打までのミリ秒（表示用の所要時間。お題の間の待ちを含む） */
   readonly elapsedMs: number;
-  /** 実効速度: 正打鍵 / 経過分 */
+  /** 打鍵時間: お題の中の連続する打鍵の間隔の合計（お題の間の待ち・休止を除く） */
+  readonly activeMs: number;
+  /** 実効速度: 正打で終わる間隔の数 / 打鍵時間（分） */
   readonly kpm: number;
-  /** raw 速度: 総打鍵 / 経過分 */
+  /** raw 速度: 間隔の数 / 打鍵時間（分）。ミスも進んだものとして数える */
   readonly rawKpm: number;
   /** 参考表示: KPM ÷ 5 */
   readonly wpm: number;

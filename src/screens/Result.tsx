@@ -71,6 +71,8 @@ export function Result() {
       </dl>
       <p className="text-sm text-text-muted">
         WPM換算 {fmt(m.wpm, 1)}・raw {fmt(m.rawKpm)} 打鍵/分・総打鍵 {m.total}
+        <br />
+        速度は、お題の中の打鍵の間隔だけで計算しています（お題の間の待ちは含みません）。
       </p>
       <section aria-labelledby="weak">
         <h2 id="weak" className="mb-2 text-lg font-bold">ミスの多かったキー</h2>

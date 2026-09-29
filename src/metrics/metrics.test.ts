@@ -21,6 +21,7 @@ describe('computeMetrics', () => {
       misses: 0,
       accuracy: 1,
       elapsedMs: 0,
+      activeMs: 0,
       kpm: 0,
       rawKpm: 0,
       wpm: 0,
@@ -29,21 +30,49 @@ describe('computeMetrics', () => {
     });
   });
 
-  it('等間隔の10打鍵: 900ms で 666.7 KPM、一貫性 100', () => {
+  it('等間隔の10打鍵: 9個の間隔が 900ms で 600 KPM、一貫性 100', () => {
     const m = computeMetrics(log(...Array.from({ length: 10 }, (_, i): [number, boolean] => [i * 100, true])));
     expect(m.elapsedMs).toBe(900);
-    expect(m.kpm).toBeCloseTo(666.67, 1);
-    expect(m.wpm).toBeCloseTo(133.33, 1);
+    expect(m.activeMs).toBe(900);
+    expect(m.kpm).toBeCloseTo(600); // 9 / (0.9s / 60)。10 / 0.9s（旧定義）と違い、間隔の数で数える
+    expect(m.wpm).toBeCloseTo(120);
     expect(m.accuracy).toBe(1);
     expect(m.consistency).toBe(100);
   });
 
-  it('誤打鍵: 正確率は 正打/総打、raw は総打鍵で数える', () => {
+  it('誤打鍵: 正確率は 正打/総打。実効速度はミスの間隔を「進んだ数」に入れない', () => {
     const m = computeMetrics(log([0, true], [100, false], [200, true], [300, true], [400, true], [500, true]));
-    expect(m).toMatchObject({ total: 6, correct: 5, misses: 1, elapsedMs: 500 });
+    expect(m).toMatchObject({ total: 6, correct: 5, misses: 1, elapsedMs: 500, activeMs: 500 });
     expect(m.accuracy).toBeCloseTo(5 / 6);
-    expect(m.kpm).toBeCloseTo(600); // 5 / (0.5s/60)
-    expect(m.rawKpm).toBeCloseTo(720); // 6 / (0.5s/60)
+    expect(m.kpm).toBeCloseTo(480); // 正打で終わる間隔 4 / (0.5s/60)
+    expect(m.rawKpm).toBeCloseTo(600); // 間隔 5 / (0.5s/60)
+  });
+
+  it('お題の間の待ち（読む時間）は速度に入れない。表示用の所要時間には残る', () => {
+    // 3打鍵 → 1.8秒の待ち → 3打鍵。各お題の中は 100ms 間隔
+    const m = computeMetrics(
+      log([0, true, 'a', 0], [100, true, 'a', 0], [200, true, 'a', 0], [2000, true, 'a', 1], [2100, true, 'a', 1], [2200, true, 'a', 1]),
+    );
+    expect(m.elapsedMs).toBe(2200);
+    expect(m.activeMs).toBe(400); // 200 + 200（お題をまたぐ 1800ms は除く）
+    expect(m.kpm).toBeCloseTo(600); // 4 / (0.4s/60)。待ちを含めると 6 / 2.2s ≒ 164 になってしまう
+  });
+
+  it('お題の中でも、3秒を超える休止は速度に入れない', () => {
+    const m = computeMetrics(log([0, true], [100, true], [5100, true], [5200, true]));
+    expect(m.activeMs).toBe(200);
+    expect(m.kpm).toBeCloseTo(600);
+  });
+
+  it('ミスは速度を下げる（時間は分母に残り、進んだ数には入らない）', () => {
+    const m = computeMetrics(log([0, true], [100, false], [200, true]));
+    expect(m.kpm).toBeCloseTo(300); // 1 / (0.2s/60)
+    expect(m.rawKpm).toBeCloseTo(600);
+  });
+
+  it('お題ごとに1打鍵しかない場合は間隔が無く、速度は 0（NaN にならない）', () => {
+    const m = computeMetrics(log([0, true, 'a', 0], [1000, true, 'a', 1], [2000, true, 'a', 2]));
+    expect(m).toMatchObject({ activeMs: 0, kpm: 0, rawKpm: 0 });
   });
 
   it('終了は最後の正打。その後の誤打鍵は総数にだけ入る', () => {
@@ -155,7 +184,7 @@ describe('recordPress（エンジンとの接続）', () => {
     });
     expect(state.done).toBe(true);
     const m = computeMetrics(ks, { minKeystrokes: minKeystrokes(text) });
-    expect(m).toMatchObject({ total: 5, correct: 5, accuracy: 1, efficiency: 1, elapsedMs: 400 });
-    expect(m.kpm).toBeCloseTo(750);
+    expect(m).toMatchObject({ total: 5, correct: 5, accuracy: 1, efficiency: 1, elapsedMs: 400, activeMs: 400 });
+    expect(m.kpm).toBeCloseTo(600); // 4 / (0.4s/60)
   });
 });
