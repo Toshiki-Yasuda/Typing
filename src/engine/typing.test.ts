@@ -117,6 +117,15 @@ describe('「ん」', () => {
     expect(accepts('んん', 'nxn')).toBe(true);
   });
 
+  it('n の直後の y: にゃ行になる入力は不可。「っ」の重ね打ち（yy）は可（nyy は表に無いので n は「ん」に確定）', () => {
+    expect(accepts('んっや', 'nyya')).toBe(true);
+    expect(accepts('んっいぇ', 'nyye')).toBe(true); // 過去の反例
+    expect(rejects('んや', 'nya')).toBe(true); // にゃ になってしまう
+    expect(rejects('んいぇ', 'nye')).toBe(true); // にぇ になってしまう
+    expect(accepts('んや', 'nnya')).toBe(true);
+    expect(accepts('んいぇ', 'nnye')).toBe(true);
+  });
+
   it('n の直後に別の子音が来たら、その子音は次の文字の頭', () => {
     expect(accepts('んか', 'nka')).toBe(true);
     expect(accepts('んわ', 'nwa')).toBe(true);

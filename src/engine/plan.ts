@@ -44,18 +44,27 @@ export interface Plan {
 }
 
 export const NO_CONSTRAINT: NextConstraint = { type: 'none' };
-/** 「ん」を n 単独で打った直後に来てはいけない打鍵（n+母音=な行等、n+n=ん、n+y=にゃ行） */
-export const HATSUON_SINGLE_FORBIDDEN_NEXT = 'aiueony';
+/** 「ん」を n 単独で打った直後に来てはいけない打鍵（n+母音=な行等、n+n=ん）。y は allows() で個別に扱う */
+export const HATSUON_SINGLE_FORBIDDEN_NEXT = 'aiueon';
 
-function allows(constraint: NextConstraint, keys: string): boolean {
-  const lower = keys.toLowerCase();
+/**
+ * 直前の辺が課す制約を、次の辺が満たすか。
+ * 「ん」を n 単独で打った直後は、IME が n を次の入力と結び付けて別の文字にしてしまう打鍵を避ける:
+ *  - 母音（な行）・n（nn = ん）で始まる辺
+ *  - y で始まる辺（nya 等 = にゃ行）。ただし「っ」の重ね打ち（yy）は可: `nyy` は表に無いので、n は「ん」に確定する
+ */
+function allows(constraint: NextConstraint, edge: Edge): boolean {
+  const keys = edge.keys.toLowerCase();
   switch (constraint.type) {
     case 'none':
       return true;
-    case 'notVowelNY':
-      return !HATSUON_SINGLE_FORBIDDEN_NEXT.includes(lower.charAt(0));
+    case 'notVowelNY': {
+      const first = keys.charAt(0);
+      if (first === 'y') return edge.kind === 'sokuon';
+      return !HATSUON_SINGLE_FORBIDDEN_NEXT.includes(first);
+    }
     case 'prefix':
-      return lower.startsWith(constraint.prefix);
+      return keys.startsWith(constraint.prefix);
   }
 }
 
@@ -118,7 +127,7 @@ export function createPlan(text: string, table: RomajiTable = ROMAJI_TABLE): Pla
       const key = `${pos}|${constraintKey(constraint)}`;
       let result = optionsMemo.get(key);
       if (!result) {
-        result = (edgesFrom[pos] ?? []).filter((e) => allows(constraint, e.keys) && viable(e));
+        result = (edgesFrom[pos] ?? []).filter((e) => allows(constraint, e) && viable(e));
         optionsMemo.set(key, result);
       }
       return result;
