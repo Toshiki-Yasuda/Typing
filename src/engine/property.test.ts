@@ -94,18 +94,28 @@ describe('仕様で除外した行の扱い（過去の反例を固定）', () =
 });
 
 describe('最適性: 最短打鍵数は総当りの最短と一致する', () => {
-  /** 許容行を連結して text を作る最短の打鍵列の長さ（総当り・反復深化） */
+  /**
+   * text を打てる最短の打鍵数（総当り・反復深化）。
+   * 行の入力を連結すると、っ の重ね打ち（hh + hyi = hhyi の h の共有）で打鍵数を数え違えるため、1打鍵ずつ伸ばす。
+   * 仕様で除外した行を使う解釈は対象外。
+   */
+  const alphabet = [...new Set(allowedInputs.join(''))];
   function bruteForceMin(text: string, maxKeys: number): number {
     const search = (keys: string, limit: number): boolean => {
-      const { output, pending } = simulateIme(MOZC_ROWS, keys);
-      if (!text.startsWith(output)) return false;
+      const { output, pending, used } = simulateIme(MOZC_ROWS, keys);
+      if (!text.startsWith(output) || used.some((input) => excluded.has(input))) return false;
       if (output === text && pending === '') return true;
       if (keys.length >= limit) return false;
-      return allowedInputs.some((input) => keys.length + input.length <= limit && search(keys + input, limit));
+      return alphabet.some((key) => search(keys + key, limit));
     };
     for (let limit = 1; limit <= maxKeys; limit++) if (search('', limit)) return limit;
     return Infinity;
   }
+
+  it('っ の重ね打ちで h を共有する経路（っひぃ = hhyi の4打鍵）を数え違えない（過去の反例を固定）', () => {
+    expect(bruteForceMin('っひぃ', 7)).toBe(4);
+    expect(minKeystrokes('っひぃ')).toBe(4);
+  });
 
   it('短いお題（1〜2単位）', () => {
     fc.assert(
@@ -114,7 +124,7 @@ describe('最適性: 最短打鍵数は総当りの最短と一致する', () =>
         fc.pre(expected !== Infinity); // 7打鍵以内で打てるものだけ比較する
         expect(minKeystrokes(text), text).toBe(expected);
       }),
-      { numRuns: 150 },
+      { numRuns: RUNS / 20 }, // 通常 150 回。総当りは重いので少なめ
     );
-  }, 60_000);
+  }, TIMEOUT);
 });
