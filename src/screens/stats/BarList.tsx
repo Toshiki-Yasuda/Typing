@@ -70,7 +70,9 @@ export function BarList({ title, rows, format, valueHeader, empty }: Props) {
         </ul>
       )}
       <details className="text-sm">
-        <summary className="cursor-pointer text-text-muted">表で見る</summary>
+        <summary className="cursor-pointer text-text-muted">
+          表で見る<span className="sr-only">（{title}）</span>
+        </summary>
         <table className="mt-2 w-full text-left">
           <thead>
             <tr className="text-text-muted">

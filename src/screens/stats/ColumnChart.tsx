@@ -44,6 +44,8 @@ function barPath(x: number, width: number, top: number, base: number): string {
 export function ColumnChart({ title, columns, format, valueHeader, minSample, labelEvery = 1 }: Props) {
   const id = useId();
   const [active, setActive] = useState<number | null>(null);
+  // キーボードで区分を移動したときだけ、読み上げ用に通知する
+  const [announce, setAnnounce] = useState('');
   const n = columns.length;
   const values = columns.map((c) => c.value).filter((v): v is number => v !== null);
   const scale = niceScale(0, values.length ? Math.max(...values) : 1);
@@ -56,7 +58,10 @@ export function ColumnChart({ title, columns, format, valueHeader, minSample, la
   const onKeyDown = (e: KeyboardEvent) => {
     const move = (next: number) => {
       e.preventDefault();
-      setActive(Math.min(n - 1, Math.max(0, next)));
+      const index = Math.min(n - 1, Math.max(0, next));
+      setActive(index);
+      const c = columns[index];
+      if (c) setAnnounce(c.value === null ? `${c.name ?? c.label}: 練習なし` : `${c.name ?? c.label}: ${format(c.value)}（${c.count}回${c.count < minSample ? '・参考値' : ''}）`);
     };
     if (e.key === 'ArrowLeft') move((active ?? n) - 1);
     else if (e.key === 'ArrowRight') move((active ?? -1) + 1);
@@ -116,6 +121,9 @@ export function ColumnChart({ title, columns, format, valueHeader, minSample, la
             </g>
           ))}
         </svg>
+        <div aria-live="polite" className="sr-only">
+          {announce}
+        </div>
         {shown && active !== null && (
           <Tooltip left={`${(cx(active) / W) * 100}%`} top={`${((shown.value !== null ? y(shown.value) : base) / H) * 100}%`}>
             {shown.value !== null ? (
@@ -135,7 +143,9 @@ export function ColumnChart({ title, columns, format, valueHeader, minSample, la
       </div>
       {hasFew && <p className="text-xs text-text-muted">枠だけの棒は、練習が {minSample} 回未満の参考値です。</p>}
       <details className="text-sm">
-        <summary className="cursor-pointer text-text-muted">表で見る</summary>
+        <summary className="cursor-pointer text-text-muted">
+          表で見る<span className="sr-only">（{title}）</span>
+        </summary>
         <table className="mt-2 w-full text-left">
           <thead>
             <tr className="text-text-muted">

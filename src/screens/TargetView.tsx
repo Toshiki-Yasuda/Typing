@@ -19,10 +19,16 @@ export function TargetView({ view, missing }: { view: SessionView; missing: bool
   return (
     <section
       aria-label="お題"
-      className={`flex flex-col items-center gap-4 rounded-lg p-8 text-center transition-colors ${
-        missing ? 'bg-danger/20' : 'bg-surface-raised'
+      className={`relative flex flex-col items-center gap-4 rounded-lg p-8 text-center transition-colors ${
+        missing ? 'bg-danger/20 ring-2 ring-danger' : 'bg-surface-raised'
       }`}
     >
+      {/* 色だけに頼らず、文字と枠でも誤打鍵を示す。読み上げには出さない（誤打鍵のたびに読み上げると邪魔になる） */}
+      {missing && (
+        <span aria-hidden className="absolute right-3 top-2 text-sm font-bold text-danger">
+          ミス
+        </span>
+      )}
       <p className={`${size.display} font-bold break-words`}>{view.item.display}</p>
       <p className={`${size.reading} tracking-wider break-words`}>
         <span className="text-success">{reading.slice(0, kanaIndex).join('')}</span>

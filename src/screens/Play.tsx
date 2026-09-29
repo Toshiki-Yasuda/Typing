@@ -10,7 +10,11 @@ import type { LayoutId } from '@/fingering';
 import { FingerGuide } from './FingerGuide';
 import { GhostBar } from './GhostBar';
 import { useStore } from '@/app/StoreContext';
+import { PageHeading } from './PageHeading';
 import { TargetView } from './TargetView';
+
+/** 画面の見出し（視覚的には隠す）。モードごとに、何の画面かを示す */
+const HEADINGS: Record<string, string> = { daily: '今日のチャレンジ', retry: '同じお題でもう一度' };
 
 interface Props {
   pack?: ContentPack;
@@ -125,19 +129,22 @@ export function Play({
   const view = session.view();
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
+      <PageHeading title={HEADINGS[mode ?? ''] ?? '練習'} srOnly />
       <header className="flex items-center justify-between text-text-muted">
-        <span aria-label="進捗">
+        {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
+        <div
+          role="progressbar"
+          aria-label="進捗"
+          aria-valuemin={0}
+          aria-valuemax={view.total}
+          aria-valuenow={view.index}
+          aria-valuetext={`${view.total}問中 ${view.index + 1}問目`}
+        >
           {view.index + 1} / {view.total}
-        </span>
+        </div>
         <span className="text-sm">Esc で中断</span>
       </header>
-      <div
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={view.total}
-        aria-valuenow={view.index}
-        className="h-1 rounded bg-surface-raised"
-      >
+      <div aria-hidden className="h-1 rounded bg-surface-raised">
         <div className="h-1 rounded bg-accent" style={{ width: `${(view.index / view.total) * 100}%` }} />
       </div>
       {!focused && (

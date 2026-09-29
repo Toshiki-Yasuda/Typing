@@ -31,6 +31,8 @@ const PLOT_H = H - M.top - M.bottom;
 export function LineChart({ title, points, format, yMin = null, yMax = null, valueHeader = '値' }: Props) {
   const id = useId();
   const [active, setActive] = useState<number | null>(null);
+  // キーボードで値を移動したときだけ、読み上げ用に通知する（ポインタのホバーでは通知しない）
+  const [announce, setAnnounce] = useState('');
   const n = points.length;
 
   const values = points.map((p) => p.value);
@@ -53,7 +55,10 @@ export function LineChart({ title, points, format, yMin = null, yMax = null, val
   const onKeyDown = (e: KeyboardEvent) => {
     const move = (next: number) => {
       e.preventDefault();
-      setActive(Math.min(n - 1, Math.max(0, next)));
+      const index = Math.min(n - 1, Math.max(0, next));
+      setActive(index);
+      const p = points[index];
+      if (p) setAnnounce(`${p.label}: ${format(p.value)}`);
     };
     if (e.key === 'ArrowLeft') move((active ?? n) - 1);
     else if (e.key === 'ArrowRight') move((active ?? -1) + 1);
@@ -131,6 +136,9 @@ export function LineChart({ title, points, format, yMin = null, yMax = null, val
             </text>
           )}
         </svg>
+        <div aria-live="polite" className="sr-only">
+          {announce}
+        </div>
         {shown && active !== null && (
           <Tooltip left={`${(x(active) / W) * 100}%`} top={`${(y(shown.value) / H) * 100}%`}>
             <div className="font-bold">{format(shown.value)}</div>
@@ -142,7 +150,9 @@ export function LineChart({ title, points, format, yMin = null, yMax = null, val
         )}
       </div>
       <details className="text-sm">
-        <summary className="cursor-pointer text-text-muted">表で見る</summary>
+        <summary className="cursor-pointer text-text-muted">
+          表で見る<span className="sr-only">（{title}）</span>
+        </summary>
         <table className="mt-2 w-full text-left">
           <thead>
             <tr className="text-text-muted">

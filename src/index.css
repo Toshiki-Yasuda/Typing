@@ -50,3 +50,31 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/*
+ * キーボード操作の目印。どの要素でも同じ、はっきりした 2px の枠（背景・文字と 3:1 以上）を出す。
+ * 見出しへのフォーカス（画面遷移後）は Tab の対象ではないので、枠は出さない。
+ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* 強制カラー（Windows のハイコントラスト）: 背景色が上書きされるので、形（枠）で見分けられるようにする */
+@media (forced-colors: active) {
+  button,
+  select,
+  a.rounded {
+    border: 1px solid ButtonText;
+  }
+  [aria-current='true'] {
+    outline: 3px solid Highlight;
+    outline-offset: -3px;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

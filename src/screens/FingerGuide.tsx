@@ -40,7 +40,8 @@ export function FingerGuide({ next, layout }: { next: string | undefined; layout
   return (
     <section aria-label="運指ガイド" className="flex flex-col items-center gap-3 rounded-lg bg-surface-raised p-4">
       <p className="min-h-6 text-lg font-bold">{loc ? describeKey(loc) : ''}</p>
-      <div aria-hidden className="flex flex-col" style={{ gap: GAP }}>
+      {/* 狭い画面（拡大表示を含む）では図を隠す。指の名前は上の文字で示すので、情報は失われない */}
+      <div aria-hidden className="hidden flex-col sm:flex" style={{ gap: GAP }}>
         {def.rows.map((row, r) => {
           const last = r === def.rows.length - 1;
           return (

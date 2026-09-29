@@ -5,6 +5,7 @@ import { usePackStore, useStore } from '@/app/StoreContext';
 import { createGhost, findBestRecord, type Ghost } from '@/session/ghost';
 import { itemsForTargets } from '@/session/retry';
 import { useSettings } from '@/settings/useSettings';
+import { PageHeading } from './PageHeading';
 import { Play } from './Play';
 
 /** 設定（パック・語数・弱点優先）を読んで、練習画面を開く。`?retry=記録ID` なら、その記録と同じお題で再挑戦する */
@@ -73,6 +74,7 @@ function RetryPlay({ id }: { id: string }) {
   if (data === 'missing') {
     return (
       <main className="mx-auto max-w-3xl p-8">
+        <PageHeading title="記録が見つかりません" srOnly />
         <p>元の記録が見つかりませんでした。</p>
       </main>
     );

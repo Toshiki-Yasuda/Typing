@@ -5,6 +5,7 @@ import type { Keystroke, KeyStat, SessionRecord } from '@/metrics';
 import { createMemoryStore, type SessionStore } from '@/storage';
 import { Stats } from '../Stats';
 import { BarList } from './BarList';
+import { ColumnChart } from './ColumnChart';
 import { KeyboardHeatmap } from './KeyboardHeatmap';
 import { LineChart } from './LineChart';
 
@@ -274,5 +275,66 @@ describe('BarList', () => {
       <BarList title="t" rows={[{ label: 'a→b', value: 0, detail: '3回' }]} format={String} valueHeader="v" empty="なし" />,
     );
     expect(container.querySelector<HTMLElement>('li [aria-hidden]')?.style.width).toBe('0%');
+  });
+});
+
+describe('読み上げ（アクセシビリティ）', () => {
+  const live = (container: HTMLElement) => container.querySelector('[aria-live="polite"]') as HTMLElement;
+  const points = [
+    { label: '9/27', value: 100 },
+    { label: '9/28', value: 200 },
+    { label: '9/29', value: 300 },
+  ];
+
+  it('折れ線: キーボードで値を移動すると、読み上げ用の領域に値が入る。ポインタでは入らない', () => {
+    const { container } = render(<LineChart title="速度" points={points} format={(v) => `${v}打`} />);
+    expect(live(container)).toBeEmptyDOMElement(); // 最初は何も通知しない
+    const group = screen.getByRole('group', { name: '速度' });
+    fireEvent.keyDown(group, { key: 'ArrowLeft' }); // 何も選んでいない状態から左へ → 末尾の点
+    expect(live(container)).toHaveTextContent('9/29: 300打');
+    fireEvent.keyDown(group, { key: 'ArrowLeft' });
+    expect(live(container)).toHaveTextContent('9/28: 200打');
+    fireEvent.keyDown(group, { key: 'Home' });
+    expect(live(container)).toHaveTextContent('9/27: 100打');
+
+    const svg = container.querySelector('svg') as SVGSVGElement;
+    svg.getBoundingClientRect = () => ({ left: 0, width: 640, top: 0, height: 240, right: 640, bottom: 240, x: 0, y: 0, toJSON: () => ({}) });
+    fireEvent.pointerMove(svg, { clientX: 600 });
+    expect(live(container)).toHaveTextContent('9/27: 100打'); // ホバーでは変わらない
+  });
+
+  it('縦棒: 区分の名前・値・回数を通知する。回数が少なければ参考値、練習なしはそう伝える', () => {
+    const { container } = render(
+      <ColumnChart
+        title="曜日別"
+        columns={[
+          { label: '月', name: '月曜日', value: 200, count: 5 },
+          { label: '火', name: '火曜日', value: 250, count: 1 },
+          { label: '水', name: '水曜日', value: null, count: 0 },
+        ]}
+        format={(v) => `${v}打`}
+        valueHeader="速度"
+        minSample={3}
+      />,
+    );
+    const group = screen.getByRole('group', { name: '曜日別' });
+    fireEvent.keyDown(group, { key: 'Home' });
+    expect(live(container)).toHaveTextContent('月曜日: 200打（5回）');
+    fireEvent.keyDown(group, { key: 'ArrowRight' });
+    expect(live(container)).toHaveTextContent('火曜日: 250打（1回・参考値）');
+    fireEvent.keyDown(group, { key: 'End' });
+    expect(live(container)).toHaveTextContent('水曜日: 練習なし');
+  });
+
+  it('「表で見る」は、どのグラフの表かが読み上げで区別できる', async () => {
+    const store = createMemoryStore();
+    const now = Date.now();
+    await store.addMany([record('a', now - DAY), record('b', now)]);
+    renderStats(store);
+    await screen.findByRole('heading', { name: '統計' });
+    const names = [...document.querySelectorAll('summary')].map((s) => s.textContent);
+    expect(names.length).toBeGreaterThanOrEqual(6);
+    expect(new Set(names).size).toBe(names.length); // すべて違う名前
+    expect(names.every((n) => n?.startsWith('表で見る（'))).toBe(true);
   });
 });

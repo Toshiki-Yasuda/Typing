@@ -74,7 +74,7 @@ export function RankCard({ summaries, goalId }: { summaries: readonly SessionSum
       </h2>
       <StatusLines status={status} goal={goalProgress(status, goalId)} />
       <Link to="/stats" className="self-start text-sm text-accent underline">
-        統計を見る
+        級位の推移を統計で見る
       </Link>
     </section>
   );

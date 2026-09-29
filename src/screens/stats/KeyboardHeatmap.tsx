@@ -140,7 +140,9 @@ export function KeyboardHeatmap({ stats }: { stats: ReadonlyMap<string, KeyStat>
       </div>
 
       <details className="text-sm">
-        <summary className="cursor-pointer text-text-muted">表で見る</summary>
+        <summary className="cursor-pointer text-text-muted">
+          表で見る<span className="sr-only">（キー別の苦手）</span>
+        </summary>
         <table className="mt-2 w-full text-left">
           <thead>
             <tr className="text-text-muted">

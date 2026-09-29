@@ -20,13 +20,13 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
         練習の設定
       </h2>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-        <label className="flex items-center gap-2">
-          <span className="text-text-muted">出題</span>
+        <label className="flex min-w-0 max-w-full items-center gap-2">
+          <span className="shrink-0 text-text-muted">出題</span>
           <select
             aria-label="出題パック"
             value={selected}
             onChange={(e) => update({ packId: e.target.value })}
-            className="rounded bg-surface-raised px-3 py-2"
+            className="min-w-0 max-w-full rounded bg-surface-raised px-3 py-2"
           >
             {BUILTIN_PACKS.map((p) => (
               <option key={p.id} value={p.id}>

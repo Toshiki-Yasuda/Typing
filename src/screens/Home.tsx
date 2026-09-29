@@ -8,8 +8,12 @@ import { useStore } from '@/app/StoreContext';
 import { useSettings } from '@/settings/useSettings';
 import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
+import { PageHeading } from './PageHeading';
 import { RankCard } from './RankPanel';
 import { useCustomPacks } from './home/useCustomPacks';
+
+/** Enter を「その要素の操作」に使う要素。tabindex=-1（見出しへのフォーカス）は対象外 */
+const INTERACTIVE = 'a[href], button, input, select, textarea, summary, [contenteditable="true"], [tabindex]:not([tabindex="-1"])';
 
 function download(name: string, text: string) {
   const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
@@ -55,7 +59,11 @@ export function Home() {
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && !e.isComposing) navigate('/play');
+      if (e.key !== 'Enter' || e.isComposing || e.defaultPrevented) return;
+      if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+      // ボタン・リンク・入力欄・選択肢などにフォーカスがあるときの Enter は、その要素の操作（押す・開く）。練習は始めない
+      if (e.target instanceof Element && e.target.closest(INTERACTIVE)) return;
+      navigate('/play');
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
@@ -77,7 +85,7 @@ export function Home() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
-      <h1 className="text-3xl font-bold">Typing</h1>
+      <PageHeading title="Typing" home className="text-3xl font-bold" />
       <Link
         to="/play"
         className="self-start rounded bg-accent px-8 py-4 text-xl font-bold text-surface focus-visible:outline-2"

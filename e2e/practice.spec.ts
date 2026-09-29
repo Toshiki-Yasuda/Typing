@@ -300,8 +300,8 @@ test('統計: 時間帯・曜日の成績が出る。ホバーで値が読め、
   }
   await page.goto('/#/stats');
   await expect(page.getByRole('heading', { name: '時間帯と曜日' })).toBeVisible();
-  await expect(page.getByText('時間帯別の速度')).toBeVisible();
-  await expect(page.getByText('曜日別の速度')).toBeVisible();
+  await expect(page.locator('figcaption', { hasText: '時間帯別の速度' })).toBeVisible();
+  await expect(page.locator('figcaption', { hasText: '曜日別の速度' })).toBeVisible();
   // 2回だけなので、傾向は出せない旨と、参考値の注記が出る
   await expect(page.getByText(/傾向は出せません/)).toBeVisible();
   await expect(page.getByText(/枠だけの棒は、練習が 3 回未満の参考値です/).first()).toBeVisible();
@@ -318,6 +318,6 @@ test('統計: 時間帯・曜日の成績が出る。ホバーで値が読め、
 
   // 「ミス率」のボタンは、キー別ヒートマップにもある。時間帯セクションの中に絞る
   await page.locator('section', { has: page.getByRole('heading', { name: '時間帯と曜日' }) }).getByRole('button', { name: 'ミス率' }).click();
-  await expect(page.getByText('時間帯別のミス率')).toBeVisible();
-  await expect(page.getByText('曜日別のミス率')).toBeVisible();
+  await expect(page.locator('figcaption', { hasText: '時間帯別のミス率' })).toBeVisible();
+  await expect(page.locator('figcaption', { hasText: '曜日別のミス率' })).toBeVisible();
 });

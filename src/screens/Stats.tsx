@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { aggregate, currentStreak, dayKey, rankStatus, summarizeSessions, withinDays, type SessionRecord } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
 import { BarList } from './stats/BarList';
+import { PageHeading } from './PageHeading';
 import { KeyboardHeatmap } from './stats/KeyboardHeatmap';
 import { LineChart } from './stats/LineChart';
 import { TimeOfDay } from './stats/TimeOfDay';
@@ -77,7 +78,7 @@ export function Stats() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">統計</h1>
+        <PageHeading title="統計" className="text-2xl font-bold" />
         <Link to="/" className="rounded bg-surface-raised px-4 py-2">
           ホーム
         </Link>

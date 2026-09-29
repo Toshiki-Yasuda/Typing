@@ -5,6 +5,7 @@ import { computeMetrics, confusionMatrix, keyStats, summarizeSessions, type Metr
 import { useStore } from '@/app/StoreContext';
 import { compareWithBest, type Comparison } from '@/session/retry';
 import { useSettings } from '@/settings/useSettings';
+import { PageHeading } from './PageHeading';
 import { RankPanel } from './RankPanel';
 
 function summarize(record: SessionRecord): Metrics {
@@ -53,6 +54,7 @@ export function Result() {
   if (record === null) {
     return (
       <main className="mx-auto max-w-3xl p-8">
+        <PageHeading title="記録が見つかりません" srOnly />
         <p>この記録は見つかりませんでした。</p>
         <Link to="/" className="text-accent underline">ホームへ</Link>
       </main>
@@ -72,7 +74,7 @@ export function Result() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
-      <h1 className="text-2xl font-bold">結果</h1>
+      <PageHeading title="結果" className="text-2xl font-bold" />
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <Stat label="速度（実効）" value={fmt(m.kpm)} unit="打鍵/分" />
         <Stat label="正確率" value={pct(m.accuracy)} />
