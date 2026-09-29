@@ -86,3 +86,40 @@ test('Esc で中断してホームに戻る', async ({ page }) => {
   await expect(page).toHaveURL(/#\/$/);
   await expect(page.getByRole('heading', { name: 'Typing' })).toBeVisible();
 });
+
+test('統計画面: 練習を重ねると推移・キー別が表示され、ホバーで値が読める', async ({ page }) => {
+  for (let i = 0; i < 2; i++) {
+    await startPlay(page);
+    await playThrough(page);
+    await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  }
+
+  await page.goto('/#/stats');
+  await expect(page.getByRole('heading', { name: '統計' })).toBeVisible();
+  await expect(page.getByText('練習した回数').locator('xpath=following-sibling::dd')).toHaveText('2回');
+  await expect(page.getByText('連続日数').locator('xpath=following-sibling::dd')).toHaveText('1日');
+
+  // 折れ線: ポインタを重ねると、最寄りの点の値がツールチップに出る
+  const chart = page.locator('figure').first().locator('svg');
+  const box = (await chart.boundingBox())!;
+  await page.mouse.move(box.x + box.width * 0.4, box.y + box.height / 2);
+  await expect(page.getByRole('tooltip')).toBeVisible();
+  await page.mouse.move(0, 0);
+  await expect(page.getByRole('tooltip')).toHaveCount(0);
+
+  // ヒートマップ: データのあるキーにホバーすると、値が読める色（暗いセル色を継承しない）で出る
+  const cell = page.locator('[role=img][aria-label*="ミス率"]:not([aria-label*="データなし"])').first();
+  await cell.hover();
+  const value = page.getByRole('tooltip').locator('div').first();
+  await expect(value).toBeVisible();
+  expect(await value.evaluate((el) => getComputedStyle(el).color)).toBe('rgb(232, 233, 238)');
+
+  // 期間の切り替え
+  await page.getByRole('button', { name: '7日' }).click();
+  await expect(page.getByRole('button', { name: '7日' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByText('練習した回数').locator('xpath=following-sibling::dd')).toHaveText('2回');
+
+  // 表でも読める
+  await page.getByText('表で見る').first().click();
+  await expect(page.getByRole('table').first()).toBeVisible();
+});

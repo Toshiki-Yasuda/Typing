@@ -1,3 +1,4 @@
+import { mergeKeyStats } from './history';
 import { keyStats, type KeyStat } from './stats';
 import type { Keystroke } from './types';
 
@@ -11,11 +12,15 @@ export interface WeaknessOptions {
   priorAttempts?: number;
 }
 
+/**
+ * @param sessions セッションごとの打鍵ログ。遅延はセッションごとに求めて合算する
+ *                 （連結すると、セッションの境界で時刻がリセットされて偽の連続2打鍵ができるため）
+ */
 export function keyWeakness(
-  keystrokes: readonly Keystroke[],
+  sessions: readonly (readonly Keystroke[])[],
   { priorAttempts = 10 }: WeaknessOptions = {},
 ): Map<string, number> {
-  const stats = [...keyStats(keystrokes).values()];
+  const stats = [...mergeKeyStats(sessions.map((s) => keyStats(s))).values()];
   if (stats.length === 0) return new Map();
 
   const totalAttempts = stats.reduce((s, k) => s + k.attempts, 0);

@@ -11,6 +11,26 @@
   --color-danger: #f87171;
 }
 
+/*
+ * グラフ用のトークン（この画面は暗い配色のみ）。
+ * 系列色 #3987e5 と、ヒートマップの階調は scripts の検証（暗い面 #1d1f27）を通した値。
+ * ヒートマップは値が大きいほど明るい（暗い面では、小さい値が背景に溶けるのが自然）。
+ */
+:root {
+  --viz-series-1: #3987e5;
+  --viz-ink: #ffffff;
+  --viz-ink-secondary: #c3c2b7;
+  --viz-muted: #898781;
+  --viz-grid: #2c2c2a;
+  --viz-axis: #383835;
+  --viz-heat-1: #184f95;
+  --viz-heat-2: #256abf;
+  --viz-heat-3: #3987e5;
+  --viz-heat-4: #6da7ec;
+  --viz-heat-5: #b7d3f6;
+  --viz-heat-ink-dark: #0b0b0b;
+}
+
 html,
 body,
 #root {

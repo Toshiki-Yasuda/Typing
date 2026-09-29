@@ -59,6 +59,9 @@ export function Home() {
       >
         練習を始める（Enter）
       </Link>
+      <Link to="/stats" className="self-start rounded bg-surface-raised px-4 py-2">
+        統計を見る
+      </Link>
 
       <section aria-labelledby="history">
         <h2 id="history" className="mb-2 text-lg font-bold">最近の記録</h2>

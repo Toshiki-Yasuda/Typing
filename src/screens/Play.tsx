@@ -24,7 +24,7 @@ export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
     let cancelled = false;
     store.list().then((records) => {
       if (cancelled) return;
-      const weakness = keyWeakness(records.flatMap((r) => r.keystrokes));
+      const weakness = keyWeakness(records.map((r) => r.keystrokes));
       const items =
         weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random);
       setSession(
