@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { aggregate, currentStreak, dayKey, summarizeSessions, withinDays, type SessionRecord } from '@/metrics';
+import { aggregate, currentStreak, dayKey, rankStatus, summarizeSessions, withinDays, type SessionRecord } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
 import { BarList } from './stats/BarList';
 import { KeyboardHeatmap } from './stats/KeyboardHeatmap';
@@ -57,6 +57,7 @@ export function Stats() {
     return {
       summaries,
       agg,
+      rank: rankStatus(summarizeSessions(records)),
       streak: currentStreak(records.map((r) => dayKey(r.startedAt)), today),
       keystrokes: summaries.reduce((s, x) => s + x.total, 0),
       best: summaries.reduce((m, x) => Math.max(m, x.kpm), 0),
@@ -105,13 +106,14 @@ export function Stats() {
         </section>
       ) : (
         <>
-          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-5">
             <Tile label="練習した回数" value={String(view.summaries.length)} unit="回" />
             <Tile label="累計打鍵" value={view.keystrokes.toLocaleString('ja-JP')} />
             <Tile label="最高速度" value={view.best.toFixed(0)} unit="打鍵/分" />
             <Tile label="連続日数" value={String(view.streak)} unit="日" />
+            <Tile label="級位" value={view.rank.rank?.label ?? '—'} unit={view.rank.rank && view.rank.provisional ? '暫定' : undefined} />
           </dl>
-          <p className="-mt-4 text-sm text-text-muted">連続日数は期間に関わらず、全記録から数えます。</p>
+          <p className="-mt-4 text-sm text-text-muted">連続日数と級位は期間に関わらず、全記録から数えます。</p>
 
           <LineChart
             title="速度の推移（打鍵/分）"

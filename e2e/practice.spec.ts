@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { LAYOUTS, describeKey, locate } from '../src/fingering';
 
 const guide = (page: Page) => page.getByLabel('ローマ字ガイド');
 
@@ -197,7 +198,7 @@ test('デイリー: 初回はゴーストなし → 2回目は自己ベストと
   await expect(page.getByRole('region', { name: 'ゴースト' })).toContainText('ゴースト: 同じお題の自己ベスト');
   await expect(page.getByRole('region', { name: 'ゴースト' })).toContainText(/先行|遅れ|±0\.0秒/);
   await playThrough(page);
-  await expect(page.getByRole('status')).toContainText(/自己ベスト更新！|同じお題の過去最高は/);
+  await expect(page.getByText(/自己ベスト更新！|同じお題の過去最高は/)).toBeVisible();
 
   await page.getByRole('link', { name: 'ホーム' }).click();
   await expect(page.getByText(/挑戦済み（2回・最高/)).toBeVisible();
@@ -224,5 +225,56 @@ test('結果から「同じお題でもう一度」: 同じお題で、前回が
   await expect(page.getByRole('region', { name: 'ゴースト' })).toBeVisible();
   await playThrough(page);
   await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
-  await expect(page.getByRole('status')).toContainText(/自己ベスト更新！|同じお題の過去最高は/);
+  await expect(page.getByText(/自己ベスト更新！|同じお題の過去最高は/)).toBeVisible();
+});
+
+test('運指ガイド: 次のキーの指を示し、打つと変わる。設定で配列の切替・非表示にできる', async ({ page }) => {
+  await startPlay(page);
+  const region = page.getByRole('region', { name: '運指ガイド' });
+  await expect(region).toBeVisible();
+  await expect(region).toContainText('JIS配列');
+  // ガイドの説明文は、ローマ字ガイドの各文字に対応する指の説明と一致する（打つたびに次のキーへ進む）
+  const romaji = ((await guide(page).textContent()) ?? '').replaceAll('␣', ' ');
+  const caption = region.locator('p').first();
+  const expected = (i: number) => describeKey(locate(LAYOUTS.jis, romaji[i] as string)!);
+  await expect(caption).toHaveText(expected(0));
+  await expect(region.locator('[aria-current="true"]').first()).toBeVisible();
+  await page.keyboard.press(romaji[0] as string);
+  await expect(caption).toHaveText(expected(1));
+  await page.keyboard.press(romaji[1] as string);
+  if (romaji.length > 2) await expect(caption).toHaveText(expected(2));
+
+  await page.goto('/');
+  await page.getByLabel('運指ガイドの配列').selectOption('us');
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: '運指ガイド' })).toContainText('US配列');
+
+  await page.goto('/');
+  await page.getByLabel('運指ガイドを表示する').uncheck();
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByRole('region', { name: '運指ガイド' })).toHaveCount(0);
+});
+
+test('級位: 最初の練習で暫定の級位が付き、結果・ホーム・統計に出る。目標も選べる', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText(/級位はまだありません/)).toBeVisible();
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await playThrough(page);
+
+  await expect(page.getByRole('heading', { name: '級位' })).toBeVisible();
+  await expect(page.getByText('この練習:', { exact: false })).toContainText('相当');
+  await expect(page.getByText(/級位が付きました: .+（暫定）/)).toBeVisible();
+  await expect(page.getByText(/現在の級位:/)).toBeVisible();
+  await expect(page.getByText(/目標 .+ まで あと \d+ 打鍵\/分|目標 .+ を達成しています/)).toBeVisible();
+
+  await page.getByRole('link', { name: 'ホーム' }).click();
+  await expect(page.getByRole('heading', { name: '級位と目標' })).toBeVisible();
+  await expect(page.getByText(/現在の級位:/)).toBeVisible();
+  await page.getByLabel('目標の級位').selectOption('k10');
+  await expect(page.getByText('目標 10級 を達成しています')).toBeVisible();
+
+  await page.goto('/#/stats');
+  await expect((await page.getByText('級位', { exact: true }).locator('xpath=following-sibling::dd').textContent()) ?? '').toMatch(/級|段/);
 });

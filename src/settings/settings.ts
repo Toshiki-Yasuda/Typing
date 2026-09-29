@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GOAL_AUTO } from '@/metrics/rank';
 
 /** 練習の設定。localStorage に保存する（小さな設定値なので。打鍵ログは IndexedDB） */
 export const SETTINGS_KEY = 'typing.settings.v1';
@@ -11,10 +12,23 @@ export const SettingsSchema = z.object({
   count: z.number().int().min(1).max(100),
   /** 過去の記録から弱点を求め、弱いキーを含むお題を優先する（記録が無ければ無視される） */
   adaptive: z.boolean(),
+  /** 目標の級位。'auto' なら「次の級位」。それ以外は級位の id（rank.ts） */
+  goalRank: z.string().min(1),
+  /** 練習中に、次に打つキーと使う指を示す */
+  fingerGuide: z.boolean(),
+  /** 運指ガイドのキー配列（表示だけ。判定には影響しない） */
+  layout: z.enum(['us', 'jis']),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 
-export const DEFAULT_SETTINGS: Settings = { packId: 'basic', count: 10, adaptive: true };
+export const DEFAULT_SETTINGS: Settings = {
+  packId: 'basic',
+  count: 10,
+  adaptive: true,
+  goalRank: GOAL_AUTO,
+  fingerGuide: true,
+  layout: 'jis',
+};
 
 /** localStorage を使えない環境（プライベートモード等）でも落ちないようにする */
 function storageOrNull(): Pick<Storage, 'getItem' | 'setItem'> | null {

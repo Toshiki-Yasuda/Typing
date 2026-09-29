@@ -161,7 +161,7 @@ describe('デイリーチャレンジ', () => {
     const [record] = await store.list();
     expect(record?.mode).toBe('daily');
     expect(record?.targets).toEqual(todaysChallenge(Date.now()).items.map((i) => normalizeTarget(i.reading)));
-    expect(screen.queryByRole('status')).not.toBeInTheDocument(); // 比較対象が無いので、比較は出ない
+    expect(screen.queryByText(/自己ベスト更新！|同じお題の過去最高は/)).not.toBeInTheDocument(); // 比較対象が無いので、比較は出ない
   });
 
   it('過去の記録があればゴーストが並走し、上回ると自己ベスト更新と表示される。ホームに挑戦回数が出る', async () => {

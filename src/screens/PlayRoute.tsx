@@ -14,8 +14,15 @@ export function PlayRoute() {
   return retryId ? <RetryPlay id={retryId} /> : <SettingsPlay />;
 }
 
+/** 設定の運指ガイド（オフなら null） */
+function useFingerGuide() {
+  const [settings] = useSettings();
+  return settings.fingerGuide ? { layout: settings.layout } : null;
+}
+
 function SettingsPlay() {
   const [settings] = useSettings();
+  const fingerGuide = useFingerGuide();
   const packStore = usePackStore();
   const [custom, setCustom] = useState<ContentPack[] | null>(null);
 
@@ -30,11 +37,12 @@ function SettingsPlay() {
   if (!custom) return <p className="p-8 text-text-muted">準備中…</p>;
   // 選んでいた自作パックが削除されていたら、基本パックで始める
   const pack = [...BUILTIN_PACKS, ...custom].find((p) => p.id === settings.packId) ?? BASIC_PACK;
-  return <Play pack={pack} count={settings.count} adaptive={settings.adaptive} />;
+  return <Play pack={pack} count={settings.count} adaptive={settings.adaptive} fingerGuide={fingerGuide} />;
 }
 
 /** 過去の記録と同じお題で、もう一度。同じお題の最高記録をゴーストにする */
 function RetryPlay({ id }: { id: string }) {
+  const fingerGuide = useFingerGuide();
   const store = useStore();
   const packStore = usePackStore();
   const [data, setData] = useState<
@@ -69,5 +77,5 @@ function RetryPlay({ id }: { id: string }) {
       </main>
     );
   }
-  return <Play pack={data.pack} items={data.items} mode="retry" ghost={data.ghost} />;
+  return <Play pack={data.pack} items={data.items} mode="retry" ghost={data.ghost} fingerGuide={fingerGuide} />;
 }

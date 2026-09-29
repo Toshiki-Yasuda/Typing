@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { minKeystrokes } from '@/engine';
-import { computeMetrics, confusionMatrix, keyStats, type Metrics, type SessionRecord } from '@/metrics';
+import { computeMetrics, confusionMatrix, keyStats, summarizeSessions, type Metrics, type SessionRecord, type SessionSummary } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
 import { compareWithBest, type Comparison } from '@/session/retry';
+import { useSettings } from '@/settings/useSettings';
+import { RankPanel } from './RankPanel';
 
 function summarize(record: SessionRecord): Metrics {
   const min = record.targets.reduce((sum, t) => sum + minKeystrokes(t), 0);
@@ -30,6 +32,8 @@ export function Result() {
   const store = useStore();
   const [record, setRecord] = useState<SessionRecord | null | undefined>(undefined);
   const [comparison, setComparison] = useState<Comparison | null>(null);
+  const [summaries, setSummaries] = useState<SessionSummary[]>([]);
+  const [settings] = useSettings();
 
   useEffect(() => {
     let cancelled = false;
@@ -38,6 +42,7 @@ export function Result() {
       if (cancelled) return;
       setRecord(r ?? null);
       setComparison(r ? compareWithBest(all, r) : null);
+      setSummaries(summarizeSessions(all));
     })();
     return () => {
       cancelled = true;
@@ -101,7 +106,8 @@ export function Result() {
           </p>
         )}
       </section>
- {comparison && (
+      <RankPanel summaries={summaries} currentId={record.id} goalId={settings.goalRank} />
+      {comparison && (
         <p role="status" className="rounded-lg bg-surface-raised p-4">
           {comparison.diffKpm > 0
             ? `自己ベスト更新！ 同じお題の過去最高より ${comparison.diffKpm.toFixed(0)} 打鍵/分 速くなりました（${comparison.bestKpm.toFixed(0)} → ${comparison.currentKpm.toFixed(0)}）`

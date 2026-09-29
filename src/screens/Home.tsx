@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { minKeystrokes } from '@/engine';
-import { computeMetrics, dayKey, type SessionRecord } from '@/metrics';
+import { computeMetrics, dayKey, summarizeSessions, type SessionRecord, type SessionSummary } from '@/metrics';
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
 import { useSettings } from '@/settings/useSettings';
 import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
+import { RankCard } from './RankPanel';
 import { useCustomPacks } from './home/useCustomPacks';
 
 function download(name: string, text: string) {
@@ -23,6 +24,7 @@ export function Home() {
   const store = useStore();
   const navigate = useNavigate();
   const [history, setHistory] = useState<SessionRecord[]>([]);
+  const [summaries, setSummaries] = useState<SessionSummary[]>([]);
   const [daily, setDaily] = useState<{ date: string; packName: string; count: number; attempts: number; bestKpm: number | null } | null>(null);
   const [message, setMessage] = useState('');
   const [settings, updateSettings] = useSettings();
@@ -32,6 +34,7 @@ export function Home() {
   const reload = () =>
     store.list().then((all) => {
       setHistory(all.slice(-10).reverse());
+      setSummaries(summarizeSessions(all));
       // 今日のチャレンジの状況（日付は読み込み時点のもの。描画中に Date.now() を呼ばない）
       const now = Date.now();
       const challenge = todaysChallenge(now);
@@ -103,6 +106,8 @@ export function Home() {
           </Link>
         </section>
       )}
+
+      <RankCard summaries={summaries} goalId={settings.goalRank} />
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

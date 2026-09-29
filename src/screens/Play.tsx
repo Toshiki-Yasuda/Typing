@@ -6,6 +6,8 @@ import { keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
 import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
+import type { LayoutId } from '@/fingering';
+import { FingerGuide } from './FingerGuide';
 import { GhostBar } from './GhostBar';
 import { useStore } from '@/app/StoreContext';
 import { TargetView } from './TargetView';
@@ -19,12 +21,23 @@ interface Props {
   items?: readonly ContentItem[];
   /** 記録に残すモード。省略なら弱点の有無で adaptive / practice */
   mode?: string;
+  /** 次に打つキーと使う指を示す運指ガイド。省略なら表示しない */
+  fingerGuide?: { layout: LayoutId } | null;
   /** 並走させる過去の記録 */
   ghost?: { ghost: Ghost; label: string } | null;
   random?: () => number;
 }
 
-export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, items: fixedItems, mode, ghost = null, random }: Props) {
+export function Play({
+  pack = BASIC_PACK,
+  count = 10,
+  adaptive = true,
+  items: fixedItems,
+  mode,
+  ghost = null,
+  fingerGuide = null,
+  random,
+}: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
@@ -139,6 +152,7 @@ export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, items: fi
       )}
       {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
       <TargetView view={view} missing={missing} />
+      {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
     </main>
   );
 }

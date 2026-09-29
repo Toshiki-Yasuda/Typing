@@ -21,9 +21,10 @@ describe('設定の読み書き', () => {
 
   it('保存して読み戻せる', () => {
     const storage = memory();
-    saveSettings({ packId: 'english', count: 20, adaptive: false }, storage);
-    expect(JSON.parse(storage.value as string)).toEqual({ packId: 'english', count: 20, adaptive: false });
-    expect(loadSettings(storage)).toEqual({ packId: 'english', count: 20, adaptive: false });
+    const custom = { packId: 'english', count: 20, adaptive: false, goalRank: 'k3', fingerGuide: false, layout: 'us' as const };
+    saveSettings(custom, storage);
+    expect(JSON.parse(storage.value as string)).toEqual(custom);
+    expect(loadSettings(storage)).toEqual(custom);
   });
 
   it('一部だけ・型違いの項目は、読めた項目だけ採用し、残りは既定値', () => {
@@ -34,6 +35,20 @@ describe('設定の読み書き', () => {
     });
     expect(loadSettings(memory(JSON.stringify({ count: 0 })))).toEqual(DEFAULT_SETTINGS); // 範囲外
     expect(loadSettings(memory(JSON.stringify({ count: 1.5 })))).toEqual(DEFAULT_SETTINGS);
+  });
+
+  it('既定: 目標は自動、運指ガイドは表示、配列は JIS', () => {
+    expect(DEFAULT_SETTINGS).toMatchObject({ goalRank: 'auto', fingerGuide: true, layout: 'jis' });
+  });
+
+  it('新しい項目が無い古い保存値でも、既存の項目は残り、新しい項目は既定値になる', () => {
+    const old = JSON.stringify({ packId: 'english', count: 20, adaptive: false });
+    expect(loadSettings(memory(old))).toEqual({ ...DEFAULT_SETTINGS, packId: 'english', count: 20, adaptive: false });
+  });
+
+  it('配列は us / jis 以外を受け付けない', () => {
+    expect(loadSettings(memory(JSON.stringify({ layout: 'dvorak' }))).layout).toBe('jis');
+    expect(loadSettings(memory(JSON.stringify({ layout: 'us' }))).layout).toBe('us');
   });
 
   it('壊れた JSON・オブジェクトでない値は既定値', () => {

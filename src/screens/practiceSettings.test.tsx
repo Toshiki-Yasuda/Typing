@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { StoreProvider } from '@/app/StoreContext';
 import { ENGLISH_PACK } from '@/content';
-import { SETTINGS_KEY } from '@/settings/settings';
+import { DEFAULT_SETTINGS, SETTINGS_KEY } from '@/settings/settings';
 import { createMemoryPackStore, createMemoryStore, type PackStore, type SessionStore } from '@/storage';
 import { Home } from './Home';
 import { PlayRoute } from './PlayRoute';
@@ -71,7 +71,12 @@ describe('練習の設定（ホーム）', () => {
     fireEvent.change(await screen.findByLabelText('出題パック'), { target: { value: 'english' } });
     fireEvent.change(screen.getByLabelText('語数'), { target: { value: '20' } });
     fireEvent.click(screen.getByLabelText('弱点を優先して出題する'));
-    expect(JSON.parse(localStorage.getItem(SETTINGS_KEY) as string)).toEqual({ packId: 'english', count: 20, adaptive: false });
+    expect(JSON.parse(localStorage.getItem(SETTINGS_KEY) as string)).toEqual({
+      ...DEFAULT_SETTINGS,
+      packId: 'english',
+      count: 20,
+      adaptive: false,
+    });
 
     document.body.innerHTML = '';
     renderApp('/');

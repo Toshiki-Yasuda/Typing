@@ -12,6 +12,7 @@ export {
   withinDays,
 } from './history';
 export type { Aggregate, Confusion, SessionSummary } from './history';
+export * from './rank';
 export { keyWeakness } from './weakness';
 export type { WeaknessOptions } from './weakness';
 export type { BigramStat, KeyStat } from './stats';

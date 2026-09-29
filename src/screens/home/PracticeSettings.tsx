@@ -1,4 +1,5 @@
 import { BUILTIN_PACKS, type ContentPack } from '@/content';
+import { GOAL_AUTO, RANKS } from '@/metrics/rank';
 import { COUNT_OPTIONS, type Settings } from '@/settings/settings';
 
 interface Props {
@@ -62,6 +63,45 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
             className="h-4 w-4 accent-[var(--viz-series-1)]"
           />
           <span>弱点を優先して出題する</span>
+        </label>
+      </div>
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.fingerGuide}
+            onChange={(e) => update({ fingerGuide: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>運指ガイドを表示する</span>
+        </label>
+        <label className="flex items-center gap-2">
+          <span className="text-text-muted">配列</span>
+          <select
+            aria-label="運指ガイドの配列"
+            value={settings.layout}
+            onChange={(e) => update({ layout: e.target.value as Settings['layout'] })}
+            className="rounded bg-surface-raised px-3 py-2"
+          >
+            <option value="jis">JIS配列</option>
+            <option value="us">US配列</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-2">
+          <span className="text-text-muted">目標の級位</span>
+          <select
+            aria-label="目標の級位"
+            value={settings.goalRank}
+            onChange={(e) => update({ goalRank: e.target.value })}
+            className="rounded bg-surface-raised px-3 py-2"
+          >
+            <option value={GOAL_AUTO}>自動（次の級位）</option>
+            {RANKS.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.label}（{r.minKpm}打鍵/分〜）
+              </option>
+            ))}
+          </select>
         </label>
       </div>
       <p className="text-sm text-text-muted">

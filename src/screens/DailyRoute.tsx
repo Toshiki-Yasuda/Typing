@@ -3,11 +3,13 @@ import { normalizeTarget } from '@/engine';
 import { useStore } from '@/app/StoreContext';
 import { todaysChallenge, type DailyChallenge } from '@/session/daily';
 import { createGhost, findBestRecord, type Ghost } from '@/session/ghost';
+import { useSettings } from '@/settings/useSettings';
 import { Play } from './Play';
 
 /** 今日のチャレンジ。お題は日付で固定。同じお題の過去の最高記録があれば、ゴーストとして並走する */
 export function DailyRoute() {
   const store = useStore();
+  const [settings] = useSettings();
   const [data, setData] = useState<{ challenge: DailyChallenge; ghost: { ghost: Ghost; label: string } | null } | null>(null);
 
   useEffect(() => {
@@ -24,5 +26,13 @@ export function DailyRoute() {
   }, [store]);
 
   if (!data) return <p className="p-8 text-text-muted">準備中…</p>;
-  return <Play pack={data.challenge.pack} items={data.challenge.items} mode="daily" ghost={data.ghost} />;
+  return (
+    <Play
+      pack={data.challenge.pack}
+      items={data.challenge.items}
+      mode="daily"
+      ghost={data.ghost}
+      fingerGuide={settings.fingerGuide ? { layout: settings.layout } : null}
+    />
+  );
 }
