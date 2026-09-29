@@ -5,6 +5,7 @@ export interface SessionStore {
   add(session: SessionRecord): Promise<void>;
   /** 既存の id を除いて追加し、追加した件数を返す（インポート用） */
   addMany(sessions: readonly SessionRecord[]): Promise<number>;
+  get(id: string): Promise<SessionRecord | undefined>;
   /** 開始時刻の昇順 */
   list(): Promise<SessionRecord[]>;
   clear(): Promise<void>;
@@ -24,6 +25,9 @@ export function createMemoryStore(): SessionStore {
         added++;
       }
       return added;
+    },
+    async get(id) {
+      return map.get(id);
     },
     async list() {
       return [...map.values()].sort((a, b) => a.startedAt - b.startedAt);

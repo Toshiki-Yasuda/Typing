@@ -55,6 +55,10 @@ export async function openSessionStore(
       await finished(tx);
       return added;
     },
+    async get(id) {
+      const tx = db.transaction(STORE, 'readonly');
+      return request(tx.objectStore(STORE).get(id) as IDBRequest<SessionRecord | undefined>);
+    },
     async list() {
       const tx = db.transaction(STORE, 'readonly');
       const all = await request(tx.objectStore(STORE).index('startedAt').getAll() as IDBRequest<SessionRecord[]>);

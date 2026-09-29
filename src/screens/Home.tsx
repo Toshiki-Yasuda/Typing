@@ -1,0 +1,116 @@
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { minKeystrokes } from '@/engine';
+import { computeMetrics, type SessionRecord } from '@/metrics';
+import { ImportError, exportSessions, parseExport } from '@/storage';
+import { useStore } from '@/app/StoreContext';
+
+function download(name: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+export function Home() {
+  const store = useStore();
+  const navigate = useNavigate();
+  const [history, setHistory] = useState<SessionRecord[]>([]);
+  const [message, setMessage] = useState('');
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  const reload = () => store.list().then((all) => setHistory(all.slice(-10).reverse()));
+  useEffect(() => {
+    void reload();
+    // 一覧の再読み込みは store が変わったときだけ
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.isComposing) navigate('/play');
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [navigate]);
+
+  const onExport = async () => {
+    download(`typing-${new Date().toISOString().slice(0, 10)}.json`, exportSessions(await store.list()));
+  };
+
+  const onImport = async (file: File) => {
+    try {
+      const added = await store.addMany(parseExport(await file.text()));
+      setMessage(`${added} 件を取り込みました`);
+      await reload();
+    } catch (error) {
+      setMessage(error instanceof ImportError ? `取り込めません: ${error.message}` : '取り込みに失敗しました');
+    }
+  };
+
+  return (
+    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
+      <h1 className="text-3xl font-bold">Typing</h1>
+      <Link
+        to="/play"
+        className="self-start rounded bg-accent px-8 py-4 text-xl font-bold text-surface focus-visible:outline-2"
+      >
+        練習を始める（Enter）
+      </Link>
+
+      <section aria-labelledby="history">
+        <h2 id="history" className="mb-2 text-lg font-bold">最近の記録</h2>
+        {history.length === 0 ? (
+          <p className="text-text-muted">まだ記録がありません。</p>
+        ) : (
+          <ul className="flex flex-col gap-1">
+            {history.map((r) => {
+              const m = computeMetrics(r.keystrokes, {
+                minKeystrokes: r.targets.reduce((sum, t) => sum + minKeystrokes(t), 0),
+              });
+              return (
+                <li key={r.id}>
+                  <Link to={`/result/${r.id}`} className="flex gap-4 rounded p-2 hover:bg-surface-raised">
+                    <span className="text-text-muted">{new Date(r.startedAt).toLocaleString('ja-JP')}</span>
+                    <span>{m.kpm.toFixed(0)} 打鍵/分</span>
+                    <span>{(m.accuracy * 100).toFixed(1)}%</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+
+      <section aria-labelledby="data" className="flex flex-col gap-2">
+        <h2 id="data" className="text-lg font-bold">データ</h2>
+        <p className="text-sm text-text-muted">
+          記録はこのブラウザにだけ保存されます。ブラウザのデータを消すと失われるので、定期的に書き出してください。
+        </p>
+        <div className="flex gap-4">
+          <button type="button" onClick={onExport} className="rounded bg-surface-raised px-4 py-2">
+            書き出す
+          </button>
+          <button type="button" onClick={() => fileInput.current?.click()} className="rounded bg-surface-raised px-4 py-2">
+            取り込む
+          </button>
+          <input
+            ref={fileInput}
+            type="file"
+            accept="application/json"
+            className="hidden"
+            aria-label="取り込むファイル"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) void onImport(file);
+              e.target.value = '';
+            }}
+          />
+        </div>
+        {message && <p role="status">{message}</p>}
+      </section>
+    </main>
+  );
+}

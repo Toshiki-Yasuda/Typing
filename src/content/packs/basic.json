@@ -1,0 +1,402 @@
+{
+  "id": "basic",
+  "name": "基本の単語",
+  "items": [
+    {
+      "display": "桜",
+      "reading": "さくら"
+    },
+    {
+      "display": "山",
+      "reading": "やま"
+    },
+    {
+      "display": "川",
+      "reading": "かわ"
+    },
+    {
+      "display": "海",
+      "reading": "うみ"
+    },
+    {
+      "display": "空",
+      "reading": "そら"
+    },
+    {
+      "display": "星",
+      "reading": "ほし"
+    },
+    {
+      "display": "月",
+      "reading": "つき"
+    },
+    {
+      "display": "太陽",
+      "reading": "たいよう"
+    },
+    {
+      "display": "風",
+      "reading": "かぜ"
+    },
+    {
+      "display": "雨",
+      "reading": "あめ"
+    },
+    {
+      "display": "雪",
+      "reading": "ゆき"
+    },
+    {
+      "display": "雲",
+      "reading": "くも"
+    },
+    {
+      "display": "花",
+      "reading": "はな"
+    },
+    {
+      "display": "森",
+      "reading": "もり"
+    },
+    {
+      "display": "石",
+      "reading": "いし"
+    },
+    {
+      "display": "水",
+      "reading": "みず"
+    },
+    {
+      "display": "光",
+      "reading": "ひかり"
+    },
+    {
+      "display": "雷",
+      "reading": "かみなり"
+    },
+    {
+      "display": "虹",
+      "reading": "にじ"
+    },
+    {
+      "display": "犬",
+      "reading": "いぬ"
+    },
+    {
+      "display": "猫",
+      "reading": "ねこ"
+    },
+    {
+      "display": "魚",
+      "reading": "さかな"
+    },
+    {
+      "display": "馬",
+      "reading": "うま"
+    },
+    {
+      "display": "熊",
+      "reading": "くま"
+    },
+    {
+      "display": "兎",
+      "reading": "うさぎ"
+    },
+    {
+      "display": "亀",
+      "reading": "かめ"
+    },
+    {
+      "display": "蝶々",
+      "reading": "ちょうちょう"
+    },
+    {
+      "display": "ご飯",
+      "reading": "ごはん"
+    },
+    {
+      "display": "味噌汁",
+      "reading": "みそしる"
+    },
+    {
+      "display": "卵",
+      "reading": "たまご"
+    },
+    {
+      "display": "砂糖",
+      "reading": "さとう"
+    },
+    {
+      "display": "塩",
+      "reading": "しお"
+    },
+    {
+      "display": "お茶",
+      "reading": "おちゃ"
+    },
+    {
+      "display": "牛乳",
+      "reading": "ぎゅうにゅう"
+    },
+    {
+      "display": "果物",
+      "reading": "くだもの"
+    },
+    {
+      "display": "野菜",
+      "reading": "やさい"
+    },
+    {
+      "display": "林檎",
+      "reading": "りんご"
+    },
+    {
+      "display": "蜜柑",
+      "reading": "みかん"
+    },
+    {
+      "display": "葡萄",
+      "reading": "ぶどう"
+    },
+    {
+      "display": "西瓜",
+      "reading": "すいか"
+    },
+    {
+      "display": "電車",
+      "reading": "でんしゃ"
+    },
+    {
+      "display": "自転車",
+      "reading": "じてんしゃ"
+    },
+    {
+      "display": "飛行機",
+      "reading": "ひこうき"
+    },
+    {
+      "display": "駅",
+      "reading": "えき"
+    },
+    {
+      "display": "道",
+      "reading": "みち"
+    },
+    {
+      "display": "橋",
+      "reading": "はし"
+    },
+    {
+      "display": "街",
+      "reading": "まち"
+    },
+    {
+      "display": "学校",
+      "reading": "がっこう"
+    },
+    {
+      "display": "病院",
+      "reading": "びょういん"
+    },
+    {
+      "display": "図書館",
+      "reading": "としょかん"
+    },
+    {
+      "display": "公園",
+      "reading": "こうえん"
+    },
+    {
+      "display": "新聞",
+      "reading": "しんぶん"
+    },
+    {
+      "display": "手紙",
+      "reading": "てがみ"
+    },
+    {
+      "display": "鉛筆",
+      "reading": "えんぴつ"
+    },
+    {
+      "display": "机",
+      "reading": "つくえ"
+    },
+    {
+      "display": "椅子",
+      "reading": "いす"
+    },
+    {
+      "display": "窓",
+      "reading": "まど"
+    },
+    {
+      "display": "鏡",
+      "reading": "かがみ"
+    },
+    {
+      "display": "時計",
+      "reading": "とけい"
+    },
+    {
+      "display": "鞄",
+      "reading": "かばん"
+    },
+    {
+      "display": "靴",
+      "reading": "くつ"
+    },
+    {
+      "display": "帽子",
+      "reading": "ぼうし"
+    },
+    {
+      "display": "切符",
+      "reading": "きっぷ"
+    },
+    {
+      "display": "冷蔵庫",
+      "reading": "れいぞうこ"
+    },
+    {
+      "display": "電話",
+      "reading": "でんわ"
+    },
+    {
+      "display": "誕生日",
+      "reading": "たんじょうび"
+    },
+    {
+      "display": "音楽",
+      "reading": "おんがく"
+    },
+    {
+      "display": "写真",
+      "reading": "しゃしん"
+    },
+    {
+      "display": "運動",
+      "reading": "うんどう"
+    },
+    {
+      "display": "勉強",
+      "reading": "べんきょう"
+    },
+    {
+      "display": "仕事",
+      "reading": "しごと"
+    },
+    {
+      "display": "休み",
+      "reading": "やすみ"
+    },
+    {
+      "display": "旅行",
+      "reading": "りょこう"
+    },
+    {
+      "display": "温泉",
+      "reading": "おんせん"
+    },
+    {
+      "display": "一緒",
+      "reading": "いっしょ"
+    },
+    {
+      "display": "発表",
+      "reading": "はっぴょう"
+    },
+    {
+      "display": "雑誌",
+      "reading": "ざっし"
+    },
+    {
+      "display": "ラーメン",
+      "reading": "らーめん"
+    },
+    {
+      "display": "コーヒー",
+      "reading": "こーひー"
+    },
+    {
+      "display": "ジュース",
+      "reading": "じゅーす"
+    },
+    {
+      "display": "ギター",
+      "reading": "ぎたー"
+    },
+    {
+      "display": "ピアノ",
+      "reading": "ぴあの"
+    },
+    {
+      "display": "カレーライス",
+      "reading": "かれーらいす"
+    },
+    {
+      "display": "ホットケーキ",
+      "reading": "ほっとけーき"
+    },
+    {
+      "display": "ファイル",
+      "reading": "ふぁいる"
+    },
+    {
+      "display": "パーティー",
+      "reading": "ぱーてぃー"
+    },
+    {
+      "display": "ヴァイオリン",
+      "reading": "ゔぁいおりん"
+    },
+    {
+      "display": "キャンプ",
+      "reading": "きゃんぷ"
+    },
+    {
+      "display": "シャツ",
+      "reading": "しゃつ"
+    },
+    {
+      "display": "チョコレート",
+      "reading": "ちょこれーと"
+    },
+    {
+      "display": "東京",
+      "reading": "とうきょう"
+    },
+    {
+      "display": "大阪",
+      "reading": "おおさか"
+    },
+    {
+      "display": "富士山",
+      "reading": "ふじさん"
+    },
+    {
+      "display": "朝日",
+      "reading": "あさひ"
+    },
+    {
+      "display": "夕焼け",
+      "reading": "ゆうやけ"
+    },
+    {
+      "display": "放課後",
+      "reading": "ほうかご"
+    },
+    {
+      "display": "天気",
+      "reading": "てんき"
+    },
+    {
+      "display": "季節",
+      "reading": "きせつ"
+    },
+    {
+      "display": "毎日",
+      "reading": "まいにち"
+    }
+  ]
+}

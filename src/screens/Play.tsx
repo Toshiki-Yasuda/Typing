@@ -1,0 +1,92 @@
+import { useEffect, useReducer, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { BASIC_PACK, type ContentPack } from '@/content';
+import { isGameKey } from '@/input/keyFilter';
+import { PracticeSession, pickItems } from '@/session/practiceSession';
+import { useStore } from '@/app/StoreContext';
+import { TargetView } from './TargetView';
+
+interface Props {
+  pack?: ContentPack;
+  count?: number;
+  random?: () => number;
+}
+
+export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
+  const navigate = useNavigate();
+  const store = useStore();
+  const [session] = useState(
+    () =>
+      new PracticeSession(pickItems(pack.items, count, random), performance.now(), {
+        id: crypto.randomUUID(),
+        startedAt: Date.now(),
+        mode: 'practice',
+        contentId: pack.id,
+      }),
+  );
+  const [, rerender] = useReducer((n: number) => n + 1, 0);
+  const [missing, setMissing] = useState(false);
+  const [imeWarning, setImeWarning] = useState(false);
+  const missTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        navigate('/');
+        return;
+      }
+      // IME が変換中のときは keydown が実キーを持たない。警告を出して、打鍵としては扱わない
+      if (e.isComposing || e.keyCode === 229) setImeWarning(true);
+      if (!isGameKey(e)) return;
+      e.preventDefault(); // Space のスクロールや ' / のクイック検索を止める
+      setImeWarning(false);
+
+      const result = session.press({ key: e.key, code: e.code }, e.timeStamp);
+      if (result === 'miss') {
+        setMissing(true);
+        clearTimeout(missTimer.current);
+        missTimer.current = setTimeout(() => setMissing(false), 160);
+      }
+      if (result === 'sessionDone') {
+        const record = session.toRecord();
+        store.add(record).then(
+          () => navigate(`/result/${record.id}`),
+          (error) => console.error('記録の保存に失敗しました', error),
+        );
+      }
+      rerender();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      clearTimeout(missTimer.current);
+    };
+  }, [navigate, session, store]);
+
+  const view = session.view();
+  return (
+    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
+      <header className="flex items-center justify-between text-text-muted">
+        <span aria-label="進捗">
+          {view.index + 1} / {view.total}
+        </span>
+        <span className="text-sm">Esc で中断</span>
+      </header>
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={view.total}
+        aria-valuenow={view.index}
+        className="h-1 rounded bg-surface-raised"
+      >
+        <div className="h-1 rounded bg-accent" style={{ width: `${(view.index / view.total) * 100}%` }} />
+      </div>
+      {imeWarning && (
+        <p role="status" className="rounded bg-danger/20 p-3 text-sm">
+          日本語入力がオンのようです。半角/英数モードに切り替えてください。
+        </p>
+      )}
+      <TargetView view={view} missing={missing} />
+    </main>
+  );
+}

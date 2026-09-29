@@ -110,6 +110,13 @@ const contract = (name: string, create: () => Promise<SessionStore>) => {
       expect(await store.list()).toEqual([s]);
     });
 
+    it('get: id で1件取り出せる。無ければ undefined', async () => {
+      const store = await create();
+      await store.add(session('a', 1));
+      expect((await store.get('a'))?.id).toBe('a');
+      expect(await store.get('nothing')).toBeUndefined();
+    });
+
     it('同じ id の add は上書き', async () => {
       const store = await create();
       await store.add(session('a', 1, { mode: 'old' }));
