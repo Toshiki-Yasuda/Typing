@@ -39,7 +39,7 @@ export const EXCLUDED_ROWS: readonly Exclusion[] = [
  */
 export const PREFERRED_KEYS: readonly string[] = [
   // 最短が同数のとき、先に並べる（訓令式寄り・打ちやすい方）
-  'hu', 'xa', 'xi', 'xu', 'xe', 'xo', 'xya', 'xyu', 'xyo', 'xwa',
+  'nn', 'hu', 'xa', 'xi', 'xu', 'xe', 'xo', 'xya', 'xyu', 'xyo', 'xwa',
   'ka', 'ku', 'ko', 'si', 'se', 'zi', 'zyi',
   'sya', 'syu', 'sye', 'syo',
   'tya', 'cha', 'tyu', 'chu', 'tye', 'che', 'tyo', 'cho', 'tyi',
