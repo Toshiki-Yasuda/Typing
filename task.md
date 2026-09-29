@@ -92,10 +92,8 @@
 
 - [x] **デプロイの設定**（GitHub Pages）
   Vite の `base: './'` と `.github/workflows/deploy.yml`（main への push で公開）。サブパス配下（`/Typing/`）で、通しプレイ・結果・リロード復元まで実ブラウザで確認済み。
-- [~] **GitHub Pages を有効にする**（オーナーの操作）
-  テストプレイは実施済みだが、公開 URL で遊んだのか手元で動かしたのかは未確認。
-  リポジトリの Settings → Pages → Source を「GitHub Actions」にする。その後、Actions の「Deploy」を再実行（`workflow_dispatch`）すると公開される。
-  完了条件: `https://toshiki-yasuda.github.io/Typing/` で通しプレイでき、リロードしても結果画面が復元される。
+- [x] **GitHub Pages を有効にする**（オーナーの操作）
+  Deploy ワークフローが `main` で成功（初回は Pages 未設定で失敗 → 有効化後の再実行で成功）。公開先: https://toshiki-yasuda.github.io/Typing/
 - [ ] **アクセシビリティの監査**（axe、キーボードのみでの全操作、フォーカス表示、コントラスト）
 - [ ] **性能の予算**（バンドルサイズ、入力から描画までの遅延の計測）
 - [ ] **打鍵時刻の精度を実測する**（`event.timeStamp` の丸め）
