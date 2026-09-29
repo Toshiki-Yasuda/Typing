@@ -2,6 +2,8 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { BASIC_PACK, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
+import { keyWeakness } from '@/metrics';
+import { pickAdaptive } from '@/session/adaptive';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
 import { useStore } from '@/app/StoreContext';
 import { TargetView } from './TargetView';
@@ -15,21 +17,36 @@ interface Props {
 export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
   const navigate = useNavigate();
   const store = useStore();
-  const [session] = useState(
-    () =>
-      new PracticeSession(pickItems(pack.items, count, random), performance.now(), {
-        id: crypto.randomUUID(),
-        startedAt: Date.now(),
-        mode: 'practice',
-        contentId: pack.id,
-      }),
-  );
+  const [session, setSession] = useState<PracticeSession | null>(null);
+
+  // 過去の記録から弱点を求め、弱いキーを含むお題が出やすいように選ぶ（記録が無ければ均等）
+  useEffect(() => {
+    let cancelled = false;
+    store.list().then((records) => {
+      if (cancelled) return;
+      const weakness = keyWeakness(records.flatMap((r) => r.keystrokes));
+      const items =
+        weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random);
+      setSession(
+        new PracticeSession(items, performance.now(), {
+          id: crypto.randomUUID(),
+          startedAt: Date.now(),
+          mode: weakness.size > 0 ? 'adaptive' : 'practice',
+          contentId: pack.id,
+        }),
+      );
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [store, pack, count, random]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
   const missTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
+    if (!session) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         navigate('/');
@@ -63,6 +80,7 @@ export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
     };
   }, [navigate, session, store]);
 
+  if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
