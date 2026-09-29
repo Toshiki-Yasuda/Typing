@@ -3,7 +3,9 @@
 個人学習用のタイピングゲーム（PC専用）。Ver.1（[Mobile-](https://github.com/Toshiki-Yasuda/Mobile-)）を原型に、コアを作り直したもの。
 
 - コアはテーマ非依存。モチーフ・世界観は「テーマパック」として別に用意する
-- 詳細な方針とロードマップは [docs/PLAN.md](docs/PLAN.md)
+- 詳細な方針とロードマップは [docs/PLAN.md](docs/PLAN.md)、今後のタスクは [task.md](task.md)
+- 仕様: [docs/spec/](docs/spec/)（入力ルール・計測）。実機確認: [docs/manual-check.md](docs/manual-check.md)
+- 開発者・AI 向けの作業ルール: [CLAUDE.md](CLAUDE.md)
 
 ## 開発
 

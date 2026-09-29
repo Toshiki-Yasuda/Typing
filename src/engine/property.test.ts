@@ -17,6 +17,10 @@ import { EXCLUDED_ROWS, MOZC_ROWS } from './table';
  * - 最適性: 最短打鍵数が、総当りの最短と一致する
  */
 
+/** 通常は数千回。FC_RUNS で増やして、まれな反例を探せる（例: FC_RUNS=200000 npx vitest run src/engine/property.test.ts） */
+const RUNS = Number(process.env.FC_RUNS ?? 3000);
+const TIMEOUT = 600_000; // 試行数を増やしたときのため。通常の回数なら 1 秒未満
+
 const excluded = new Set(EXCLUDED_ROWS.map((e) => e.input));
 const allowedInputs = MOZC_ROWS.filter((r) => !excluded.has(r.input)).map((r) => r.input);
 
@@ -51,12 +55,12 @@ describe('健全性: エンジンが受理する打鍵列は IME でも同じか
           typed += key;
         }
         expect(state.done, `${text} を ${typed} で打ち切れない`).toBe(true);
-        const ime = simulateIme(MOZC_ROWS, typed);
-        expect({ text, typed, ...ime }).toEqual({ text, typed, output: text, pending: '' });
+        const { output, pending } = simulateIme(MOZC_ROWS, typed);
+        expect({ text, typed, output, pending }).toEqual({ text, typed, output: text, pending: '' });
       }),
-      { numRuns: 1500 },
+      { numRuns: RUNS / 2 },
     );
-  });
+  }, TIMEOUT);
 });
 
 describe('完全性: IME が変換できる打鍵列はエンジンも受理する', () => {
@@ -64,16 +68,28 @@ describe('完全性: IME が変換できる打鍵列はエンジンも受理す�
     fc.assert(
       fc.property(fc.array(fc.constantFrom(...allowedInputs), { minLength: 1, maxLength: 5 }), (inputs) => {
         const keys = inputs.join('');
-        const { output, pending } = simulateIme(MOZC_ROWS, keys);
+        const { output, pending, used } = simulateIme(MOZC_ROWS, keys);
         // 未確定が残る（語末の n や っ の重ね打ち）／仕様で出題しない文字になる場合は対象外
         fc.pre(pending === '');
+        // IME が、仕様で意図的に除外した行（例: z- → 〜）を使って解釈した打鍵列は、エンジンが受理しないのが正しい
+        fc.pre(used.every((input) => !excluded.has(input)));
         // Mozc 表の出力は かな・記号のみ。ASCII が混ざるのは、表に一致せず素通りした残骸（有効な入力ではない）
         fc.pre(!/[\x20-\x7e]/.test(output));
         fc.pre(validateTarget(output).ok);
         expect(typeAll(output, keys), `${keys} → ${output}`).toBe(true);
       }),
-      { numRuns: 3000 },
+      { numRuns: RUNS },
     );
+  }, TIMEOUT);
+});
+
+describe('仕様で除外した行の扱い（過去の反例を固定）', () => {
+  it('zz- は IME では「っ〜」（z- → 〜）だが、z- は除外した行なので、エンジンは受理しない', () => {
+    const { output, used } = simulateIme(MOZC_ROWS, 'zz-');
+    expect(output).toBe('っ〜');
+    expect(used).toContain('z-');
+    expect(typeAll('っ〜', 'zz-')).toBe(false);
+    expect(typeAll('っ〜', 'xtu~')).toBe(true); // 「〜」は ~ で打つ
   });
 });
 

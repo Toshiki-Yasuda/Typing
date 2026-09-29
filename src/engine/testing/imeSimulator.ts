@@ -13,6 +13,8 @@ export interface ImeResult {
   readonly output: string;
   /** 未確定のバッファ（語末の n など） */
   readonly pending: string;
+  /** 変換に使った表の行（入力）。仕様で除外した行を使った結果かどうかの判定に使う */
+  readonly used: readonly string[];
 }
 
 interface Index {
@@ -42,7 +44,9 @@ export function simulateIme(rows: readonly MozcRow[], keys: string): ImeResult {
 
   let output = '';
   let buf = '';
+  const used: string[] = [];
   const apply = (row: MozcRow, consumed: number) => {
+    used.push(row.input);
     output += row.output;
     buf = (row.next ?? '') + buf.slice(consumed);
   };
@@ -65,5 +69,5 @@ export function simulateIme(rows: readonly MozcRow[], keys: string): ImeResult {
       }
     }
   }
-  return { output, pending: buf };
+  return { output, pending: buf, used };
 }
