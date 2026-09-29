@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+/* デザイントークンはここに一元化する（色・フォント・アニメーション） */
+@theme {
+  --color-surface: #14151a;
+  --color-surface-raised: #1d1f27;
+  --color-text: #e8e9ee;
+  --color-text-muted: #9a9db0;
+  --color-accent: #5b9dff;
+  --color-success: #4ade80;
+  --color-danger: #f87171;
+}
+
+html,
+body,
+#root {
+  min-height: 100dvh;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

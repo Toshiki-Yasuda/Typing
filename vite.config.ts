@@ -1,0 +1,21 @@
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test-setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    coverage: {
+      include: ['src/engine/**'],
+      thresholds: { statements: 95, branches: 90, functions: 95, lines: 95 },
+    },
+  },
+});
