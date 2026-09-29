@@ -1,5 +1,6 @@
 import basicJson from './packs/basic.json';
 import englishJson from './packs/english.json';
+import phrasesJson from './packs/phrases.json';
 import symbolsJson from './packs/symbols.json';
 import { loadPack } from './schema';
 
@@ -9,6 +10,7 @@ export type { ContentItem, ContentPack } from './schema';
 export const BASIC_PACK = loadPack(basicJson);
 export const ENGLISH_PACK = loadPack(englishJson);
 export const SYMBOLS_PACK = loadPack(symbolsJson);
+export const PHRASES_PACK = loadPack(phrasesJson);
 
 /** 組み込みのパック。読み込み時に全語が打てることを検証している */
-export const BUILTIN_PACKS = [BASIC_PACK, ENGLISH_PACK, SYMBOLS_PACK] as const;
+export const BUILTIN_PACKS = [BASIC_PACK, ENGLISH_PACK, SYMBOLS_PACK, PHRASES_PACK] as const;

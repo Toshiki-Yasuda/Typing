@@ -85,10 +85,10 @@ describe('練習の設定（ホーム）', () => {
     expect(screen.getByLabelText('弱点を優先して出題する')).not.toBeChecked();
   });
 
-  it('組み込みの3パックを選べる', async () => {
+  it('組み込みの4パックを選べる', async () => {
     renderApp('/');
     const select = await screen.findByLabelText('出題パック');
-    expect(within(select).getAllByRole('option').map((o) => o.getAttribute('value'))).toEqual(['basic', 'english', 'symbols']);
+    expect(within(select).getAllByRole('option').map((o) => o.getAttribute('value'))).toEqual(['basic', 'english', 'symbols', 'phrases']);
   });
 });
 

@@ -46,7 +46,7 @@ describe('parsePackJson（自作パックの取り込み）', () => {
   });
 
   it('組み込みパックと同じ id は拒否する（組み込みを上書きさせない）', () => {
-    for (const id of ['basic', 'english', 'symbols']) {
+    for (const id of ['basic', 'english', 'symbols', 'phrases']) {
       const r = parsePackJson(json({ ...valid, id }));
       expect(r.ok, id).toBe(false);
       if (!r.ok) expect(r.problems[0]).toMatch(/組み込み/);

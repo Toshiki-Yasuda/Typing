@@ -1,4 +1,4 @@
-import { BASIC_PACK, BUILTIN_PACKS, ContentPackSchema, ENGLISH_PACK, SYMBOLS_PACK, loadPack, validatePackContent } from './index';
+import { BASIC_PACK, BUILTIN_PACKS, ContentPackSchema, ENGLISH_PACK, PHRASES_PACK, SYMBOLS_PACK, loadPack, validatePackContent } from './index';
 import { minKeystrokes } from '@/engine';
 
 describe('出題データの検証', () => {
@@ -20,8 +20,8 @@ describe('出題データの検証', () => {
     for (const part of ['っ', 'ん', 'ー', 'ゃ', 'ゅ', 'ょ', 'ぃ', 'ゔ', 'ふぁ']) expect(readings).toContain(part);
   });
 
-  it('組み込みパックは3つで、id が重複せず、すべて検証を通る', () => {
-    expect(BUILTIN_PACKS.map((p) => p.id)).toEqual(['basic', 'english', 'symbols']);
+  it('組み込みパックは4つで、id が重複せず、すべて検証を通る', () => {
+    expect(BUILTIN_PACKS.map((p) => p.id)).toEqual(['basic', 'english', 'symbols', 'phrases']);
     for (const pack of BUILTIN_PACKS) {
       expect(validatePackContent(pack), pack.id).toEqual([]);
       for (const item of pack.items) expect(minKeystrokes(item.reading), `${pack.id}: ${item.reading}`).toBeGreaterThan(0);
@@ -32,6 +32,29 @@ describe('出題データの検証', () => {
     for (const pack of [ENGLISH_PACK, SYMBOLS_PACK]) {
       expect(pack.items.length).toBeGreaterThanOrEqual(20);
       for (const item of pack.items) expect(minKeystrokes(item.reading), item.reading).toBe(item.reading.length);
+    }
+  });
+
+  it('短文パック: 文の長さが適切で、句読点・促音・撥音・長音・拗音を含む', () => {
+    expect(PHRASES_PACK.items.length).toBeGreaterThanOrEqual(60);
+    for (const item of PHRASES_PACK.items) {
+      const n = [...item.reading].length;
+      expect(n, item.display).toBeGreaterThanOrEqual(6);
+      expect(n, item.display).toBeLessThanOrEqual(35);
+    }
+    const readings = PHRASES_PACK.items.map((i) => i.reading);
+    expect(readings.filter((r) => r.includes('、')).length).toBeGreaterThanOrEqual(10);
+    expect(readings.filter((r) => r.endsWith('。')).length).toBeGreaterThanOrEqual(20);
+    const all = readings.join('');
+    for (const part of ['っ', 'ん', 'ー', 'ゃ', 'ゅ', 'ょ']) expect(all, part).toContain(part);
+  });
+
+  it('短文パック: 打鍵数は文字数より多く、極端でない（かな1文字あたり 1〜4 打鍵）', () => {
+    for (const item of PHRASES_PACK.items) {
+      const chars = [...item.reading].length;
+      const keys = minKeystrokes(item.reading);
+      expect(keys, item.display).toBeGreaterThan(chars);
+      expect(keys, item.display).toBeLessThanOrEqual(chars * 4);
     }
   });
 

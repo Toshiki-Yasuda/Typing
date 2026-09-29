@@ -24,7 +24,7 @@ src/engine    ローマ字入力の判定。React/DOM に依存しない。他�
 src/metrics   打鍵ログ → 指標・統計・弱点。純関数。engine に依存
 src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)。engine / metrics に依存
 src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB(sessions / packs) / メモリ
-src/content   出題パック(JSON: basic / english / symbols) と zod 検証、自作パックの取り込み(import.ts)
+src/content   出題パック(JSON: basic / english / symbols / phrases) と zod 検証、自作パックの取り込み(import.ts)
 src/settings  練習の設定（パック・語数・弱点優先・運指ガイド・配列・目標の級位）。localStorage
 src/fingering キー配列(US/JIS)と運指（どの指でどのキーか）。ガイド表示専用
 src/input     KeyboardEvent の除外判定（repeat / IME 中 / 修飾キー併用）
@@ -49,6 +49,14 @@ e2e/          Playwright
 - 保存形式（`src/storage/schema.ts`）を変えるときは `CURRENT_SCHEMA_VERSION` を上げ、`migrate.ts` に移行を足し、テストを書く。
 - IndexedDB の構造（ストアの追加など）を変えるときは `indexedDbStore.ts` の `DB_VERSION` を上げ、`onupgradeneeded` で **oldVersion ごとに足りない部分だけ**作る（既存データを消さない）。旧版のDBから開くテストを書く（`storage.test.ts` の v1 → v2）。
 - 出題データは JSON + zod。読み込み時に**全語が打てること・重複が無いこと**を検証する（`src/content/schema.ts`）。
+
+### 出題パック
+- 組み込みパックは読み込み時に検証される（全語が打てる・重複なし）。**読みが正しいか（誤字）は機械では検証できない**。追加したら、読みを声に出して確認する。
+- デイリーの対象は `DAILY_PACKS` だけ。パックを足しても過去の日のお題が変わらないよう、`BUILTIN_PACKS` とは別に管理している。
+
+### 統計のグラフ
+- 少ないデータの区分は、色だけでなく形（枠だけ）でも区別し、参考値と明記する（`MIN_SAMPLE`）。「最良」は、比べられる区分が2つ以上あるときだけ出す。
+- 棒はゼロ基準。ゼロ基準で差が見えない指標（正確率など）は、逆の指標（ミス率）にする。
 
 ### 級位・運指ガイド
 - 級位の段階は `src/metrics/rank.ts` に集約し、`docs/spec/ranks.md` の表と一致させる（テストが検査する）。値を変えるときは両方を直す。仮置きの値なので、根拠のない数値を「確定」と書かない。

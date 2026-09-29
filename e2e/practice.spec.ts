@@ -154,7 +154,7 @@ test('自作パック: 取り込み → 選択 → 練習。不正なパック�
   await expect(page.getByText(/取り込めません（2件の問題）/)).toBeVisible();
   await expect(page.getByRole('status')).toContainText('打てない文字');
   await expect(page.getByRole('status')).toContainText('重複');
-  await expect(page.getByLabel('出題パック').locator('option')).toHaveCount(3);
+  await expect(page.getByLabel('出題パック').locator('option')).toHaveCount(4); // 組み込みの 4 つだけ（不正なパックは増えない）
 
   await input.setInputFiles(
     file({ id: 'mine', name: '自作', items: [{ display: '猫', reading: 'ねこ' }, { display: '犬', reading: 'いぬ' }, { display: '鳥', reading: 'とり' }] }),
@@ -277,4 +277,47 @@ test('級位: 最初の練習で暫定の級位が付き、結果・ホーム・
 
   await page.goto('/#/stats');
   await expect((await page.getByText('級位', { exact: true }).locator('xpath=following-sibling::dd').textContent()) ?? '').toMatch(/級|段/);
+});
+
+test('短文モード: 短文パックの文を最後まで打てる（句読点・長文）', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('出題パック').selectOption('phrases');
+  await page.getByLabel('語数').selectOption('5');
+  await page.getByLabel('弱点を優先して出題する').uncheck();
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByLabel('進捗')).toHaveText('1 / 5');
+  await playThrough(page, 5);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  await expect(page.getByText('ミスはありませんでした。')).toBeVisible();
+});
+
+test('統計: 時間帯・曜日の成績が出る。ホバーで値が読め、ミス率に切り替えられる', async ({ page }) => {
+  for (let i = 0; i < 2; i++) {
+    await startPlay(page);
+    await playThrough(page);
+    await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  }
+  await page.goto('/#/stats');
+  await expect(page.getByRole('heading', { name: '時間帯と曜日' })).toBeVisible();
+  await expect(page.getByText('時間帯別の速度')).toBeVisible();
+  await expect(page.getByText('曜日別の速度')).toBeVisible();
+  // 2回だけなので、傾向は出せない旨と、参考値の注記が出る
+  await expect(page.getByText(/傾向は出せません/)).toBeVisible();
+  await expect(page.getByText(/枠だけの棒は、練習が 3 回未満の参考値です/).first()).toBeVisible();
+
+  const chart = page.locator('figure', { hasText: '時間帯別の速度' }).locator('svg');
+  const hour = new Date().getHours();
+  await chart.scrollIntoViewIfNeeded(); // 画面外のままだと、マウスの座標がグラフに届かない
+  const box = (await chart.boundingBox())!;
+  // 今の時間帯（練習した時間帯）の区分にポインタを重ねる。SVG は viewBox 640 幅、左余白 48・右 16
+  const slot = (box.width * (640 - 64)) / 640 / 24;
+  await page.mouse.move(box.x + (box.width * 48) / 640 + slot * (hour + 0.5), box.y + box.height / 2);
+  await expect(page.getByRole('tooltip')).toContainText('2回');
+  await expect(page.getByRole('tooltip')).toContainText('参考値');
+
+  // 「ミス率」のボタンは、キー別ヒートマップにもある。時間帯セクションの中に絞る
+  await page.locator('section', { has: page.getByRole('heading', { name: '時間帯と曜日' }) }).getByRole('button', { name: 'ミス率' }).click();
+  await expect(page.getByText('時間帯別のミス率')).toBeVisible();
+  await expect(page.getByText('曜日別のミス率')).toBeVisible();
 });

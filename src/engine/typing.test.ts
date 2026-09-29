@@ -304,6 +304,32 @@ describe('minKeystrokes / validateTarget / normalizeTarget', () => {
   });
 });
 
+describe('長文', () => {
+  const long = 'きょうはとてもいいてんきなので、こうえんでゆっくりおちゃをのみながら、ほんをよみます。しゃしんもとりたいです。'.repeat(2);
+
+  it('100 文字を超える文も、最後まで打ち切れて、十分に速い（性能）', () => {
+    expect([...long].length).toBeGreaterThan(100);
+    const start = performance.now();
+    let state = startTyping(long);
+    while (!state.done) {
+      const key = getGuide(state).rest[0] as string;
+      const r = press(state, key);
+      expect(r.outcome).not.toBe('miss');
+      state = r.state;
+    }
+    // 1打鍵ごとにガイド（最短経路）も再計算して、この時間。余裕をみた上限で、退行だけを検出する
+    expect(performance.now() - start).toBeLessThan(2000);
+  });
+
+  it('文の途中の誤打鍵・undo も正しく動く', () => {
+    let state = startTyping('ぽすとにいれました。');
+    for (const k of 'posutoni') state = press(state, k).state;
+    expect(press(state, 'x').outcome).toBe('miss');
+    state = undo(state);
+    expect(state.typed).toBe('posuton');
+  });
+});
+
 describe('状態の不変性', () => {
   it('press は元の状態を変更しない', () => {
     const s0: TypingState = startTyping('かき');

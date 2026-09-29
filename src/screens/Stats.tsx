@@ -5,6 +5,7 @@ import { useStore } from '@/app/StoreContext';
 import { BarList } from './stats/BarList';
 import { KeyboardHeatmap } from './stats/KeyboardHeatmap';
 import { LineChart } from './stats/LineChart';
+import { TimeOfDay } from './stats/TimeOfDay';
 
 type Range = { label: string; days: number | null };
 const RANGES: readonly Range[] = [
@@ -129,6 +130,7 @@ export function Stats() {
             format={(v) => `${Number.isInteger(v) ? v : v.toFixed(1)}%`}
             yMax={100}
           />
+          <TimeOfDay summaries={view.summaries} />
           <KeyboardHeatmap stats={view.agg.keys} />
           <BarList
             title="遅くなりやすい連接"

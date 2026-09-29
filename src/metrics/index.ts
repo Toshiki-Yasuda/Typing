@@ -13,6 +13,8 @@ export {
 } from './history';
 export type { Aggregate, Confusion, SessionSummary } from './history';
 export * from './rank';
+export { MIN_SAMPLE, WEEKDAY_LABELS, bestBucket, byHour, byWeekday, valueOf } from './timeOfDay';
+export type { Bucket, TimeMetric } from './timeOfDay';
 export { keyWeakness } from './weakness';
 export type { WeaknessOptions } from './weakness';
 export type { BigramStat, KeyStat } from './stats';
