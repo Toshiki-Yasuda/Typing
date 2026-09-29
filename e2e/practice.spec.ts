@@ -181,3 +181,48 @@ test('ウィンドウが非アクティブになると案内が出て、戻る�
   await expect(page.getByText(/アクティブではありません/)).toHaveCount(0);
   expect(await typedPart(page)).toBe(first);
 });
+
+test('デイリー: 初回はゴーストなし → 2回目は自己ベストと並走 → 結果に比較が出る', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText('未挑戦')).toBeVisible();
+  await page.getByRole('link', { name: '挑戦する' }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'ゴースト' })).toHaveCount(0);
+  await playThrough(page);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+
+  // 同じ日のデイリーは同じお題。前回の記録がゴーストになる
+  await page.goto('/#/daily');
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'ゴースト' })).toContainText('ゴースト: 同じお題の自己ベスト');
+  await expect(page.getByRole('region', { name: 'ゴースト' })).toContainText(/先行|遅れ|±0\.0秒/);
+  await playThrough(page);
+  await expect(page.getByRole('status')).toContainText(/自己ベスト更新！|同じお題の過去最高は/);
+
+  await page.getByRole('link', { name: 'ホーム' }).click();
+  await expect(page.getByText(/挑戦済み（2回・最高/)).toBeVisible();
+});
+
+test('デイリーのお題は、日を変えなければ何度開いても同じ', async ({ page }) => {
+  const firstWord = async () => {
+    await page.goto('/#/daily');
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    return (await page.getByRole('region', { name: 'お題' }).textContent()) ?? '';
+  };
+  const a = await firstWord();
+  await page.reload();
+  const b = await firstWord();
+  expect(b).toBe(a);
+});
+
+test('結果から「同じお題でもう一度」: 同じお題で、前回がゴーストになる', async ({ page }) => {
+  await startPlay(page);
+  await playThrough(page);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  await page.getByRole('link', { name: '同じお題でもう一度' }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'ゴースト' })).toBeVisible();
+  await playThrough(page);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  await expect(page.getByRole('status')).toContainText(/自己ベスト更新！|同じお題の過去最高は/);
+});

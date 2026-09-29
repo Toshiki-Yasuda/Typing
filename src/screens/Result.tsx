@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router';
 import { minKeystrokes } from '@/engine';
 import { computeMetrics, confusionMatrix, keyStats, type Metrics, type SessionRecord } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
+import { compareWithBest, type Comparison } from '@/session/retry';
 
 function summarize(record: SessionRecord): Metrics {
   const min = record.targets.reduce((sum, t) => sum + minKeystrokes(t), 0);
@@ -28,10 +29,16 @@ export function Result() {
   const { id = '' } = useParams();
   const store = useStore();
   const [record, setRecord] = useState<SessionRecord | null | undefined>(undefined);
+  const [comparison, setComparison] = useState<Comparison | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    store.get(id).then((r) => !cancelled && setRecord(r ?? null));
+    (async () => {
+      const [r, all] = await Promise.all([store.get(id), store.list()]);
+      if (cancelled) return;
+      setRecord(r ?? null);
+      setComparison(r ? compareWithBest(all, r) : null);
+    })();
     return () => {
       cancelled = true;
     };
@@ -94,9 +101,19 @@ export function Result() {
           </p>
         )}
       </section>
-      <nav className="flex gap-4">
-        <Link to="/play" className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
-          もう一度
+ {comparison && (
+        <p role="status" className="rounded-lg bg-surface-raised p-4">
+          {comparison.diffKpm > 0
+            ? `自己ベスト更新！ 同じお題の過去最高より ${comparison.diffKpm.toFixed(0)} 打鍵/分 速くなりました（${comparison.bestKpm.toFixed(0)} → ${comparison.currentKpm.toFixed(0)}）`
+            : `同じお題の過去最高は ${comparison.bestKpm.toFixed(0)} 打鍵/分（今回は ${Math.abs(comparison.diffKpm).toFixed(0)} 遅い）`}
+        </p>
+      )}
+      <nav className="flex flex-wrap gap-4">
+        <Link to={`/play?retry=${record.id}`} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
+          同じお題でもう一度
+        </Link>
+        <Link to="/play" className="rounded bg-surface-raised px-6 py-3">
+          新しいお題で練習
         </Link>
         <Link to="/" className="rounded bg-surface-raised px-6 py-3">ホーム</Link>
       </nav>

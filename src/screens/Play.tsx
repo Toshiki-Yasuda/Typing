@@ -1,10 +1,12 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { BASIC_PACK, type ContentPack } from '@/content';
+import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
+import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
+import { GhostBar } from './GhostBar';
 import { useStore } from '@/app/StoreContext';
 import { TargetView } from './TargetView';
 
@@ -13,10 +15,16 @@ interface Props {
   count?: number;
   /** 過去の記録から弱点を求めて、弱いキーを含むお題を優先する（記録が無ければ均等） */
   adaptive?: boolean;
+  /** お題を固定する（デイリー・同じお題の再挑戦）。指定すると、語数・弱点優先・乱数は使わない */
+  items?: readonly ContentItem[];
+  /** 記録に残すモード。省略なら弱点の有無で adaptive / practice */
+  mode?: string;
+  /** 並走させる過去の記録 */
+  ghost?: { ghost: Ghost; label: string } | null;
   random?: () => number;
 }
 
-export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, random }: Props) {
+export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, items: fixedItems, mode, ghost = null, random }: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
@@ -28,12 +36,13 @@ export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, random }:
       if (cancelled) return;
       const weakness = adaptive ? keyWeakness(records.map((r) => r.keystrokes)) : new Map<string, number>();
       const items =
-        weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random);
+        fixedItems ??
+        (weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random));
       setSession(
         new PracticeSession(items, performance.now(), {
           id: crypto.randomUUID(),
           startedAt: Date.now(),
-          mode: weakness.size > 0 ? 'adaptive' : 'practice',
+          mode: mode ?? (weakness.size > 0 ? 'adaptive' : 'practice'),
           contentId: pack.id,
         }),
       );
@@ -41,7 +50,7 @@ export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, random }:
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, random]);
+  }, [store, pack, count, adaptive, fixedItems, mode, random]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -128,6 +137,7 @@ export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, random }:
           日本語入力がオンのようです。半角/英数モードに切り替えてください。
         </p>
       )}
+      {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
       <TargetView view={view} missing={missing} />
     </main>
   );

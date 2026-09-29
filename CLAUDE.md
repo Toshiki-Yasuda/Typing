@@ -22,7 +22,7 @@ src/engine    ローマ字入力の判定。React/DOM に依存しない。他�
   table/      Mozc 表(同梱)から許容表を生成。rules.ts に除外と推奨順
   testing/    テスト専用の IME シミュレータ（オラクル）
 src/metrics   打鍵ログ → 指標・統計・弱点。純関数。engine に依存
-src/session   練習1回分の進行(PracticeSession)、出題の選び方。engine / metrics に依存
+src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)。engine / metrics に依存
 src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB(sessions / packs) / メモリ
 src/content   出題パック(JSON: basic / english / symbols) と zod 検証、自作パックの取り込み(import.ts)
 src/settings  練習の設定（パック・語数・弱点優先）。localStorage
@@ -48,6 +48,11 @@ e2e/          Playwright
 - 保存形式（`src/storage/schema.ts`）を変えるときは `CURRENT_SCHEMA_VERSION` を上げ、`migrate.ts` に移行を足し、テストを書く。
 - IndexedDB の構造（ストアの追加など）を変えるときは `indexedDbStore.ts` の `DB_VERSION` を上げ、`onupgradeneeded` で **oldVersion ごとに足りない部分だけ**作る（既存データを消さない）。旧版のDBから開くテストを書く（`storage.test.ts` の v1 → v2）。
 - 出題データは JSON + zod。読み込み時に**全語が打てること・重複が無いこと**を検証する（`src/content/schema.ts`）。
+
+### デイリーとゴースト
+- デイリーのお題は日付だけから決まる。**`Math.random` を使わない**（`seededRandom` を使う）。同じ日は、いつ・誰が開いても同じお題であること。
+- ゴーストが有効なのは、**お題の並びが完全に一致**する記録だけ（`findBestRecord`）。比較は位置（お題の何個分）と到達時刻で行い、打鍵数では比べない（経路が違うと打鍵数が変わるため）。
+- 「先行/遅れ」は色だけで示さない（符号と語を必ず付ける）。
 
 ### コアに固有名詞を置かない
 原作・既存作品の名称、台詞、画像、音源をコアに入れない。世界観は「テーマパック」として分離する（`task.md` P2）。

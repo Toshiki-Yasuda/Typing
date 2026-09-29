@@ -68,6 +68,20 @@ describe('PracticeSession', () => {
     expect(s.toRecord().keystrokes).toHaveLength(4);
   });
 
+  it('位置: お題の番号 + お題の中の進み具合。経過時間は開始からの差', () => {
+    const s = new PracticeSession(items, 1000, meta);
+    expect(s.position()).toBe(0);
+    play(s, 'k'); // かき = kaki の 1/4
+    expect(s.position()).toBeCloseTo(0.25);
+    play(s, 'aki', 1100);
+    expect(s.position()).toBe(1); // 1つ目を打ち終えた
+    play(s, 'u', 1400); // うみ = umi の 1/3
+    expect(s.position()).toBeCloseTo(1 + 1 / 3);
+    play(s, 'mi', 1500);
+    expect(s.position()).toBe(2);
+    expect(s.elapsedMs(1750)).toBe(750);
+  });
+
   it('お題が空ならエラー', () => {
     expect(() => new PracticeSession([], 0, meta)).toThrow(/お題がありません/);
   });

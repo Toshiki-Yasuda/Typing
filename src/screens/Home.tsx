@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { minKeystrokes } from '@/engine';
-import { computeMetrics, type SessionRecord } from '@/metrics';
+import { computeMetrics, dayKey, type SessionRecord } from '@/metrics';
+import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
 import { useSettings } from '@/settings/useSettings';
@@ -22,12 +23,27 @@ export function Home() {
   const store = useStore();
   const navigate = useNavigate();
   const [history, setHistory] = useState<SessionRecord[]>([]);
+  const [daily, setDaily] = useState<{ date: string; packName: string; count: number; attempts: number; bestKpm: number | null } | null>(null);
   const [message, setMessage] = useState('');
   const [settings, updateSettings] = useSettings();
   const custom = useCustomPacks();
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const reload = () => store.list().then((all) => setHistory(all.slice(-10).reverse()));
+  const reload = () =>
+    store.list().then((all) => {
+      setHistory(all.slice(-10).reverse());
+      // 今日のチャレンジの状況（日付は読み込み時点のもの。描画中に Date.now() を呼ばない）
+      const now = Date.now();
+      const challenge = todaysChallenge(now);
+      const today = all.filter((r) => r.mode === 'daily' && dayKey(r.startedAt) === challenge.day);
+      setDaily({
+        date: challenge.day,
+        packName: challenge.pack.name,
+        count: challenge.items.length,
+        attempts: today.length,
+        bestKpm: today.length ? Math.max(...today.map((r) => computeMetrics(r.keystrokes).kpm)) : null,
+      });
+    });
   useEffect(() => {
     void reload();
     // 一覧の再読み込みは store が変わったときだけ
@@ -68,6 +84,25 @@ export function Home() {
       <Link to="/stats" className="self-start rounded bg-surface-raised px-4 py-2">
         統計を見る
       </Link>
+
+      {daily && (
+        <section aria-labelledby="daily" className="flex flex-col gap-2 rounded-lg bg-surface-raised p-4">
+          <h2 id="daily" className="text-lg font-bold">
+            今日のチャレンジ
+          </h2>
+          <p className="text-sm text-text-muted">
+            {daily.date}・{daily.packName}・{daily.count}語（日付で固定。設定に関係なく、同じ日は同じお題です）
+          </p>
+          <p>
+            {daily.attempts === 0
+              ? '未挑戦'
+              : `挑戦済み（${daily.attempts}回・最高 ${daily.bestKpm?.toFixed(0)} 打鍵/分）`}
+          </p>
+          <Link to="/daily" className="self-start rounded bg-accent px-6 py-2 font-bold text-surface focus-visible:outline-2">
+            {daily.attempts === 0 ? '挑戦する' : 'もう一度挑戦する（自己ベストと並走）'}
+          </Link>
+        </section>
+      )}
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

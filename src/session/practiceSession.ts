@@ -2,6 +2,7 @@ import { ENGINE_VERSION, RULE_VERSION } from '@/engine/version';
 import { getGuide, minKeystrokes, normalizeTarget, startTyping, type Guide, type TypingState } from '@/engine';
 import { computeMetrics, recordPress, type Keystroke, type Metrics, type SessionRecord } from '@/metrics';
 import type { ContentItem } from '@/content';
+import { userPosition } from './ghost';
 
 export type PressEvent = 'ok' | 'miss' | 'wordDone' | 'sessionDone' | 'ignored';
 
@@ -67,6 +68,16 @@ export class PracticeSession {
 
   get keystrokes(): readonly Keystroke[] {
     return this.log;
+  }
+
+  /** セッション開始からの経過ミリ秒（`now` は performance.now() と同じ時間軸） */
+  elapsedMs(now: number): number {
+    return now - this.startedAtPerf;
+  }
+
+  /** 今の位置（お題の何個分進んだか）。ゴーストとの比較に使う */
+  position(): number {
+    return userPosition(this.view());
   }
 
   /** 全お題の理論最小打鍵数 */
