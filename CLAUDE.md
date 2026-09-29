@@ -23,8 +23,9 @@ src/engine    ローマ字入力の判定。React/DOM に依存しない。他�
   testing/    テスト専用の IME シミュレータ（オラクル）
 src/metrics   打鍵ログ → 指標・統計・弱点。純関数。engine に依存
 src/session   練習1回分の進行(PracticeSession)、出題の選び方。engine / metrics に依存
-src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB / メモリ
-src/content   出題パック(JSON) と zod 検証
+src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB(sessions / packs) / メモリ
+src/content   出題パック(JSON: basic / english / symbols) と zod 検証、自作パックの取り込み(import.ts)
+src/settings  練習の設定（パック・語数・弱点優先）。localStorage
 src/input     KeyboardEvent の除外判定（repeat / IME 中 / 修飾キー併用）
 src/screens   画面（Home / Play / Result / Stats）。src/screens/stats はグラフ部品
 src/app       ルーティングと保存先の提供
@@ -45,6 +46,7 @@ e2e/          Playwright
 - 指標・統計は**打鍵ログから純関数で再計算**する。指標を保存しない。
 - 複数セッションの遅延は**セッションごとに集計して合算**する（`aggregate` / `keyWeakness`）。打鍵を連結すると、セッションの境界で偽の連続2打鍵ができる。
 - 保存形式（`src/storage/schema.ts`）を変えるときは `CURRENT_SCHEMA_VERSION` を上げ、`migrate.ts` に移行を足し、テストを書く。
+- IndexedDB の構造（ストアの追加など）を変えるときは `indexedDbStore.ts` の `DB_VERSION` を上げ、`onupgradeneeded` で **oldVersion ごとに足りない部分だけ**作る（既存データを消さない）。旧版のDBから開くテストを書く（`storage.test.ts` の v1 → v2）。
 - 出題データは JSON + zod。読み込み時に**全語が打てること・重複が無いこと**を検証する（`src/content/schema.ts`）。
 
 ### コアに固有名詞を置かない

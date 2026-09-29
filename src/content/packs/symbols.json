@@ -1,0 +1,134 @@
+{
+  "id": "symbols",
+  "name": "数字と記号",
+  "items": [
+    {
+      "display": "123",
+      "reading": "123"
+    },
+    {
+      "display": "4567",
+      "reading": "4567"
+    },
+    {
+      "display": "890",
+      "reading": "890"
+    },
+    {
+      "display": "2026-09-29",
+      "reading": "2026-09-29"
+    },
+    {
+      "display": "12:30:45",
+      "reading": "12:30:45"
+    },
+    {
+      "display": "3.14159",
+      "reading": "3.14159"
+    },
+    {
+      "display": "1,000,000",
+      "reading": "1,000,000"
+    },
+    {
+      "display": "50%",
+      "reading": "50%"
+    },
+    {
+      "display": "$19.99",
+      "reading": "$19.99"
+    },
+    {
+      "display": "#tag",
+      "reading": "#tag"
+    },
+    {
+      "display": "@user",
+      "reading": "@user"
+    },
+    {
+      "display": "a_b_c",
+      "reading": "a_b_c"
+    },
+    {
+      "display": "(a+b)*c",
+      "reading": "(a+b)*c"
+    },
+    {
+      "display": "x=y-1",
+      "reading": "x=y-1"
+    },
+    {
+      "display": "[1,2,3]",
+      "reading": "[1,2,3]"
+    },
+    {
+      "display": "{key:value}",
+      "reading": "{key:value}"
+    },
+    {
+      "display": "a&&b||c",
+      "reading": "a&&b||c"
+    },
+    {
+      "display": "a<b>c",
+      "reading": "a<b>c"
+    },
+    {
+      "display": "~/.config",
+      "reading": "~/.config"
+    },
+    {
+      "display": "user@example.com",
+      "reading": "user@example.com"
+    },
+    {
+      "display": "https://example.com/a?b=c&d=e",
+      "reading": "https://example.com/a?b=c&d=e"
+    },
+    {
+      "display": "print(\"hello\")",
+      "reading": "print(\"hello\")"
+    },
+    {
+      "display": "if(x>0){y++;}",
+      "reading": "if(x>0){y++;}"
+    },
+    {
+      "display": "100/25=4",
+      "reading": "100/25=4"
+    },
+    {
+      "display": "name='value'",
+      "reading": "name='value'"
+    },
+    {
+      "display": "path\\to\\file",
+      "reading": "path\\to\\file"
+    },
+    {
+      "display": "5!=120",
+      "reading": "5!=120"
+    },
+    {
+      "display": "a^2+b^2=c^2",
+      "reading": "a^2+b^2=c^2"
+    },
+    {
+      "display": "x|y;z",
+      "reading": "x|y;z"
+    },
+    {
+      "display": "hello, world!",
+      "reading": "hello, world!"
+    },
+    {
+      "display": "a + b = c",
+      "reading": "a + b = c"
+    },
+    {
+      "display": "it's 5 o'clock",
+      "reading": "it's 5 o'clock"
+    }
+  ]
+}

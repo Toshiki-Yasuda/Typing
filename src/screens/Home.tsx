@@ -4,6 +4,10 @@ import { minKeystrokes } from '@/engine';
 import { computeMetrics, type SessionRecord } from '@/metrics';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { useSettings } from '@/settings/useSettings';
+import { CustomPacks } from './home/CustomPacks';
+import { PracticeSettings } from './home/PracticeSettings';
+import { useCustomPacks } from './home/useCustomPacks';
 
 function download(name: string, text: string) {
   const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
@@ -19,6 +23,8 @@ export function Home() {
   const navigate = useNavigate();
   const [history, setHistory] = useState<SessionRecord[]>([]);
   const [message, setMessage] = useState('');
+  const [settings, updateSettings] = useSettings();
+  const custom = useCustomPacks();
   const fileInput = useRef<HTMLInputElement>(null);
 
   const reload = () => store.list().then((all) => setHistory(all.slice(-10).reverse()));
@@ -63,6 +69,8 @@ export function Home() {
         統計を見る
       </Link>
 
+      <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
+
       <section aria-labelledby="history">
         <h2 id="history" className="mb-2 text-lg font-bold">最近の記録</h2>
         {history.length === 0 ? (
@@ -87,6 +95,8 @@ export function Home() {
         )}
       </section>
 
+      <CustomPacks packs={custom.packs} state={custom.state} onImport={custom.importFile} onRemove={custom.remove} />
+
       <section aria-labelledby="data" className="flex flex-col gap-2">
         <h2 id="data" className="text-lg font-bold">データ</h2>
         <p className="text-sm text-text-muted">
@@ -94,10 +104,10 @@ export function Home() {
         </p>
         <div className="flex gap-4">
           <button type="button" onClick={onExport} className="rounded bg-surface-raised px-4 py-2">
-            書き出す
+            記録を書き出す
           </button>
           <button type="button" onClick={() => fileInput.current?.click()} className="rounded bg-surface-raised px-4 py-2">
-            取り込む
+            記録を取り込む
           </button>
           <input
             ref={fileInput}

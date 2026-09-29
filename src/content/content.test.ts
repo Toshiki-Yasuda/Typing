@@ -1,4 +1,4 @@
-import { BASIC_PACK, ContentPackSchema, loadPack, validatePackContent } from './index';
+import { BASIC_PACK, BUILTIN_PACKS, ContentPackSchema, ENGLISH_PACK, SYMBOLS_PACK, loadPack, validatePackContent } from './index';
 import { minKeystrokes } from '@/engine';
 
 describe('出題データの検証', () => {
@@ -18,6 +18,26 @@ describe('出題データの検証', () => {
   it('促音・撥音・長音・拗音・外来音を含む（エンジンの主要ケースを実データでも通す）', () => {
     const readings = BASIC_PACK.items.map((i) => i.reading).join('|');
     for (const part of ['っ', 'ん', 'ー', 'ゃ', 'ゅ', 'ょ', 'ぃ', 'ゔ', 'ふぁ']) expect(readings).toContain(part);
+  });
+
+  it('組み込みパックは3つで、id が重複せず、すべて検証を通る', () => {
+    expect(BUILTIN_PACKS.map((p) => p.id)).toEqual(['basic', 'english', 'symbols']);
+    for (const pack of BUILTIN_PACKS) {
+      expect(validatePackContent(pack), pack.id).toEqual([]);
+      for (const item of pack.items) expect(minKeystrokes(item.reading), `${pack.id}: ${item.reading}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('英単語・記号パック: 打鍵数はお題の文字数と一致する（かな変換が入らない）', () => {
+    for (const pack of [ENGLISH_PACK, SYMBOLS_PACK]) {
+      expect(pack.items.length).toBeGreaterThanOrEqual(20);
+      for (const item of pack.items) expect(minKeystrokes(item.reading), item.reading).toBe(item.reading.length);
+    }
+  });
+
+  it('記号パックに、空白・Shift が要る記号・数字が含まれる', () => {
+    const all = SYMBOLS_PACK.items.map((i) => i.reading).join('');
+    for (const ch of [' ', '@', '$', '%', '(', '"', '&', '0']) expect(all).toContain(ch);
   });
 
   it('打てない文字・未正規化・重複を検出する', () => {

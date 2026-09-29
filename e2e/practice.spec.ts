@@ -123,3 +123,61 @@ test('統計画面: 練習を重ねると推移・キー別が表示され、ホ
   await page.getByText('表で見る').first().click();
   await expect(page.getByRole('table').first()).toBeVisible();
 });
+
+test('設定: 英単語パック・5語で通しプレイでき、設定は再読み込み後も残る', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('出題パック').selectOption('english');
+  await page.getByLabel('語数').selectOption('5');
+  await page.getByLabel('弱点を優先して出題する').uncheck();
+
+  await page.reload();
+  await expect(page.getByLabel('出題パック')).toHaveValue('english');
+  await expect(page.getByLabel('語数')).toHaveValue('5');
+  await expect(page.getByLabel('弱点を優先して出題する')).not.toBeChecked();
+
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await playThrough(page, 5);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+  await expect(page.getByText('ミスはありませんでした。')).toBeVisible();
+});
+
+test('自作パック: 取り込み → 選択 → 練習。不正なパックは理由を示して取り込まない', async ({ page }) => {
+  await page.goto('/');
+  const input = page.getByLabel('取り込むパックのファイル');
+  const file = (obj: unknown) => ({ name: 'pack.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(obj)) });
+
+  await input.setInputFiles(
+    file({ id: 'bad', name: 'bad', items: [{ display: '漢', reading: '漢字' }, { display: 'x', reading: 'ねこ' }, { display: 'y', reading: 'ねこ' }] }),
+  );
+  await expect(page.getByText(/取り込めません（2件の問題）/)).toBeVisible();
+  await expect(page.getByRole('status')).toContainText('打てない文字');
+  await expect(page.getByRole('status')).toContainText('重複');
+  await expect(page.getByLabel('出題パック').locator('option')).toHaveCount(3);
+
+  await input.setInputFiles(
+    file({ id: 'mine', name: '自作', items: [{ display: '猫', reading: 'ねこ' }, { display: '犬', reading: 'いぬ' }, { display: '鳥', reading: 'とり' }] }),
+  );
+  await expect(page.getByText('「自作」を取り込みました（3語）')).toBeVisible();
+  await page.getByLabel('出題パック').selectOption('mine');
+
+  await page.reload(); // IndexedDB に残っている
+  await expect(page.getByLabel('出題パック')).toHaveValue('mine');
+
+  await page.getByRole('link', { name: /練習を始める/ }).click();
+  await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+  await expect(page.getByLabel('進捗')).toHaveText('1 / 3');
+  await playThrough(page, 3);
+  await expect(page.getByRole('heading', { name: '結果' })).toBeVisible();
+});
+
+test('ウィンドウが非アクティブになると案内が出て、戻ると消える（進行は保たれる）', async ({ page }) => {
+  await startPlay(page);
+  const first = ((await guide(page).textContent()) ?? '')[0] as string;
+  await page.keyboard.press(first);
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  await expect(page.getByText(/アクティブではありません/)).toBeVisible();
+  await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+  await expect(page.getByText(/アクティブではありません/)).toHaveCount(0);
+  expect(await typedPart(page)).toBe(first);
+});

@@ -11,10 +11,12 @@ import { TargetView } from './TargetView';
 interface Props {
   pack?: ContentPack;
   count?: number;
+  /** 過去の記録から弱点を求めて、弱いキーを含むお題を優先する（記録が無ければ均等） */
+  adaptive?: boolean;
   random?: () => number;
 }
 
-export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
+export function Play({ pack = BASIC_PACK, count = 10, adaptive = true, random }: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
@@ -24,7 +26,7 @@ export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
     let cancelled = false;
     store.list().then((records) => {
       if (cancelled) return;
-      const weakness = keyWeakness(records.map((r) => r.keystrokes));
+      const weakness = adaptive ? keyWeakness(records.map((r) => r.keystrokes)) : new Map<string, number>();
       const items =
         weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random);
       setSession(
@@ -39,11 +41,28 @@ export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, random]);
+  }, [store, pack, count, adaptive, random]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
+  // ウィンドウが非アクティブの間は、キーがページに届かない。ポーズはせず（3秒超の休止は速度から除かれる）、案内だけ出す。
+  // 初期値は「アクティブ」とみなす（document.hasFocus() は環境によって不正確なため、イベントだけで切り替える）
+  const [focused, setFocused] = useState(true);
   const missTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => {
+    const onBlur = () => setFocused(false);
+    const onFocus = () => setFocused(true);
+    const onVisibility = () => setFocused(!document.hidden);
+    window.addEventListener('blur', onBlur);
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('blur', onBlur);
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   useEffect(() => {
     if (!session) return;
@@ -99,6 +118,11 @@ export function Play({ pack = BASIC_PACK, count = 10, random }: Props) {
       >
         <div className="h-1 rounded bg-accent" style={{ width: `${(view.index / view.total) * 100}%` }} />
       </div>
+      {!focused && (
+        <p role="status" className="rounded bg-surface-raised p-3 text-sm">
+          ウィンドウがアクティブではありません。画面をクリックすると、続きから打てます。
+        </p>
+      )}
       {imeWarning && (
         <p role="status" className="rounded bg-danger/20 p-3 text-sm">
           日本語入力がオンのようです。半角/英数モードに切り替えてください。

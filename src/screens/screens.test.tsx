@@ -32,6 +32,16 @@ function renderApp(initial: string, store: SessionStore = createMemoryStore()) {
   return store;
 }
 
+/**
+ * 練習画面の準備完了を待つ。お題の表示だけでは、キー受付のリスナー（effect）の登録が終わっていない
+ * ことがあるので、保留中の effect を流してから返す。
+ */
+const ready = async () => {
+  const region = await screen.findByRole('region', { name: 'お題' });
+  await act(async () => {});
+  return region;
+};
+
 const press = (key: string, extra: KeyboardEventInit = {}) =>
   act(() => {
     fireEvent.keyDown(window, { key, code: `Key${key.toUpperCase()}`, ...extra });
@@ -41,7 +51,7 @@ const typeKeys = (keys: string) => [...keys].forEach((k) => press(k));
 describe('Play', () => {
   it('お題・読み・ローマ字ガイドを表示する', async () => {
     renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     // random=()=>0 の並べ替えは [うみ, かき]... どちらが先でも、表示されるお題の読みは pack のどちらか
     const target = screen.getByRole('region', { name: 'お題' });
     expect(target.textContent).toMatch(/柿|海/);
@@ -50,7 +60,7 @@ describe('Play', () => {
 
   it('打ち切ると保存されて、結果画面に移る', async () => {
     const store = renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     const first = screen.getByRole('region', { name: 'お題' }).textContent?.includes('柿') ? 'kaki' : 'umi';
     const second = first === 'kaki' ? 'umi' : 'kaki';
     typeKeys(first);
@@ -68,7 +78,7 @@ describe('Play', () => {
 
   it('誤打鍵で一瞬ハイライトし、進行は変わらない。ミスは結果に出る', async () => {
     const store = renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     const first = screen.getByRole('region', { name: 'お題' }).textContent?.includes('柿') ? 'kaki' : 'umi';
     const second = first === 'kaki' ? 'umi' : 'kaki';
     press('z');
@@ -84,7 +94,7 @@ describe('Play', () => {
 
   it('IME 変換中の入力は打鍵にせず、警告を出す', async () => {
     renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     press('k', { isComposing: true });
     expect(screen.getByRole('status')).toHaveTextContent('半角/英数');
     expect(screen.getByLabelText('進捗')).toHaveTextContent('1 / 2');
@@ -94,7 +104,7 @@ describe('Play', () => {
 
   it('Ctrl 併用・自動連打は打鍵にしない', async () => {
     renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     const target = () => screen.getByRole('region', { name: 'お題' }).className;
     press('k', { ctrlKey: true });
     press('k', { repeat: true });
@@ -104,7 +114,7 @@ describe('Play', () => {
   it('過去にミスの多いキーがあれば、弱点モードで選ぶ。記録が無ければ通常モード', async () => {
     const store = createMemoryStore();
     renderApp('/play', store);
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     // 通常モードの記録を1件作る
     const target = screen.getByRole('region', { name: 'お題' }).textContent?.includes('柿') ? 'kaki' : 'umi';
     const other = target === 'kaki' ? 'umi' : 'kaki';
@@ -118,7 +128,7 @@ describe('Play', () => {
     await again.addMany(await store.list());
     cleanup();
     renderApp('/play', again);
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     press('1');
     const next = screen.getByRole('region', { name: 'お題' }).textContent?.includes('柿') ? 'kaki' : 'umi';
     typeKeys(next + (next === 'kaki' ? 'umi' : 'kaki'));
@@ -127,9 +137,39 @@ describe('Play', () => {
     expect(modes).toEqual(['adaptive', 'practice']);
   });
 
+  it('ウィンドウが非アクティブの間は案内を出し、戻ると消える（進行は保たれる）', async () => {
+    renderApp('/play');
+    await ready();
+    expect(screen.queryByText(/アクティブではありません/)).not.toBeInTheDocument();
+    act(() => {
+      window.dispatchEvent(new Event('blur'));
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('アクティブではありません');
+    act(() => {
+      window.dispatchEvent(new Event('focus'));
+    });
+    expect(screen.queryByText(/アクティブではありません/)).not.toBeInTheDocument();
+    expect(screen.getByLabelText('進捗')).toHaveTextContent('1 / 2');
+  });
+
+  it('タブが隠れている間も同様', async () => {
+    renderApp('/play');
+    await ready();
+    const setHidden = (hidden: boolean) => {
+      Object.defineProperty(document, 'hidden', { configurable: true, get: () => hidden });
+      act(() => {
+        document.dispatchEvent(new Event('visibilitychange'));
+      });
+    };
+    setHidden(true);
+    expect(screen.getByRole('status')).toHaveTextContent('アクティブではありません');
+    setHidden(false);
+    expect(screen.queryByText(/アクティブではありません/)).not.toBeInTheDocument();
+  });
+
   it('Esc でホームに戻る', async () => {
     renderApp('/play');
-    await screen.findByRole('region', { name: 'お題' });
+    await ready();
     press('Escape');
     expect(screen.getByRole('heading', { name: 'Typing' })).toBeInTheDocument();
   });

@@ -6,7 +6,9 @@ import {
   createMemoryStore,
   exportSessions,
   migrateExport,
-  openSessionStore,
+  openStores,
+  createMemoryPackStore,
+  type PackStore,
   parseExport,
   type Migration,
   type SessionStore,
@@ -150,23 +152,81 @@ const contract = (name: string, create: () => Promise<SessionStore>) => {
 };
 
 contract('メモリ', async () => createMemoryStore());
-contract('IndexedDB', async () => openSessionStore(new IDBFactory(), 'typing-test'));
+contract('IndexedDB', async () => (await openStores(new IDBFactory(), 'typing-test')).sessions);
 
 describe('IndexedDB: 永続性', () => {
   it('開き直しても残っている', async () => {
     const factory = new IDBFactory();
-    const first = await openSessionStore(factory, 'persist');
+    const first = (await openStores(factory, 'persist')).sessions;
     await first.add(session('a', 1));
-    const second = await openSessionStore(factory, 'persist');
+    const second = (await openStores(factory, 'persist')).sessions;
     expect((await second.list()).map((s) => s.id)).toEqual(['a']);
   });
 
   it('エクスポート → 別ストアへインポートで移せる', async () => {
-    const from = await openSessionStore(new IDBFactory(), 'from');
+    const from = (await openStores(new IDBFactory(), 'from')).sessions;
     await from.addMany([session('a', 1), session('b', 2)]);
     const json = exportSessions(await from.list());
-    const to = await openSessionStore(new IDBFactory(), 'to');
+    const to = (await openStores(new IDBFactory(), 'to')).sessions;
     expect(await to.addMany(parseExport(json))).toBe(2);
     expect(await to.list()).toEqual(await from.list());
+  });
+});
+
+
+const pack = (id: string, name = id) => ({ id, name, items: [{ display: 'あ', reading: 'あ' }] });
+
+const packContract = (name: string, create: () => Promise<PackStore>) => {
+  describe(`PackStore: ${name}`, () => {
+    it('保存して id 順に取り出せる。同じ id は上書き', async () => {
+      const store = await create();
+      await store.put(pack('b'));
+      await store.put(pack('a', '旧'));
+      await store.put(pack('a', '新'));
+      const all = await store.list();
+      expect(all.map((p) => p.id)).toEqual(['a', 'b']);
+      expect(all[0]?.name).toBe('新');
+    });
+
+    it('remove で消える。無い id を消しても例外にならない', async () => {
+      const store = await create();
+      await store.put(pack('a'));
+      await store.remove('a');
+      await store.remove('none');
+      expect(await store.list()).toEqual([]);
+    });
+  });
+};
+
+packContract('メモリ', async () => createMemoryPackStore());
+packContract('IndexedDB', async () => (await openStores(new IDBFactory(), 'packs-test')).packs);
+
+describe('IndexedDB: 版の引き上げ（v1 → v2）', () => {
+  it('v1 で保存済みの記録を保ったまま、自作パックの保存先が使えるようになる', async () => {
+    const factory = new IDBFactory();
+    // v1 の DB を、当時のスキーマで作って記録を1件入れる
+    await new Promise<void>((resolve, reject) => {
+      const open = factory.open('legacy', 1);
+      open.onupgradeneeded = () => {
+        const store = open.result.createObjectStore('sessions', { keyPath: 'id' });
+        store.createIndex('startedAt', 'startedAt');
+      };
+      open.onsuccess = () => {
+        const db = open.result;
+        const tx = db.transaction('sessions', 'readwrite');
+        tx.objectStore('sessions').put(session('old-1', 5));
+        tx.oncomplete = () => {
+          db.close();
+          resolve();
+        };
+        tx.onerror = () => reject(tx.error);
+      };
+      open.onerror = () => reject(open.error);
+    });
+
+    const { sessions, packs } = await openStores(factory, 'legacy');
+    expect((await sessions.list()).map((s) => s.id)).toEqual(['old-1']);
+    await packs.put(pack('mine'));
+    expect((await packs.list()).map((p) => p.id)).toEqual(['mine']);
   });
 });

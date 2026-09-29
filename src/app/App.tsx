@@ -1,6 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router';
 import { Home } from '@/screens/Home';
-import { Play } from '@/screens/Play';
+import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
 import { Stats } from '@/screens/Stats';
 import { StoreProvider } from './StoreContext';
@@ -12,7 +12,7 @@ export function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/play" element={<Play />} />
+          <Route path="/play" element={<PlayRoute />} />
           <Route path="/result/:id" element={<Result />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="*" element={<Home />} />

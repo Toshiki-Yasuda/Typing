@@ -1,0 +1,406 @@
+{
+  "id": "english",
+  "name": "英単語",
+  "items": [
+    {
+      "display": "time",
+      "reading": "time"
+    },
+    {
+      "display": "year",
+      "reading": "year"
+    },
+    {
+      "display": "people",
+      "reading": "people"
+    },
+    {
+      "display": "way",
+      "reading": "way"
+    },
+    {
+      "display": "day",
+      "reading": "day"
+    },
+    {
+      "display": "man",
+      "reading": "man"
+    },
+    {
+      "display": "thing",
+      "reading": "thing"
+    },
+    {
+      "display": "woman",
+      "reading": "woman"
+    },
+    {
+      "display": "life",
+      "reading": "life"
+    },
+    {
+      "display": "child",
+      "reading": "child"
+    },
+    {
+      "display": "world",
+      "reading": "world"
+    },
+    {
+      "display": "school",
+      "reading": "school"
+    },
+    {
+      "display": "state",
+      "reading": "state"
+    },
+    {
+      "display": "family",
+      "reading": "family"
+    },
+    {
+      "display": "student",
+      "reading": "student"
+    },
+    {
+      "display": "group",
+      "reading": "group"
+    },
+    {
+      "display": "country",
+      "reading": "country"
+    },
+    {
+      "display": "problem",
+      "reading": "problem"
+    },
+    {
+      "display": "hand",
+      "reading": "hand"
+    },
+    {
+      "display": "part",
+      "reading": "part"
+    },
+    {
+      "display": "place",
+      "reading": "place"
+    },
+    {
+      "display": "case",
+      "reading": "case"
+    },
+    {
+      "display": "week",
+      "reading": "week"
+    },
+    {
+      "display": "company",
+      "reading": "company"
+    },
+    {
+      "display": "system",
+      "reading": "system"
+    },
+    {
+      "display": "program",
+      "reading": "program"
+    },
+    {
+      "display": "question",
+      "reading": "question"
+    },
+    {
+      "display": "work",
+      "reading": "work"
+    },
+    {
+      "display": "government",
+      "reading": "government"
+    },
+    {
+      "display": "number",
+      "reading": "number"
+    },
+    {
+      "display": "night",
+      "reading": "night"
+    },
+    {
+      "display": "point",
+      "reading": "point"
+    },
+    {
+      "display": "home",
+      "reading": "home"
+    },
+    {
+      "display": "water",
+      "reading": "water"
+    },
+    {
+      "display": "room",
+      "reading": "room"
+    },
+    {
+      "display": "mother",
+      "reading": "mother"
+    },
+    {
+      "display": "area",
+      "reading": "area"
+    },
+    {
+      "display": "money",
+      "reading": "money"
+    },
+    {
+      "display": "story",
+      "reading": "story"
+    },
+    {
+      "display": "fact",
+      "reading": "fact"
+    },
+    {
+      "display": "month",
+      "reading": "month"
+    },
+    {
+      "display": "lot",
+      "reading": "lot"
+    },
+    {
+      "display": "right",
+      "reading": "right"
+    },
+    {
+      "display": "study",
+      "reading": "study"
+    },
+    {
+      "display": "book",
+      "reading": "book"
+    },
+    {
+      "display": "eye",
+      "reading": "eye"
+    },
+    {
+      "display": "job",
+      "reading": "job"
+    },
+    {
+      "display": "word",
+      "reading": "word"
+    },
+    {
+      "display": "business",
+      "reading": "business"
+    },
+    {
+      "display": "issue",
+      "reading": "issue"
+    },
+    {
+      "display": "side",
+      "reading": "side"
+    },
+    {
+      "display": "kind",
+      "reading": "kind"
+    },
+    {
+      "display": "head",
+      "reading": "head"
+    },
+    {
+      "display": "house",
+      "reading": "house"
+    },
+    {
+      "display": "service",
+      "reading": "service"
+    },
+    {
+      "display": "friend",
+      "reading": "friend"
+    },
+    {
+      "display": "father",
+      "reading": "father"
+    },
+    {
+      "display": "power",
+      "reading": "power"
+    },
+    {
+      "display": "hour",
+      "reading": "hour"
+    },
+    {
+      "display": "game",
+      "reading": "game"
+    },
+    {
+      "display": "line",
+      "reading": "line"
+    },
+    {
+      "display": "end",
+      "reading": "end"
+    },
+    {
+      "display": "member",
+      "reading": "member"
+    },
+    {
+      "display": "law",
+      "reading": "law"
+    },
+    {
+      "display": "car",
+      "reading": "car"
+    },
+    {
+      "display": "city",
+      "reading": "city"
+    },
+    {
+      "display": "community",
+      "reading": "community"
+    },
+    {
+      "display": "name",
+      "reading": "name"
+    },
+    {
+      "display": "president",
+      "reading": "president"
+    },
+    {
+      "display": "team",
+      "reading": "team"
+    },
+    {
+      "display": "minute",
+      "reading": "minute"
+    },
+    {
+      "display": "idea",
+      "reading": "idea"
+    },
+    {
+      "display": "kid",
+      "reading": "kid"
+    },
+    {
+      "display": "body",
+      "reading": "body"
+    },
+    {
+      "display": "information",
+      "reading": "information"
+    },
+    {
+      "display": "back",
+      "reading": "back"
+    },
+    {
+      "display": "parent",
+      "reading": "parent"
+    },
+    {
+      "display": "face",
+      "reading": "face"
+    },
+    {
+      "display": "others",
+      "reading": "others"
+    },
+    {
+      "display": "level",
+      "reading": "level"
+    },
+    {
+      "display": "office",
+      "reading": "office"
+    },
+    {
+      "display": "door",
+      "reading": "door"
+    },
+    {
+      "display": "health",
+      "reading": "health"
+    },
+    {
+      "display": "person",
+      "reading": "person"
+    },
+    {
+      "display": "art",
+      "reading": "art"
+    },
+    {
+      "display": "war",
+      "reading": "war"
+    },
+    {
+      "display": "history",
+      "reading": "history"
+    },
+    {
+      "display": "party",
+      "reading": "party"
+    },
+    {
+      "display": "result",
+      "reading": "result"
+    },
+    {
+      "display": "change",
+      "reading": "change"
+    },
+    {
+      "display": "morning",
+      "reading": "morning"
+    },
+    {
+      "display": "reason",
+      "reading": "reason"
+    },
+    {
+      "display": "research",
+      "reading": "research"
+    },
+    {
+      "display": "girl",
+      "reading": "girl"
+    },
+    {
+      "display": "guy",
+      "reading": "guy"
+    },
+    {
+      "display": "moment",
+      "reading": "moment"
+    },
+    {
+      "display": "air",
+      "reading": "air"
+    },
+    {
+      "display": "teacher",
+      "reading": "teacher"
+    },
+    {
+      "display": "force",
+      "reading": "force"
+    },
+    {
+      "display": "education",
+      "reading": "education"
+    }
+  ]
+}
