@@ -7,6 +7,9 @@
 - 仕様: [docs/spec/](docs/spec/)（入力ルール・計測）。実機確認: [docs/manual-check.md](docs/manual-check.md)
 - 開発者・AI 向けの作業ルール: [CLAUDE.md](CLAUDE.md)
 
+## 遊ぶ
+公開先: https://toshiki-yasuda.github.io/Typing/ （GitHub Pages。初回はリポジトリの Settings → Pages → Source を「GitHub Actions」に設定する）
+
 ## 開発
 
 ```bash

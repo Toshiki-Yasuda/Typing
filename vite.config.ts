@@ -4,6 +4,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  // 相対パスで配信する。GitHub Pages のサブパス（/Typing/）でも、ルートでも動く（画面遷移はハッシュ）
+  base: './',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },

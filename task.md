@@ -92,9 +92,11 @@
 
 ## P3: 品質・公開
 
-- [ ] **デプロイ**（GitHub Pages など）
-  ハッシュルーティングなので URL の書き換えは不要だが、サブパス配下（`/Typing/`）で配信するなら Vite の `base`（例: `'./'`）を設定しないとアセットが読み込めない。
-  完了条件: 公開 URL で通しプレイでき、リロードしても結果画面が復元される。
+- [x] **デプロイの設定**（GitHub Pages）
+  Vite の `base: './'` と `.github/workflows/deploy.yml`（main への push で公開）。サブパス配下（`/Typing/`）で、通しプレイ・結果・リロード復元まで実ブラウザで確認済み。
+- [ ] **GitHub Pages を有効にする**（オーナーの操作）
+  リポジトリの Settings → Pages → Source を「GitHub Actions」にする。その後、Actions の「Deploy」を再実行（`workflow_dispatch`）すると公開される。
+  完了条件: `https://toshiki-yasuda.github.io/Typing/` で通しプレイでき、リロードしても結果画面が復元される。
 - [ ] **アクセシビリティの監査**（axe、キーボードのみでの全操作、フォーカス表示、コントラスト）
 - [ ] **性能の予算**（バンドルサイズ、入力から描画までの遅延の計測）
 - [ ] **打鍵時刻の精度を実測する**（`event.timeStamp` の丸め）
