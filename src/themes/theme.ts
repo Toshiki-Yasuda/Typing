@@ -61,6 +61,8 @@ export const ChapterSchema = z.object({
   stages: z.array(StageSchema).min(1),
   /** この章のボス（`bosses` の id） */
   boss: z.string().min(1).optional(),
+  /** 章のアクセント色。ステージ選択・練習・結果で、テーマのアクセントの代わりに使う。読める色であること（chapterAccentProblems） */
+  accent: hex.optional(),
 });
 export type Chapter = z.infer<typeof ChapterSchema>;
 
@@ -220,6 +222,19 @@ export function contrastProblems(colors: Readonly<Record<ColorToken, string>>): 
       const c = contrast(color, colors[bg]);
       if (c < min) problems.push(`固定色 ${name} と ${bg} のコントラスト比が ${c.toFixed(2)}（${min} 未満）`);
     }
+  }
+  return problems;
+}
+
+/** 章のアクセント色は、ボタンの文字（surface 色）が乗るので、テーマのアクセントより厳しく 4.5:1 以上にする */
+export const CHAPTER_ACCENT_MIN_CONTRAST = 4.5;
+
+/** 章のアクセント色が、背景（surface / surface-raised）の上で読めるか。読めなければ問題の説明を返す */
+export function chapterAccentProblems(accent: string, colors: Readonly<Record<ColorToken, string>>): string[] {
+  const problems: string[] = [];
+  for (const bg of ['surface', 'surface-raised'] as const) {
+    const c = contrast(accent, colors[bg]);
+    if (c < CHAPTER_ACCENT_MIN_CONTRAST) problems.push(`章のアクセント ${accent} と ${bg} のコントラスト比が ${c.toFixed(2)}（${CHAPTER_ACCENT_MIN_CONTRAST} 未満）`);
   }
   return problems;
 }

@@ -4,6 +4,7 @@ import { isOpen } from '@/session/stageUnlock';
 import { vowEffects } from '@/session/vows';
 import { stageMode } from '@/session/stageProgress';
 import { useSettings } from '@/settings/useSettings';
+import { chapterAccentStyle, chapterOfStage } from '@/themes/chapterAccent';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { PageHeading } from '../PageHeading';
@@ -45,6 +46,7 @@ export function StageRoute() {
   }
   if (state.status !== 'ready') return <p className="p-8 text-text-muted">準備中…</p>;
   return (
+    <div className="contents" style={chapterAccentStyle(theme, chapterOfStage(theme, stage.id))}>
     <Play
       key={stage.id}
       pack={state.pack}
@@ -56,5 +58,6 @@ export function StageRoute() {
       exitTo="/stages"
       title={`ステージ: ${stage.name}`}
     />
+    </div>
   );
 }

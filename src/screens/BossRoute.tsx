@@ -5,6 +5,7 @@ import { prefersReducedMotion, resolveEffects } from '@/effects/level';
 import { isOpen } from '@/session/stageUnlock';
 import { vowEffects } from '@/session/vows';
 import { useSettings } from '@/settings/useSettings';
+import { chapterAccentStyle, chapterOfBoss } from '@/themes/chapterAccent';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { PageHeading } from './PageHeading';
@@ -48,6 +49,7 @@ export function BossRoute() {
     );
   }
   return (
+    <div className="contents" style={chapterAccentStyle(theme, chapterOfBoss(theme, boss.id))}>
     <Play
       key={boss.id}
       pack={pack}
@@ -61,5 +63,6 @@ export function BossRoute() {
       vows={settings.vows}
       skillsOn={settings.bossSkills}
     />
+    </div>
   );
 }

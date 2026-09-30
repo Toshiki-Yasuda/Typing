@@ -222,6 +222,25 @@ test.describe('ステージ選択', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'ステージ選択' })).toBeVisible();
   });
 
+  test('章ごとの配色: 7 章すべて、ステージ選択・練習で axe が通る（コントラスト）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    const accents: string[] = [];
+    for (let n = 1; n <= 7; n++) {
+      await page.getByRole('button', { name: new RegExp(`第${n}章`) }).click();
+      const color = await page.locator('main').first().evaluate((el) => el.style.getPropertyValue('--color-accent'));
+      accents.push(color);
+      await scan(page, `ステージ選択（第${n}章）`);
+    }
+    expect(new Set(accents).size).toBe(7);
+    for (const id of ['c3s1', 'c5s1', 'c7s1']) {
+      await page.goto(`/#/stage/${id}`);
+      await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+      await scan(page, `練習（${id}）`);
+    }
+  });
+
   test('制約と誓約: 縛りを付けてクリアするとメダルが付く。付き記録は統計に数えない（axe も通る）', async ({ page }) => {
     await unlock(page);
     await page.keyboard.press('Escape');

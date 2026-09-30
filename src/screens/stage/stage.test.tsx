@@ -442,3 +442,48 @@ describe('ステージ選択: ルール設定の折りたたみ', () => {
     expect(within(details).getByText(/縛り 0 つ・順番に開放: オン/)).toBeInTheDocument();
   });
 });
+
+// 章ごとのアクセント色（N10）。ステージ選択・練習・結果で、その章の色に切り替わる
+describe('章ごとのアクセント色', () => {
+  const accentOf = (el: Element | null) => (el as HTMLElement | null)?.style.getPropertyValue('--color-accent');
+
+  it('ステージ選択: 開いている章の色になり、章を切り替えると変わる', async () => {
+    setup();
+    app('/stages');
+    const main = (await screen.findByRole('heading', { level: 1, name: 'ステージ選択' })).closest('main');
+    expect(accentOf(main)).toBe(chapters[0]!.accent);
+    fireEvent.click(within(screen.getByRole('navigation', { name: '章' })).getByRole('button', { name: /第3章/ }));
+    expect(accentOf(main)).toBe(chapters[2]!.accent);
+  });
+
+  it('ステージの練習: その章の色の範囲の中で練習画面が開く', async () => {
+    setup();
+    app('/stage/c4s1');
+    const region = await screen.findByRole('region', { name: 'お題' });
+    const scope = region.closest('[style*="--color-accent"]');
+    expect(accentOf(scope)).toBe(chapters[3]!.accent);
+  });
+
+  it('ボス戦: その章の色の範囲の中で開く', async () => {
+    setup();
+    app('/bossx/chapter2');
+    const region = await screen.findByRole('region', { name: 'お題' });
+    expect(accentOf(region.closest('[style*="--color-accent"]'))).toBe(chapters[1]!.accent);
+  });
+
+  it('結果: ステージの記録はその章の色、ボスの記録はそのボスの章の色。ふつうの練習はテーマのまま', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record('c2s1', 10, 0, 's'));
+    await store.add({ ...record('c1s1', 10, 0, 'b'), mode: 'boss:chapter5' });
+    await store.add({ ...record('c1s1', 10, 0, 'p'), mode: 'practice' });
+    app('/result/s', store);
+    expect(accentOf((await screen.findByRole('heading', { level: 1, name: '結果' })).closest('main'))).toBe(chapters[1]!.accent);
+    cleanup();
+    app('/result/b', store);
+    expect(accentOf((await screen.findByRole('heading', { level: 1, name: '結果' })).closest('main'))).toBe(chapters[4]!.accent);
+    cleanup();
+    app('/result/p', store);
+    expect(accentOf((await screen.findByRole('heading', { level: 1, name: '結果' })).closest('main'))).toBe('');
+  });
+});

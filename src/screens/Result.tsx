@@ -11,6 +11,7 @@ import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
 import { hasVows, plainRecords, vowBroken } from '@/session/vows';
 import { afterFlow, type FlowInput } from '@/session/afterFlow';
+import { chapterAccentStyle, chapterOfBoss } from '@/themes/chapterAccent';
 import { AfterActions, AfterKeys } from './AfterActions';
 import { parseTrainMode } from '@/session/training';
 import { StageResultPanel } from './stage/StageResultPanel';
@@ -113,7 +114,7 @@ export function Result() {
     .slice(0, 5);
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
+    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8" style={chapterAccentStyle(theme, stageChapter ?? (bossId ? chapterOfBoss(theme, bossId) : undefined))}>
       <PageHeading title="結果" className="text-2xl font-bold" />
       {boss && outcome && <BossResultPanel boss={boss} outcome={outcome} />}
       <VowResultPanel record={record} cleared={stageChapter && stage ? stageCleared : null} />

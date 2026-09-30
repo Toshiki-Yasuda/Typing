@@ -11,6 +11,7 @@ import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import type { Chapter, Theme } from '@/themes/theme';
+import { chapterAccentStyle } from '@/themes/chapterAccent';
 import { PageHeading } from '../PageHeading';
 import { VowsPicker } from '../vows/VowsPicker';
 
@@ -76,7 +77,7 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
   const clearedCount = (c: Chapter) => c.stages.filter((s) => progressOf(s.id).cleared).length;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-6 p-8">
+    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-6 p-8" style={chapterAccentStyle(theme, chapter)}>
       <header className="flex items-center justify-between gap-4">
         <PageHeading title="ステージ選択" className="text-3xl font-bold" />
         <Link to={theme.title ? '/title' : '/'} className="rounded bg-surface-raised px-4 py-2">

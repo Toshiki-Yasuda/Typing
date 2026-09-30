@@ -1,4 +1,5 @@
 import { HUNTER_BOSSES } from './hunterBosses';
+import { HUNTER_CHAPTER_ACCENTS } from './hunterAccents';
 import { HUNTER_CHAPTERS } from './hunterChapters';
 import { ThemeSchema, contrastProblems, type ColorToken, type Theme } from './theme';
 
@@ -96,7 +97,7 @@ export const HUNTER_THEME: Theme = {
   license: { heading: 'ライセンス', cardTitle: 'HUNTER LICENSE', unnamed: '（ハンターネーム未設定）' },
   vowsHeading: '制約と誓約',
   train: { names: { zetsu: '絶', ren: '練', hatsu: '発' }, aids: { gyo: '凝', en: '円' } },
-  chapters: HUNTER_CHAPTERS,
+  chapters: HUNTER_CHAPTERS.map((c) => ({ ...c, accent: HUNTER_CHAPTER_ACCENTS[c.id] })),
   bosses: HUNTER_BOSSES,
 };
 
