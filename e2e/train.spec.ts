@@ -73,4 +73,16 @@ test.describe('修行の型', () => {
     await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
     await expect(page.getByText(/『.』の型/).first()).toBeVisible();
   });
+
+  test('練習の提案: 正確率が低い記録が続くと、ホームに丁寧さの提案が出る（axe も通る）', async ({ page }) => {
+    await page.goto('/');
+    await seedRecords(page, 3, { missEvery: 3 }); // 正確率 約 67%
+    await page.reload();
+    const note = page.getByRole('region', { name: '練習の提案' });
+    await expect(note).toContainText('提案：丁寧に');
+    await scan(page, 'ホーム（提案あり）');
+    await note.getByRole('link', { name: /静寂/ }).click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect(page).toHaveURL(/#\/train\/zetsu$/);
+  });
 });

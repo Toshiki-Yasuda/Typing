@@ -11,6 +11,7 @@ import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
 import { parseTrainMode } from '@/session/training';
 import { StageResultPanel } from './stage/StageResultPanel';
+import { RecommendationNote } from './train/RecommendationNote';
 import { TrainResultPanel } from './train/TrainResultPanel';
 import { PageHeading } from './PageHeading';
 import { RankPanel } from './RankPanel';
@@ -128,6 +129,7 @@ export function Result() {
         )}
       </section>
       <RankPanel summaries={summaries} currentId={record.id} goalId={settings.goalRank} />
+      <RecommendationNote summaries={summaries.slice(0, summaries.findIndex((s) => s.id === record.id) + 1)} current={summaries.find((s) => s.id === record.id)} />
       {comparison && (
         <p role="status" className="rounded-lg bg-surface-raised p-4">
           {comparison.diffKpm > 0

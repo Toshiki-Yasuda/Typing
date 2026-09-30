@@ -17,6 +17,7 @@ import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
 import { PageHeading } from './PageHeading';
 import { RankCard } from './RankPanel';
+import { RecommendationNote } from './train/RecommendationNote';
 import { useCustomPacks } from './home/useCustomPacks';
 
 /** Enter を「その要素の操作」に使う要素。tabindex=-1（見出しへのフォーカス）は対象外 */
@@ -128,6 +129,8 @@ export function Home() {
           </Link>
         </section>
       )}
+
+      <RecommendationNote summaries={summaries} />
 
       <RankCard summaries={summaries} goalId={settings.goalRank} />
 
