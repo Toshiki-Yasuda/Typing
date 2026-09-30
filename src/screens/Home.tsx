@@ -11,6 +11,7 @@ import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { ThemeSettings } from './home/ThemeSettings';
 import { useSettings } from '@/settings/useSettings';
+import { useSceneBgm } from '@/sound/useSceneBgm';
 import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
 import { PageHeading } from './PageHeading';
@@ -32,6 +33,7 @@ function download(name: string, text: string) {
 export function Home() {
   const store = useStore();
   const navigate = useNavigate();
+  useSceneBgm(null); // ホームは静か（BGM のある画面から来たときは止める）
   const [history, setHistory] = useState<SessionRecord[]>([]);
   const [summaries, setSummaries] = useState<SessionSummary[]>([]);
   const [daily, setDaily] = useState<{ date: string; packName: string; count: number; attempts: number; bestKpm: number | null } | null>(null);
@@ -127,7 +129,7 @@ export function Home() {
 
       {bosses && bosses.length > 0 && <BossList bosses={bosses} />}
 
-      <ThemeSettings themeId={settings.themeId} sound={settings.sound} effects={settings.effects} update={updateSettings} />
+      <ThemeSettings themeId={settings.themeId} sound={settings.sound} effects={settings.effects} onChosen={(t) => t.title && navigate('/title')} update={updateSettings} />
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

@@ -5,6 +5,8 @@ import { Home } from '@/screens/Home';
 import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
 import { Stats } from '@/screens/Stats';
+import { Entrance } from '@/screens/title/Entrance';
+import { TitleRoute } from '@/screens/title/TitleScreen';
 import { useBgmSync } from '@/sound/useBgmSync';
 import { StoreProvider } from './StoreContext';
 
@@ -15,13 +17,14 @@ export function App() {
     <StoreProvider>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Entrance><Home /></Entrance>} />
+          <Route path="/title" element={<TitleRoute />} />
           <Route path="/play" element={<PlayRoute />} />
           <Route path="/boss/:id" element={<BossRoute />} />
           <Route path="/daily" element={<DailyRoute />} />
           <Route path="/result/:id" element={<Result />} />
           <Route path="/stats" element={<Stats />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<Entrance><Home /></Entrance>} />
         </Routes>
       </HashRouter>
     </StoreProvider>

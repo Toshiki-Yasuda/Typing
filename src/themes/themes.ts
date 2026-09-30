@@ -46,6 +46,12 @@ export const HUNTER_THEME: Theme = {
     miss: ['themes/hunter/se-heavy1.mp3'],
     complete: ['themes/hunter/se-complete.mp3'],
   },
+  title: {
+    heading: 'HUNTER×HUNTER',
+    subheading: 'TYPING MASTER',
+    art: 'themes/hunter/title-art.jpg',
+    artAlt: 'HUNTER×HUNTER NEN×TYPING IMPACT',
+  },
   // BGM は Ver1 の曲を 128kbps に再エンコードしたもの（public/themes/hunter/audio/）
   audio: {
     stinger: 'themes/hunter/audio/stinger.mp3',

@@ -3,17 +3,20 @@ import { applyTheme } from '@/themes/apply';
 import { THEMES, resolveTheme } from '@/themes/themes';
 import { checkPassword, loadUnlocked, saveUnlocked } from '@/themes/unlock';
 import { EFFECT_LABELS, EFFECT_LEVELS, type EffectLevel } from '@/effects/level';
+import type { Theme } from '@/themes/theme';
 import type { Settings } from '@/settings/settings';
 
 interface Props {
   themeId: string;
   sound: boolean;
   effects: EffectLevel;
+  /** テーマを選んだ（解除した）直後。入口のあるテーマなら、呼び出し側が入口へ送る */
+  onChosen?: (theme: Theme) => void;
   update: (patch: Partial<Settings>) => void;
 }
 
 /** テーマの選択。ロック中のテーマは、パスワードを入れると選べる */
-export function ThemeSettings({ themeId, sound, effects, update }: Props) {
+export function ThemeSettings({ themeId, sound, effects, onChosen, update }: Props) {
   const [unlocked, setUnlocked] = useState(() => loadUnlocked());
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -22,7 +25,9 @@ export function ThemeSettings({ themeId, sound, effects, update }: Props) {
 
   const choose = (id: string) => {
     update({ themeId: id });
-    applyTheme(resolveTheme(id, unlocked));
+    const chosen = resolveTheme(id, unlocked);
+    applyTheme(chosen);
+    onChosen?.(chosen);
   };
 
   const submit = async (e: FormEvent) => {
@@ -35,7 +40,9 @@ export function ThemeSettings({ themeId, sound, effects, update }: Props) {
         setPassword('');
         setError(false);
         update({ themeId: theme.id });
-        applyTheme(resolveTheme(theme.id, next));
+        const chosen = resolveTheme(theme.id, next);
+        applyTheme(chosen);
+        onChosen?.(chosen);
         return;
       }
     }

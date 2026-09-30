@@ -8,13 +8,16 @@ async function scan(page: Page, label: string) {
   expect(summary, `${label} の違反:\n${JSON.stringify(summary, null, 2)}`).toEqual([]);
 }
 
-/** ホームでパスワードを入れてテストを開く */
+/** ホームでパスワードを入れてテーマを開く。解除するとテーマの入口へ進むので、飛ばしてホームへ戻る */
 async function unlock(page: Page) {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Typing' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'ボス戦' })).toHaveCount(0);
   await page.getByLabel(/パスワードで新しいテーマを開く/).fill('SAKI');
   await page.getByRole('button', { name: '開く' }).click();
+  await expect(page.getByRole('button', { name: /スタート/ })).toBeVisible(); // 入口のゲート
+  await page.keyboard.press('Escape'); // オープニングを飛ばす
+  await page.getByRole('link', { name: /ホーム/ }).click();
   await expect(page.getByRole('heading', { name: 'ボス戦' })).toBeVisible();
 }
 

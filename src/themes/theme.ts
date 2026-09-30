@@ -48,6 +48,16 @@ export const ThemeSchema = z.object({
       complete: z.array(z.string().min(1)).min(1),
     })
     .optional(),
+  /** ゲームの入口（オープニング・タイトル）。無ければ入口は出さず、ホームから始まる */
+  title: z
+    .object({
+      heading: z.string().min(1),
+      subheading: z.string().min(1),
+      /** タイトルに大きく出す絵（アプリからの相対パス）と、その説明 */
+      art: z.string().min(1).optional(),
+      artAlt: z.string().min(1).optional(),
+    })
+    .optional(),
   /** BGM と効果音（アプリからの相対パス）。無ければ無音 */
   audio: z
     .object({
