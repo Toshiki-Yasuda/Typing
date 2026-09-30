@@ -83,8 +83,11 @@ test('Ctrl 併用・自動連打はゲームの打鍵にならない（ブラウ
 
 test('Esc で中断してホームに戻る', async ({ page }) => {
   await startPlay(page);
-  await page.keyboard.press('Escape');
-  await expect(page).toHaveURL(/#\/$/);
+  // お題が見えた直後は、キー受付の登録（effect）がまだのことがある。押し直しながら待つ
+  await expect(async () => {
+    await page.keyboard.press('Escape');
+    await expect(page).toHaveURL(/#\/$/, { timeout: 500 });
+  }).toPass();
   await expect(page.getByRole('heading', { name: 'Typing' })).toBeVisible();
 });
 

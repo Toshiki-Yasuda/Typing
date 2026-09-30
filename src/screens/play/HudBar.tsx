@@ -68,8 +68,10 @@ export function HudBar({ index, total, label, remaining, stats, showStats = true
           <dl className="hud-stats" data-testid="hud-stats">
             <div>
               <dt>速さ</dt>
-              <dd>{stats.kpm === null ? '--' : Math.round(stats.kpm)}</dd>
-              <span className="hud-unit">打/分</span>
+              <dd>
+                {stats.kpm === null ? '--' : Math.round(stats.kpm)}
+                <span className="hud-unit">打/分</span>
+              </dd>
             </div>
             <div>
               <dt>正確率</dt>

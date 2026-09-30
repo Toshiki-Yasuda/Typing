@@ -83,6 +83,8 @@ describe('Play', () => {
     const second = first === 'kaki' ? 'umi' : 'kaki';
     press('z');
     expect(screen.getByRole('region', { name: 'お題' }).className).toContain('bg-danger');
+    // 対照: 誤打のときは、お題カードに「ミス」の表示が出る（IME 中の入力では出ないことを別のテストで確かめている）
+    expect(screen.getByText('ミス', { selector: 'span[aria-hidden]' })).toBeInTheDocument();
     expect(screen.getByLabelText('進捗')).toHaveTextContent('1 / 2');
     typeKeys(first + second);
 
@@ -99,7 +101,8 @@ describe('Play', () => {
     expect(screen.getByRole('status')).toHaveTextContent('半角/英数');
     expect(screen.getByLabelText('進捗')).toHaveTextContent('1 / 2');
     press('a', { keyCode: 229 });
-    expect(screen.queryByText(/ミス/)).not.toBeInTheDocument();
+    // お題カードの「ミス」表示（HUD の数字欄の「ミス」ラベルとは別）
+    expect(screen.queryByText('ミス', { selector: 'span[aria-hidden]' })).not.toBeInTheDocument();
   });
 
   it('Ctrl 併用・自動連打は打鍵にしない', async () => {

@@ -36,6 +36,8 @@
 
 - ホーム（`src/screens/Home.tsx`）は、見出し → はじめる（CTA・修行・統計）→ 状況タイル → 提案 → チャレンジ/級位 → ボス → 記録 → 設定とデータ の順。共通の見た目は `src/index.css` の `.card` `.btn-primary` `.tile-link` `.stat-tile` `.rank-badge`（色はトークンから作る）。320px 幅のはみ出し確認は `node scripts/overflow.mjs 320 /`。
 
+- 練習画面（`src/screens/play/`）: 3 ゾーン（待ち行列 / 舞台 / 指の案内）＋上部の HUD＋背景の 3 層。設計とレビューは `docs/design/play-upgrade.md`、複数エージェントでの進め方は `docs/design/agents.md`。`liveMetrics`（`metrics/live.ts`）は `computeMetrics` を再利用し、速さは打鍵の間隔が無い間は null。運指ガイドの色は 8 色（`guide.css` の `--fg-*`、変えるときは dataviz の `validate_palette.js` を再実行）。
+
 ## 5. 次にやる候補（task.md に詳細。優先はオーナーに確認）
 1. ※練習の推奨・連接の弱点の出題反映は実装済み
 2. ペースゴースト（お題が違っても並走）

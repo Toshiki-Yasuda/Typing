@@ -40,3 +40,6 @@ Session   { id, startedAt, mode, contentId, engineVersion, ruleVersion, keystrok
 - 正確率の警告閾値（初期値は仮置き。使いながら調整する）。
 - ウィンドウが非アクティブの間の扱い（`blur` / `visibilitychange` でポーズするか。task.md の P0）。
 - 打鍵時刻の丸め精度の実測。
+
+## 練習中の指標（liveMetrics）
+`liveMetrics(keystrokes, nowMs)`（`src/metrics/live.ts`）は、練習画面の上部バーに出す速さ・正確率・ミス数・経過秒を返す。**`computeMetrics` を呼ぶだけで、定義を二重に持たない**。速さは打鍵の間隔がまだ無い間（実効時間が 0）は `null`、正確率は打鍵が無ければ `null`。経過秒は `floor(nowMs / 1000)`（負にならない）。

@@ -117,9 +117,9 @@
   border-radius: 0.375rem;
   background: var(--color-surface-raised);
   padding: 0.5rem 0.75rem;
-  /* 遠いほど小さく薄く（--i は 0 始まりの順番） */
+  /* 遠いほど小さく、わずかに薄く（--i は 0 始まりの順番）。薄くしすぎるとコントラストが足りなくなる（3 番目で 0.76 が下限の目安） */
   font-size: calc(1.125rem - var(--i) * 0.125rem);
-  opacity: calc(1 - var(--i) * 0.22);
+  opacity: calc(1 - var(--i) * 0.08);
 }
 @media (min-width: 1024px) and (max-width: 1199px) {
   .queue-rail {

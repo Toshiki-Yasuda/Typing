@@ -179,4 +179,18 @@ export const SCENARIOS = {
     await page.waitForTimeout(300);
     await page.screenshot({ path: ctx.path });
   },
+  /** 統合後の練習画面: 幅ごと（1920 / 1440 / 1280 / 1024 / 390）に、入力の途中の状態を撮る */
+  async playWidths(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(`${ctx.url}#/play`);
+    await page.getByRole('region', { name: 'お題' }).waitFor();
+    const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');
+    for (const key of romaji.slice(0, Math.max(2, Math.floor(romaji.length / 2)))) await page.keyboard.press(key);
+    for (const w of [1920, 1440, 1280, 1024, 390]) {
+      await page.setViewportSize({ width: w, height: Math.round(w * 0.5625) > 900 ? 1000 : Math.max(700, Math.round(w * 0.56)) });
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: ctx.path.replace('.png', `-w${w}.png`) });
+    }
+    await page.screenshot({ path: ctx.path });
+  },
 };

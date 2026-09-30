@@ -12,7 +12,8 @@ import { BossHud } from './boss/BossHud';
 import { webglAvailable, type EffectLevel } from '@/effects/level';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
-import { bigramWeakness, keyWeakness } from '@/metrics';
+import { bigramWeakness, keyWeakness, liveMetrics } from '@/metrics';
+import { useSettings } from '@/settings/useSettings';
 import { pickAdaptive } from '@/session/adaptive';
 import { hideActive, skillRules, stripActive } from '@/session/bossSkills';
 import { parseVows, plainRecords, vowEffects } from '@/session/vows';
@@ -91,6 +92,9 @@ export function Play({
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
+  const [settings] = useSettings();
+  // 練習中の数字用の経過時間（セッション開始からのミリ秒）。描画中に時計を読まないよう、1 秒ごとに state へ写す
+  const [nowMs, setNowMs] = useState(0);
   const quiet = train?.kind === 'zetsu';
   const bossLimitMs = boss?.timeLimitSec ? boss.timeLimitSec * 1000 : null;
   const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : bossLimitMs;
@@ -252,6 +256,14 @@ export function Play({
     [boss, conclude, endRun],
   );
 
+  useEffect(() => {
+    if (!session) return;
+    const tick = () => setNowMs(session.elapsedMs(performance.now()));
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [session]);
+
   // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
   useEffect(() => {
     if (!session || limitMs === null) return;
@@ -387,7 +399,17 @@ export function Play({
     <PlayFrame
       overlay={fx && boss && level !== 'off' ? <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} /> : null}
       heading={<PageHeading title={headingTitle} srOnly />}
-      hud={<HudBar index={view.index} total={view.total} label={train?.label} remaining={remaining} />}
+      hud={
+        <HudBar
+          index={view.index}
+          total={view.total}
+          label={train?.label}
+          remaining={remaining}
+          stats={settings.liveStats ? liveMetrics(session.keystrokes, nowMs) : undefined}
+          showStats={settings.liveStats}
+          onAbort={() => navigate('/')}
+        />
+      }
       notices={
         <>
           {feel && (
