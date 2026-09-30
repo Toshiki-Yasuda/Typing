@@ -21,6 +21,16 @@
 | `src/styles/{stage,backdrop,hud,guide,fx}.css` | 機能ごとの CSS。`index.css` から import 済み（**index.css は誰も編集しない**） |
 | 設定 `showQueue` / `liveStats` / `fingerColors` | 保存・既定（すべて true）・ホームの設定のチェックまで作成済み。**挙動は各担当が実装** |
 
+### 作業コピー（worktree）の作り方 — 重要
+エージェントに `isolation: worktree` を使うと、**作業ブランチではなく古い基点（main）から作られる**ことがある（継ぎ目が無い状態で始まり、担当が止まる）。そこで**オーケストレーターが作業コピーを作り**、エージェントには絶対パスで場所を渡す:
+```bash
+# 準備コミットを済ませてから（git log で継ぎ目のコミットを確認）
+for x in a b c d e; do git worktree add -b wave1-$x .claude/worktrees/wave1-$x HEAD; done
+```
+- エージェントは `isolation` を付けずに起動し、プロンプトの先頭で「作業場所は `/home/user/Typing/.claude/worktrees/wave1-x`。本体と他のコピーには触れない。merge/rebase/push/reset をしない」と伝える。
+- `.claude/worktrees/` は `.gitignore` 済み。取り込み後は `git worktree remove` とブランチ削除で片づける。
+- 各コピーには `node_modules` が無い。エージェントが最初に `npm install --no-audit --no-fund` を行う。
+
 ## 2. 所有ファイル表（衝突しないように分ける）
 | 担当 | 段階 | 触ってよいファイル | 触ってはいけない |
 |---|---|---|---|
