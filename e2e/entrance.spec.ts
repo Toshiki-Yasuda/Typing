@@ -119,6 +119,28 @@ test.describe('設定画面', () => {
   });
 });
 
+test.describe('図鑑', () => {
+  test('タイトルから開ける。打った語は遭遇・習熟になり、区分で絞れる（axe も通る）', async ({ page }) => {
+    await page.goto('/'); // DB を作らせる
+    await seedRecords(page, 3, { target: 'ごん', idPrefix: 'gon' });
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('8'); // 図鑑
+    await expect(page.getByRole('heading', { level: 1, name: '図鑑' })).toBeVisible();
+    await expect(page.getByRole('status')).toContainText(/遭遇 1 \/ 全 \d+ ・ 習熟 1/);
+    const gon = page.getByRole('listitem').filter({ hasText: 'ゴン' }).first();
+    await expect(gon).toContainText('習熟');
+    await expect(gon).toContainText('3 回・正確率 100%');
+    await expect(page.getByText('？？？').first()).toBeVisible();
+    await page.getByRole('button', { name: /^能力/ }).click();
+    await expect(page.getByRole('button', { name: /^能力/ })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByText('ゴン')).toHaveCount(0);
+    await scan(page, '図鑑');
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+  });
+});
+
 test.describe('ステージ選択', () => {
   const typeCurrentWord = async (page: Page) => {
     const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');

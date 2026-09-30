@@ -79,9 +79,9 @@ export const settle = (page) =>
  * 打鍵の記録を IndexedDB（typing / sessions）へ直接入れる（e2e/helpers.ts の seedRecords と同じ）。
  * 先に一度ページを開いてから呼び、呼んだ後にもう一度開く。
  */
-export async function seedRecords(page, count, { contentId = 'basic', keys = 30, dt = 150, idPrefix = 'seed', expected = 'x' } = {}) {
+export async function seedRecords(page, count, { contentId = 'basic', keys = 30, dt = 150, idPrefix = 'seed', expected = 'x', target = 'x' } = {}) {
   await page.evaluate(
-    async ({ count, contentId, keys, dt, idPrefix, expected }) => {
+    async ({ count, contentId, keys, dt, idPrefix, expected, target }) => {
       const db = await new Promise((resolve, reject) => {
         const open = indexedDB.open('typing', 2);
         open.onupgradeneeded = () => {
@@ -99,7 +99,7 @@ export async function seedRecords(page, count, { contentId = 'basic', keys = 30,
           startedAt: Date.now() - i * 60_000,
           mode: 'practice',
           contentId,
-          targets: ['x'],
+          targets: [target],
           engineVersion: '1',
           ruleVersion: '1',
           keystrokes: Array.from({ length: keys }, (_, k) => ({ t: (k + 1) * dt, key: expected, code: 'K', expected, correct: true, item: 0 })),
@@ -111,6 +111,6 @@ export async function seedRecords(page, count, { contentId = 'basic', keys = 30,
       });
       db.close();
     },
-    { count, contentId, keys, dt, idPrefix, expected },
+    { count, contentId, keys, dt, idPrefix, expected, target },
   );
 }

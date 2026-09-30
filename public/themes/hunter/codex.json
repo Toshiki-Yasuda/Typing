@@ -1,0 +1,1726 @@
+{
+"entries": [
+{
+"display": "ゴン",
+"reading": "ごん",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ジン",
+"reading": "じん",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ミト",
+"reading": "みと",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ぬまちたい",
+"reading": "ぬまちたい",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "ちかどう",
+"reading": "ちかどう",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "ジュース",
+"reading": "じゅーす",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "トリックタワー",
+"reading": "とりっくたわー",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "ベンドット",
+"reading": "べんどっと",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "マジタニ",
+"reading": "まじたに",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "セドカン",
+"reading": "せどかん",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "レルート",
+"reading": "れるーと",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ジョネス",
+"reading": "じょねす",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ろうそく",
+"reading": "ろうそく",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "スイッチ",
+"reading": "すいっち",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "ボタン",
+"reading": "ぼたん",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "ゼビルとう",
+"reading": "ぜびるとう",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "プレート",
+"reading": "ぷれーと",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "つりざお",
+"reading": "つりざお",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "バッジ",
+"reading": "ばっじ",
+"category": "item",
+"chapter": 1
+},
+{
+"display": "シュウ",
+"reading": "しゅう",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ゾルディックけ",
+"reading": "ぞるでぃっくけ",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "ククルーマウンテン",
+"reading": "くくるーまうんてん",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "ためしのもん",
+"reading": "ためしのもん",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "しれんのみち",
+"reading": "しれんのみち",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "シルバ",
+"reading": "しるば",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ゼノ",
+"reading": "ぜの",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "キキョウ",
+"reading": "ききょう",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ミルキ",
+"reading": "みるき",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "カルト",
+"reading": "かると",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ゴトー",
+"reading": "ごとー",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "カナリア",
+"reading": "かなりあ",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ゼブロ",
+"reading": "ぜぶろ",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "ミケ",
+"reading": "みけ",
+"category": "character",
+"chapter": 1
+},
+{
+"display": "てんくうとうぎじょう",
+"reading": "てんくうとうぎじょう",
+"category": "location",
+"chapter": 1
+},
+{
+"display": "てん",
+"reading": "てん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ぜつ",
+"reading": "ぜつ",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "れん",
+"reading": "れん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "はつ",
+"reading": "はつ",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ぎょう",
+"reading": "ぎょう",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "いん",
+"reading": "いん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "えん",
+"reading": "えん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "しゅう",
+"reading": "しゅう",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "こう",
+"reading": "こう",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "けん",
+"reading": "けん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "りゅう",
+"reading": "りゅう",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ウイング",
+"reading": "ういんぐ",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "ズシ",
+"reading": "ずし",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "ギド",
+"reading": "ぎど",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "サダソ",
+"reading": "さだそ",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "リールベルト",
+"reading": "りーるべると",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "ヒソカ",
+"reading": "ひそか",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "キルア",
+"reading": "きるあ",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "カストロ",
+"reading": "かすとろ",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "ココ",
+"reading": "ここ",
+"category": "character",
+"chapter": 2
+},
+{
+"display": "バンジーガム",
+"reading": "ばんじーがむ",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ドッキリテクスチャー",
+"reading": "どっきりてくすちゃー",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ダブル",
+"reading": "だぶる",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "こま",
+"reading": "こま",
+"category": "item",
+"chapter": 2
+},
+{
+"display": "むち",
+"reading": "むち",
+"category": "item",
+"chapter": 2
+},
+{
+"display": "トランプ",
+"reading": "とらんぷ",
+"category": "item",
+"chapter": 2
+},
+{
+"display": "ジャジャンケン",
+"reading": "じゃじゃんけん",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "グー",
+"reading": "ぐー",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "チー",
+"reading": "ちー",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "パー",
+"reading": "ぱー",
+"category": "ability",
+"chapter": 2
+},
+{
+"display": "ナンバープレート",
+"reading": "なんばーぷれーと",
+"category": "item",
+"chapter": 2
+},
+{
+"display": "クロロ",
+"reading": "くろろ",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "マチ",
+"reading": "まち",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "フェイタン",
+"reading": "ふぇいたん",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "シャルナーク",
+"reading": "しゃるなーく",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "フランクリン",
+"reading": "ふらんくりん",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "ノブナガ",
+"reading": "のぶなが",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "ウボォーギン",
+"reading": "うぼぉーぎん",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "パクノダ",
+"reading": "ぱくのだ",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "コルトピ",
+"reading": "こるとぴ",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "ボノレノフ",
+"reading": "ぼのれのふ",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "シズク",
+"reading": "しずく",
+"category": "character",
+"chapter": 3
+},
+{
+"display": "りゅうせいがい",
+"reading": "りゅうせいがい",
+"category": "location",
+"chapter": 3
+},
+{
+"display": "メテオシティ",
+"reading": "めておしてぃ",
+"category": "location",
+"chapter": 3
+},
+{
+"display": "スキルハンター",
+"reading": "すきるはんたー",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ぬすんだうでによる",
+"reading": "ぬすんだうでによる",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ねんしじゅう",
+"reading": "ねんしじゅう",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ダブルフェイス",
+"reading": "だぶるふぇいす",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ビッグバンインパクト",
+"reading": "びっぐばんいんぱくと",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "メモリーボム",
+"reading": "めもりーぼむ",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ブラックボイス",
+"reading": "ぶらっくぼいす",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ギャラリーフェイク",
+"reading": "ぎゃらりーふぇいく",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "インドアフィッシュ",
+"reading": "いんどあふぃっしゅ",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "ペインパッカー",
+"reading": "ぺいんぱっかー",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "デメちゃん",
+"reading": "でめちゃん",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "アンテナ",
+"reading": "あんてな",
+"category": "item",
+"chapter": 3
+},
+{
+"display": "けいたいでんわ",
+"reading": "けいたいでんわ",
+"category": "item",
+"chapter": 3
+},
+{
+"display": "ライジングサン",
+"reading": "らいじんぐさん",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "かたな",
+"reading": "かたな",
+"category": "item",
+"chapter": 3
+},
+{
+"display": "そうじき",
+"reading": "そうじき",
+"category": "item",
+"chapter": 3
+},
+{
+"display": "ねんじゅう",
+"reading": "ねんじゅう",
+"category": "item",
+"chapter": 3
+},
+{
+"display": "バトルダンス",
+"reading": "ばとるだんす",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "きえるマジック",
+"reading": "きえるまじっく",
+"category": "ability",
+"chapter": 3
+},
+{
+"display": "クラピカ",
+"reading": "くらぴか",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "センリツ",
+"reading": "せんりつ",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ネオン",
+"reading": "ねおん",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ゼパイル",
+"reading": "ぜぱいる",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ライト",
+"reading": "らいと",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "イワレンコフ",
+"reading": "いわれんこふ",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "スクワラ",
+"reading": "すくわら",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "バショウ",
+"reading": "ばしょう",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ノストラード",
+"reading": "のすとらーど",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ゼンジ",
+"reading": "ぜんじ",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "リンセン",
+"reading": "りんせん",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ベルゼブブ",
+"reading": "べるぜぶぶ",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ヨークシンシティ",
+"reading": "よーくしんしてぃ",
+"category": "location",
+"chapter": 4
+},
+{
+"display": "ほうせき",
+"reading": "ほうせき",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "きんか",
+"reading": "きんか",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ぎんか",
+"reading": "ぎんか",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ダイヤモンド",
+"reading": "だいやもんど",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ルビー",
+"reading": "るびー",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "サファイア",
+"reading": "さふぁいあ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "エメラルド",
+"reading": "えめらるど",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "きん",
+"reading": "きん",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ぎん",
+"reading": "ぎん",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "どう",
+"reading": "どう",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "てつ",
+"reading": "てつ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "エンペラータイム",
+"reading": "えんぺらーたいむ",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "ホーリーチェーン",
+"reading": "ほーりーちぇーん",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "チェーンジェイル",
+"reading": "ちぇーんじぇいる",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "ダウジングチェーン",
+"reading": "だうじんぐちぇーん",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "ジャッジメントチェーン",
+"reading": "じゃっじめんとちぇーん",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "ぐきょくのめ",
+"reading": "ぐきょくのめ",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "くさり",
+"reading": "くさり",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "フィンクス",
+"reading": "ふぃんくす",
+"category": "character",
+"chapter": 4
+},
+{
+"display": "ダブルマシンガン",
+"reading": "だぶるましんがん",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "ねんいとう",
+"reading": "ねんいとう",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "りっとうのいと",
+"reading": "りっとうのいと",
+"category": "ability",
+"chapter": 4
+},
+{
+"display": "グリードアイランド",
+"reading": "ぐりーどあいらんど",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ゲーム",
+"reading": "げーむ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "やみのフルート",
+"reading": "やみのふるーと",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ソナタ",
+"reading": "そなた",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "フルート",
+"reading": "ふるーと",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ぶき",
+"reading": "ぶき",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ぼうぐ",
+"reading": "ぼうぐ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "どうぐ",
+"reading": "どうぐ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "かざりもの",
+"reading": "かざりもの",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "アクセサリー",
+"reading": "あくせさりー",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ゆびわ",
+"reading": "ゆびわ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "くびかざり",
+"reading": "くびかざり",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "うでわ",
+"reading": "うでわ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "かんむり",
+"reading": "かんむり",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "おうしゃく",
+"reading": "おうしゃく",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "つぼ",
+"reading": "つぼ",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "え",
+"reading": "え",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ちょうこく",
+"reading": "ちょうこく",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "かいが",
+"reading": "かいが",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "びじゅつひん",
+"reading": "びじゅつひん",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "こっとうひん",
+"reading": "こっとうひん",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "こだいのもの",
+"reading": "こだいのもの",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ほん",
+"reading": "ほん",
+"category": "item",
+"chapter": 4
+},
+{
+"display": "ビスケ",
+"reading": "びすけ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "レイザー",
+"reading": "れいざー",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ゲンスルー",
+"reading": "げんするー",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ツェズゲラ",
+"reading": "つぇずげら",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ゴレイヌ",
+"reading": "ごれいぬ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "アベンガネ",
+"reading": "あべんがね",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "バラ",
+"reading": "ばら",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "サブ",
+"reading": "さぶ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "カイト",
+"reading": "かいと",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "プーハット",
+"reading": "ぷーはっと",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ニッケス",
+"reading": "にっけす",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "モタリケ",
+"reading": "もたりけ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "チンポ",
+"reading": "ちんぽ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "イータ",
+"reading": "いーた",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "エレナ",
+"reading": "えれな",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "リスト",
+"reading": "りすと",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ウォンク",
+"reading": "うぉんく",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ゼホ",
+"reading": "ぜほ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "ボポボ",
+"reading": "ぼぽぼ",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "バテラ",
+"reading": "ばてら",
+"category": "character",
+"chapter": 5
+},
+{
+"display": "カード",
+"reading": "かーど",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "バインダー",
+"reading": "ばいんだー",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "ブック",
+"reading": "ぶっく",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "しゅりょうば",
+"reading": "しゅりょうば",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "まち",
+"reading": "まち",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "むら",
+"reading": "むら",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "ダンジョン",
+"reading": "だんじょん",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "もり",
+"reading": "もり",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "やま",
+"reading": "やま",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "うみ",
+"reading": "うみ",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "みずうみ",
+"reading": "みずうみ",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "さばく",
+"reading": "さばく",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "どうくつ",
+"reading": "どうくつ",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "いせき",
+"reading": "いせき",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "しろ",
+"reading": "しろ",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "とりで",
+"reading": "とりで",
+"category": "location",
+"chapter": 5
+},
+{
+"display": "トロフィー",
+"reading": "とろふぃー",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "メダル",
+"reading": "めだる",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "アクシデント",
+"reading": "あくしでんと",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "マグネティックフォース",
+"reading": "まぐねてぃっくふぉーす",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "アカンパニー",
+"reading": "あかんぱにー",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "リターン",
+"reading": "りたーん",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "リープ",
+"reading": "りーぷ",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "トレース",
+"reading": "とれーす",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "リサイクル",
+"reading": "りさいくる",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "クローン",
+"reading": "くろーん",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "デフレクト",
+"reading": "でふれくと",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "ドッジ",
+"reading": "どっじ",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "ロブ",
+"reading": "ろぶ",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "スティール",
+"reading": "すてぃーる",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "コンタクト",
+"reading": "こんたくと",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "アナリシス",
+"reading": "あなりしす",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "ボマー",
+"reading": "ぼまー",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "いっしょくそくはつ",
+"reading": "いっしょくそくはつ",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "しろいゴリラ",
+"reading": "しろいごりら",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "くろいゴリラ",
+"reading": "くろいごりら",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "ピアノマッサージ",
+"reading": "ぴあのまっさーじ",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "マジカルエステ",
+"reading": "まじかるえすて",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "クッキーちゃん",
+"reading": "くっきーちゃん",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "クレイジースロット",
+"reading": "くれいじーすろっと",
+"category": "ability",
+"chapter": 5
+},
+{
+"display": "ばくだん",
+"reading": "ばくだん",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "ボール",
+"reading": "ぼーる",
+"category": "item",
+"chapter": 5
+},
+{
+"display": "メルエム",
+"reading": "めるえむ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ネフェルピトー",
+"reading": "ねふぇるぴとー",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "シャウアプフ",
+"reading": "しゃうあぷふ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "モントゥトゥユピー",
+"reading": "もんとぅとぅゆぴー",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "コムギ",
+"reading": "こむぎ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ネテロ",
+"reading": "ねてろ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ノヴ",
+"reading": "のぶ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "モラウ",
+"reading": "もらう",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ナックル",
+"reading": "なっくる",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "シュート",
+"reading": "しゅーと",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "パーム",
+"reading": "ぱーむ",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "イカルゴ",
+"reading": "いかるご",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "メレオロン",
+"reading": "めれおろん",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "コルト",
+"reading": "こると",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "レイナ",
+"reading": "れいな",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ペギー",
+"reading": "ぺぎー",
+"category": "character",
+"chapter": 6
+},
+{
+"display": "ひがしゴルトー",
+"reading": "ひがしごるとー",
+"category": "location",
+"chapter": 6
+},
+{
+"display": "きゅうでん",
+"reading": "きゅうでん",
+"category": "location",
+"chapter": 6
+},
+{
+"display": "す",
+"reading": "す",
+"category": "location",
+"chapter": 6
+},
+{
+"display": "ひゃくしきかんのん",
+"reading": "ひゃくしきかんのん",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "きっかのせいやく",
+"reading": "きっかのせいやく",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "ディープパープル",
+"reading": "でぃーぷぱーぷる",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "ハコワレ",
+"reading": "はこわれ",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "ポットクリン",
+"reading": "ぽっとくりん",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "マンションあんこく",
+"reading": "まんしょんあんこく",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "ホテルラフレシア",
+"reading": "ほてるらふれしあ",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "かみをすべらす",
+"reading": "かみをすべらす",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "あんこくのおに",
+"reading": "あんこくのおに",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "かぜつかい",
+"reading": "かぜつかい",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "ミニチュアローズ",
+"reading": "みにちゅあろーず",
+"category": "ability",
+"chapter": 6
+},
+{
+"display": "パリストン",
+"reading": "ぱりすとん",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "チードル",
+"reading": "ちーどる",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ミザイストム",
+"reading": "みざいすとむ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "サッチョウ",
+"reading": "さっちょう",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ゲル",
+"reading": "げる",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ピヨン",
+"reading": "ぴよん",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ギンタ",
+"reading": "ぎんた",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "カンザイ",
+"reading": "かんざい",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ボトバイ",
+"reading": "ぼとばい",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "レオリオ",
+"reading": "れおりお",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "じゅうにしん",
+"reading": "じゅうにしん",
+"category": "organization",
+"chapter": 7
+},
+{
+"display": "ハンターきょうかい",
+"reading": "はんたーきょうかい",
+"category": "organization",
+"chapter": 7
+},
+{
+"display": "アルカ",
+"reading": "あるか",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ナニカ",
+"reading": "なにか",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "イルミ",
+"reading": "いるみ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ねがいごと",
+"reading": "ねがいごと",
+"category": "ability",
+"chapter": 7
+},
+{
+"display": "おねだり",
+"reading": "おねだり",
+"category": "ability",
+"chapter": 7
+},
+{
+"display": "あんこくたいりく",
+"reading": "あんこくたいりく",
+"category": "location",
+"chapter": 7
+},
+{
+"display": "しんたいりく",
+"reading": "しんたいりく",
+"category": "location",
+"chapter": 7
+},
+{
+"display": "カキン",
+"reading": "かきん",
+"category": "location",
+"chapter": 7
+},
+{
+"display": "カキンていこく",
+"reading": "かきんていこく",
+"category": "organization",
+"chapter": 7
+},
+{
+"display": "ベンジャミン",
+"reading": "べんじゃみん",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "カミーラ",
+"reading": "かみーら",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "チョウライ",
+"reading": "ちょうらい",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ツェリードニヒ",
+"reading": "つぇりーどにひ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ツベッパ",
+"reading": "つべっぱ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "タイソン",
+"reading": "たいそん",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ルズールス",
+"reading": "るずーるす",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "サレサレ",
+"reading": "されされ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ハルケンブルグ",
+"reading": "はるけんぶるぐ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "カチョウ",
+"reading": "かちょう",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "フウゲツ",
+"reading": "ふうげつ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "マラヤーム",
+"reading": "まらやーむ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "モモゼ",
+"reading": "ももぜ",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ワブル",
+"reading": "わぶる",
+"category": "character",
+"chapter": 7
+},
+{
+"display": "ブラックホエールごう",
+"reading": "ぶらっくほえーるごう",
+"category": "location",
+"chapter": 7
+},
+{
+"display": "せんない",
+"reading": "せんない",
+"category": "location",
+"chapter": 7
+},
+{
+"display": "せんりつのかめん",
+"reading": "せんりつのかめん",
+"category": "ability",
+"chapter": 7
+},
+{
+"display": "ゆびを",
+"reading": "ゆびを",
+"category": "ability",
+"chapter": 7
+},
+{
+"display": "げんえいりょだん",
+"reading": "げんえいりょだん",
+"category": "organization",
+"chapter": 7
+}
+]
+}

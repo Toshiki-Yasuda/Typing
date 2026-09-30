@@ -126,4 +126,19 @@ export const SCENARIOS = {
     await page.waitForTimeout(2500);
     await page.screenshot({ path: ctx.path, fullPage: true });
   },
+  /** 図鑑（一部の語を打った状態） */
+  async codex(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    for (const [i, target] of ['ごん', 'じん', 'きるあ', 'ぜつ'].entries()) {
+      await seedRecords(page, i === 0 ? 4 : 1, { target, idPrefix: `c${i}`, expected: 'x' });
+    }
+    await unlockTheme(page, ctx.url);
+    await skipToTitle(page);
+    await page.keyboard.press('8');
+    await page.getByRole('heading', { level: 1, name: '図鑑' }).waitFor();
+    await page.getByRole('status').waitFor();
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: ctx.path, fullPage: false });
+  },
 };

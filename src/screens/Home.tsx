@@ -123,6 +123,12 @@ export function Home() {
               <span className="font-bold">修行（型を選んで練習）</span>
               <small id="hint-train">静寂・速さ・弱点。ミスなし／60 秒／苦手だけ</small>
             </Link>
+            {theme.codex && (
+              <Link to="/codex" className="tile-link" aria-label={theme.codex.heading} aria-describedby="hint-codex">
+                <span className="font-bold">{theme.codex.heading}</span>
+                <small id="hint-codex">出会った語と習熟。人物・能力・道具・場所・組織</small>
+              </Link>
+            )}
             <Link to="/stats" className="tile-link" aria-label="統計を見る" aria-describedby="hint-stats">
               <span className="font-bold">統計を見る</span>
               <small id="hint-stats">推移・キー別の弱点・時間帯・級位</small>

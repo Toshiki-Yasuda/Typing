@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AXIS_IDS } from '@/metrics/axes';
+import { CODEX_CATEGORIES } from '@/content/codex';
 import { SKILL_KINDS } from '@/session/bossSkills';
 
 /** テーマが上書きできる色。これ以外は上書きできない（グラフの色などは検証済みの固定値のため） */
@@ -148,6 +149,15 @@ export const ThemeSchema = z.object({
     .optional(),
   /** 6 軸診断の見せ方（作品の言葉への対応）。無ければ、軸の名前だけで見せる */
   diagnosis: DiagnosisSchema.optional(),
+  /** 図鑑。語彙のうち、キャラクター・能力などを見出しにして、出会った印と習熟を示す（docs/spec/codex.md） */
+  codex: z
+    .object({
+      heading: z.string().min(1),
+      /** 図鑑のデータ（JSON。アプリからの相対パス） */
+      path: z.string().min(1),
+      categories: z.object(Object.fromEntries(CODEX_CATEGORIES.map((c) => [c, z.string().min(1)])) as Record<(typeof CODEX_CATEGORIES)[number], z.ZodString>),
+    })
+    .optional(),
   /** 縛りの見出し（無ければ「縛り」） */
   vowsHeading: z.string().min(1).optional(),
   /** 修行の型（絶・練・発）と補助（凝・円）の呼び名 */
