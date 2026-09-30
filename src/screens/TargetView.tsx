@@ -4,10 +4,26 @@ import { normalizeTarget } from '@/engine';
 
 /** 長い文でも収まるよう、文字数に応じて大きさを変える（短い語は大きく、長い文は小さく折り返す） */
 export function sizeClasses(displayLength: number, readingLength: number, romajiLength: number) {
+  // Tailwind はソース中の完全なクラス名を走査して生成するため、文字列は連結せず全文で書く
   return {
-    display: displayLength <= 12 ? 'text-4xl' : displayLength <= 24 ? 'text-3xl' : 'text-2xl',
-    reading: readingLength <= 12 ? 'text-2xl' : readingLength <= 24 ? 'text-xl' : 'text-lg',
-    romaji: romajiLength <= 24 ? 'text-3xl tracking-widest' : romajiLength <= 48 ? 'text-2xl tracking-wide' : 'text-xl tracking-normal',
+    display:
+      displayLength <= 12
+        ? 'text-[length:clamp(2.75rem,5.5vw,5rem)]'
+        : displayLength <= 24
+          ? 'text-[length:clamp(2rem,4vw,3.5rem)]'
+          : 'text-[length:clamp(1.5rem,2.8vw,2.5rem)]',
+    reading:
+      readingLength <= 12
+        ? 'text-[length:clamp(1.5rem,3vw,2.5rem)]'
+        : readingLength <= 24
+          ? 'text-[length:clamp(1.25rem,2.4vw,1.75rem)]'
+          : 'text-[length:clamp(1rem,1.9vw,1.25rem)]',
+    romaji:
+      romajiLength <= 24
+        ? 'text-[length:clamp(2.25rem,4.5vw,3.75rem)] tracking-widest'
+        : romajiLength <= 48
+          ? 'text-[length:clamp(1.75rem,3.4vw,2.75rem)] tracking-wide'
+          : 'text-[length:clamp(1.25rem,2.4vw,1.875rem)] tracking-normal',
   };
 }
 
@@ -37,7 +53,7 @@ export function TargetView({
   return (
     <section
       aria-label="お題"
-      className={`relative flex flex-col items-center gap-4 rounded-lg p-8 text-center transition-colors ${
+      className={`target-card relative flex flex-col items-center gap-4 p-8 text-center transition-colors ${
         missing ? 'bg-danger/20 ring-2 ring-danger' : 'bg-surface-raised'
       }`}
     >
@@ -60,8 +76,8 @@ export function TargetView({
         </p>
       ) : (
       <p className={`font-mono ${size.romaji} break-all`} aria-label="ローマ字ガイド">
-        <span className="text-text-muted">{typed}</span>
-        <span className="text-accent underline decoration-2 underline-offset-8">{next === ' ' ? '␣' : next}</span>
+        <span className="target-typed">{typed}</span>
+        <span className="target-next">{next === ' ' ? '␣' : next}</span>
         <span>
           {weakKeys && weakKeys.size > 0
             ? others.map((c, i) =>

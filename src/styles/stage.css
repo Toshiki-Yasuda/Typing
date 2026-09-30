@@ -1,1 +1,29 @@
 /* stage: 練習画面のアップグレード用のスタイル（担当エージェント専用のファイル。計画書 docs/design/agents.md） */
+
+/* B: お題のカード＝舞台の面。額縁・二重の縁・内側の淡い光 */
+.target-card {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 45%, var(--color-surface-raised));
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--color-surface) 80%, black),
+    0 0 0 5px color-mix(in srgb, var(--color-accent) 30%, transparent),
+    inset 0 0 48px color-mix(in srgb, var(--color-accent) 12%, transparent),
+    0 12px 32px color-mix(in srgb, black 40%, transparent);
+}
+/* 打ち終えた分: 灰色に落とさず、明るい前景に淡いアクセントを混ぜる */
+.target-typed {
+  color: color-mix(in srgb, var(--color-accent) 30%, var(--color-text));
+}
+/* 次の1文字: アクセント色＋下線＋太字＋淡い塗り */
+.target-next {
+  color: var(--color-accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 0.18em;
+  background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  border-radius: 0.25rem;
+  padding: 0 0.1em;
+}
+/* B: ここまで */
