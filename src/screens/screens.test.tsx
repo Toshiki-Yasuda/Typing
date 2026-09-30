@@ -193,6 +193,25 @@ describe('Home', () => {
     ],
   });
 
+  it('記録が 20 件以上あって未バックアップなら促し、書き出すと消える。少なければ出ない', async () => {
+    const few = createMemoryStore();
+    for (let i = 0; i < 19; i++) await few.add(record(`f${i}`));
+    renderApp('/', few);
+    await screen.findAllByRole('link', { name: /打鍵\/分/ });
+    expect(screen.queryByTestId('backup-nudge')).toBeNull();
+    cleanup();
+
+    const many = createMemoryStore();
+    for (let i = 0; i < 20; i++) await many.add(record(`m${i}`));
+    renderApp('/', many);
+    expect(await screen.findByTestId('backup-nudge')).toHaveTextContent('記録が 20 件あります。まだ書き出していません。');
+    URL.createObjectURL = vi.fn(() => 'blob:x');
+    URL.revokeObjectURL = vi.fn();
+    act(() => screen.getByRole('button', { name: '記録を書き出す' }).click());
+    await waitFor(() => expect(screen.queryByTestId('backup-nudge')).toBeNull());
+    expect(localStorage.getItem('typing.backup.v1')).not.toBeNull();
+  });
+
   it('記録が無ければ案内を出す', async () => {
     renderApp('/');
     expect(await screen.findByText('まだ記録がありません。')).toBeInTheDocument();

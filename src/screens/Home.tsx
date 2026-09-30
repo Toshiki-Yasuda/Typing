@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { minKeystrokes } from '@/engine';
 import { computeMetrics, currentStreak, dayKey, rankStatus, summarizeSessions, type SessionRecord, type SessionSummary } from '@/metrics';
 import { todaysChallenge } from '@/session/daily';
-import { ImportError, exportSessions, parseExport } from '@/storage';
+import { ImportError, backupNudge, exportSessions, loadLastBackup, parseExport, saveLastBackup } from '@/storage';
 import { useStore } from '@/app/StoreContext';
 import { isOpen } from '@/session/stageUnlock';
 import { useUnlock } from './stage/useUnlock';
@@ -45,6 +45,8 @@ export function Home() {
   const [message, setMessage] = useState('');
   const [streak, setStreak] = useState(0);
   const [total, setTotal] = useState(0);
+  // バックアップの促し用。時刻は読み込み時に state へ持つ（描画中に時計を読まない）
+  const [backup, setBackup] = useState(() => ({ lastAt: loadLastBackup(), now: Date.now() }));
   const [settings, updateSettings] = useSettings();
   const custom = useCustomPacks();
   const theme = resolveTheme(settings.themeId, loadUnlocked());
@@ -88,8 +90,13 @@ export function Home() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [navigate]);
 
+  const nudge = backupNudge({ records: total, lastAt: backup.lastAt, now: backup.now });
+
   const onExport = async () => {
     download(`typing-${new Date().toISOString().slice(0, 10)}.json`, exportSessions(await store.list()));
+    const at = Date.now();
+    saveLastBackup(at);
+    setBackup({ lastAt: at, now: at });
   };
 
   const onImport = async (file: File) => {
@@ -248,6 +255,11 @@ export function Home() {
                 <p className="text-sm text-text-muted">
                   記録はこのブラウザにだけ保存されます。ブラウザのデータを消すと失われるので、定期的に書き出してください。
                 </p>
+                {nudge && (
+                  <p className="text-sm font-bold" data-testid="backup-nudge">
+                    ◆ {nudge}「記録を書き出す」でバックアップできます。
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-3">
                   <button type="button" onClick={onExport} className="tile-link !flex-row !px-4 !py-2">
                     記録を書き出す

@@ -1,3 +1,4 @@
+import '@/zodConfig'; // 他の import より先に評価させる
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';

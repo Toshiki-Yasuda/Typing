@@ -123,6 +123,9 @@ e2e/          Playwright
 ## 公開
 `main` への push で `.github/workflows/deploy.yml` が GitHub Pages に公開する。アセットは相対パス（`vite.config.ts` の `base: './'`）、画面遷移はハッシュ（`#/...`）。サブパス配下でも動く前提を崩さない（絶対パスの `/assets/...` や、ハッシュを使わない遷移を入れない）。
 
+## CSP
+ビルドした `index.html` に CSP の meta を入れている（`vite.config.ts`、`script-src 'self'`）。**eval・インラインスクリプト・外部への通信を足さない**。zod は `src/zodConfig.ts` で jitless にしている（`main.tsx` の最初の import）。違反は `e2e/csp.spec.ts` が検出する。
+
 ## 既知の落とし穴
 - React StrictMode の開発時は effect が2回走る。`Play` のセッション生成は、キャンセルフラグで先の1回を捨てている。
 - `KeyboardEvent` は IME 変換中に `isComposing` と `keyCode === 229` のどちらか片方しか立たないことがある。両方を見る。

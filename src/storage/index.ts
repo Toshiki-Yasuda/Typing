@@ -8,3 +8,4 @@ export { createMemoryPackStore } from './packStore';
 export type { PackStore } from './packStore';
 export { createMemoryStore } from './store';
 export type { SessionStore } from './store';
+export { backupNudge, loadLastBackup, saveLastBackup } from './backup';
