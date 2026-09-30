@@ -107,11 +107,10 @@ describe('練（時間制限）', () => {
     const store = createMemoryStore();
     renderPlay(store, <Play pack={pack} items={pack.items} mode="train:ren" train={{ kind: 'ren' }} />);
     await screen.findByRole('region', { name: 'お題' });
-    act(() => {
-      const e = new KeyboardEvent('keydown', { key: 'k', code: 'KeyK', bubbles: true, cancelable: true });
-      Object.defineProperty(e, 'timeStamp', { value: performance.now() + 61_000 });
-      window.dispatchEvent(e);
-    });
+    const now = performance.now();
+    const spy = vi.spyOn(performance, 'now').mockReturnValue(now + 61_000); // 61 秒後の時計
+    press('k');
+    spy.mockRestore();
     expect(await screen.findByText('修行の一覧')).toBeInTheDocument();
     expect(await store.list()).toHaveLength(0);
   });

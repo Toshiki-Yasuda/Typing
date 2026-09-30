@@ -184,6 +184,27 @@ test.describe('ステージ選択', () => {
     await page.getByRole('link', { name: /ボス メルエムに挑戦する/ }).click();
     await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
     await expect(page.getByText('ミスの余裕 1 回')).toBeVisible();
+    // 上位の章は時間制限つき。残り時間を文字で示す
+    await expect(page.getByRole('timer')).toContainText(/残り \d+ 秒/);
+    await scan(page, 'ボス戦（時間制限つき）');
+  });
+
+  test('ボスの技: 章 1 のボスは技を持つ（文字で示す）。設定で切れる', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    await page.getByRole('link', { name: /ボス ヒソカに挑戦する/ }).click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect(page.getByText(/技「トランプの奇術」/)).toBeVisible();
+    await expect(page.getByRole('timer')).toHaveCount(0);
+    await scan(page, 'ボス戦（技あり）');
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('Escape');
+    await page.goto('/#/stages');
+    await page.getByRole('checkbox', { name: /ボスの技を使う/ }).uncheck();
+    await page.getByRole('link', { name: /ボス ヒソカに挑戦する/ }).click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect(page.getByText(/技「/)).toHaveCount(0);
   });
 });
 

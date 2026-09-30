@@ -8,6 +8,8 @@ const EntrySchema = z.object({
   attempts: z.number().int().min(0),
   wins: z.number().int().min(0),
   best: z.enum(BOSS_RANKS as [BossRank, ...BossRank[]]).nullable(),
+  /** 勝利したときの、最大の縛りの数（メダルの元）。旧データには無い */
+  bestVows: z.number().int().min(0).max(4).optional(),
 });
 export type BossEntry = z.infer<typeof EntrySchema>;
 export type BossProgress = Readonly<Record<string, BossEntry>>;
@@ -42,6 +44,8 @@ export function recordBossResult(
   bossId: string,
   rank: BossRank,
   storage: Store | null = storageOrNull(),
+  /** この挑戦で付けていた縛りの数 */
+  vowCount = 0,
 ): BossProgress {
   const all = loadBossProgress(storage);
   const before = all[bossId] ?? { attempts: 0, wins: 0, best: null };
@@ -51,6 +55,8 @@ export function recordBossResult(
       attempts: before.attempts + 1,
       wins: before.wins + (rank === 'D' ? 0 : 1),
       best: betterRank(before.best, rank === 'D' ? null : rank),
+      // 勝ったときだけ、縛りの数を更新する（敗北では変えない）
+      ...(rank === 'D' ? (before.bestVows !== undefined ? { bestVows: before.bestVows } : {}) : { bestVows: Math.max(before.bestVows ?? 0, vowCount) }),
     },
   };
   try {

@@ -73,6 +73,8 @@ test('メルエム（ミスの余裕 1 回）: 2 回ミスすると敗北し、�
 });
 
 test('ヒソカ: 全お題を打てば勝ち、ノーミスならランク S', async ({ page }) => {
+  // ヒソカの技（3 つに 1 つ、ローマ字が隠れる）は切っておく。ガイドを読んで打つテストのため
+  await page.addInitScript(() => localStorage.setItem('typing.settings.v1', JSON.stringify({ bossSkills: false })));
   await unlock(page);
   await page.getByRole('link', { name: 'ヒソカに挑戦する' }).click();
   const guide = page.getByLabel('ローマ字ガイド');

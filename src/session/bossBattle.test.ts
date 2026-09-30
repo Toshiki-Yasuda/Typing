@@ -73,6 +73,93 @@ describe('BossBattle', () => {
   });
 });
 
+describe('時間制限（tick）', () => {
+  const timed: BattleRules = { words: 3, maxMisses: 3, timeLimitMs: 10_000 };
+
+  it('制限の手前では何も起きず、ちょうど制限で敗北（理由は時間切れ）', () => {
+    const b = new BossBattle(timed);
+    expect(b.tick(9_999)).toBe(false);
+    expect(b.state().status).toBe('fighting');
+    expect(b.tick(10_000)).toBe(true);
+    expect(b.state()).toMatchObject({ status: 'lost', lostBy: 'time' });
+    expect(b.rank()).toBe('D');
+  });
+
+  it('制限が無ければ、どれだけ経っても負けない', () => {
+    const b = new BossBattle(rules);
+    expect(b.tick(1e9)).toBe(false);
+    expect(b.state().status).toBe('fighting');
+  });
+
+  it('決着した後の tick は何も変えない（勝利は時間切れにならない・敗北の理由は変わらない）', () => {
+    const won = new BossBattle({ words: 1, maxMisses: 1, timeLimitMs: 100 });
+    won.apply('sessionDone');
+    expect(won.tick(1000)).toBe(false);
+    expect(won.state()).toMatchObject({ status: 'won', lostBy: null });
+    const lost = new BossBattle({ words: 2, maxMisses: 0, timeLimitMs: 100 });
+    lost.apply('miss');
+    expect(lost.tick(1000)).toBe(false);
+    expect(lost.state().lostBy).toBe('misses');
+  });
+
+  it('敗北の理由: ミスなら misses。戦闘中・勝利は null', () => {
+    expect(new BossBattle(rules).state().lostBy).toBeNull();
+    expect(run(['miss', 'miss', 'miss', 'miss']).b.state()).toMatchObject({ status: 'lost', lostBy: 'misses' });
+  });
+
+  it('不正な制限は作れない', () => {
+    expect(() => new BossBattle({ words: 1, maxMisses: 1, timeLimitMs: 0 })).toThrow();
+    expect(() => new BossBattle({ words: 1, maxMisses: 1, timeLimitMs: -5 })).toThrow();
+  });
+});
+
+describe('スタミナ（recoverEvery）', () => {
+  const stamina: BattleRules = { words: 50, maxMisses: 2, recoverEvery: 3 };
+  const oks = (n: number): PressEvent[] => Array(n).fill('ok');
+
+  it('正しい打鍵が指定の回数つづくごとに、ミスを 1 回ぶん回復する', () => {
+    const { b } = run(['miss', 'miss', ...oks(3)], stamina);
+    expect(b.state()).toMatchObject({ misses: 1, missesTotal: 2, missesLeft: 1 });
+    b.apply('ok');
+    b.apply('ok');
+    b.apply('ok');
+    expect(b.state()).toMatchObject({ misses: 0, missesTotal: 2, missesLeft: 2 });
+  });
+
+  it('回復は、初期の許容を超えない（ミスが 0 なら回復しない）', () => {
+    const { b } = run(oks(9), stamina);
+    expect(b.state()).toMatchObject({ misses: 0, missesLeft: 2 });
+  });
+
+  it('連続が途切れると数え直し（ミスでコンボが 0 に戻る）', () => {
+    const { b } = run(['miss', 'ok', 'ok', 'miss', 'ok', 'ok'], stamina);
+    expect(b.state().misses).toBe(2); // どこも 3 連続に届かない
+  });
+
+  it('回復があるので、総数では許容を超えても負けないことがある。ランクは総数で決める', () => {
+    const { b } = run(['miss', 'miss', ...oks(3), 'miss', ...oks(2), 'sessionDone'], { ...stamina, words: 1 });
+    // 総ミス 3 > 許容 2 だが、回復して超えていない
+    expect(b.state()).toMatchObject({ status: 'won', missesTotal: 3 });
+    expect(b.rank()).toBe('C'); // 総数 3 は許容の半分（1）超え
+  });
+
+  it('ミスを回復しても、ランクは S にならない（総数 1 は A）', () => {
+    const { b } = run(['miss', ...oks(2), 'sessionDone'], { words: 1, maxMisses: 2, recoverEvery: 3 });
+    expect(b.state()).toMatchObject({ misses: 0, missesTotal: 1 });
+    expect(b.rank()).toBe('A');
+  });
+
+  it('スタミナ無しでは回復しない（対照）', () => {
+    const { b } = run(['miss', ...oks(10)], rules);
+    expect(b.state().misses).toBe(1);
+  });
+
+  it('不正な回復間隔は作れない', () => {
+    expect(() => new BossBattle({ words: 1, maxMisses: 1, recoverEvery: 0 })).toThrow();
+    expect(() => new BossBattle({ words: 1, maxMisses: 1, recoverEvery: 1.5 })).toThrow();
+  });
+});
+
 describe('betterRank', () => {
   it('強い方を返す。null は未挑戦', () => {
     expect(betterRank('B', 'A')).toBe('A');

@@ -38,6 +38,8 @@ export const SettingsSchema = z.object({
   aidEn: z.boolean(),
   /** 縛り（制約と誓約）。ステージ・ボス戦に適用する。仕様は docs/spec/vows.md */
   vows: z.array(z.enum(VOW_IDS)),
+  /** ボスの技を使う（表示と敗北条件にだけ作用する。無効にできる）。docs/spec/boss.md */
+  bossSkills: z.boolean(),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -59,6 +61,7 @@ export const DEFAULT_SETTINGS: Settings = {
   aidGyo: false,
   aidEn: false,
   vows: [],
+  bossSkills: true,
   effects: 'full',
 };
 

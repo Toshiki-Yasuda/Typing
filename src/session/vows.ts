@@ -43,6 +43,12 @@ export const MEDAL_LABEL: Record<Medal, string> = { none: 'なし', bronze: '銅
 
 export const MEDAL_RANK: Record<Medal, number> = { none: 0, bronze: 1, silver: 2, gold: 3 };
 
+/** 戦績のメダル表示用（勝利したときの最大の縛りの数 → 文字）。無ければ空 */
+export function medalText(bestVows: number | undefined): string {
+  const m = medalOf(bestVows ?? 0);
+  return m === 'none' ? '' : `メダル ${MEDAL_LABEL[m]}`;
+}
+
 export const hasVows = (r: SessionRecord): boolean => (r.vows?.length ?? 0) > 0;
 
 /** 縛りの無い記録だけ。級位・統計・診断・推奨・弱点・ゴーストは、これを通した記録で求める */

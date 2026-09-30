@@ -14,7 +14,8 @@ import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
-import { plainRecords, vowEffects } from '@/session/vows';
+import { hideActive, skillRules, stripActive } from '@/session/bossSkills';
+import { parseVows, plainRecords, vowEffects } from '@/session/vows';
 import { REN_LIMIT_MS, remainingMs, type TrainKind } from '@/session/training';
 import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
@@ -61,6 +62,8 @@ interface Props {
   aids?: { gyo: boolean; en: boolean };
   /** 縛り（制約と誓約）。ステージ・ボス戦だけで渡す。表示と終わり方に作用し、判定・計測は変えない（docs/spec/vows.md） */
   vows?: readonly string[];
+  /** ボスの技を使うか（設定 bossSkills）。省略なら使う。時間制限は技ではないので、常に効く */
+  skillsOn?: boolean;
   random?: () => number;
 }
 
@@ -78,13 +81,17 @@ export function Play({
   train,
   aids,
   vows,
+  skillsOn = true,
   random,
 }: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
   const quiet = train?.kind === 'zetsu';
-  const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : null;
+  const bossLimitMs = boss?.timeLimitSec ? boss.timeLimitSec * 1000 : null;
+  const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : bossLimitMs;
+  const skill = boss && skillsOn ? boss.skill : undefined;
+  const skillKind = skill?.kind;
   const vowKey = (vows ?? []).join(',');
   const eff = useMemo(() => vowEffects(vowKey ? vowKey.split(',') : []), [vowKey]);
   const silent = !eff.sound;
@@ -158,7 +165,10 @@ export function Play({
           : pickItems(pack.items, count, random));
       tracker.current = feelRef.current ? new ComboTracker(feelRef.current.levels) : null;
       setCombo(0);
-      battle.current = boss ? new BossBattle({ words: items.length, maxMisses: Math.min(boss.maxMisses, eff.maxMisses ?? boss.maxMisses) }) : null;
+      battle.current = boss ? new BossBattle({ words: items.length, maxMisses: Math.min(boss.maxMisses, eff.maxMisses ?? boss.maxMisses),
+            ...(bossLimitMs ? { timeLimitMs: bossLimitMs } : {}),
+            ...skillRules(skillKind),
+          }) : null;
       setBossLine(boss?.intro ?? '');
       setBattleState(battle.current?.state() ?? null);
       setSession(
@@ -175,8 +185,7 @@ export function Play({
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx, aids?.gyo, vowKey, eff.maxMisses]);
-  // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
+  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx, aids?.gyo, vowKey, eff.maxMisses, bossLimitMs, skillKind]);
   const endRun = useCallback(() => {
     if (!session || finishing.current) return;
     finishing.current = true;
@@ -187,17 +196,70 @@ export function Play({
       (error) => console.error('記録の保存に失敗しました', error),
     );
   }, [session, store, navigate]);
+  // 戦闘の決着（勝利・敗北）。記録を保存してから、演出を見せて結果へ（Enter・クリックで飛ばせる）
+  const vowCount = parseVows(vows).length;
+  const conclude = useCallback(
+    (fight: BossBattle | null) => {
+      if (!session) return;
+      finishing.current = true;
+      // 1 打もないまま時間切れ: 記録するものが無い
+      if (session.keystrokes.length === 0) return navigate('/');
+      const record = session.toRecord();
+      const rank = fight?.rank() ?? null;
+      store.add(record).then(
+        () => {
+          if (fight && boss && rank) {
+            recordBossResult(boss.id, rank, undefined, vowCount);
+            const s = fight.state();
+            const go = () => {
+              skip.current = null;
+              clearTimeout(fxTimer.current);
+              navigate(`/result/${record.id}`, {
+                state: { boss: { id: boss.id, rank, misses: s.missesTotal, maxCombo: s.maxCombo, ...(s.lostBy ? { lostBy: s.lostBy } : {}), vows: vowCount } },
+              });
+            };
+            const lvl = levelRef.current;
+            if (lvl === 'off') return go();
+            skip.current = go;
+            showFx({ kind: rank === 'D' ? 'lost' : 'won', line: rank === 'D' ? (boss.dialogues[0] ?? '') : boss.defeat }, 60_000);
+            clearTimeout(fxTimer.current);
+            fxTimer.current = setTimeout(go, lvl === 'full' ? FX_MS.finishFull : FX_MS.finishReduced);
+          } else {
+            navigate(`/result/${record.id}`);
+          }
+        },
+        (error) => console.error('記録の保存に失敗しました', error),
+      );
+    },
+    [session, store, navigate, boss, showFx, vowCount],
+  );
+  // 時間切れ。ボス戦は敗北（理由は時間切れ）、修行の練は、そこまでの記録で終える
+  const timeUp = useCallback(
+    (elapsedMs: number) => {
+      if (finishing.current) return;
+      const fight = battle.current;
+      if (boss && fight) {
+        if (fight.tick(elapsedMs)) {
+          setBattleState(fight.state());
+          conclude(fight);
+        }
+      } else endRun();
+    },
+    [boss, conclude, endRun],
+  );
+
+  // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
   useEffect(() => {
     if (!session || limitMs === null) return;
     const tick = () => {
-      const left = remainingMs(0, session.elapsedMs(performance.now()), limitMs);
-      setRemaining(left);
-      if (left === 0) endRun();
+      const elapsed = session.elapsedMs(performance.now());
+      setRemaining(remainingMs(0, elapsed, limitMs));
+      if (elapsed >= limitMs) timeUp(elapsed);
     };
     tick();
     const id = setInterval(tick, 200);
     return () => clearInterval(id);
-  }, [session, limitMs, endRun]);
+  }, [session, limitMs, timeUp]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -239,9 +301,11 @@ export function Play({
       if (e.isComposing || e.keyCode === 229) setImeWarning(true);
       if (!isGameKey(e)) return;
       // 練: 時間切れの後の打鍵は記録しない
-      if (limitMs !== null && remainingMs(0, session.elapsedMs(e.timeStamp), limitMs) === 0) {
+      // 制限時間の判定は、タイマーと同じ時計（performance.now）で行う。打鍵の時刻（e.timeStamp）は記録にだけ使う
+      const elapsed = session.elapsedMs(performance.now());
+      if (limitMs !== null && remainingMs(0, elapsed, limitMs) === 0) {
         e.preventDefault();
-        endRun();
+        timeUp(elapsed);
         return;
       }
       e.preventDefault(); // Space のスクロールや ' / のクイック検索を止める
@@ -286,35 +350,7 @@ export function Play({
         missTimer.current = setTimeout(() => setMissing(false), 160);
       }
       const lost = fight?.state().status === 'lost';
-      if (result === 'sessionDone' || lost) {
-        const record = session.toRecord();
-        const rank = fight?.rank() ?? null;
-        store.add(record).then(
-          () => {
-            if (fight && boss && rank) {
-              recordBossResult(boss.id, rank);
-              const s = fight.state();
-              const go = () => {
-                skip.current = null;
-                clearTimeout(fxTimer.current);
-                navigate(`/result/${record.id}`, {
-                  state: { boss: { id: boss.id, rank, misses: s.misses, maxCombo: s.maxCombo } },
-                });
-              };
-              const lvl = levelRef.current;
-              if (lvl === 'off') return go();
-              // 決着の演出を見せてから結果へ（Enter・クリックで飛ばせる。保存は済んでいる）
-              skip.current = go;
-              showFx({ kind: rank === 'D' ? 'lost' : 'won', line: rank === 'D' ? (boss.dialogues[0] ?? '') : boss.defeat }, 60_000);
-              clearTimeout(fxTimer.current);
-              fxTimer.current = setTimeout(go, lvl === 'full' ? FX_MS.finishFull : FX_MS.finishReduced);
-            } else {
-              navigate(`/result/${record.id}`);
-            }
-          },
-          (error) => console.error('記録の保存に失敗しました', error),
-        );
-      }
+      if (result === 'sessionDone' || lost) conclude(fight);
       rerender();
       // 音は判定・描画の後に鳴らす（鳴らす処理は軽く、失敗しても練習に影響しない）
       try {
@@ -330,10 +366,14 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store, sound, boss, showFx, limitMs, endRun, eff.maxMisses]);
+  }, [navigate, session, sound, boss, limitMs, endRun, timeUp, conclude, showFx, eff.maxMisses]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
+  // ボスの技（表示だけ。判定は変えない）
+  const hideRest = skillKind === 'hide' && hideActive(view.index);
+  const stripped = skillKind === 'strip' && stripActive(session.keystrokes, view.index);
+  const skillNote = hideRest ? 'この語は、ローマ字の残りが隠れています' : stripped ? 'この語は、運指ガイドを奪われています' : null;
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
       {fx && boss && level !== 'off' && (
@@ -380,16 +420,16 @@ export function Play({
           日本語入力がオンのようです。半角/英数モードに切り替えてください。
         </p>
       )}
-      {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} />}
+      {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} skill={skill} note={skillNote} />}
       {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
       <div
         className={feel && feel.effect !== 'off' ? `feel-aura ${missing && feel.effect === 'full' ? 'feel-shake' : ''}` : ''}
         data-effect={feel?.effect}
         style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
       >
-        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} hideRomaji={!eff.showRomaji} />
+        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} hideRomaji={!eff.showRomaji ? true : hideRest ? 'rest' : false} />
       </div>
-      {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
+      {fingerGuide && !stripped && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
     </main>
   );
 }

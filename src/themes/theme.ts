@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AXIS_IDS } from '@/metrics/axes';
+import { SKILL_KINDS } from '@/session/bossSkills';
 
 /** テーマが上書きできる色。これ以外は上書きできない（グラフの色などは検証済みの固定値のため） */
 export const COLOR_TOKENS = ['surface', 'surface-raised', 'text', 'text-muted', 'accent', 'success', 'danger'] as const;
@@ -24,6 +25,10 @@ export const BossSchema = z.object({
   words: z.number().int().min(1).max(100),
   /** 許されるミスの数。これを超えるミスで敗北 */
   maxMisses: z.number().int().min(0).max(100),
+  /** 時間制限（秒）。無ければ無制限。上位の章だけに付ける（docs/spec/boss.md） */
+  timeLimitSec: z.number().int().min(10).max(600).optional(),
+  /** ボスの技。判定は変えず、表示と敗北条件にだけ作用する。名前と説明はテーマの言葉 */
+  skill: z.object({ kind: z.enum(SKILL_KINDS), name: z.string().min(1), text: z.string().min(1) }).optional(),
   intro: z.string().min(1),
   /** 戦闘中の台詞（お題ごとに順に出す） */
   dialogues: z.array(z.string().min(1)).min(1),

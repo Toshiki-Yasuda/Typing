@@ -77,7 +77,7 @@ describe('ボス戦', () => {
     expect(screen.getByText(boss('chapter1').defeat)).toBeInTheDocument();
     expect(screen.getByText(/ミス 1 回（許容 5 回）/)).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem(BOSS_PROGRESS_KEY) as string)).toEqual({
-      chapter1: { attempts: 1, wins: 1, best: 'A' },
+      chapter1: { attempts: 1, wins: 1, best: 'A', bestVows: 0 },
     });
     expect((await store.list())[0]?.mode).toBe('boss:chapter1');
   });

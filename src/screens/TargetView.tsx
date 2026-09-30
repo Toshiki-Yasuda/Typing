@@ -25,7 +25,7 @@ export function TargetView({
   /** 補助（円）: 次のお題を先に見せる */
   preview?: boolean;
   /** 縛り（ローマ字を隠す）: ガイドの文字を「・」にする。読みと表示は見える。表示だけで判定には関わらない */
-  hideRomaji?: boolean;
+  hideRomaji?: boolean | 'rest';
 }) {
   const reading = Array.from(normalizeTarget(view.item.reading));
   const { typed, rest, kanaIndex } = view.guide;
@@ -51,7 +51,7 @@ export function TargetView({
       </p>
       {hideRomaji ? (
         <p className={`font-mono ${size.romaji} break-all text-text-muted`} aria-label="ローマ字ガイド（隠しています）">
-          {'・'.repeat(Array.from(typed).length)}
+          {hideRomaji === 'rest' ? typed : '・'.repeat(Array.from(typed).length)}
           <span className="text-accent">＊</span>
           {'・'.repeat(Array.from(others.join('')).length)}
         </p>

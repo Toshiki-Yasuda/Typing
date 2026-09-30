@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router';
 import { useStore } from '@/app/StoreContext';
 import type { SessionRecord } from '@/metrics';
 import { loadBossProgress } from '@/session/bossProgress';
-import { MEDAL_LABEL } from '@/session/vows';
+import { MEDAL_LABEL, medalText } from '@/session/vows';
 import { STAGE_CLEAR_ACCURACY, stageMedal, stageProgress } from '@/session/stageProgress';
 import { useSettings } from '@/settings/useSettings';
 import { useSceneBgm } from '@/sound/useSceneBgm';
@@ -62,7 +62,7 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
   }, [records, chapters, progressOf, bossProgress]);
   const chapter = chapters.find((c) => c.id === (picked ?? firstOpen)) ?? chapters[0]!;
   const boss = chapter.boss ? theme.bosses?.find((b) => b.id === chapter.boss) : undefined;
-  const medalText = (stageId: string) => {
+  const stageMedalText = (stageId: string) => {
     const m = stageMedal(records ?? [], stageId);
     return m === 'none' ? '' : `（メダル ${MEDAL_LABEL[m]}）`;
   };
@@ -122,7 +122,7 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
                   </span>
                   <span className="font-bold">{s.name}</span>
                   <span className="text-sm">
-                    {!records ? '…' : p.cleared ? `✓ クリア済み${medalText(s.id)}` : p.attempts > 0 ? '△ 挑戦中' : '未挑戦'}
+                    {!records ? '…' : p.cleared ? `✓ クリア済み${stageMedalText(s.id)}` : p.attempts > 0 ? '△ 挑戦中' : '未挑戦'}
                   </span>
                   <span className="text-sm text-text-muted">{s.description}</span>
                   <span className="text-sm text-text-muted">
@@ -149,7 +149,7 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
                   <span className="ml-2 text-sm font-normal text-text-muted">{boss.title}</span>
                 </span>
                 <span className="text-sm">
-                  {bossProgress[boss.id]?.best ? `最高ランク ${bossProgress[boss.id]?.best}` : '未勝利'}
+                  {bossProgress[boss.id]?.best ? `最高ランク ${bossProgress[boss.id]?.best}${bossProgress[boss.id]?.bestVows ? `（${medalText(bossProgress[boss.id]?.bestVows)}）` : ''}` : '未勝利'}
                 </span>
                 <span className="text-sm text-text-muted">
                   {boss.words}語・ミスの余裕 {boss.maxMisses}回

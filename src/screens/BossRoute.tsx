@@ -43,6 +43,7 @@ export function BossRoute() {
       effects={{ level: resolveEffects(settings.effects, prefersReducedMotion()), cardModel: theme.hero?.orbiter ?? null }}
       fingerGuide={settings.fingerGuide && vowEffects(settings.vows).fingerGuide ? { layout: settings.layout } : null}
       vows={settings.vows}
+      skillsOn={settings.bossSkills}
     />
   );
 }

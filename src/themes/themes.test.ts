@@ -134,6 +134,17 @@ describe('3D の演出', () => {
     }
   });
 
+  it('ボスの時間制限は上位の章（5〜7）だけで、1 語あたり 5 秒以上ある。技は章 1・3・4', () => {
+    const bosses = HUNTER_THEME.bosses ?? [];
+    for (const b of bosses) {
+      if (b.timeLimitSec === undefined) continue;
+      expect(b.chapter, b.name).toBeGreaterThanOrEqual(5);
+      expect(b.timeLimitSec / b.words, `${b.name} の 1 語あたりの秒数`).toBeGreaterThanOrEqual(5);
+    }
+    expect(bosses.filter((b) => b.timeLimitSec !== undefined).map((b) => b.chapter)).toEqual([5, 6, 7]);
+    expect(bosses.filter((b) => b.skill).map((b) => [b.chapter, b.skill?.kind])).toEqual([[1, 'hide'], [3, 'strip'], [4, 'stamina']]);
+  });
+
   it('標準テーマには 3D の演出が無い', () => {
     expect(NEUTRAL_THEME.hero).toBeUndefined();
   });

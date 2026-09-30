@@ -43,6 +43,18 @@ export function VowsPicker() {
           </span>
         </label>
       ))}
+      <label className="mt-2 flex items-start gap-2 border-t border-surface pt-2">
+        <input
+          type="checkbox"
+          checked={settings.bossSkills}
+          onChange={(e) => update({ bossSkills: e.target.checked })}
+          className="mt-1 h-4 w-4 accent-[var(--viz-series-1)]"
+        />
+        <span>
+          ボスの技を使う
+          <span className="block text-sm text-text-muted">技は表示と敗北条件にだけ働きます。オフにすると、技なしで戦えます（制限時間は残ります）</span>
+        </span>
+      </label>
       <p role="status" className="text-sm">
         今の縛り: {settings.vows.length} つ・狙えるメダル: <strong>{MEDAL_LABEL[medal]}</strong>
       </p>

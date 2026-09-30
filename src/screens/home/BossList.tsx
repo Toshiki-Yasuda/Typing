@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { medalText } from '@/session/vows';
 import { loadBossProgress } from '@/session/bossProgress';
 import { VowsPicker } from '../vows/VowsPicker';
 import type { Boss } from '@/themes/theme';
@@ -28,7 +29,9 @@ export function BossList({ bosses }: { bosses: readonly Boss[] }) {
                 </p>
                 <p className="text-sm text-text-muted">
                   {b.words}語・ミスの余裕 {b.maxMisses}回・
-                  {p ? `挑戦 ${p.attempts}回・最高ランク ${p.best ?? 'なし（未勝利）'}` : '未挑戦'}
+                  {p ? `挑戦 ${p.attempts}回・最高ランク ${p.best ?? 'なし（未勝利）'}${p.bestVows ? `・${medalText(p.bestVows)}` : ''}` : '未挑戦'}
+                  {b.timeLimitSec ? `・制限時間 ${b.timeLimitSec}秒` : ''}
+                  {b.skill ? `・技「${b.skill.name}」` : ''}
                 </p>
               </div>
               <Link
