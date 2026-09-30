@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router';
 import { BASIC_PACK, BUILTIN_PACKS, type ContentItem, type ContentPack } from '@/content';
 import { usePackStore, useStore } from '@/app/StoreContext';
 import { keyWeakness } from '@/metrics';
+import { plainRecords } from '@/session/vows';
 import { parseTrainMode, pickTechniqueItems, technique, trainMode, type Technique, type TrainKind } from '@/session/training';
 import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
@@ -45,7 +46,7 @@ function Prepare({ kind }: { kind: TrainKind }) {
       if (cancelled) return;
       const pack = [...BUILTIN_PACKS, ...custom].find((p) => p.id === settings.packId) ?? BASIC_PACK;
       if (kind !== 'hatsu') return setData({ pack, items: null, tech: null });
-      const weakness = keyWeakness(records.map((r) => r.keystrokes));
+      const weakness = keyWeakness(plainRecords(records).map((r) => r.keystrokes));
       const tech = technique(weakness);
       setData({ pack, tech, items: tech ? pickTechniqueItems(pack.items, settings.count, tech, weakness) : null });
     });

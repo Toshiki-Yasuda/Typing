@@ -31,7 +31,7 @@ export class PracticeSession {
     items: readonly ContentItem[],
     /** 開始時刻（`performance.now()` と同じ時間軸）。打鍵の t はこれからの相対ミリ秒 */
     private readonly startedAtPerf: number,
-    readonly meta: { id: string; startedAt: number; mode: string; contentId: string },
+    readonly meta: { id: string; startedAt: number; mode: string; contentId: string; vows?: readonly string[] },
   ) {
     if (items.length === 0) throw new Error('お題がありません');
     this.items = items;

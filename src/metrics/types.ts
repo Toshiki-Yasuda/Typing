@@ -26,6 +26,8 @@ export interface SessionRecord {
   readonly engineVersion: string;
   readonly ruleVersion: string;
   readonly keystrokes: readonly Keystroke[];
+  /** 縛り（制約と誓約）の id。付けなかったときは持たない。付き記録は級位・統計に数えない（docs/spec/vows.md） */
+  readonly vows?: readonly string[];
 }
 
 export interface Metrics {

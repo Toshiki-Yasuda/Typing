@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { SessionRecord } from '@/metrics';
 
 /** 保存・エクスポート形式の版。形式を変えたら上げ、migrate.ts に移行を足す */
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 
 export const KeystrokeSchema = z.object({
   t: z.number().finite().nonnegative(),
@@ -22,6 +22,7 @@ export const SessionSchema = z.object({
   engineVersion: z.string(),
   ruleVersion: z.string(),
   keystrokes: z.array(KeystrokeSchema),
+  vows: z.array(z.string()).optional(),
 });
 
 export const ExportSchema = z.object({

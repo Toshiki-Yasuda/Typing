@@ -60,6 +60,22 @@ describe('エクスポート / インポート', () => {
     expect(() => parseExport(JSON.stringify(missing))).toThrow(ImportError);
   });
 
+  it('v1 の書き出し（vows なし）は、そのまま読める。版は 2 に上がる', () => {
+    const v1 = JSON.stringify({ schemaVersion: 1, exportedAt: 5, sessions: [session('a', 1)] });
+    const parsed = parseExport(v1);
+    expect(parsed).toEqual([session('a', 1)]);
+    expect(parsed[0]?.vows).toBeUndefined();
+    expect(CURRENT_SCHEMA_VERSION).toBe(2);
+  });
+
+  it('縛り（vows）は書き出し・読み込みで残る。文字列以外は拒否', () => {
+    const withVows = { ...session('a', 1), vows: ['noMiss', 'silent'] };
+    expect(parseExport(exportSessions([withVows]))[0]?.vows).toEqual(['noMiss', 'silent']);
+    const bad = JSON.parse(exportSessions([withVows]));
+    bad.sessions[0].vows = [1];
+    expect(() => parseExport(JSON.stringify(bad))).toThrow(ImportError);
+  });
+
   it('新しい版のデータは拒否する', () => {
     const future = JSON.stringify({ schemaVersion: CURRENT_SCHEMA_VERSION + 1, exportedAt: 0, sessions: [] });
     expect(() => parseExport(future)).toThrow(/新しい版/);

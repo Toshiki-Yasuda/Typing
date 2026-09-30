@@ -28,7 +28,7 @@ src/engine    ローマ字入力の判定。React/DOM に依存しない。他�
   table/      Mozc 表(同梱)から許容表を生成。rules.ts に除外と推奨順
   testing/    テスト専用の IME シミュレータ（オラクル）
 src/metrics   打鍵ログ → 指標・統計・弱点。純関数。engine に依存
-src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)、修行の型(training.ts)。engine / metrics に依存
+src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)、修行の型(training.ts)、練習の推奨(recommendation.ts)、縛り(vows.ts)。engine / metrics に依存
 src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB(sessions / packs) / メモリ
 src/content   出題パック(JSON: basic / english / symbols / phrases) と zod 検証、自作パックの取り込み(import.ts)
 src/settings  練習の設定（パック・語数・弱点優先・運指ガイド・配列・目標の級位）。localStorage
@@ -90,6 +90,9 @@ e2e/          Playwright
 - ブラウザは、ユーザー操作の前の音を拒む。BGM は入口のゲートの操作から流し、拒まれても例外にせず `unlock()` で再試行する。テーマを選んでも、標準テーマの配信量を増やさない（3D・BGM・語彙は選んだときだけ読み込む）。
 - 3D の見た目の確認は、ヘッドレスではソフトウェア描画で遅い。演出中に画面が切り替わって撮れないことがある。`page.evaluate` でタイマーを全消去しない（Suspense の表示が止まる）。遷移だけ止める（`history.pushState` を無効化）。
 - ステージの語彙は `GEN_STAGES` の生成ツールで作る（手で編集しない）。`hunterChapters.ts` は生成物。
+
+### 縛り（制約と誓約）
+- 縛り付きの記録（`vows`）は、**級位・統計・診断・推奨・弱点・ゴーストに数えない**。新しい集計を足すときは、`plainRecords` を通す。縛りは表示と終わり方にだけ作用し、判定・計測は変えない（`docs/spec/vows.md`）。
 
 ### コアに固有名詞を置かない
 原作・既存作品の名称、台詞、画像、音源をコアに入れない。世界観は「テーマパック」として分離する（`task.md` P2）。

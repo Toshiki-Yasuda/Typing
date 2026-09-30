@@ -147,6 +147,34 @@ test.describe('ステージ選択', () => {
     await expect(page.getByText('1 / 5 クリア')).toBeVisible();
   });
 
+  test('制約と誓約: 縛りを付けてクリアするとメダルが付く。付き記録は統計に数えない（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    const vows = page.getByRole('group', { name: '制約と誓約' });
+    await vows.getByRole('checkbox', { name: /無音/ }).check();
+    await vows.getByRole('checkbox', { name: /運指ガイドなし/ }).check();
+    await expect(vows.getByRole('status')).toContainText('銀');
+    await scan(page, 'ステージ選択（縛り）');
+
+    await page.getByRole('link', { name: /未挑戦/ }).first().click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect(page.getByRole('region', { name: '運指ガイド' })).toHaveCount(0);
+    for (let i = 1; i <= 10; i++) {
+      await expect(page.getByLabel('進捗')).toHaveText(`${i} / 10`);
+      await typeCurrentWord(page);
+    }
+    const panel = page.getByRole('region', { name: '縛り付きの練習' });
+    await expect(panel).toContainText('メダル 銀');
+    await expect(page.getByRole('heading', { name: '級位' })).toHaveCount(0);
+    await scan(page, '縛り付きの結果');
+
+    await page.getByRole('link', { name: 'ステージ選択へ' }).click();
+    await expect(page.getByText('✓ クリア済み（メダル 銀）')).toBeVisible();
+    await page.goto('/#/stats');
+    await expect(page.getByText(/縛り付きの記録 1 件は、この統計に含めていません/)).toBeVisible();
+  });
+
   test('章を切り替えられ、ボスへも進める', async ({ page }) => {
     await unlock(page);
     await page.keyboard.press('Escape');

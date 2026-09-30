@@ -11,7 +11,10 @@ export class ImportError extends Error {
 export type Migration = (data: Record<string, unknown>) => Record<string, unknown>;
 
 /** 版が上がったらここに足す。例: `1: (d) => ({ ...d, schemaVersion: 2, ... })` */
-export const MIGRATIONS: Readonly<Record<number, Migration>> = {};
+export const MIGRATIONS: Readonly<Record<number, Migration>> = {
+  // v1 → v2: 記録に任意の vows（縛り）を足した。既存の記録はそのまま読める（版だけ上げる）
+  1: (d) => ({ ...d, schemaVersion: 2 }),
+};
 
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 

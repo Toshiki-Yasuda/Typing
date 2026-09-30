@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { plainRecords } from '@/session/vows';
 import { Link } from 'react-router';
 import { aggregate, currentStreak, dayKey, rankStatus, summarizeSessions, withinDays, type SessionRecord } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
@@ -38,12 +39,17 @@ function Tile({ label, value, unit }: { label: string; value: string; unit?: str
 export function Stats() {
   const store = useStore();
   // 読み込んだ時点の時刻を一緒に持つ（描画のたびに Date.now() を呼ぶと、結果が不安定になる）
-  const [loaded, setLoaded] = useState<{ records: SessionRecord[]; now: number } | null>(null);
+  const [loaded, setLoaded] = useState<{ records: SessionRecord[]; days: string[]; excluded: number; now: number } | null>(null);
   const [range, setRange] = useState<Range>(RANGES[3] as Range);
 
   useEffect(() => {
     let cancelled = false;
-    store.list().then((records) => !cancelled && setLoaded({ records, now: Date.now() }));
+    store.list().then((all) => {
+      if (cancelled) return;
+      // 縛り付きの記録は、級位・統計に数えない（件数は画面に示す）。練習した日は数える
+      const records = plainRecords(all);
+      setLoaded({ records, days: all.map((r) => dayKey(r.startedAt)), excluded: all.length - records.length, now: Date.now() });
+    });
     return () => {
       cancelled = true;
     };
@@ -60,7 +66,8 @@ export function Stats() {
       summaries,
       agg,
       rank: rankStatus(summarizeSessions(records)),
-      streak: currentStreak(records.map((r) => dayKey(r.startedAt)), today),
+      streak: currentStreak(loaded.days, today),
+      excluded: loaded.excluded,
       keystrokes: summaries.reduce((s, x) => s + x.total, 0),
       best: summaries.reduce((m, x) => Math.max(m, x.kpm), 0),
       accuracy: summaries.length ? summaries.reduce((s, x) => s + x.accuracy, 0) / summaries.length : 0,
@@ -103,6 +110,10 @@ export function Stats() {
           </button>
         ))}
       </div>
+
+      {view.excluded > 0 && (
+        <p className="text-sm text-text-muted">縛り付きの記録 {view.excluded} 件は、この統計に含めていません。</p>
+      )}
 
       {view.summaries.length === 0 ? (
         <section className="rounded-lg bg-surface-raised p-6">

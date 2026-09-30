@@ -16,6 +16,7 @@ import { useSceneBgm } from '@/sound/useSceneBgm';
 import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
 import { PageHeading } from './PageHeading';
+import { plainRecords } from '@/session/vows';
 import { RankCard } from './RankPanel';
 import { RecommendationNote } from './train/RecommendationNote';
 import { useCustomPacks } from './home/useCustomPacks';
@@ -49,7 +50,7 @@ export function Home() {
   const reload = () =>
     store.list().then((all) => {
       setHistory(all.slice(-10).reverse());
-      setSummaries(summarizeSessions(all));
+      setSummaries(summarizeSessions(plainRecords(all))); // 縛り付きは級位・提案に数えない
       // 今日のチャレンジの状況（日付は読み込み時点のもの。描画中に Date.now() を呼ばない）
       const now = Date.now();
       const challenge = todaysChallenge(now);

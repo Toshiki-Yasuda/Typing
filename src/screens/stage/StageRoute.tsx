@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { useThemePack } from '@/content/themePack';
+import { vowEffects } from '@/session/vows';
 import { stageMode } from '@/session/stageProgress';
 import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
@@ -14,6 +15,7 @@ export function StageRoute() {
   const theme = resolveTheme(settings.themeId, loadUnlocked());
   const stage = theme.chapters?.flatMap((c) => c.stages).find((s) => s.id === id);
   const state = useThemePack(stage?.pack);
+  const vows = settings.vows;
 
   if (!stage || state.status === 'error') {
     return (
@@ -34,7 +36,8 @@ export function StageRoute() {
       count={settings.count}
       adaptive={settings.adaptive}
       mode={stageMode(stage.id)}
-      fingerGuide={settings.fingerGuide ? { layout: settings.layout } : null}
+      fingerGuide={settings.fingerGuide && vowEffects(vows).fingerGuide ? { layout: settings.layout } : null}
+      vows={vows}
       title={`ステージ: ${stage.name}`}
     />
   );

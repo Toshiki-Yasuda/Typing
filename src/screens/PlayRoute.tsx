@@ -4,6 +4,7 @@ import { BASIC_PACK, BUILTIN_PACKS, type ContentItem, type ContentPack } from '@
 import { usePackStore, useStore } from '@/app/StoreContext';
 import { createGhost, findBestRecord, type Ghost } from '@/session/ghost';
 import { itemsForTargets } from '@/session/retry';
+import { plainRecords } from '@/session/vows';
 import { useSettings } from '@/settings/useSettings';
 import { PageHeading } from './PageHeading';
 import { Play } from './Play';
@@ -58,7 +59,7 @@ function RetryPlay({ id }: { id: string }) {
       const source = records.find((r) => r.id === id);
       if (!source) return setData('missing');
       const packs = [...BUILTIN_PACKS, ...custom];
-      const best = findBestRecord(records, source.targets);
+      const best = findBestRecord(plainRecords(records), source.targets);
       setData({
         pack: packs.find((p) => p.id === source.contentId) ?? BASIC_PACK,
         items: itemsForTargets(source.targets, packs),

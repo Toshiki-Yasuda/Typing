@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { EFFECT_LEVELS } from '@/effects/level';
 import { GOAL_AUTO } from '@/metrics/rank';
+import { VOW_IDS } from '@/session/vows';
 
 /** 練習の設定。localStorage に保存する（小さな設定値なので。打鍵ログは IndexedDB） */
 export const SETTINGS_KEY = 'typing.settings.v1';
@@ -35,6 +36,8 @@ export const SettingsSchema = z.object({
   aidGyo: z.boolean(),
   /** 補助・円: 次のお題を先に見せる（表示だけ） */
   aidEn: z.boolean(),
+  /** 縛り（制約と誓約）。ステージ・ボス戦に適用する。仕様は docs/spec/vows.md */
+  vows: z.array(z.enum(VOW_IDS)),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -55,6 +58,7 @@ export const DEFAULT_SETTINGS: Settings = {
   gameBgm: 'boss',
   aidGyo: false,
   aidEn: false,
+  vows: [],
   effects: 'full',
 };
 

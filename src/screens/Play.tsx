@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState, type CSSProperties } from 'react';
 import { useNavigate } from 'react-router';
 import { BossBattle, type BattleState } from '@/session/bossBattle';
 import { recordBossResult } from '@/session/bossProgress';
@@ -14,6 +14,7 @@ import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
+import { plainRecords, vowEffects } from '@/session/vows';
 import { REN_LIMIT_MS, remainingMs, type TrainKind } from '@/session/training';
 import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
@@ -58,6 +59,8 @@ interface Props {
   train?: { kind: TrainKind; /** 画面に出す型の名前や技の名前 */ label?: string; limitMs?: number };
   /** 補助（表示だけ）。gyo=弱点キーの強調、en=次のお題の先読み */
   aids?: { gyo: boolean; en: boolean };
+  /** 縛り（制約と誓約）。ステージ・ボス戦だけで渡す。表示と終わり方に作用し、判定・計測は変えない（docs/spec/vows.md） */
+  vows?: readonly string[];
   random?: () => number;
 }
 
@@ -74,6 +77,7 @@ export function Play({
   effects,
   train,
   aids,
+  vows,
   random,
 }: Props) {
   const navigate = useNavigate();
@@ -81,8 +85,11 @@ export function Play({
   const [session, setSession] = useState<PracticeSession | null>(null);
   const quiet = train?.kind === 'zetsu';
   const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : null;
+  const vowKey = (vows ?? []).join(',');
+  const eff = useMemo(() => vowEffects(vowKey ? vowKey.split(',') : []), [vowKey]);
+  const silent = !eff.sound;
   const soundPlayer = useSoundPlayer();
-  const sound = quiet ? null : soundPlayer;
+  const sound = quiet || silent ? null : soundPlayer;
   const [weakKeys, setWeakKeys] = useState<ReadonlySet<string> | null>(null);
   const [remaining, setRemaining] = useState<number | null>(limitMs);
   const finishing = useRef(false);
@@ -105,7 +112,10 @@ export function Play({
   }, [boss, level, cardModel]);
   // 打鍵の手応え（コンボの段階）。描画・効果音だけで、判定・計測には関わらない
   const themeFeel = useFeel();
-  const feel = quiet ? null : themeFeel;
+  const feel = useMemo(
+    () => (quiet ? null : silent && themeFeel ? { ...themeFeel, cue: null } : themeFeel),
+    [quiet, silent, themeFeel],
+  );
   const feelRef = useRef(feel);
   useEffect(() => {
     feelRef.current = feel;
@@ -117,7 +127,7 @@ export function Play({
   useEffect(() => () => clearTimeout(popTimer.current), []);
   const [fx, setFx] = useState<BossFxState | null>(null);
   // 練習中の BGM（設定に従う）。決着の演出に入ったらフェードアウト
-  useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: quiet || fx?.kind === 'won' || fx?.kind === 'lost' });
+  useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: quiet || silent || fx?.kind === 'won' || fx?.kind === 'lost' });
   const fxTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   /** 決着の演出を閉じて先へ進む関数（決着の演出中だけ入る） */
   const skip = useRef<(() => void) | null>(null);
@@ -131,8 +141,9 @@ export function Play({
   // 過去の記録から弱点を求め、弱いキーを含むお題が出やすいように選ぶ（記録が無ければ均等）
   useEffect(() => {
     let cancelled = false;
-    store.list().then((records) => {
+    store.list().then((all) => {
       if (cancelled) return;
+      const records = plainRecords(all); // 縛り付きの記録は、弱点に数えない
       const weakness = adaptive ? keyWeakness(records.map((r) => r.keystrokes)) : new Map<string, number>();
       // 補助（凝）: 弱点の上位のキー
       if (aids?.gyo) {
@@ -147,7 +158,7 @@ export function Play({
           : pickItems(pack.items, count, random));
       tracker.current = feelRef.current ? new ComboTracker(feelRef.current.levels) : null;
       setCombo(0);
-      battle.current = boss ? new BossBattle({ words: items.length, maxMisses: boss.maxMisses }) : null;
+      battle.current = boss ? new BossBattle({ words: items.length, maxMisses: Math.min(boss.maxMisses, eff.maxMisses ?? boss.maxMisses) }) : null;
       setBossLine(boss?.intro ?? '');
       setBattleState(battle.current?.state() ?? null);
       setSession(
@@ -156,6 +167,7 @@ export function Play({
           startedAt: Date.now(),
           mode: mode ?? (weakness.size > 0 ? 'adaptive' : 'practice'),
           contentId: pack.id,
+          ...(vowKey ? { vows: vowKey.split(',') } : {}),
         }),
       );
       if (boss && levelRef.current !== 'off') showFx({ kind: 'intro' }, FX_MS.intro);
@@ -163,9 +175,9 @@ export function Play({
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx, aids?.gyo]);
+  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx, aids?.gyo, vowKey, eff.maxMisses]);
   // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
-  const finishTimeUp = useCallback(() => {
+  const endRun = useCallback(() => {
     if (!session || finishing.current) return;
     finishing.current = true;
     if (session.keystrokes.length === 0) return navigate('/train');
@@ -180,12 +192,12 @@ export function Play({
     const tick = () => {
       const left = remainingMs(0, session.elapsedMs(performance.now()), limitMs);
       setRemaining(left);
-      if (left === 0) finishTimeUp();
+      if (left === 0) endRun();
     };
     tick();
     const id = setInterval(tick, 200);
     return () => clearInterval(id);
-  }, [session, limitMs, finishTimeUp]);
+  }, [session, limitMs, endRun]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -229,13 +241,14 @@ export function Play({
       // 練: 時間切れの後の打鍵は記録しない
       if (limitMs !== null && remainingMs(0, session.elapsedMs(e.timeStamp), limitMs) === 0) {
         e.preventDefault();
-        finishTimeUp();
+        endRun();
         return;
       }
       e.preventDefault(); // Space のスクロールや ' / のクイック検索を止める
       setImeWarning(false);
 
-      // 決着後（敗北の保存中）の打鍵は受けない
+      // 終わった後（時間切れ・縛りの破れ・敗北の保存中）の打鍵は受けない
+      if (finishing.current) return;
       if (battle.current && battle.current.state().status === 'lost') return;
       const result = session.press({ key: e.key, code: e.code }, e.timeStamp);
       const fight = battle.current;
@@ -261,6 +274,11 @@ export function Play({
         }
         else if (result === 'wordDone') setBossLine(boss.dialogues[session.view().index % boss.dialogues.length] ?? '');
         else if (result === 'sessionDone') setBossLine(boss.defeat);
+      }
+      // 縛り「ミスなし」（ボス戦以外）: ミスをしたら、そこまでの記録で終わる。ボス戦は許容 0 の敗北になる
+      if (result === 'miss' && eff.maxMisses === 0 && !boss) {
+        endRun();
+        return;
       }
       if (result === 'miss') {
         setMissing(true);
@@ -312,7 +330,7 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store, sound, boss, showFx, limitMs, finishTimeUp]);
+  }, [navigate, session, store, sound, boss, showFx, limitMs, endRun, eff.maxMisses]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
@@ -369,7 +387,7 @@ export function Play({
         data-effect={feel?.effect}
         style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
       >
-        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} />
+        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} hideRomaji={!eff.showRomaji} />
       </div>
       {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
     </main>

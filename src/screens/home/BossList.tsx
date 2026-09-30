@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { loadBossProgress } from '@/session/bossProgress';
+import { VowsPicker } from '../vows/VowsPicker';
 import type { Boss } from '@/themes/theme';
 
 /** ボス戦の一覧。戦績（挑戦回数・最高ランク）を文字で示す */
@@ -14,6 +15,7 @@ export function BossList({ bosses }: { bosses: readonly Boss[] }) {
       <p className="text-sm text-text-muted">
         苦手なキーを含むお題が多く出ます。ミスが許される回数を超えると敗北です。
       </p>
+      <VowsPicker />
       <ul className="flex flex-col gap-2">
         {bosses.map((b) => {
           const p = progress[b.id];

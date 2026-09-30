@@ -3,6 +3,7 @@ import { normalizeTarget } from '@/engine';
 import { useStore } from '@/app/StoreContext';
 import { todaysChallenge, type DailyChallenge } from '@/session/daily';
 import { createGhost, findBestRecord, type Ghost } from '@/session/ghost';
+import { plainRecords } from '@/session/vows';
 import { useSettings } from '@/settings/useSettings';
 import { Play } from './Play';
 
@@ -17,7 +18,7 @@ export function DailyRoute() {
     store.list().then((records) => {
       if (cancelled) return;
       const challenge = todaysChallenge(Date.now());
-      const best = findBestRecord(records, challenge.items.map((i) => normalizeTarget(i.reading)));
+      const best = findBestRecord(plainRecords(records), challenge.items.map((i) => normalizeTarget(i.reading)));
       setData({ challenge, ghost: best ? { ghost: createGhost(best), label: '同じお題の自己ベスト' } : null });
     });
     return () => {

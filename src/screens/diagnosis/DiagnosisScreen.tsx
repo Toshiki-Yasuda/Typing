@@ -6,6 +6,7 @@ import { LAYOUTS, locate } from '@/fingering';
 import { AXIS_IDS, computeAxes, diagnose, type AxisId } from '@/metrics/axes';
 import { withinDays } from '@/metrics/history';
 import type { SessionRecord } from '@/metrics/types';
+import { plainRecords } from '@/session/vows';
 import { useSettings } from '@/settings/useSettings';
 import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
@@ -41,7 +42,7 @@ export function DiagnosisScreen() {
 
   useEffect(() => {
     let cancelled = false;
-    store.list().then((records) => !cancelled && setLoaded({ records, now: Date.now() }));
+    store.list().then((records) => !cancelled && setLoaded({ records: plainRecords(records), now: Date.now() }));
     return () => {
       cancelled = true;
     };

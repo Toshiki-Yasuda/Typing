@@ -9,9 +9,12 @@ import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
+import { hasVows, plainRecords } from '@/session/vows';
 import { parseTrainMode } from '@/session/training';
 import { StageResultPanel } from './stage/StageResultPanel';
 import { RecommendationNote } from './train/RecommendationNote';
+import { VowResultPanel } from './vows/VowResultPanel';
+import { isStageCleared } from '@/session/stageProgress';
 import { TrainResultPanel } from './train/TrainResultPanel';
 import { PageHeading } from './PageHeading';
 import { RankPanel } from './RankPanel';
@@ -52,8 +55,8 @@ export function Result() {
       const [r, all] = await Promise.all([store.get(id), store.list()]);
       if (cancelled) return;
       setRecord(r ?? null);
-      setComparison(r ? compareWithBest(all, r) : null);
-      setSummaries(summarizeSessions(all));
+      setComparison(r && !hasVows(r) ? compareWithBest(plainRecords(all), r) : null);
+      setSummaries(summarizeSessions(plainRecords(all)));
     })();
     return () => {
       cancelled = true;
@@ -93,6 +96,7 @@ export function Result() {
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <PageHeading title="結果" className="text-2xl font-bold" />
       {boss && outcome && <BossResultPanel boss={boss} outcome={outcome} />}
+      <VowResultPanel record={record} cleared={stageChapter && stage ? isStageCleared(m.accuracy) : null} />
       {trainKind && <TrainResultPanel kind={trainKind} record={record} misses={m.misses} />}
       {stageChapter && stage && <StageResultPanel chapter={stageChapter} stage={stage} accuracy={m.accuracy} />}
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">

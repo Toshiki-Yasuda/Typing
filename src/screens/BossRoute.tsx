@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router';
 import { BUILTIN_PACKS } from '@/content';
 import { useThemePack } from '@/content/themePack';
 import { prefersReducedMotion, resolveEffects } from '@/effects/level';
+import { vowEffects } from '@/session/vows';
 import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
@@ -40,7 +41,8 @@ export function BossRoute() {
       mode={`boss:${boss.id}`}
       boss={boss}
       effects={{ level: resolveEffects(settings.effects, prefersReducedMotion()), cardModel: theme.hero?.orbiter ?? null }}
-      fingerGuide={settings.fingerGuide ? { layout: settings.layout } : null}
+      fingerGuide={settings.fingerGuide && vowEffects(settings.vows).fingerGuide ? { layout: settings.layout } : null}
+      vows={settings.vows}
     />
   );
 }

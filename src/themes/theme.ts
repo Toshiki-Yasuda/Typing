@@ -143,6 +143,8 @@ export const ThemeSchema = z.object({
     .optional(),
   /** 6 軸診断の見せ方（作品の言葉への対応）。無ければ、軸の名前だけで見せる */
   diagnosis: DiagnosisSchema.optional(),
+  /** 縛りの見出し（無ければ「縛り」） */
+  vowsHeading: z.string().min(1).optional(),
   /** 修行の型（絶・練・発）と補助（凝・円）の呼び名 */
   train: TrainSchema.optional(),
   /** ステージ選択の章。無ければステージ選択は出ない */

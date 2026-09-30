@@ -3,13 +3,15 @@ import { Link, Navigate, useNavigate } from 'react-router';
 import { useStore } from '@/app/StoreContext';
 import type { SessionRecord } from '@/metrics';
 import { loadBossProgress } from '@/session/bossProgress';
-import { STAGE_CLEAR_ACCURACY, stageProgress } from '@/session/stageProgress';
+import { MEDAL_LABEL } from '@/session/vows';
+import { STAGE_CLEAR_ACCURACY, stageMedal, stageProgress } from '@/session/stageProgress';
 import { useSettings } from '@/settings/useSettings';
 import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import type { Chapter, Theme } from '@/themes/theme';
 import { PageHeading } from '../PageHeading';
+import { VowsPicker } from '../vows/VowsPicker';
 
 const pct = (v: number) => `${Math.round(v * 100)}%`;
 
@@ -60,6 +62,10 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
   }, [records, chapters, progressOf, bossProgress]);
   const chapter = chapters.find((c) => c.id === (picked ?? firstOpen)) ?? chapters[0]!;
   const boss = chapter.boss ? theme.bosses?.find((b) => b.id === chapter.boss) : undefined;
+  const medalText = (stageId: string) => {
+    const m = stageMedal(records ?? [], stageId);
+    return m === 'none' ? '' : `（メダル ${MEDAL_LABEL[m]}）`;
+  };
   const clearedCount = (c: Chapter) => c.stages.filter((s) => progressOf(s.id).cleared).length;
 
   return (
@@ -92,6 +98,8 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
         ))}
       </nav>
 
+      <VowsPicker />
+
       <section aria-labelledby="chapter" className="flex flex-col gap-3">
         <h2 id="chapter" className="text-xl font-bold">
           第{chapter.number}章 {chapter.title}
@@ -114,7 +122,7 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
                   </span>
                   <span className="font-bold">{s.name}</span>
                   <span className="text-sm">
-                    {!records ? '…' : p.cleared ? '✓ クリア済み' : p.attempts > 0 ? '△ 挑戦中' : '未挑戦'}
+                    {!records ? '…' : p.cleared ? `✓ クリア済み${medalText(s.id)}` : p.attempts > 0 ? '△ 挑戦中' : '未挑戦'}
                   </span>
                   <span className="text-sm text-text-muted">{s.description}</span>
                   <span className="text-sm text-text-muted">
