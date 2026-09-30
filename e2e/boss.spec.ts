@@ -47,6 +47,9 @@ test('メルエム（ミスの余裕 1 回）: 2 回ミスすると敗北し、�
   await expect(page.getByText('ミスの余裕 0 回（次のミスで敗北）')).toBeVisible();
   await page.keyboard.press('1');
 
+  // 決着の演出（敗北）。Enter で結果へ進む
+  await expect(page.getByText('Enter またはクリックで進む')).toBeVisible();
+  await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: /メルエムに敗れた（ランク D）/ })).toBeVisible();
   await scan(page, 'ボス戦の結果（敗北）');
   await page.getByRole('link', { name: 'ホーム' }).click();
@@ -62,6 +65,8 @@ test('ヒソカ: 全お題を打てば勝ち、ノーミスならランク S', a
     const romaji = ((await guide.textContent()) ?? '').replaceAll('␣', ' ');
     for (const key of romaji) await page.keyboard.press(key);
   }
+  await expect(page.getByText('Enter またはクリックで進む')).toBeVisible();
+  await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: /ヒソカを倒した（ランク S）/ })).toBeVisible();
   await scan(page, 'ボス戦の結果（勝利）');
 });

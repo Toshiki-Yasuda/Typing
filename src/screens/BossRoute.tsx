@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { BUILTIN_PACKS } from '@/content';
+import { prefersReducedMotion, resolveEffects } from '@/effects/level';
 import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
@@ -33,6 +34,7 @@ export function BossRoute() {
       adaptive
       mode={`boss:${boss.id}`}
       boss={boss}
+      effects={{ level: resolveEffects(settings.effects, prefersReducedMotion()), cardModel: theme.hero?.orbiter ?? null }}
       fingerGuide={settings.fingerGuide ? { layout: settings.layout } : null}
     />
   );

@@ -135,7 +135,7 @@ export function startHeroScene({ canvas, models, animate, onReady, onError }: He
     renderer.render(scene, camera);
   }
 
-  const start = performance.now();
+  let start = performance.now();
   const loop = () => {
     if (disposed) return;
     if (!document.hidden) draw((performance.now() - start) / 1000);
@@ -170,6 +170,7 @@ export function startHeroScene({ canvas, models, animate, onReady, onError }: He
       resize();
       draw(0);
       if (animate) {
+        start = performance.now();
         window.addEventListener('pointermove', onMove);
         raf = requestAnimationFrame(loop);
       }

@@ -1,9 +1,11 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { BossBattle, type BattleState } from '@/session/bossBattle';
 import { recordBossResult } from '@/session/bossProgress';
 import type { Boss } from '@/themes/theme';
+import { BossFx, type BossFxState } from './boss/BossFx';
 import { BossHud } from './boss/BossHud';
+import { webglAvailable, type EffectLevel } from '@/effects/level';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness } from '@/metrics';
@@ -21,6 +23,9 @@ import { TargetView } from './TargetView';
 /** 画面の見出し（視覚的には隠す）。モードごとに、何の画面かを示す */
 const HEADINGS: Record<string, string> = { daily: '今日のチャレンジ', retry: '同じお題でもう一度' };
 
+/** 演出の長さ（ミリ秒）。登場・フェーズ切替は打鍵を受けたまま重ねる。決着は打鍵が終わった後なので、Enter で飛ばせる */
+export const FX_MS = { intro: 3000, phase: 1900, finishFull: 3400, finishReduced: 1600 } as const;
+
 interface Props {
   pack?: ContentPack;
   count?: number;
@@ -36,6 +41,8 @@ interface Props {
   ghost?: { ghost: Ghost; label: string } | null;
   /** ボス戦。指定すると、ボスの HP・ミスの許容・台詞が加わる（判定・計測は通常の練習と同じ） */
   boss?: Boss;
+  /** ボス戦の演出。省略なら演出なし（待ち時間もない）。level が off も同じ */
+  effects?: { level: EffectLevel; cardModel: string | null };
   random?: () => number;
 }
 
@@ -48,6 +55,7 @@ export function Play({
   ghost = null,
   fingerGuide = null,
   boss,
+  effects,
   random,
 }: Props) {
   const navigate = useNavigate();
@@ -57,6 +65,30 @@ export function Play({
   const battle = useRef<BossBattle | null>(null);
   const [bossLine, setBossLine] = useState('');
   const [battleState, setBattleState] = useState<BattleState | null>(null);
+
+  // ボス戦の演出。level は途中で変わらないが、effect の依存を増やさないよう ref に写す
+  const level = effects?.level ?? 'off';
+  const levelRef = useRef<EffectLevel>(level);
+  useEffect(() => {
+    levelRef.current = level;
+  }, [level]);
+  // 決着の 3D は、戦闘の始まりに先読みする（決着の瞬間に読み込むと、演出に間に合わない）
+  const cardModel = effects?.cardModel ?? null;
+  useEffect(() => {
+    if (!boss || level === 'off' || !cardModel || !webglAvailable()) return;
+    void import('./boss/BurstScene');
+    fetch(new URL(cardModel, document.baseURI)).catch(() => {});
+  }, [boss, level, cardModel]);
+  const [fx, setFx] = useState<BossFxState | null>(null);
+  const fxTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  /** 決着の演出を閉じて先へ進む関数（決着の演出中だけ入る） */
+  const skip = useRef<(() => void) | null>(null);
+  const showFx = useCallback((next: BossFxState, ms: number) => {
+    clearTimeout(fxTimer.current);
+    setFx(next);
+    fxTimer.current = setTimeout(() => setFx(null), ms);
+  }, []);
+  useEffect(() => () => clearTimeout(fxTimer.current), []);
 
   // 過去の記録から弱点を求め、弱いキーを含むお題が出やすいように選ぶ（記録が無ければ均等）
   useEffect(() => {
@@ -81,11 +113,12 @@ export function Play({
           contentId: pack.id,
         }),
       );
+      if (boss && levelRef.current !== 'off') showFx({ kind: 'intro' }, FX_MS.intro);
     });
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, fixedItems, mode, boss, random]);
+  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -115,6 +148,14 @@ export function Play({
         navigate('/');
         return;
       }
+      // 決着の演出中: Enter・Space で先へ進む。打鍵としては扱わない
+      if (skip.current) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          skip.current();
+        }
+        return;
+      }
       // IME が変換中のときは keydown が実キーを持たない。警告を出して、打鍵としては扱わない
       if (e.isComposing || e.keyCode === 229) setImeWarning(true);
       if (!isGameKey(e)) return;
@@ -128,7 +169,11 @@ export function Play({
       if (fight && boss) {
         const { phaseChanged } = fight.apply(result);
         setBattleState(fight.state());
-        if (phaseChanged) setBossLine(boss.phaseMessages[phaseChanged - 2] ?? '');
+        if (phaseChanged) {
+          const line = boss.phaseMessages[phaseChanged - 2] ?? '';
+          setBossLine(line);
+          if (levelRef.current !== 'off') showFx({ kind: 'phase', phase: phaseChanged, line }, FX_MS.phase);
+        }
         else if (result === 'wordDone') setBossLine(boss.dialogues[session.view().index % boss.dialogues.length] ?? '');
         else if (result === 'sessionDone') setBossLine(boss.defeat);
       }
@@ -146,9 +191,20 @@ export function Play({
             if (fight && boss && rank) {
               recordBossResult(boss.id, rank);
               const s = fight.state();
-              navigate(`/result/${record.id}`, {
-                state: { boss: { id: boss.id, rank, misses: s.misses, maxCombo: s.maxCombo } },
-              });
+              const go = () => {
+                skip.current = null;
+                clearTimeout(fxTimer.current);
+                navigate(`/result/${record.id}`, {
+                  state: { boss: { id: boss.id, rank, misses: s.misses, maxCombo: s.maxCombo } },
+                });
+              };
+              const lvl = levelRef.current;
+              if (lvl === 'off') return go();
+              // 決着の演出を見せてから結果へ（Enter・クリックで飛ばせる。保存は済んでいる）
+              skip.current = go;
+              showFx({ kind: rank === 'D' ? 'lost' : 'won', line: rank === 'D' ? (boss.dialogues[0] ?? '') : boss.defeat }, 60_000);
+              clearTimeout(fxTimer.current);
+              fxTimer.current = setTimeout(go, lvl === 'full' ? FX_MS.finishFull : FX_MS.finishReduced);
             } else {
               navigate(`/result/${record.id}`);
             }
@@ -171,12 +227,15 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store, sound, boss]);
+  }, [navigate, session, store, sound, boss, showFx]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
+      {fx && boss && level !== 'off' && (
+        <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} />
+      )}
       <PageHeading title={boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習')} srOnly />
       <header className="flex items-center justify-between text-text-muted">
         {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
