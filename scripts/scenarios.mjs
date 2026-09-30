@@ -72,4 +72,17 @@ export const SCENARIOS = {
     await page.getByRole('img', { name: /^速さ/ }).waitFor();
     await page.screenshot({ path: ctx.path, fullPage: true });
   },
+  /** 水見式のグラス（診断の画面。反応が起きた最後の姿を撮る） */
+  async ritual(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 5, { contentId: 'basic', dt: 160, idPrefix: 'a' });
+    await seedRecords(page, 5, { contentId: 'english', dt: 260, idPrefix: 'b' });
+    await unlockTheme(page, ctx.url);
+    await skipToTitle(page);
+    await page.keyboard.press('5');
+    await page.getByRole('heading', { level: 2, name: '水見式' }).waitFor();
+    await page.waitForTimeout(5000);
+    await page.screenshot({ path: ctx.path, fullPage: true });
+  },
 };

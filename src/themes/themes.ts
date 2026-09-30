@@ -86,6 +86,7 @@ export const HUNTER_THEME: Theme = {
       reach: { kind: '放出系', trait: '大雑把', ritual: '水の色が変わる' },
     },
     affinity: [100, 80, 60, 40],
+    glass: 'themes/hunter/models/glass.glb',
   },
   chapters: HUNTER_CHAPTERS,
   bosses: HUNTER_BOSSES,

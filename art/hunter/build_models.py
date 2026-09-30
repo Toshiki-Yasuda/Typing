@@ -6,6 +6,7 @@ HUNTER×HUNTER テーマの 3D 小道具を作る（Blender をスクリプト�
 作るもの（すべてこのスクリプトが生成するオリジナルのモデル。手作業の調整は無い）:
   - license.glb : ハンターライセンス風のカード（濃紺の地・金の縁・金の紋章と文字）
   - card.glb    : トランプ風のカード（白地・金の縁・赤いダイヤ）
+  - glass.glb   : 水見式のグラス（glass / water / leaf の3つ。水は底が原点で、y 方向に伸縮して水位にする）
 再生成の手順は art/README.md。bpy（pip install bpy）が必要。
 """
 import math
@@ -199,5 +200,49 @@ def build_card():
         preview('card')
 
 
+def lathe(name, profile, mat, steps=48, z=0.0):
+    """断面（半径, 高さ）の折れ線を軸まわりに回した回転体。"""
+    bm = bmesh.new()
+    verts = [bm.verts.new((r, 0, h)) for r, h in profile]
+    edges = [bm.edges.new((verts[i], verts[i + 1])) for i in range(len(verts) - 1)]
+    bmesh.ops.spin(bm, geom=verts + edges, cent=(0, 0, 0), axis=(0, 0, 1), angle=math.tau, steps=steps)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.location.z = z
+    obj.data.materials.append(mat)
+    for poly in obj.data.polygons:
+        poly.use_smooth = True
+    return obj
+
+
+def build_glass():
+    reset()
+    glass_m = material('glass', (0.85, 0.92, 0.95), metallic=0.0, roughness=0.05)
+    water_m = material('water', (0.55, 0.78, 0.95), metallic=0.0, roughness=0.1)
+    leaf_m = material('leaf', (0.20, 0.55, 0.18), metallic=0.0, roughness=0.6)
+    # グラス: 厚みのある壁と底（外側 → 縁 → 内側 → 内底）。高さ 0.5・口の半径 0.2
+    wall = 0.012
+    profile = [(0.0, 0.0), (0.155, 0.0), (0.16, 0.03), (0.2, 0.5), (0.2 - wall, 0.5), (0.16 - wall, 0.04), (0.0, 0.04)]
+    glass = lathe('glass', profile, glass_m)
+    # 水: 底が原点の錐台（高さ 1 単位 = 0.34）。three.js で y を伸縮して水位にする
+    water = lathe('water', [(0.0, 0.0), (0.146, 0.0), (0.146 + 0.038, 0.34), (0.0, 0.34)], water_m, z=0.045)
+    # 葉: 水面に浮かぶ、先のとがった楕円。中央の筋も入れる
+    pts = []
+    for i in range(24):
+        a = math.tau * i / 24
+        pts.append((0.085 * math.cos(a), 0.045 * math.sin(a) * (1 - 0.25 * math.cos(a)) if math.cos(a) < 0 else 0.045 * math.sin(a) * (1 - 0.6 * math.cos(a))))
+    leaf = polygon('leaf', pts, 0.004, leaf_m, z=0.045 + 0.34)
+    objs = [glass, water, leaf]
+    export('glass', objs)
+    if PREVIEW:
+        preview('glass')
+
+
 build_license()
 build_card()
+build_glass()

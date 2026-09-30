@@ -71,6 +71,8 @@ export const DiagnosisSchema = z.object({
   axes: z.object(Object.fromEntries(AXIS_IDS.map((id) => [id, AxisFlavorSchema])) as Record<(typeof AXIS_IDS)[number], typeof AxisFlavorSchema>),
   /** 得意な軸から伸ばす軸までの環の距離 0〜3 に対する「伸ばしやすさ」の割合（演出） */
   affinity: z.tuple([z.number(), z.number(), z.number(), z.number()]),
+  /** 水見式のグラスの 3D モデル（glass / water / leaf を含む glTF）。無ければ文字だけで見せる */
+  glass: z.string().min(1).optional(),
 });
 export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 

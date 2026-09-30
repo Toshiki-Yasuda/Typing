@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useStore } from '@/app/StoreContext';
+import { prefersReducedMotion, resolveEffects, webglAvailable } from '@/effects/level';
 import { LAYOUTS, locate } from '@/fingering';
 import { AXIS_IDS, computeAxes, diagnose, type AxisId } from '@/metrics/axes';
 import { withinDays } from '@/metrics/history';
@@ -12,6 +13,10 @@ import { loadUnlocked } from '@/themes/unlock';
 import { PageHeading } from '../PageHeading';
 import { AXIS_INFO } from './labels';
 import { RadarChart } from './RadarChart';
+import { REACTION_OF_AXIS } from './ritual';
+
+// three.js は大きいので、水見式を見せるときだけ読み込む
+const WaterGlass = lazy(() => import('./WaterGlass'));
 
 type Range = { label: string; days: number | null };
 const RANGES: readonly Range[] = [
@@ -29,6 +34,9 @@ export function DiagnosisScreen() {
   const flavor = theme.diagnosis;
   const [loaded, setLoaded] = useState<{ records: SessionRecord[]; now: number } | null>(null);
   const [range, setRange] = useState<Range>(RANGES[2] as Range);
+  const [replay, setReplay] = useState(0);
+  const [glassFailed, setGlassFailed] = useState(false);
+  const onGlassError = useCallback(() => setGlassFailed(true), []);
   useSceneBgm('stage');
 
   useEffect(() => {
@@ -58,6 +66,8 @@ export function DiagnosisScreen() {
   const name = (id: AxisId) => `${AXIS_INFO[id].label}${flavor ? `（${flavor.axes[id].kind}）` : ''}`;
   const heading = flavor?.heading ?? '6軸診断';
   const weak = diagnosis ? AXIS_INFO[diagnosis.weakest] : null;
+  const effectLevel = resolveEffects(settings.effects, prefersReducedMotion());
+  const showGlass = !!(flavor?.glass && diagnosis && effectLevel !== 'off' && !glassFailed && webglAvailable());
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-6 p-8">
@@ -97,6 +107,33 @@ export function DiagnosisScreen() {
       ) : (
         <>
           <RadarChart title="6軸の得点" axes={axes} kinds={kinds} />
+
+          {flavor && diagnosis && (
+            <section aria-labelledby="ritual" className="flex flex-col items-center gap-2 rounded-lg bg-surface-raised p-4">
+              <h2 id="ritual" className="self-start text-lg font-bold">
+                水見式
+              </h2>
+              {showGlass && flavor.glass && (
+                <Suspense fallback={null}>
+                  <WaterGlass
+                    model={flavor.glass}
+                    reaction={REACTION_OF_AXIS[diagnosis.strongest]}
+                    animate={effectLevel === 'full'}
+                    replay={replay}
+                    onError={onGlassError}
+                  />
+                </Suspense>
+              )}
+              <p className="text-lg font-bold">
+                {flavor.axes[diagnosis.strongest].ritual} → {flavor.axes[diagnosis.strongest].kind}
+              </p>
+              {showGlass && effectLevel === 'full' && (
+                <button type="button" onClick={() => setReplay((n) => n + 1)} className="rounded bg-surface px-3 py-1 text-sm">
+                  もう一度見る
+                </button>
+              )}
+            </section>
+          )}
 
           <section aria-labelledby="result" className="flex flex-col gap-3 rounded-lg bg-surface-raised p-4">
             <h2 id="result" className="text-lg font-bold">

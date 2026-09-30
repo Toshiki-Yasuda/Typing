@@ -124,7 +124,9 @@ describe('3D の演出', () => {
     const { readFileSync } = await import('node:fs');
     const hero = HUNTER_THEME.hero;
     expect(hero).toBeDefined();
-    for (const path of Object.values(hero ?? {})) {
+    const paths = [...Object.values(hero ?? {}), HUNTER_THEME.diagnosis?.glass ?? ''];
+    expect(paths.every((x) => x !== '')).toBe(true);
+    for (const path of paths) {
       const bytes = readFileSync(`public/${path}`);
       expect(bytes.subarray(0, 4).toString('ascii'), path).toBe('glTF');
       expect(bytes.readUInt32LE(4), `${path} の版`).toBe(2);

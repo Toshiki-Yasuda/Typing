@@ -275,6 +275,12 @@ test.describe('念系統診断', () => {
     await expect(result).toContainText('得意な軸: 速さ（強化系）');
     await expect(result).toContainText('伸ばせる軸: 安定（特質系）');
     await expect(page.getByRole('img', { name: '速さ 100点' })).toBeVisible();
+    // 水見式: 結果は文字でも出る。グラスの 3D は飾り（支援技術には見せない）
+    const ritual = page.getByRole('region', { name: '水見式' });
+    await expect(ritual).toContainText('水があふれる → 強化系');
+    await expect(ritual.locator('canvas')).toHaveCount(1);
+    await expect(ritual.locator('[aria-hidden="true"] canvas')).toHaveCount(1);
+    await page.waitForTimeout(700); // 3D の出現（フェード）が終わってから axe
     await scan(page, '念系統診断（結果あり）');
 
     await page.getByRole('button', { name: '30日' }).click();
