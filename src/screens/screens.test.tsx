@@ -82,7 +82,7 @@ describe('Play', () => {
     const first = screen.getByRole('region', { name: 'お題' }).textContent?.includes('柿') ? 'kaki' : 'umi';
     const second = first === 'kaki' ? 'umi' : 'kaki';
     press('z');
-    expect(screen.getByRole('region', { name: 'お題' }).className).toContain('bg-danger');
+    expect(screen.getByRole('region', { name: 'お題' }).className).toContain('ring-danger');
     // 対照: 誤打のときは、お題カードに「ミス」の表示が出る（IME 中の入力では出ないことを別のテストで確かめている）
     expect(screen.getByText('ミス', { selector: 'span[aria-hidden]' })).toBeInTheDocument();
     expect(screen.getByLabelText('進捗')).toHaveTextContent('1 / 2');

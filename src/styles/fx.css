@@ -1,5 +1,69 @@
 /* fx: 練習画面のアップグレード用のスタイル（担当エージェント専用のファイル。計画書 docs/design/agents.md） */
 
 /* F: 打鍵の手応え（U3。TargetView の要素）— 担当F専用の区画 */
+/* 基本の見た目が「動いた後の姿」。動きは data-effect="full"（標準）のときだけ @keyframes で足す。
+   どの動きも 1 回きりで、1 秒に 3 回以上の輝度変化は作らない（明るさは変えず、位置・大きさ・不透明度だけ） */
+.target-card .target-hit {
+  font-weight: 700; /* 控えめ: 動かさず、太さで「打てた」を示す */
+}
+.target-card .target-expected {
+  /* ミス: 期待した1文字だけを強調（カード全体は染めない）。下線の脈打ちは運指ガイド側 */
+  outline: 2px solid var(--color-danger);
+  outline-offset: 2px;
+}
+.target-card .target-ghost {
+  display: none;
+}
+.target-card[data-effect='full'] .target-hit {
+  display: inline-block;
+  animation: target-hit 100ms ease-out;
+}
+.target-card[data-effect='full'] .target-next {
+  display: inline-block;
+  animation: target-caret 80ms ease-out;
+}
+.target-card[data-effect='full'] .target-enter {
+  animation: target-enter 160ms ease-out;
+}
+.target-card[data-effect='full'] .target-ghost {
+  display: block;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  margin: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: target-ghost 160ms ease-out;
+}
+@keyframes target-hit {
+  from {
+    transform: scale(1.06);
+  }
+}
+@keyframes target-caret {
+  from {
+    transform: translateX(-0.6em);
+  }
+}
+@keyframes target-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes target-ghost {
+  from {
+    opacity: 0.6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .target-card[data-effect] .target-hit,
+  .target-card[data-effect] .target-next,
+  .target-card[data-effect] .target-enter,
+  .target-card[data-effect] .target-ghost {
+    animation: none;
+  }
+}
 
 /* G: 空気と達成（U5。FxLayer・光の呼吸・レールの進み）— 担当G専用の区画 */
