@@ -487,3 +487,78 @@ describe('章ごとのアクセント色', () => {
     expect(accentOf((await screen.findByRole('heading', { level: 1, name: '結果' })).closest('main'))).toBe('');
   });
 });
+
+// 結果で鳴らす短い合成音（N10）
+describe('結果の合成音', () => {
+  let freqs: number[];
+  beforeEach(() => {
+    freqs = [];
+    class FakeAudioContext {
+      state = 'running';
+      currentTime = 0;
+      destination = {};
+      resume = async () => {};
+      createGain = () => ({ gain: { value: 0, setValueAtTime() {}, linearRampToValueAtTime() {}, exponentialRampToValueAtTime() {} }, connect() {} });
+      createOscillator = () => ({
+        type: '',
+        frequency: { value: 0, setValueAtTime: (v: number) => void freqs.push(v), linearRampToValueAtTime() {}, exponentialRampToValueAtTime() {} },
+        connect() {},
+        start() {},
+        stop() {},
+      });
+    }
+    vi.stubGlobal('AudioContext', FakeAudioContext);
+  });
+
+  const inResult = async (rec: SessionRecord, state?: unknown) => {
+    const store = createMemoryStore();
+    await store.add(rec);
+    app(state ? { pathname: `/result/${rec.id}`, state } : `/result/${rec.id}`, store);
+    await screen.findByRole('heading', { level: 1, name: '結果' });
+    await act(async () => {});
+  };
+
+  it('ステージをクリアしたとき、上昇 3 音を 1 回だけ鳴らす', async () => {
+    setup();
+    await inResult(record('c1s1', 10, 0, 'ok'));
+    expect(freqs).toEqual([523, 659, 784]);
+  });
+
+  it('クリアならずのときは鳴らさない（責めない）', async () => {
+    setup();
+    await inResult(record('c1s1', 8, 2, 'weak'));
+    expect(freqs).toEqual([]);
+  });
+
+  it('縛り「無音」の記録では鳴らさない', async () => {
+    setup();
+    await inResult({ ...record('c1s1', 10, 0, 'silent'), vows: ['silent'] });
+    expect(freqs).toEqual([]);
+  });
+
+  it('ボスに勝ったら上昇 4 音、負けたら下降 3 音。勝敗が分からないとき（履歴から開き直した）は鳴らさない', async () => {
+    setup();
+    const boss = (id: string) => ({ ...record('c1s1', 10, 0, id), mode: 'boss:chapter1' });
+    await inResult(boss('w'), { boss: { id: 'chapter1', rank: 'S', misses: 0, maxCombo: 9 } });
+    expect(freqs).toEqual([523, 659, 784, 1047]);
+    cleanup();
+    freqs.length = 0;
+    await inResult(boss('l'), { boss: { id: 'chapter1', rank: 'D', misses: 4, maxCombo: 3 } });
+    expect(freqs).toHaveLength(3);
+    expect(freqs[0]! > freqs[1]! && freqs[1]! > freqs[2]!).toBe(true);
+    cleanup();
+    freqs.length = 0;
+    await inResult(boss('u'));
+    expect(freqs).toEqual([]);
+  });
+
+  it('「効果音を鳴らす」がオフなら鳴らさない。ふつうの練習の結果でも鳴らさない', async () => {
+    setup({ sound: false });
+    await inResult(record('c1s1', 10, 0, 'off'));
+    expect(freqs).toEqual([]);
+    cleanup();
+    setup();
+    await inResult({ ...record('c1s1', 10, 0, 'plain'), mode: 'practice' });
+    expect(freqs).toEqual([]);
+  });
+});

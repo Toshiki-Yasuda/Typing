@@ -13,6 +13,8 @@ import { hasVows, plainRecords, vowBroken } from '@/session/vows';
 import { afterFlow, type FlowInput } from '@/session/afterFlow';
 import { chapterAccentStyle, chapterOfBoss } from '@/themes/chapterAccent';
 import { AfterActions, AfterKeys } from './AfterActions';
+import { ResultJingle } from './ResultJingle';
+import type { JingleKind } from '@/sound/jingle';
 import { parseTrainMode } from '@/session/training';
 import { StageResultPanel } from './stage/StageResultPanel';
 import { RecommendationNote } from './train/RecommendationNote';
@@ -103,6 +105,18 @@ export function Result() {
       : {}),
   };
   const flow = afterFlow(flowInput);
+  // 結果で鳴らす短い合成音（縛り「無音」では鳴らさない。ステージはクリアしたときだけ。ボスは勝敗が分かるときだけ）
+  const jingle: JingleKind | null = record.vows?.includes('silent')
+    ? null
+    : stage
+      ? stageCleared
+        ? 'clear'
+        : null
+      : bossDef && outcome
+        ? outcome.rank !== 'D'
+          ? 'victory'
+          : 'defeat'
+        : null;
   const weak = [...keyStats(record.keystrokes).values()]
     .filter((k) => k.misses > 0)
     .sort((a, b) => b.misses - a.misses || b.attempts - a.attempts)
@@ -120,6 +134,7 @@ export function Result() {
       <VowResultPanel record={record} cleared={stageChapter && stage ? stageCleared : null} />
       {trainKind && <TrainResultPanel kind={trainKind} record={record} misses={m.misses} />}
       {stageChapter && stage && <StageResultPanel chapter={stageChapter} stage={stage} accuracy={m.accuracy} cleared={stageCleared} />}
+      {jingle && <ResultJingle kind={jingle} recordId={record.id} />}
       <AfterKeys flow={flow} />
       {flow.inGame && <AfterActions flow={flow} />}
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
