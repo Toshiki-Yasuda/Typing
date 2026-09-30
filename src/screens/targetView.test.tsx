@@ -1,4 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { saveSettings, DEFAULT_SETTINGS } from '@/settings/settings';
+import { UNLOCK_KEY } from '@/themes/unlock';
+import type { PressFx } from './play/types';
 import type { SessionView } from '@/session/practiceSession';
 import { TargetView, sizeClasses } from './TargetView';
 
@@ -67,14 +70,18 @@ describe('TargetView', () => {
 
   it('打ち終えたローマ字は暗くせず、次の1文字は強調クラスを持つ', () => {
     render(<TargetView view={view('猫', 'ねこ', 'n', 'eko')} missing={false} />);
-    expect(screen.getByText('n')).toHaveClass('target-typed');
-    expect(screen.getByText('n')).not.toHaveClass('text-text-muted');
+    expect(screen.getByText('n').closest('.target-typed')).not.toBeNull();
+    expect(screen.getByText('n').closest('.text-text-muted')).toBeNull();
     expect(screen.getByText('e')).toHaveClass('target-next');
   });
 
-  it('誤打鍵の間は背景が変わり、スペースは ␣ で示す', () => {
+  it('誤打鍵の間は枠とラベルで示し（背景は染めない）、期待した1文字を強調。スペースは ␣ で示す', () => {
     render(<TargetView view={view('a b', 'a b', 'a', ' b', 1)} missing />);
-    expect(screen.getByRole('region', { name: 'お題' })).toHaveClass('bg-danger/20');
+    const card = screen.getByRole('region', { name: 'お題' });
+    expect(card).toHaveClass('ring-danger');
+    expect(card).not.toHaveClass('bg-danger/20');
+    expect(screen.getByText('ミス')).toBeInTheDocument();
+    expect(screen.getByText('␣')).toHaveClass('target-expected');
     expect(screen.getByLabelText('ローマ字ガイド')).toHaveTextContent('a␣b');
   });
 });
@@ -100,5 +107,101 @@ describe('補助（凝・円）', () => {
     expect(screen.queryByText(/^次:/)).toBeNull();
     rerender(<TargetView view={{ ...v, next: null }} missing={false} preview />);
     expect(screen.queryByText(/^次:/)).toBeNull();
+  });
+});
+
+describe('U3 打鍵の手応え', () => {
+  const setEffects = (effects: 'full' | 'reduced' | 'off') => saveSettings({ ...DEFAULT_SETTINGS, effects });
+  const ok = (seq: number): PressFx => ({ seq, result: 'ok', key: 'e', expected: null });
+  const miss = (seq: number): PressFx => ({ seq, result: 'miss', key: '1', expected: 'e' });
+  afterEach(() => localStorage.clear());
+
+  it('正打: 直前に打った1文字だけが反応の対象（標準）。ミスの打鍵では付かない', () => {
+    setEffects('full');
+    const { rerender } = render(<TargetView view={view('猫', 'ねこ', 'ne', 'ko', 1)} missing={false} press={ok(1)} />);
+    expect(screen.getByText('e')).toHaveClass('target-hit');
+    expect(screen.getByText('n')).not.toHaveClass('target-hit');
+    expect(screen.getByLabelText('ローマ字ガイド')).toHaveTextContent('neko');
+    rerender(<TargetView view={view('猫', 'ねこ', 'ne', 'ko', 1)} missing press={miss(2)} />);
+    expect(document.querySelector('.target-hit')).toBeNull();
+  });
+
+  it('正打の反応は、控えめでも付く（太さだけ。動きは data-effect が full のときだけ CSS で付く）。オフでは付かない', () => {
+    setEffects('reduced');
+    const { unmount } = render(<TargetView view={view('猫', 'ねこ', 'n', 'eko')} missing={false} press={ok(1)} />);
+    expect(screen.getByRole('region', { name: 'お題' })).toHaveAttribute('data-effect', 'reduced');
+    expect(screen.getByText('n')).toHaveClass('target-hit');
+    unmount();
+    setEffects('off');
+    render(<TargetView view={view('猫', 'ねこ', 'n', 'eko')} missing={false} press={ok(1)} />);
+    expect(screen.getByRole('region', { name: 'お題' })).toHaveAttribute('data-effect', 'off');
+    expect(document.querySelector('.target-hit')).toBeNull();
+  });
+
+  it('語の切り替え: 標準では前の語が薄れる幽霊が出て、終わると消える。控えめ・オフでは出ない', async () => {
+    setEffects('full');
+    const a = view('猫', 'ねこ', 'neko', '');
+    const b = { ...view('犬', 'いぬ', '', 'inu'), index: 1 };
+    const { rerender, unmount } = render(<TargetView view={a} missing={false} />);
+    expect(screen.queryByTestId('target-ghost')).toBeNull();
+    rerender(<TargetView view={b} missing={false} />);
+    const ghost = screen.getByTestId('target-ghost');
+    expect(ghost).toHaveTextContent('猫');
+    expect(ghost).toHaveAttribute('aria-hidden', 'true');
+    await waitFor(() => expect(screen.queryByTestId('target-ghost')).toBeNull());
+    unmount();
+    for (const lv of ['reduced', 'off'] as const) {
+      setEffects(lv);
+      const r = render(<TargetView view={a} missing={false} />);
+      r.rerender(<TargetView view={b} missing={false} />);
+      expect(screen.queryByTestId('target-ghost')).toBeNull();
+      r.unmount();
+    }
+  });
+
+  it('ミスの揺れ: 標準のときだけ、ミスのたびに 2px・120ms で再生する', () => {
+    const animate = vi.fn();
+    Element.prototype.animate = animate;
+    try {
+      setEffects('full');
+      const v = view('猫', 'ねこ', 'n', 'eko');
+      const { rerender } = render(<TargetView view={v} missing={false} press={ok(1)} />);
+      expect(animate).not.toHaveBeenCalled();
+      rerender(<TargetView view={v} missing press={miss(2)} />);
+      rerender(<TargetView view={v} missing press={miss(3)} />);
+      expect(animate).toHaveBeenCalledTimes(2);
+      expect(animate.mock.calls[0]![1]).toMatchObject({ duration: 120 });
+      expect(JSON.stringify(animate.mock.calls[0]![0])).toContain('2px');
+    } finally {
+      Reflect.deleteProperty(Element.prototype, 'animate');
+    }
+  });
+
+  it('ミスの揺れ: 控えめ・オフでは再生しない', () => {
+    const animate = vi.fn();
+    Element.prototype.animate = animate;
+    try {
+      for (const lv of ['reduced', 'off'] as const) {
+        setEffects(lv);
+        const r = render(<TargetView view={view('猫', 'ねこ', 'n', 'eko')} missing press={miss(2)} />);
+        r.unmount();
+      }
+      expect(animate).not.toHaveBeenCalled();
+    } finally {
+      Reflect.deleteProperty(Element.prototype, 'animate');
+    }
+  });
+
+  it('テーマの手応え（feel）があるときは、Play 側が揺らすので TargetView は揺らさない', () => {
+    const animate = vi.fn();
+    Element.prototype.animate = animate;
+    try {
+      localStorage.setItem(UNLOCK_KEY, JSON.stringify(['hunter']));
+      saveSettings({ ...DEFAULT_SETTINGS, effects: 'full', themeId: 'hunter' });
+      render(<TargetView view={view('猫', 'ねこ', 'n', 'eko')} missing press={miss(2)} />);
+      expect(animate).not.toHaveBeenCalled();
+    } finally {
+      Reflect.deleteProperty(Element.prototype, 'animate');
+    }
   });
 });
