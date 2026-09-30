@@ -9,7 +9,9 @@ import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
-import { hasVows, plainRecords } from '@/session/vows';
+import { hasVows, plainRecords, vowBroken } from '@/session/vows';
+import { afterFlow, type FlowInput } from '@/session/afterFlow';
+import { AfterActions, AfterKeys } from './AfterActions';
 import { parseTrainMode } from '@/session/training';
 import { StageResultPanel } from './stage/StageResultPanel';
 import { RecommendationNote } from './train/RecommendationNote';
@@ -82,6 +84,24 @@ export function Result() {
   const stageId = record.mode.startsWith('stage:') ? record.mode.slice('stage:'.length) : null;
   const stageChapter = stageId ? theme.chapters?.find((c) => c.stages.some((s) => s.id === stageId)) : undefined;
   const stage = stageChapter?.stages.find((s) => s.id === stageId);
+  const stageCleared = stage ? isStageCleared(m.accuracy) && !vowBroken(record) : false;
+  // 終わった後の動線（docs/spec/flow.md）。ステージ・ボスの結果は、ステージの文脈から出さない
+  const chapters = theme.chapters ?? [];
+  const bossId = outcome?.id ?? (record.mode.startsWith('boss:') ? record.mode.slice('boss:'.length) : null);
+  const bossDef = bossId ? theme.bosses?.find((b) => b.id === bossId) : undefined;
+  const bossChapterAt = bossId ? chapters.findIndex((c) => c.boss === bossId) : -1;
+  const nextChapterStage = bossChapterAt >= 0 ? chapters[bossChapterAt + 1]?.stages[0] : undefined;
+  const nextStage = stageChapter && stage ? stageChapter.stages[stageChapter.stages.findIndex((s) => s.id === stage.id) + 1] : undefined;
+  const flowInput: FlowInput = {
+    recordId: record.id,
+    ...(stageChapter && stage
+      ? { stage: { id: stage.id, cleared: stageCleared, next: nextStage ? { id: nextStage.id, name: nextStage.name } : null, bossId: stageChapter.boss ?? null } }
+      : {}),
+    ...(!stage && bossDef
+      ? { boss: { id: bossDef.id, name: bossDef.name, won: outcome ? outcome.rank !== 'D' : null, nextStage: nextChapterStage ? { id: nextChapterStage.id, name: `第${chapters[bossChapterAt + 1]!.number}章 ${nextChapterStage.name}` } : null } }
+      : {}),
+  };
+  const flow = afterFlow(flowInput);
   const weak = [...keyStats(record.keystrokes).values()]
     .filter((k) => k.misses > 0)
     .sort((a, b) => b.misses - a.misses || b.attempts - a.attempts)
@@ -96,9 +116,11 @@ export function Result() {
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <PageHeading title="結果" className="text-2xl font-bold" />
       {boss && outcome && <BossResultPanel boss={boss} outcome={outcome} />}
-      <VowResultPanel record={record} cleared={stageChapter && stage ? isStageCleared(m.accuracy) : null} />
+      <VowResultPanel record={record} cleared={stageChapter && stage ? stageCleared : null} />
       {trainKind && <TrainResultPanel kind={trainKind} record={record} misses={m.misses} />}
-      {stageChapter && stage && <StageResultPanel chapter={stageChapter} stage={stage} accuracy={m.accuracy} />}
+      {stageChapter && stage && <StageResultPanel chapter={stageChapter} stage={stage} accuracy={m.accuracy} cleared={stageCleared} />}
+      <AfterKeys flow={flow} />
+      {flow.inGame && <AfterActions flow={flow} />}
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <Stat label="速度（実効）" value={fmt(m.kpm)} unit="打鍵/分" />
         <Stat label="正確率" value={pct(m.accuracy)} />
@@ -141,20 +163,22 @@ export function Result() {
             : `同じお題の過去最高は ${comparison.bestKpm.toFixed(0)} 打鍵/分（今回は ${Math.abs(comparison.diffKpm).toFixed(0)} 遅い）`}
         </p>
       )}
-      <nav className="flex flex-wrap gap-4">
-        {boss && (
-          <Link to={`/boss/${boss.id}`} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
-            {boss.name}にもう一度挑戦
+      {flow.inGame ? (
+        <nav aria-label="そのほか" className="flex flex-wrap gap-4">
+          <Link to="/" className="rounded bg-surface-raised px-6 py-3">ホーム</Link>
+        </nav>
+      ) : (
+        <nav className="flex flex-wrap gap-4">
+          <Link to={flow.primary.to} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
+            {flow.primary.label}
           </Link>
-        )}
-        <Link to={`/play?retry=${record.id}`} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
-          同じお題でもう一度
-        </Link>
-        <Link to="/play" className="rounded bg-surface-raised px-6 py-3">
-          新しいお題で練習
-        </Link>
-        <Link to="/" className="rounded bg-surface-raised px-6 py-3">ホーム</Link>
-      </nav>
+          {flow.secondary.map((a) => (
+            <Link key={a.to} to={a.to} className="rounded bg-surface-raised px-6 py-3">
+              {a.label}
+            </Link>
+          ))}
+        </nav>
+      )}
     </main>
   );
 }

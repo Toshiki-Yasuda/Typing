@@ -53,6 +53,7 @@ export function StageRoute() {
       mode={stageMode(stage.id)}
       fingerGuide={settings.fingerGuide && vowEffects(vows).fingerGuide ? { layout: settings.layout } : null}
       vows={vows}
+      exitTo="/stages"
       title={`ステージ: ${stage.name}`}
     />
   );

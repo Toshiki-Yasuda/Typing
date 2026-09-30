@@ -105,20 +105,31 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
         ))}
       </nav>
 
-      <VowsPicker />
+      {/* 設定は折りたたむ（開くたびに長い設定を越えないと、ステージ一覧に届かないため）。いまの状態は見出しに文字で出す */}
+      <details className="card !p-0" data-testid="stage-rules">
+        <summary className="cursor-pointer p-4 font-bold">
+          ルール設定
+          <span className="ml-3 text-sm font-normal text-text-muted">
+            縛り {settings.vows.length} つ・順番に開放: {settings.stageUnlock === 'sequential' ? 'オン' : 'オフ'}
+          </span>
+        </summary>
+        <div className="flex flex-col gap-4 p-4 pt-0">
+          <VowsPicker />
 
-      <label className="card flex items-start gap-2 !p-3">
-        <input
-          type="checkbox"
-          checked={settings.stageUnlock === 'sequential'}
-          onChange={(e) => updateSettings({ stageUnlock: e.target.checked ? 'sequential' : 'all' })}
-          className="mt-1 h-4 w-4 accent-[var(--viz-series-1)]"
-        />
-        <span>
-          ステージを順番に開放する
-          <span className="block text-sm text-text-muted">前のステージをクリアすると次が開き、章のボスは、その章のステージをすべてクリアすると開きます。</span>
-        </span>
-      </label>
+          <label className="card flex items-start gap-2 !p-3">
+            <input
+              type="checkbox"
+              checked={settings.stageUnlock === 'sequential'}
+              onChange={(e) => updateSettings({ stageUnlock: e.target.checked ? 'sequential' : 'all' })}
+              className="mt-1 h-4 w-4 accent-[var(--viz-series-1)]"
+            />
+            <span>
+              ステージを順番に開放する
+              <span className="block text-sm text-text-muted">前のステージをクリアすると次が開き、章のボスは、その章のステージをすべてクリアすると開きます。</span>
+            </span>
+          </label>
+        </div>
+      </details>
 
       <section aria-labelledby="chapter" className="flex flex-col gap-3">
         <h2 id="chapter" className="text-xl font-bold">

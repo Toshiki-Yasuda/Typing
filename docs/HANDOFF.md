@@ -68,6 +68,7 @@
 | [../task.md](../task.md) | 今後のタスクと完了状況 |
 | [spec/input-rules.md](spec/input-rules.md) | 入力の許容範囲（正） |
 | [spec/metrics.md](spec/metrics.md) | 指標の定義 |
+| [spec/flow.md](spec/flow.md) | 終わった後の動線（結果の主ボタン・Enter/Esc・中断の戻り先） |
 | [spec/ranks.md](spec/ranks.md) | 級位の段階（コードと一致をテストで検査） |
 | [a11y.md](a11y.md) | アクセシビリティの監査結果と限界 |
 | [manual-check.md](manual-check.md) | 実機確認の手順（オーナー用） |

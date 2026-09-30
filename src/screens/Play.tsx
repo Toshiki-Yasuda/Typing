@@ -72,6 +72,8 @@ interface Props {
   vows?: readonly string[];
   /** ボスの技を使うか（設定 bossSkills）。省略なら使う。時間制限は技ではないので、常に効く */
   skillsOn?: boolean;
+  /** 中断（Esc・中断ボタン・1 打もないまま終わったとき）の戻り先。ステージ・ボスはステージ選択。既定はホーム */
+  exitTo?: string;
   random?: () => number;
 }
 
@@ -90,6 +92,7 @@ export function Play({
   aids,
   vows,
   skillsOn = true,
+  exitTo = '/',
   random,
 }: Props) {
   const navigate = useNavigate();
@@ -229,7 +232,7 @@ export function Play({
       if (!session) return;
       finishing.current = true;
       // 1 打もないまま時間切れ: 記録するものが無い
-      if (session.keystrokes.length === 0) return navigate('/');
+      if (session.keystrokes.length === 0) return navigate(exitTo);
       const record = session.toRecord();
       const rank = fight?.rank() ?? null;
       store.add(record).then(
@@ -260,7 +263,7 @@ export function Play({
         (error) => console.error('記録の保存に失敗しました', error),
       );
     },
-    [session, store, navigate, boss, showFx, vowCount, settings.effects],
+    [session, store, navigate, boss, showFx, vowCount, settings.effects, exitTo],
   );
   // 時間切れ。ボス戦は敗北（理由は時間切れ）、修行の練は、そこまでの記録で終える
   const timeUp = useCallback(
@@ -346,7 +349,7 @@ export function Play({
     if (!session) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        navigate('/');
+        navigate(exitTo);
         return;
       }
       // 決着の演出中: Enter・Space で先へ進む。打鍵としては扱わない
@@ -432,7 +435,7 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, sound, boss, limitMs, endRun, timeUp, conclude, showFx, eff.maxMisses]);
+  }, [navigate, session, sound, boss, limitMs, endRun, timeUp, conclude, showFx, eff.maxMisses, exitTo]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
@@ -453,7 +456,7 @@ export function Play({
           remaining={remaining}
           stats={settings.liveStats ? liveMetrics(session.keystrokes, nowMs) : undefined}
           showStats={settings.liveStats}
-          onAbort={() => navigate('/')}
+          onAbort={() => navigate(exitTo)}
         />
       }
       notices={

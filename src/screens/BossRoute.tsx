@@ -55,6 +55,7 @@ export function BossRoute() {
       adaptive
       mode={`boss:${boss.id}`}
       boss={boss}
+      exitTo="/stages"
       effects={{ level: resolveEffects(settings.effects, prefersReducedMotion()), cardModel: theme.hero?.orbiter ?? null }}
       fingerGuide={settings.fingerGuide && vowEffects(settings.vows).fingerGuide ? { layout: settings.layout } : null}
       vows={settings.vows}

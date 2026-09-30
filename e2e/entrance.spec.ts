@@ -165,6 +165,8 @@ test.describe('マイライセンス', () => {
 });
 
 test.describe('ステージ選択', () => {
+  /** ルール設定（縛り・順番開放）は折りたたまれている */
+  const openRules = (page: Page) => page.locator('summary', { hasText: 'ルール設定' }).click();
   const typeCurrentWord = async (page: Page) => {
     const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');
     for (const key of romaji) await page.keyboard.press(key);
@@ -192,10 +194,39 @@ test.describe('ステージ選択', () => {
     await expect(page.getByText('1 / 5 クリア')).toBeVisible();
   });
 
+  test('終了後の動線: 主ボタンは次のステージ（Enter で進む）。Esc で中断するとステージ選択へ戻る（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    // ルール設定は折りたたまれていて、ステージの一覧が最初から見える
+    await expect(page.locator('summary', { hasText: 'ルール設定' })).toContainText('縛り 0 つ・順番に開放: オフ');
+    const first = page.getByRole('link', { name: /未挑戦/ }).first();
+    await expect(first).toBeInViewport();
+    await first.click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    for (let i = 1; i <= 10; i++) {
+      await expect(page.getByLabel('進捗')).toHaveText(`${i} / 10`);
+      await typeCurrentWord(page);
+    }
+    const nav = page.getByRole('navigation', { name: '次の行動' });
+    await expect(nav).toBeVisible();
+    // 主ボタンは画面内（スクロールなし）にあり、ステージを外れる「新しいお題」は出ない
+    await expect(nav.getByRole('link').first()).toContainText('次のステージ:');
+    await expect(nav.getByRole('link').first()).toBeInViewport();
+    await expect(page.getByRole('link', { name: '新しいお題で練習' })).toHaveCount(0);
+    await scan(page, 'ステージの結果（動線）');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/#\/stage\/c1s2$/);
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await page.keyboard.press('Escape'); // 中断 → ステージ選択（ホームではない）
+    await expect(page.getByRole('heading', { level: 1, name: 'ステージ選択' })).toBeVisible();
+  });
+
   test('制約と誓約: 縛りを付けてクリアするとメダルが付く。付き記録は統計に数えない（axe も通る）', async ({ page }) => {
     await unlock(page);
     await page.keyboard.press('Escape');
     await page.keyboard.press('2');
+    await openRules(page);
     const vows = page.getByRole('group', { name: '制約と誓約' });
     await vows.getByRole('checkbox', { name: /無音/ }).check();
     await vows.getByRole('checkbox', { name: /運指ガイドなし/ }).check();
@@ -224,6 +255,7 @@ test.describe('ステージ選択', () => {
     await unlock(page);
     await page.keyboard.press('Escape');
     await page.keyboard.press('2');
+    await openRules(page);
     await page.getByRole('checkbox', { name: /ステージを順番に開放する/ }).check();
     await expect(page.getByText('🔒 閉じています')).toHaveCount(5);
     await expect(page.getByRole('link', { name: /未挑戦/ })).toHaveCount(1);
@@ -267,6 +299,7 @@ test.describe('ステージ選択', () => {
     await page.keyboard.press('Escape');
     await page.keyboard.press('Escape');
     await page.goto('/#/stages');
+    await openRules(page);
     await page.getByRole('checkbox', { name: /ボスの技を使う/ }).uncheck();
     await page.getByRole('link', { name: /ボス ヒソカに挑戦する/ }).click();
     await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();

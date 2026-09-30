@@ -24,7 +24,7 @@ const record = (stageId: string, correct: number, misses: number, id = `${stageI
   return { id, startedAt: 1, mode: stageMode(stageId), contentId: 'x', targets: ['a'], engineVersion: '1', ruleVersion: '1', keystrokes };
 };
 
-function app(initial: string, store: SessionStore = createMemoryStore()) {
+function app(initial: string | { pathname: string; state: unknown }, store: SessionStore = createMemoryStore()) {
   render(
     <StoreProvider store={store}>
       <MemoryRouter initialEntries={[initial]}>
@@ -32,6 +32,7 @@ function app(initial: string, store: SessionStore = createMemoryStore()) {
           <Route path="/stages" element={<StageSelectRoute />} />
           <Route path="/stage/:id" element={<StageRoute />} />
           <Route path="/boss/:id" element={<p>ボス画面</p>} />
+          <Route path="/play" element={<p>練習画面</p>} />
           <Route path="/bossx/:id" element={<BossRoute />} />
           <Route path="/result/:id" element={<Result />} />
           <Route path="/title" element={<p>タイトル画面</p>} />
@@ -268,5 +269,176 @@ describe('ステージの練習', () => {
     clearThemePackCache();
     app('/stage/c1s1');
     expect(await screen.findByText(/語彙を読み込めませんでした/)).toBeInTheDocument();
+  });
+});
+
+// 終わった後の動線（docs/spec/flow.md）。ステージ・ボスの結果は、先へ進むのが主役で、ステージの文脈から外れない
+describe('ステージ終了後の動線', () => {
+  const press = (key: string, target: Element | Window = window) => act(() => void fireEvent.keyDown(target, { key }));
+  const bossRecord = (id: string, bossId: string): SessionRecord => ({ ...record('c1s1', 10, 0, id), mode: `boss:${bossId}` });
+  const outcome = (rank: string) => ({ boss: { id: 'chapter1', rank, misses: rank === 'D' ? 4 : 0, maxCombo: 9 } });
+
+  it('クリアして次があれば、先頭のリンクが「次のステージ」。ステージを外れる「新しいお題」「同じお題」は出さない', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record('c1s1', 10, 0, 'ok'));
+    app('/result/ok', store);
+    const nav = await screen.findByRole('navigation', { name: '次の行動' });
+    const links = within(nav).getAllByRole('link').map((a) => a.textContent);
+    expect(links).toEqual([`次のステージ: ${chapters[0]!.stages[1]!.name}`, 'もう一度このステージ', 'ステージ選択へ']);
+    expect(screen.queryByRole('link', { name: '新しいお題で練習' })).toBeNull();
+    expect(screen.queryByRole('link', { name: '同じお題でもう一度' })).toBeNull();
+    // 結果の数字より前（画面の上）にある
+    const stats = screen.getByText('速度（実効）');
+    expect(nav.compareDocumentPosition(stats) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('Enter で主ボタン（次のステージ）へ、Esc でステージ選択へ', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record('c1s1', 10, 0, 'ok'));
+    app('/result/ok', store);
+    await screen.findByRole('navigation', { name: '次の行動' });
+    press('Enter');
+    expect(await screen.findByRole('heading', { level: 1, name: 'ステージ: ' + chapters[0]!.stages[1]!.name })).toBeInTheDocument();
+    cleanup();
+    app('/result/ok', store);
+    await screen.findByRole('navigation', { name: '次の行動' });
+    press('Escape');
+    expect(await screen.findByRole('heading', { level: 1, name: 'ステージ選択' })).toBeInTheDocument();
+  });
+
+  it('フォーカス中のリンクの Enter は奪わない。押しっぱなし・修飾キー併用も無視する', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record('c1s1', 10, 0, 'ok'));
+    app('/result/ok', store);
+    const link = await screen.findByRole('link', { name: 'ステージ選択へ' });
+    act(() => void fireEvent.keyDown(link, { key: 'Enter' }));
+    await act(async () => {});
+    expect(screen.getByRole('heading', { level: 1, name: '結果' })).toBeInTheDocument();
+    act(() => void fireEvent.keyDown(window, { key: 'Enter', repeat: true }));
+    await act(async () => {});
+    expect(screen.getByRole('heading', { level: 1, name: '結果' })).toBeInTheDocument();
+    for (const mod of ['ctrlKey', 'metaKey', 'altKey', 'shiftKey']) {
+      act(() => void fireEvent.keyDown(window, { key: 'Enter', [mod]: true }));
+      await act(async () => {});
+      expect(screen.getByRole('heading', { level: 1, name: '結果' }), mod).toBeInTheDocument();
+    }
+  });
+
+  it('クリアならずのときは、主ボタンが「もう一度このステージ」で、次へは進めない', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record('c1s1', 8, 2, 'weak'));
+    app('/result/weak', store);
+    const nav = await screen.findByRole('navigation', { name: '次の行動' });
+    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['もう一度このステージ', 'ステージ選択へ']);
+  });
+
+  it('章の最後のステージをクリアしたら、Enter でボスへ', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(record(chapters[0]!.stages.at(-1)!.id, 10, 0, 'last'));
+    app('/result/last', store);
+    await screen.findByRole('navigation', { name: '次の行動' });
+    press('Enter');
+    expect(await screen.findByText('ボス画面')).toBeInTheDocument();
+  });
+
+  it('縛り「ミスなし」が破れた記録は、正確率が高くてもクリアに数えず、次へ案内しない', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add({ ...record('c1s1', 99, 1, 'broken'), vows: ['noMiss'] });
+    app('/result/broken', store);
+    expect(await screen.findByRole('heading', { level: 2, name: /クリアならず/ })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /次のステージ/ })).toBeNull();
+  });
+
+  it('ボスに勝つと、次の章へ進める（Enter）。ステージ選択へも戻れる', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(bossRecord('bw', 'chapter1'));
+    app({ pathname: '/result/bw', state: outcome('S') }, store);
+    const nav = await screen.findByRole('navigation', { name: '次の行動' });
+    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual([
+      `次の章へ: 第2章 ${chapters[1]!.stages[0]!.name}`,
+      `${HUNTER_THEME.bosses![0]!.name}にもう一度挑戦`,
+      'ステージ選択へ',
+    ]);
+    press('Enter');
+    expect(await screen.findByRole('heading', { level: 1, name: 'ステージ: ' + chapters[1]!.stages[0]!.name })).toBeInTheDocument();
+  });
+
+  it('ボスに負けたら、主ボタンは「もう一度挑戦」。履歴から開き直して勝敗が分からないときは、ステージ選択が主', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add(bossRecord('bl', 'chapter1'));
+    app({ pathname: '/result/bl', state: outcome('D') }, store);
+    const nav = await screen.findByRole('navigation', { name: '次の行動' });
+    expect(within(nav).getAllByRole('link')[0]).toHaveTextContent(/にもう一度挑戦/);
+    press('Enter');
+    expect(await screen.findByText('ボス画面')).toBeInTheDocument();
+    cleanup();
+    app('/result/bl', store);
+    const nav2 = await screen.findByRole('navigation', { name: '次の行動' });
+    expect(within(nav2).getAllByRole('link')[0]).toHaveTextContent('ステージ選択へ');
+  });
+
+  it('ふつうの練習の結果は従来どおり（下に「同じお題でもう一度」）。Enter で再挑戦、Esc でホーム', async () => {
+    setup();
+    const store = createMemoryStore();
+    await store.add({ ...record('c1s1', 10, 0, 'plain'), mode: 'practice' });
+    app('/result/plain', store);
+    expect(await screen.findByRole('link', { name: '同じお題でもう一度' })).toHaveAttribute('href', '/play?retry=plain');
+    expect(screen.queryByRole('navigation', { name: '次の行動' })).toBeNull();
+    press('Enter');
+    expect(await screen.findByText('練習画面')).toBeInTheDocument();
+    cleanup();
+    app('/result/plain', store);
+    await screen.findByRole('heading', { level: 1, name: '結果' });
+    press('Escape');
+    expect(await screen.findByText('ホーム画面')).toBeInTheDocument();
+  });
+
+  it('ステージの練習を Esc で中断すると、ステージ選択へ戻る（記録は残らない）', async () => {
+    setup();
+    const store = app('/stage/c1s1');
+    await screen.findByRole('region', { name: 'お題' });
+    await act(async () => {});
+    press('Escape');
+    expect(await screen.findByRole('heading', { level: 1, name: 'ステージ選択' })).toBeInTheDocument();
+    expect(await store.list()).toHaveLength(0);
+  });
+
+  it('ボス戦を「中断」ボタンでやめても、ステージ選択へ戻る', async () => {
+    setup();
+    app('/bossx/chapter1');
+    await screen.findByRole('region', { name: 'お題' });
+    await act(async () => {});
+    act(() => screen.getByRole('button', { name: /中断/ }).click());
+    expect(await screen.findByRole('heading', { level: 1, name: 'ステージ選択' })).toBeInTheDocument();
+  });
+});
+
+describe('ステージ選択: ルール設定の折りたたみ', () => {
+  it('最初は閉じていて、いまの設定を見出しに文字で出す。ステージ一覧は設定の前に見える', async () => {
+    setup({ vows: ['noMiss'], stageUnlock: 'sequential' });
+    app('/stages');
+    const details = await screen.findByTestId('stage-rules');
+    expect((details as HTMLDetailsElement).open).toBe(false);
+    expect(within(details).getByText(/縛り 1 つ・順番に開放: オン/)).toBeInTheDocument();
+    const list = screen.getByRole('heading', { level: 2, name: /第1章/ });
+    expect(details.compareDocumentPosition(list) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('開いて切り替えると、見出しの文字も変わる', async () => {
+    setup();
+    app('/stages');
+    const details = (await screen.findByTestId('stage-rules')) as HTMLDetailsElement;
+    expect(within(details).getByText(/縛り 0 つ・順番に開放: オフ/)).toBeInTheDocument();
+    details.open = true;
+    fireEvent.click(within(details).getByRole('checkbox', { name: /ステージを順番に開放する/ }));
+    expect(within(details).getByText(/縛り 0 つ・順番に開放: オン/)).toBeInTheDocument();
   });
 });
