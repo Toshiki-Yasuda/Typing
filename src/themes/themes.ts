@@ -21,20 +21,23 @@ export const NEUTRAL_THEME: Theme = {
 
 /**
  * HUNTER×HUNTER テーマ（ロック付き）。
- * 配色は仮の値（Ver1 の配色を取り込むまでの暫定）。
+ * 配色は Ver1（Mobile-）の tailwind.config.ts の hunter パレットから取った
+ * （dark #1A1A2E / dark-light #2A2A3E / gold #D4AF37 / success #10B981 / error #EF4444）。
  */
 export const HUNTER_THEME: Theme = {
   id: 'hunter',
   name: 'HUNTER×HUNTER',
   locked: true,
   colors: {
-    surface: '#0e1a14',
-    'surface-raised': '#16281e',
-    text: '#e9f1ea',
-    'text-muted': '#a6b9ab',
-    accent: '#7fd66b',
+    surface: '#1a1a2e',
+    'surface-raised': '#2a2a3e',
+    text: '#f4f1e6',
+    'text-muted': '#b3b1c2',
+    accent: '#d4af37',
+    success: '#10b981',
+    danger: '#ef4444',
   },
-  strings: { tagline: 'ハンター試験、開始。' },
+  strings: { tagline: 'HUNTER×HUNTER TYPING MASTER' },
 };
 
 export const THEMES: readonly Theme[] = [NEUTRAL_THEME, HUNTER_THEME];

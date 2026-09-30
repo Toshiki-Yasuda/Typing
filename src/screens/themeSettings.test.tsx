@@ -27,7 +27,7 @@ describe('ThemeSettings', () => {
     expect(await screen.findByRole('option', { name: 'HUNTER×HUNTER' })).toBeInTheDocument();
     expect(update).toHaveBeenCalledWith({ themeId: 'hunter' });
     expect(document.documentElement.dataset.theme).toBe('hunter');
-    expect(document.documentElement.style.getPropertyValue('--color-accent')).toBe('#7fd66b');
+    expect(document.documentElement.style.getPropertyValue('--color-accent')).toBe('#d4af37');
     expect(screen.queryByLabelText(/パスワード/)).toBeNull();
     unmount();
 
