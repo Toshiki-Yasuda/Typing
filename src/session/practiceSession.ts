@@ -12,6 +12,8 @@ export interface SessionView {
   readonly total: number;
   readonly guide: Guide;
   readonly finished: boolean;
+  /** 次のお題（最後のお題なら null）。先読みの表示用 */
+  readonly next: ContentItem | null;
 }
 
 /**
@@ -63,6 +65,7 @@ export class PracticeSession {
       total: this.items.length,
       guide: getGuide(this.engine),
       finished: this.finished,
+      next: this.items[shown + 1] ?? null,
     };
   }
 

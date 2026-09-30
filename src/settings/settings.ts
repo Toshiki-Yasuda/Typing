@@ -31,6 +31,10 @@ export const SettingsSchema = z.object({
   sfxVolume: z.number().int().min(0).max(100),
   /** 練習中の BGM。off=鳴らさない / boss=ボス戦だけ / all=すべての練習（集中したいので既定は boss） */
   gameBgm: z.enum(['off', 'boss', 'all']),
+  /** 補助・凝: 弱点のキーをローマ字ガイドで強調する（表示だけ。判定には影響しない） */
+  aidGyo: z.boolean(),
+  /** 補助・円: 次のお題を先に見せる（表示だけ） */
+  aidEn: z.boolean(),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -49,6 +53,8 @@ export const DEFAULT_SETTINGS: Settings = {
   bgmVolume: 60,
   sfxVolume: 80,
   gameBgm: 'boss',
+  aidGyo: false,
+  aidEn: false,
   effects: 'full',
 };
 

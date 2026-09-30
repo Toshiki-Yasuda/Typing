@@ -26,6 +26,7 @@ function menuFor(theme: Theme): MenuItem[] {
     { to: '/stats', label: '統計', hint: '記録の推移・弱点' },
     ...(theme.diagnosis ? [{ to: '/diagnosis', label: theme.diagnosis.heading, hint: '得意と伸びしろを 6 軸で' }] : []),
     { to: '/settings', label: '設定', hint: '音・演出・練習' },
+    { to: '/train', label: '修行', hint: '静寂・速さ・弱点の型' },
     { to: '/', label: 'ホーム', hint: 'ボス戦・記録・データ' },
   ];
 }

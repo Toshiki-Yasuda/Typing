@@ -8,6 +8,7 @@ const view = (display: string, reading: string, typed: string, rest: string, kan
   total: 1,
   guide: { typed, rest, remaining: rest.length, kanaIndex },
   finished: false,
+  next: null,
 });
 
 describe('sizeClasses（長さに応じた大きさ）', () => {
@@ -58,5 +59,29 @@ describe('TargetView', () => {
     render(<TargetView view={view('a b', 'a b', 'a', ' b', 1)} missing />);
     expect(screen.getByRole('region', { name: 'お題' })).toHaveClass('bg-danger/20');
     expect(screen.getByLabelText('ローマ字ガイド')).toHaveTextContent('a␣b');
+  });
+});
+
+describe('補助（凝・円）', () => {
+  it('凝: 残りのガイドのうち、弱点のキーだけを強調する（表示だけ。文字は変わらない）', () => {
+    render(<TargetView view={view('柿', 'かき', 'k', 'aki', 0)} missing={false} weakKeys={new Set(['k', 'i'])} />);
+    const weak = [...document.querySelectorAll('[data-weak]')].map((e) => e.textContent);
+    expect(weak).toEqual(['k', 'i']);
+    expect(screen.getByLabelText('ローマ字ガイド')).toHaveTextContent('kaki');
+  });
+
+  it('凝: 強調するキーが無ければ、何も強調しない', () => {
+    render(<TargetView view={view('柿', 'かき', '', 'kaki')} missing={false} weakKeys={new Set()} />);
+    expect(document.querySelectorAll('[data-weak]')).toHaveLength(0);
+  });
+
+  it('円: 次のお題を見せる。オフ・最後のお題では出さない', () => {
+    const v = { ...view('柿', 'かき', '', 'kaki'), next: { display: '栗', reading: 'くり' } };
+    const { rerender } = render(<TargetView view={v} missing={false} preview />);
+    expect(screen.getByText('次: 栗')).toBeInTheDocument();
+    rerender(<TargetView view={v} missing={false} />);
+    expect(screen.queryByText(/^次:/)).toBeNull();
+    rerender(<TargetView view={{ ...v, next: null }} missing={false} preview />);
+    expect(screen.queryByText(/^次:/)).toBeNull();
   });
 });

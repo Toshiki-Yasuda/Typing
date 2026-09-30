@@ -76,6 +76,13 @@ export const DiagnosisSchema = z.object({
 });
 export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 
+/** 修行の型と補助の呼び名（無ければ標準の言葉）。仕様は docs/spec/training.md */
+export const TrainSchema = z.object({
+  names: z.object({ zetsu: z.string().min(1), ren: z.string().min(1), hatsu: z.string().min(1) }),
+  aids: z.object({ gyo: z.string().min(1), en: z.string().min(1) }),
+});
+export type TrainFlavor = z.infer<typeof TrainSchema>;
+
 export const ThemeSchema = z.object({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/),
   name: z.string().min(1),
@@ -136,6 +143,8 @@ export const ThemeSchema = z.object({
     .optional(),
   /** 6 軸診断の見せ方（作品の言葉への対応）。無ければ、軸の名前だけで見せる */
   diagnosis: DiagnosisSchema.optional(),
+  /** 修行の型（絶・練・発）と補助（凝・円）の呼び名 */
+  train: TrainSchema.optional(),
   /** ステージ選択の章。無ければステージ選択は出ない */
   chapters: z.array(ChapterSchema).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */

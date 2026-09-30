@@ -88,6 +88,7 @@ export const HUNTER_THEME: Theme = {
     affinity: [100, 80, 60, 40],
     glass: 'themes/hunter/models/glass.glb',
   },
+  train: { names: { zetsu: '絶', ren: '練', hatsu: '発' }, aids: { gyo: '凝', en: '円' } },
   chapters: HUNTER_CHAPTERS,
   bosses: HUNTER_BOSSES,
 };

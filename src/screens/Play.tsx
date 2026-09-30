@@ -14,6 +14,7 @@ import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
+import { REN_LIMIT_MS, remainingMs, type TrainKind } from '@/session/training';
 import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
 import type { LayoutId } from '@/fingering';
@@ -27,6 +28,9 @@ import { TargetView } from './TargetView';
 
 /** 画面の見出し（視覚的には隠す）。モードごとに、何の画面かを示す */
 const HEADINGS: Record<string, string> = { daily: '今日のチャレンジ', retry: '同じお題でもう一度' };
+
+/** 型の見出し（読み上げ用）。名前は label があればそれ */
+const TRAIN_HEADINGS: Record<TrainKind, string> = { zetsu: '修行: 静寂', ren: '修行: 速さ', hatsu: '修行: 弱点' };
 
 /** 演出の長さ（ミリ秒）。登場・フェーズ切替は打鍵を受けたまま重ねる。決着は打鍵が終わった後なので、Enter で飛ばせる */
 export const FX_MS = { intro: 3000, phase: 1900, finishFull: 3400, finishReduced: 1600 } as const;
@@ -50,6 +54,10 @@ interface Props {
   boss?: Boss;
   /** ボス戦の演出。省略なら演出なし（待ち時間もない）。level が off も同じ */
   effects?: { level: EffectLevel; cardModel: string | null };
+  /** 修行の型。絶は音・演出を出さず、練は制限時間で終わる。判定・計測は通常の練習と同じ */
+  train?: { kind: TrainKind; /** 画面に出す型の名前や技の名前 */ label?: string; limitMs?: number };
+  /** 補助（表示だけ）。gyo=弱点キーの強調、en=次のお題の先読み */
+  aids?: { gyo: boolean; en: boolean };
   random?: () => number;
 }
 
@@ -64,12 +72,20 @@ export function Play({
   title,
   boss,
   effects,
+  train,
+  aids,
   random,
 }: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
-  const sound = useSoundPlayer();
+  const quiet = train?.kind === 'zetsu';
+  const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : null;
+  const soundPlayer = useSoundPlayer();
+  const sound = quiet ? null : soundPlayer;
+  const [weakKeys, setWeakKeys] = useState<ReadonlySet<string> | null>(null);
+  const [remaining, setRemaining] = useState<number | null>(limitMs);
+  const finishing = useRef(false);
   const battle = useRef<BossBattle | null>(null);
   const [bossLine, setBossLine] = useState('');
   const [battleState, setBattleState] = useState<BattleState | null>(null);
@@ -88,7 +104,8 @@ export function Play({
     fetch(new URL(cardModel, document.baseURI)).catch(() => {});
   }, [boss, level, cardModel]);
   // 打鍵の手応え（コンボの段階）。描画・効果音だけで、判定・計測には関わらない
-  const feel = useFeel();
+  const themeFeel = useFeel();
+  const feel = quiet ? null : themeFeel;
   const feelRef = useRef(feel);
   useEffect(() => {
     feelRef.current = feel;
@@ -100,7 +117,7 @@ export function Play({
   useEffect(() => () => clearTimeout(popTimer.current), []);
   const [fx, setFx] = useState<BossFxState | null>(null);
   // 練習中の BGM（設定に従う）。決着の演出に入ったらフェードアウト
-  useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: fx?.kind === 'won' || fx?.kind === 'lost' });
+  useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: quiet || fx?.kind === 'won' || fx?.kind === 'lost' });
   const fxTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   /** 決着の演出を閉じて先へ進む関数（決着の演出中だけ入る） */
   const skip = useRef<(() => void) | null>(null);
@@ -117,6 +134,11 @@ export function Play({
     store.list().then((records) => {
       if (cancelled) return;
       const weakness = adaptive ? keyWeakness(records.map((r) => r.keystrokes)) : new Map<string, number>();
+      // 補助（凝）: 弱点の上位のキー
+      if (aids?.gyo) {
+        const top = [...keyWeakness(records.map((r) => r.keystrokes))].filter(([, w]) => w > 0).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        setWeakKeys(new Set(top.map(([k]) => k)));
+      } else setWeakKeys(null);
       const bigrams = adaptive ? bigramWeakness(records.map((r) => r.keystrokes)) : undefined;
       const items =
         fixedItems ??
@@ -141,7 +163,29 @@ export function Play({
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx]);
+  }, [store, pack, count, adaptive, fixedItems, mode, boss, random, showFx, aids?.gyo]);
+  // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
+  const finishTimeUp = useCallback(() => {
+    if (!session || finishing.current) return;
+    finishing.current = true;
+    if (session.keystrokes.length === 0) return navigate('/train');
+    const record = session.toRecord();
+    store.add(record).then(
+      () => navigate(`/result/${record.id}`),
+      (error) => console.error('記録の保存に失敗しました', error),
+    );
+  }, [session, store, navigate]);
+  useEffect(() => {
+    if (!session || limitMs === null) return;
+    const tick = () => {
+      const left = remainingMs(0, session.elapsedMs(performance.now()), limitMs);
+      setRemaining(left);
+      if (left === 0) finishTimeUp();
+    };
+    tick();
+    const id = setInterval(tick, 200);
+    return () => clearInterval(id);
+  }, [session, limitMs, finishTimeUp]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -182,6 +226,12 @@ export function Play({
       // IME が変換中のときは keydown が実キーを持たない。警告を出して、打鍵としては扱わない
       if (e.isComposing || e.keyCode === 229) setImeWarning(true);
       if (!isGameKey(e)) return;
+      // 練: 時間切れの後の打鍵は記録しない
+      if (limitMs !== null && remainingMs(0, session.elapsedMs(e.timeStamp), limitMs) === 0) {
+        e.preventDefault();
+        finishTimeUp();
+        return;
+      }
       e.preventDefault(); // Space のスクロールや ' / のクイック検索を止める
       setImeWarning(false);
 
@@ -262,7 +312,7 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store, sound, boss, showFx]);
+  }, [navigate, session, store, sound, boss, showFx, limitMs, finishTimeUp]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
@@ -271,7 +321,7 @@ export function Play({
       {fx && boss && level !== 'off' && (
         <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} />
       )}
-      <PageHeading title={title ?? (boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習'))} srOnly />
+      <PageHeading title={title ?? (train ? (train.label ?? TRAIN_HEADINGS[train.kind]) : boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習'))} srOnly />
       <header className="flex items-center justify-between text-text-muted">
         {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
         <div
@@ -284,6 +334,12 @@ export function Play({
         >
           {view.index + 1} / {view.total}
         </div>
+        {train?.label && <span className="font-bold text-text">{train.label}</span>}
+        {remaining !== null && (
+          <span role="timer" className="font-mono text-lg text-text">
+            残り {Math.ceil(remaining / 1000)} 秒
+          </span>
+        )}
         <span className="text-sm">Esc で中断</span>
       </header>
       <div aria-hidden className="h-1 rounded bg-surface-raised">
@@ -313,7 +369,7 @@ export function Play({
         data-effect={feel?.effect}
         style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
       >
-        <TargetView view={view} missing={missing} />
+        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} />
       </div>
       {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
     </main>

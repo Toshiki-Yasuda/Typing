@@ -28,7 +28,7 @@ src/engine    ローマ字入力の判定。React/DOM に依存しない。他�
   table/      Mozc 表(同梱)から許容表を生成。rules.ts に除外と推奨順
   testing/    テスト専用の IME シミュレータ（オラクル）
 src/metrics   打鍵ログ → 指標・統計・弱点。純関数。engine に依存
-src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)。engine / metrics に依存
+src/session   練習1回分の進行(PracticeSession)、出題の選び方、デイリー(daily.ts)、ゴースト(ghost.ts)、再挑戦(retry.ts)、修行の型(training.ts)。engine / metrics に依存
 src/storage   zod スキーマ、版移行、JSON 入出力、IndexedDB(sessions / packs) / メモリ
 src/content   出題パック(JSON: basic / english / symbols / phrases) と zod 検証、自作パックの取り込み(import.ts)
 src/settings  練習の設定（パック・語数・弱点優先・運指ガイド・配列・目標の級位）。localStorage

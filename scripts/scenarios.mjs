@@ -85,4 +85,23 @@ export const SCENARIOS = {
     await page.waitForTimeout(5000);
     await page.screenshot({ path: ctx.path, fullPage: true });
   },
+  /** 修行（HUNTER の言葉）。入口と、補助（凝・円）をオンにした練の練習画面 */
+  async train(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 3, { missEvery: 3 });
+    await unlockTheme(page, ctx.url);
+    await page.evaluate(() => {
+      const raw = JSON.parse(localStorage.getItem('typing.settings.v1') ?? '{}');
+      localStorage.setItem('typing.settings.v1', JSON.stringify({ ...raw, aidGyo: true, aidEn: true }));
+    });
+    await skipToTitle(page);
+    await page.keyboard.press('7');
+    await page.getByRole('heading', { level: 1, name: '修行' }).waitFor();
+    await page.screenshot({ path: ctx.path.replace('.png', '-menu.png'), fullPage: true });
+    await page.getByRole('link', { name: /^練/ }).click();
+    await page.getByRole('region', { name: 'お題' }).waitFor();
+    await page.waitForTimeout(600);
+    await page.screenshot({ path: ctx.path, fullPage: true });
+  },
 };

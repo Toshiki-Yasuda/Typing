@@ -11,7 +11,19 @@ export function sizeClasses(displayLength: number, readingLength: number, romaji
 }
 
 /** 表示: お題・読み（確定した分を強調）・ローマ字ガイド（打鍵済み + 残りの最短） */
-export function TargetView({ view, missing }: { view: SessionView; missing: boolean }) {
+export function TargetView({
+  view,
+  missing,
+  weakKeys,
+  preview = false,
+}: {
+  view: SessionView;
+  missing: boolean;
+  /** 補助（凝）: 強調する弱点のキー。表示だけで、判定には関わらない */
+  weakKeys?: ReadonlySet<string>;
+  /** 補助（円）: 次のお題を先に見せる */
+  preview?: boolean;
+}) {
   const reading = Array.from(normalizeTarget(view.item.reading));
   const { typed, rest, kanaIndex } = view.guide;
   const [next = '', ...others] = Array.from(rest);
@@ -37,8 +49,21 @@ export function TargetView({ view, missing }: { view: SessionView; missing: bool
       <p className={`font-mono ${size.romaji} break-all`} aria-label="ローマ字ガイド">
         <span className="text-text-muted">{typed}</span>
         <span className="text-accent underline decoration-2 underline-offset-8">{next === ' ' ? '␣' : next}</span>
-        <span>{others.join('')}</span>
+        <span>
+          {weakKeys && weakKeys.size > 0
+            ? others.map((c, i) =>
+                weakKeys.has(c.toLowerCase()) ? (
+                  <span key={i} className="font-bold underline decoration-dotted decoration-2 underline-offset-8" data-weak>
+                    {c}
+                  </span>
+                ) : (
+                  c
+                ),
+              )
+            : others.join('')}
+        </span>
       </p>
+      {preview && view.next && <p className="text-sm text-text-muted">次: {view.next.display}</p>}
     </section>
   );
 }

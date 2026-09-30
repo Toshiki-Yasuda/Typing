@@ -1,6 +1,9 @@
 import { BUILTIN_PACKS, type ContentPack } from '@/content';
 import { GOAL_AUTO, RANKS } from '@/metrics/rank';
 import { COUNT_OPTIONS, type Settings } from '@/settings/settings';
+import { resolveTheme } from '@/themes/themes';
+import { loadUnlocked } from '@/themes/unlock';
+import { trainLabels } from '../train/labels';
 
 interface Props {
   settings: Settings;
@@ -13,6 +16,8 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
   const all = [...BUILTIN_PACKS, ...customPacks];
   // 選んでいた自作パックが消えていたら、先頭（基本）を選んでいるように見せる（練習も基本で始まる）
   const selected = all.some((p) => p.id === settings.packId) ? settings.packId : BUILTIN_PACKS[0].id;
+
+  const aidNames = trainLabels(resolveTheme(settings.themeId, loadUnlocked())).aids;
 
   return (
     <section aria-labelledby="settings" className="flex flex-col gap-3">
@@ -74,6 +79,24 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
             className="h-4 w-4 accent-[var(--viz-series-1)]"
           />
           <span>運指ガイドを表示する</span>
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.aidGyo}
+            onChange={(e) => update({ aidGyo: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>弱点のキーを強調する（{aidNames.gyo}）</span>
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.aidEn}
+            onChange={(e) => update({ aidEn: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>次のお題を先に見せる（{aidNames.en}）</span>
         </label>
         <label className="flex items-center gap-2">
           <span className="text-text-muted">配列</span>

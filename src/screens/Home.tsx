@@ -106,6 +106,9 @@ export function Home() {
       <Link to="/stats" className="self-start rounded bg-surface-raised px-4 py-2">
         統計を見る
       </Link>
+      <Link to="/train" className="self-start rounded bg-surface-raised px-4 py-2">
+        修行（型を選んで練習）
+      </Link>
 
       {daily && (
         <section aria-labelledby="daily" className="flex flex-col gap-2 rounded-lg bg-surface-raised p-4">

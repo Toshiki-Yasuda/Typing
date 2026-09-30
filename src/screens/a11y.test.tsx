@@ -85,7 +85,7 @@ describe('ホームの Enter ショートカット', () => {
 });
 
 describe('誤打鍵の表示（色だけに頼らない）', () => {
-  const view = { item: { display: '猫', reading: 'ねこ' }, index: 0, total: 1, guide: { typed: '', rest: 'neko', remaining: 4, kanaIndex: 0 }, finished: false };
+  const view = { item: { display: '猫', reading: 'ねこ' }, index: 0, total: 1, guide: { typed: '', rest: 'neko', remaining: 4, kanaIndex: 0 }, finished: false, next: null };
 
   it('誤打鍵の間は「ミス」の文字と枠が出る。読み上げには出さない', () => {
     render(<TargetView view={view} missing />);
