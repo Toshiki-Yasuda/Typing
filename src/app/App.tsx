@@ -4,6 +4,7 @@ import { DailyRoute } from '@/screens/DailyRoute';
 import { Home } from '@/screens/Home';
 import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
+import { SettingsScreen } from '@/screens/SettingsScreen';
 import { Stats } from '@/screens/Stats';
 import { Entrance } from '@/screens/title/Entrance';
 import { TitleRoute } from '@/screens/title/TitleScreen';
@@ -18,6 +19,7 @@ export function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Entrance><Home /></Entrance>} />
+          <Route path="/settings" element={<SettingsScreen />} />
           <Route path="/title" element={<TitleRoute />} />
           <Route path="/play" element={<PlayRoute />} />
           <Route path="/boss/:id" element={<BossRoute />} />

@@ -128,6 +128,15 @@ describe('テーマの入口', () => {
     expect(await screen.findByText('デイリー画面')).toBeInTheDocument();
   });
 
+  it('この起動で入口を見た後に戻ってきたら、ゲートを出さずメニューから。曲は続ける', async () => {
+    setTheme('hunter');
+    sessionStorage.setItem('typing.entrance.v1', '1');
+    app('/title');
+    expect(await screen.findByRole('navigation', { name: 'メニュー' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /スタート/ })).toBeNull();
+    expect(bgm.play).toHaveBeenCalledWith(URL_TITLE);
+  });
+
   it('入口を開くと、この起動では見たことになる', async () => {
     setTheme('hunter', { effects: 'off' });
     expect(entranceSeen()).toBe(false);

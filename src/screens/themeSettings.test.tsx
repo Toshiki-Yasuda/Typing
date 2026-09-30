@@ -10,7 +10,7 @@ beforeEach(() => {
 describe('ThemeSettings', () => {
   it('ロック中は選択肢に無く、違うパスワードではエラー', async () => {
     const update = vi.fn();
-    render(<ThemeSettings themeId="neutral" sound effects="full" update={update} />);
+    render(<ThemeSettings themeId="neutral" effects="full" update={update} />);
     expect(screen.queryByRole('option', { name: 'HUNTER×HUNTER' })).toBeNull();
     fireEvent.change(screen.getByLabelText(/パスワード/), { target: { value: 'nope' } });
     fireEvent.click(screen.getByRole('button', { name: '開く' }));
@@ -21,7 +21,7 @@ describe('ThemeSettings', () => {
 
   it('SAKI で解除すると、テーマが選ばれて色が反映され、次回も解除済み', async () => {
     const update = vi.fn();
-    const { unmount } = render(<ThemeSettings themeId="neutral" sound effects="full" update={update} />);
+    const { unmount } = render(<ThemeSettings themeId="neutral" effects="full" update={update} />);
     fireEvent.change(screen.getByLabelText(/パスワード/), { target: { value: 'SAKI' } });
     fireEvent.click(screen.getByRole('button', { name: '開く' }));
     expect(await screen.findByRole('option', { name: 'HUNTER×HUNTER' })).toBeInTheDocument();
@@ -31,13 +31,13 @@ describe('ThemeSettings', () => {
     expect(screen.queryByLabelText(/パスワード/)).toBeNull();
     unmount();
 
-    render(<ThemeSettings themeId="hunter" sound effects="full" update={update} />);
+    render(<ThemeSettings themeId="hunter" effects="full" update={update} />);
     expect(screen.getByRole('option', { name: 'HUNTER×HUNTER' })).toBeInTheDocument();
   });
 
   it('標準に戻すと色が中立に戻る', async () => {
     localStorage.setItem('typing.themes.unlocked.v1', '["hunter"]');
-    render(<ThemeSettings themeId="hunter" sound effects="full" update={vi.fn()} />);
+    render(<ThemeSettings themeId="hunter" effects="full" update={vi.fn()} />);
     fireEvent.change(screen.getByRole('combobox', { name: 'テーマ' }), { target: { value: 'neutral' } });
     expect(document.documentElement.style.getPropertyValue('--color-accent')).toBe('#5b9dff');
   });

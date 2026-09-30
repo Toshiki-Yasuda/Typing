@@ -5,6 +5,7 @@ import { computeMetrics, dayKey, summarizeSessions, type SessionRecord, type Ses
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { AudioSettings } from './home/AudioSettings';
 import { HeroBanner } from './home/HeroBanner';
 import { BossList } from './home/BossList';
 import { resolveTheme } from '@/themes/themes';
@@ -129,7 +130,9 @@ export function Home() {
 
       {bosses && bosses.length > 0 && <BossList bosses={bosses} />}
 
-      <ThemeSettings themeId={settings.themeId} sound={settings.sound} effects={settings.effects} onChosen={(t) => t.title && navigate('/title')} update={updateSettings} />
+      <ThemeSettings themeId={settings.themeId} effects={settings.effects} onChosen={(t) => t.title && navigate('/title', { state: { opening: true } })} update={updateSettings} />
+
+      {theme.audio && <AudioSettings settings={settings} update={updateSettings} audio={theme.audio} />}
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useReducer } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { prefersReducedMotion, resolveEffects, webglAvailable, type EffectLevel } from '@/effects/level';
 import { useSettings } from '@/settings/useSettings';
 import { getBgm } from '@/sound/bgm';
@@ -9,7 +9,7 @@ import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import type { Theme } from '@/themes/theme';
 import { PageHeading } from '../PageHeading';
-import { markEntranceSeen } from './entrance';
+import { entranceSeen, markEntranceSeen } from './entrance';
 import { BURST_MS, initialPhase, nextPhase, type OpeningEvent } from './opening';
 
 // 3D のカードが弾ける演出は大きいので、オープニングのときだけ読み込む
@@ -20,7 +20,8 @@ const MENU = [
   { to: '/play', label: 'はじめる', hint: '弱点を優先した練習' },
   { to: '/daily', label: '今日のチャレンジ', hint: '日替わりのお題' },
   { to: '/stats', label: '統計', hint: '記録の推移・弱点' },
-  { to: '/', label: 'ホーム', hint: 'ボス戦・記録・設定' },
+  { to: '/settings', label: '設定', hint: '音・演出・練習' },
+  { to: '/', label: 'ホーム', hint: 'ボス戦・記録・データ' },
 ] as const;
 
 /** テーマの入口。ゲート → オープニング → タイトルメニュー。入口の無いテーマなら、ホームへ戻す */
@@ -35,10 +36,14 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
   const navigate = useNavigate();
   const [settings] = useSettings();
   const title = theme.title as NonNullable<Theme['title']>;
+  // この起動で入口を見た後に戻ってきたときは、メニューから（他の画面からの戻り）。
+  // テーマを選んだ直後（state.opening）と、この起動で初めてのときは、ゲート・オープニングから。
+  const { state } = useLocation();
+  const replay = !!(state as { opening?: boolean } | null)?.opening;
   const [phase, dispatch] = useReducer(
     (p: ReturnType<typeof initialPhase>, e: OpeningEvent) => nextPhase(p, e, level),
     level,
-    initialPhase,
+    (l: EffectLevel) => (!replay && entranceSeen() ? 'title' : initialPhase(l)),
   );
   const music = bgmUrl(theme, 'title');
 

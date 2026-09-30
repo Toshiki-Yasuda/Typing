@@ -78,3 +78,27 @@ test.describe('テーマの入口', () => {
     await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
   });
 });
+
+test.describe('設定画面', () => {
+  test('タイトルから設定へ（axe も通る）。音量は保存され、Esc でタイトルへ戻る', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape'); // ゲートから直接タイトルへ
+    await page.getByRole('link', { name: /設定/ }).click();
+    await expect(page.getByRole('heading', { level: 1, name: '設定' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '音' })).toBeVisible();
+    await scan(page, '設定画面');
+
+    const slider = page.getByRole('slider', { name: 'BGM の音量' });
+    await slider.focus();
+    await page.keyboard.press('ArrowRight'); // 60 → 65
+    await expect(page.getByText('65%')).toBeVisible();
+    await page.getByRole('combobox', { name: '練習中の BGM' }).selectOption('all');
+
+    await page.reload();
+    await expect(page.getByRole('slider', { name: 'BGM の音量' })).toHaveValue('65');
+    await expect(page.getByRole('combobox', { name: '練習中の BGM' })).toHaveValue('all');
+
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+  });
+});

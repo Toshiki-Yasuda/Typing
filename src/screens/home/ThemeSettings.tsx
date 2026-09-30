@@ -8,7 +8,6 @@ import type { Settings } from '@/settings/settings';
 
 interface Props {
   themeId: string;
-  sound: boolean;
   effects: EffectLevel;
   /** テーマを選んだ（解除した）直後。入口のあるテーマなら、呼び出し側が入口へ送る */
   onChosen?: (theme: Theme) => void;
@@ -16,7 +15,7 @@ interface Props {
 }
 
 /** テーマの選択。ロック中のテーマは、パスワードを入れると選べる */
-export function ThemeSettings({ themeId, sound, effects, onChosen, update }: Props) {
+export function ThemeSettings({ themeId, effects, onChosen, update }: Props) {
   const [unlocked, setUnlocked] = useState(() => loadUnlocked());
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -85,17 +84,6 @@ export function ThemeSettings({ themeId, sound, effects, onChosen, update }: Pro
               </option>
             ))}
           </select>
-        </label>
-      )}
-      {current.sounds && (
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={sound}
-            onChange={(e) => update({ sound: e.target.checked })}
-            className="h-4 w-4 accent-[var(--viz-series-1)]"
-          />
-          <span>効果音を鳴らす</span>
         </label>
       )}
       {locked.length > 0 && (
