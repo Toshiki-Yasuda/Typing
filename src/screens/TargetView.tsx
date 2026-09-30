@@ -1,3 +1,4 @@
+import type { PressFx } from './play/types';
 import type { SessionView } from '@/session/practiceSession';
 import { normalizeTarget } from '@/engine';
 
@@ -26,6 +27,8 @@ export function TargetView({
   preview?: boolean;
   /** 縛り（ローマ字を隠す）: ガイドの文字を「・」にする。読みと表示は見える。表示だけで判定には関わらない */
   hideRomaji?: boolean | 'rest';
+  /** 直前の打鍵の結果（U3: キャレット・ミスの表現が使う）。いまは未使用 */
+  press?: PressFx;
 }) {
   const reading = Array.from(normalizeTarget(view.item.reading));
   const { typed, rest, kanaIndex } = view.guide;

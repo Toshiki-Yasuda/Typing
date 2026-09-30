@@ -99,6 +99,33 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
           <span>次のお題を先に見せる（{aidNames.en}）</span>
         </label>
         <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.showQueue}
+            onChange={(e) => update({ showQueue: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>次のお題を横に並べて見せる</span>
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.liveStats}
+            onChange={(e) => update({ liveStats: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>練習中に速さなどの数字を出す</span>
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.fingerColors}
+            onChange={(e) => update({ fingerColors: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>運指ガイドを指ごとに色分けする</span>
+        </label>
+        <label className="flex items-center gap-2">
           <span className="text-text-muted">配列</span>
           <select
             aria-label="運指ガイドの配列"

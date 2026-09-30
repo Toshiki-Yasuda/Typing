@@ -44,6 +44,12 @@ export const SettingsSchema = z.object({
   hunterName: z.string().max(12),
   /** ボスの技を使う（表示と敗北条件にだけ作用する。無効にできる）。docs/spec/boss.md */
   bossSkills: z.boolean(),
+  /** 練習画面: 左に次のお題（待ち行列）を見せる（U1a。docs/design/play-upgrade.md） */
+  showQueue: z.boolean(),
+  /** 練習画面: 速さ・正確率などの数字を出す（U2） */
+  liveStats: z.boolean(),
+  /** 練習画面: 運指ガイドを指ごとに色分けする（U4。ラベルも併記し、色だけにしない） */
+  fingerColors: z.boolean(),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -68,6 +74,9 @@ export const DEFAULT_SETTINGS: Settings = {
   bossSkills: true,
   hunterName: '',
   stageUnlock: 'all',
+  showQueue: true,
+  liveStats: true,
+  fingerColors: true,
   effects: 'full',
 };
 

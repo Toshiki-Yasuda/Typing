@@ -1,3 +1,4 @@
+import type { PressFx } from './play/types';
 import { LAYOUTS, describeKey, locate, type KeyDef, type LayoutId } from '@/fingering';
 
 const CELL = 36;
@@ -31,7 +32,7 @@ const labelOf = (key: KeyDef) => (/^[a-z]$/.test(key.base) ? key.base.toUpperCas
  * 運指ガイド。次に打つキーを光らせ、Shift が要るときは反対側の Shift も光らせる。
  * 図は補助で、指の名前は文字でも示す（図だけに頼らない）。
  */
-export function FingerGuide({ next, layout }: { next: string | undefined; layout: LayoutId }) {
+export function FingerGuide({ next, layout }: { next: string | undefined; layout: LayoutId; /** 直前の打鍵の結果（U4: 押したキーの表現が使う）。いまは未使用 */ press?: PressFx }) {
   const def = LAYOUTS[layout];
   const loc = next ? locate(def, next) : null;
   const activeBase = loc?.key.base;

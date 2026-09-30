@@ -4,6 +4,9 @@ import { computeMetrics, recordPress, type Keystroke, type Metrics, type Session
 import type { ContentItem } from '@/content';
 import { userPosition } from './ghost';
 
+/** 待ち行列に出す、先のお題の数 */
+export const QUEUE_LENGTH = 4;
+
 export type PressEvent = 'ok' | 'miss' | 'wordDone' | 'sessionDone' | 'ignored';
 
 export interface SessionView {
@@ -14,6 +17,8 @@ export interface SessionView {
   readonly finished: boolean;
   /** 次のお題（最後のお題なら null）。先読みの表示用 */
   readonly next: ContentItem | null;
+  /** 次以降のお題（先頭が next と同じ）。待ち行列の表示用。最大 QUEUE_LENGTH 件 */
+  readonly upcoming: readonly ContentItem[];
 }
 
 /**
@@ -66,6 +71,7 @@ export class PracticeSession {
       guide: getGuide(this.engine),
       finished: this.finished,
       next: this.items[shown + 1] ?? null,
+      upcoming: this.items.slice(shown + 1, shown + 1 + QUEUE_LENGTH),
     };
   }
 

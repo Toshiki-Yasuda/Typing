@@ -27,6 +27,10 @@ import { useGameBgm } from '@/sound/useGameBgm';
 import { useSoundPlayer } from '@/sound/useSoundPlayer';
 import { PageHeading } from './PageHeading';
 import { TargetView } from './TargetView';
+import { HudBar } from './play/HudBar';
+import { PlayFrame } from './play/PlayFrame';
+import { QueueRail } from './play/QueueRail';
+import type { PressFx } from './play/types';
 
 /** 画面の見出し（視覚的には隠す）。モードごとに、何の画面かを示す */
 const HEADINGS: Record<string, string> = { daily: '今日のチャレンジ', retry: '同じお題でもう一度' };
@@ -262,6 +266,8 @@ export function Play({
   }, [session, limitMs, timeUp]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
+  // 直前の打鍵の結果（演出用。判定・計測には使わない）
+  const [press, setPress] = useState<PressFx | undefined>(undefined);
   const [imeWarning, setImeWarning] = useState(false);
   // ウィンドウが非アクティブの間は、キーがページに届かない。ポーズはせず（3秒超の休止は速度から除かれる）、案内だけ出す。
   // 初期値は「アクティブ」とみなす（document.hasFocus() は環境によって不正確なため、イベントだけで切り替える）
@@ -314,7 +320,9 @@ export function Play({
       // 終わった後（時間切れ・縛りの破れ・敗北の保存中）の打鍵は受けない
       if (finishing.current) return;
       if (battle.current && battle.current.state().status === 'lost') return;
+      const expectedBefore = session.view().guide.rest[0] ?? null;
       const result = session.press({ key: e.key, code: e.code }, e.timeStamp);
+      if (result !== 'ignored') setPress((prev) => ({ seq: (prev?.seq ?? 0) + 1, result, key: e.key, expected: expectedBefore }));
       const fight = battle.current;
       const f = feelRef.current;
       if (tracker.current && f) {
@@ -374,62 +382,53 @@ export function Play({
   const hideRest = skillKind === 'hide' && hideActive(view.index);
   const stripped = skillKind === 'strip' && stripActive(session.keystrokes, view.index);
   const skillNote = hideRest ? 'この語は、ローマ字の残りが隠れています' : stripped ? 'この語は、運指ガイドを奪われています' : null;
+  const headingTitle = title ?? (train ? (train.label ?? TRAIN_HEADINGS[train.kind]) : boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習'));
   return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
-      {fx && boss && level !== 'off' && (
-        <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} />
-      )}
-      <PageHeading title={title ?? (train ? (train.label ?? TRAIN_HEADINGS[train.kind]) : boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習'))} srOnly />
-      <header className="flex items-center justify-between text-text-muted">
-        {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
+    <PlayFrame
+      overlay={fx && boss && level !== 'off' ? <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} /> : null}
+      heading={<PageHeading title={headingTitle} srOnly />}
+      hud={<HudBar index={view.index} total={view.total} label={train?.label} remaining={remaining} />}
+      notices={
+        <>
+          {feel && (
+            <FeelHud
+              combo={combo}
+              info={levelAt(feel.levels, combo)}
+              reached={pop ? { name: pop.name, animate: feel.effect === 'full' } : null}
+            />
+          )}
+          {!focused && (
+            <p role="status" className="rounded bg-surface-raised p-3 text-sm">
+              ウィンドウがアクティブではありません。画面をクリックすると、続きから打てます。
+            </p>
+          )}
+          {imeWarning && (
+            <p role="status" className="rounded bg-danger/20 p-3 text-sm">
+              日本語入力がオンのようです。半角/英数モードに切り替えてください。
+            </p>
+          )}
+          {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} skill={skill} note={skillNote} />}
+          {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
+        </>
+      }
+      stage={
         <div
-          role="progressbar"
-          aria-label="進捗"
-          aria-valuemin={0}
-          aria-valuemax={view.total}
-          aria-valuenow={view.index}
-          aria-valuetext={`${view.total}問中 ${view.index + 1}問目`}
+          className={feel && feel.effect !== 'off' ? `feel-aura ${missing && feel.effect === 'full' ? 'feel-shake' : ''}` : ''}
+          data-effect={feel?.effect}
+          style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
         >
-          {view.index + 1} / {view.total}
+          <TargetView
+            view={view}
+            missing={missing}
+            weakKeys={weakKeys ?? undefined}
+            preview={!!aids?.en}
+            hideRomaji={!eff.showRomaji ? true : hideRest ? 'rest' : false}
+            press={press}
+          />
         </div>
-        {train?.label && <span className="font-bold text-text">{train.label}</span>}
-        {remaining !== null && (
-          <span role="timer" className="font-mono text-lg text-text">
-            残り {Math.ceil(remaining / 1000)} 秒
-          </span>
-        )}
-        <span className="text-sm">Esc で中断</span>
-      </header>
-      <div aria-hidden className="h-1 rounded bg-surface-raised">
-        <div className="h-1 rounded bg-accent" style={{ width: `${(view.index / view.total) * 100}%` }} />
-      </div>
-      {feel && (
-        <FeelHud
-          combo={combo}
-          info={levelAt(feel.levels, combo)}
-          reached={pop ? { name: pop.name, animate: feel.effect === 'full' } : null}
-        />
-      )}
-      {!focused && (
-        <p role="status" className="rounded bg-surface-raised p-3 text-sm">
-          ウィンドウがアクティブではありません。画面をクリックすると、続きから打てます。
-        </p>
-      )}
-      {imeWarning && (
-        <p role="status" className="rounded bg-danger/20 p-3 text-sm">
-          日本語入力がオンのようです。半角/英数モードに切り替えてください。
-        </p>
-      )}
-      {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} skill={skill} note={skillNote} />}
-      {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
-      <div
-        className={feel && feel.effect !== 'off' ? `feel-aura ${missing && feel.effect === 'full' ? 'feel-shake' : ''}` : ''}
-        data-effect={feel?.effect}
-        style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
-      >
-        <TargetView view={view} missing={missing} weakKeys={weakKeys ?? undefined} preview={!!aids?.en} hideRomaji={!eff.showRomaji ? true : hideRest ? 'rest' : false} />
-      </div>
-      {fingerGuide && !stripped && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
-    </main>
+      }
+      guide={fingerGuide && !stripped ? <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} press={press} /> : null}
+      queue={<QueueRail upcoming={view.upcoming} />}
+    />
   );
 }

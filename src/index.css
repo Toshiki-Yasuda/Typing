@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+@import './styles/stage.css'; /* U1 舞台（レイアウト・背景・面） */
+@import './styles/backdrop.css'; /* U1c 背景の3層 */
+@import './styles/hud.css'; /* U2 ライブ HUD */
+@import './styles/guide.css'; /* U4 運指ガイド */
+@import './styles/fx.css'; /* U3・U5 打鍵の手応え・空気・粒子 */
 
 /* デザイントークンはここに一元化する（色・フォント・アニメーション） */
 @theme {

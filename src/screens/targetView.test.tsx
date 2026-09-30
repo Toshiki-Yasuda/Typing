@@ -9,6 +9,7 @@ const view = (display: string, reading: string, typed: string, rest: string, kan
   guide: { typed, rest, remaining: rest.length, kanaIndex },
   finished: false,
   next: null,
+  upcoming: [],
 });
 
 describe('sizeClasses（長さに応じた大きさ）', () => {
