@@ -118,7 +118,7 @@ export function Home() {
 
       <RankCard summaries={summaries} goalId={settings.goalRank} />
 
-      <ThemeSettings themeId={settings.themeId} update={updateSettings} />
+      <ThemeSettings themeId={settings.themeId} sound={settings.sound} update={updateSettings} />
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

@@ -6,11 +6,12 @@ import type { Settings } from '@/settings/settings';
 
 interface Props {
   themeId: string;
+  sound: boolean;
   update: (patch: Partial<Settings>) => void;
 }
 
 /** テーマの選択。ロック中のテーマは、パスワードを入れると選べる */
-export function ThemeSettings({ themeId, update }: Props) {
+export function ThemeSettings({ themeId, sound, update }: Props) {
   const [unlocked, setUnlocked] = useState(() => loadUnlocked());
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -60,6 +61,17 @@ export function ThemeSettings({ themeId, update }: Props) {
           ))}
         </select>
       </label>
+      {current.sounds && (
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={sound}
+            onChange={(e) => update({ sound: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>効果音を鳴らす</span>
+        </label>
+      )}
       {locked.length > 0 && (
         <form onSubmit={submit} className="flex flex-wrap items-center gap-2">
           <label className="flex items-center gap-2">

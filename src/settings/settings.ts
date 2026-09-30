@@ -20,6 +20,8 @@ export const SettingsSchema = z.object({
   layout: z.enum(['us', 'jis']),
   /** テーマの id（ロック中・不明なら中立テーマになる。記録には持たせない） */
   themeId: z.string().min(1),
+  /** テーマに効果音があれば鳴らす（判定・計測には影響しない） */
+  sound: z.boolean(),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 
@@ -31,6 +33,7 @@ export const DEFAULT_SETTINGS: Settings = {
   fingerGuide: true,
   layout: 'jis',
   themeId: 'neutral',
+  sound: true,
 };
 
 /** localStorage を使えない環境（プライベートモード等）でも落ちないようにする */

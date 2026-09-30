@@ -38,6 +38,12 @@ export const HUNTER_THEME: Theme = {
     danger: '#ef4444',
   },
   strings: { tagline: 'HUNTER×HUNTER TYPING MASTER' },
+  // 音は Ver1 の効果音（public/themes/hunter/）
+  sounds: {
+    type: ['themes/hunter/se-type1.mp3', 'themes/hunter/se-type2.mp3'],
+    miss: ['themes/hunter/se-heavy1.mp3'],
+    complete: ['themes/hunter/se-complete.mp3'],
+  },
 };
 
 export const THEMES: readonly Theme[] = [NEUTRAL_THEME, HUNTER_THEME];

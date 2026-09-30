@@ -15,6 +15,14 @@ export const ThemeSchema = z.object({
   colors: z.partialRecord(z.enum(COLOR_TOKENS), hex),
   /** 文言。指定しなければ中立の文言 */
   strings: z.object({ tagline: z.string().optional() }),
+  /** 効果音（アプリからの相対パス）。無ければ無音。打鍵が合っている / 間違い / 練習の完了 */
+  sounds: z
+    .object({
+      type: z.array(z.string().min(1)).min(1),
+      miss: z.array(z.string().min(1)).min(1),
+      complete: z.array(z.string().min(1)).min(1),
+    })
+    .optional(),
 });
 export type Theme = z.infer<typeof ThemeSchema>;
 

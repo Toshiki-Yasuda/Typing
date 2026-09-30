@@ -10,6 +10,7 @@ import type { LayoutId } from '@/fingering';
 import { FingerGuide } from './FingerGuide';
 import { GhostBar } from './GhostBar';
 import { useStore } from '@/app/StoreContext';
+import { useSoundPlayer } from '@/sound/useSoundPlayer';
 import { PageHeading } from './PageHeading';
 import { TargetView } from './TargetView';
 
@@ -45,6 +46,7 @@ export function Play({
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
+  const sound = useSoundPlayer();
 
   // 過去の記録から弱点を求め、弱いキーを含むお題が出やすいように選ぶ（記録が無ければ均等）
   useEffect(() => {
@@ -120,13 +122,21 @@ export function Play({
         );
       }
       rerender();
+      // 音は判定・描画の後に鳴らす（鳴らす処理は軽く、失敗しても練習に影響しない）
+      try {
+        if (result === 'ok' || result === 'wordDone') sound?.play('type');
+        else if (result === 'miss') sound?.play('miss');
+        else if (result === 'sessionDone') sound?.play('complete');
+      } catch (error) {
+        console.error('効果音を鳴らせませんでした', error);
+      }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => {
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store]);
+  }, [navigate, session, store, sound]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
