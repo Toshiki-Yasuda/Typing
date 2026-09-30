@@ -1,3 +1,4 @@
+import { HUNTER_BOSSES } from './hunterBosses';
 import { ThemeSchema, contrastProblems, type ColorToken, type Theme } from './theme';
 
 /** 中立テーマ。`src/index.css` の @theme と同じ値（常に存在し、他のテーマが不正なときの戻り先） */
@@ -23,14 +24,15 @@ export const NEUTRAL_THEME: Theme = {
  * HUNTER×HUNTER テーマ（ロック付き）。
  * 配色は Ver1（Mobile-）の tailwind.config.ts の hunter パレットから取った
  * （dark #1A1A2E / dark-light #2A2A3E / gold #D4AF37 / success #10B981 / error #EF4444）。
+ * 背景だけは、グラフ・運指ガイドの固定色（--viz-*）が読める明るさに収めるため、Ver1 より少し暗くした。
  */
 export const HUNTER_THEME: Theme = {
   id: 'hunter',
   name: 'HUNTER×HUNTER',
   locked: true,
   colors: {
-    surface: '#1a1a2e',
-    'surface-raised': '#2a2a3e',
+    surface: '#13131f',
+    'surface-raised': '#1e1e33',
     text: '#f4f1e6',
     'text-muted': '#b3b1c2',
     accent: '#d4af37',
@@ -44,6 +46,7 @@ export const HUNTER_THEME: Theme = {
     miss: ['themes/hunter/se-heavy1.mp3'],
     complete: ['themes/hunter/se-complete.mp3'],
   },
+  bosses: HUNTER_BOSSES,
 };
 
 export const THEMES: readonly Theme[] = [NEUTRAL_THEME, HUNTER_THEME];

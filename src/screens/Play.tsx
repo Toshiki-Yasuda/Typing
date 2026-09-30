@@ -1,5 +1,9 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { BossBattle, type BattleState } from '@/session/bossBattle';
+import { recordBossResult } from '@/session/bossProgress';
+import type { Boss } from '@/themes/theme';
+import { BossHud } from './boss/BossHud';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness } from '@/metrics';
@@ -30,6 +34,8 @@ interface Props {
   fingerGuide?: { layout: LayoutId } | null;
   /** 並走させる過去の記録 */
   ghost?: { ghost: Ghost; label: string } | null;
+  /** ボス戦。指定すると、ボスの HP・ミスの許容・台詞が加わる（判定・計測は通常の練習と同じ） */
+  boss?: Boss;
   random?: () => number;
 }
 
@@ -41,12 +47,16 @@ export function Play({
   mode,
   ghost = null,
   fingerGuide = null,
+  boss,
   random,
 }: Props) {
   const navigate = useNavigate();
   const store = useStore();
   const [session, setSession] = useState<PracticeSession | null>(null);
   const sound = useSoundPlayer();
+  const battle = useRef<BossBattle | null>(null);
+  const [bossLine, setBossLine] = useState('');
+  const [battleState, setBattleState] = useState<BattleState | null>(null);
 
   // 過去の記録から弱点を求め、弱いキーを含むお題が出やすいように選ぶ（記録が無ければ均等）
   useEffect(() => {
@@ -60,6 +70,9 @@ export function Play({
         (weakness.size > 0
           ? pickAdaptive(pack.items, count, weakness, { bigrams, random })
           : pickItems(pack.items, count, random));
+      battle.current = boss ? new BossBattle({ words: items.length, maxMisses: boss.maxMisses }) : null;
+      setBossLine(boss?.intro ?? '');
+      setBattleState(battle.current?.state() ?? null);
       setSession(
         new PracticeSession(items, performance.now(), {
           id: crypto.randomUUID(),
@@ -72,7 +85,7 @@ export function Play({
     return () => {
       cancelled = true;
     };
-  }, [store, pack, count, adaptive, fixedItems, mode, random]);
+  }, [store, pack, count, adaptive, fixedItems, mode, boss, random]);
   const [, rerender] = useReducer((n: number) => n + 1, 0);
   const [missing, setMissing] = useState(false);
   const [imeWarning, setImeWarning] = useState(false);
@@ -108,16 +121,38 @@ export function Play({
       e.preventDefault(); // Space のスクロールや ' / のクイック検索を止める
       setImeWarning(false);
 
+      // 決着後（敗北の保存中）の打鍵は受けない
+      if (battle.current && battle.current.state().status === 'lost') return;
       const result = session.press({ key: e.key, code: e.code }, e.timeStamp);
+      const fight = battle.current;
+      if (fight && boss) {
+        const { phaseChanged } = fight.apply(result);
+        setBattleState(fight.state());
+        if (phaseChanged) setBossLine(boss.phaseMessages[phaseChanged - 2] ?? '');
+        else if (result === 'wordDone') setBossLine(boss.dialogues[session.view().index % boss.dialogues.length] ?? '');
+        else if (result === 'sessionDone') setBossLine(boss.defeat);
+      }
       if (result === 'miss') {
         setMissing(true);
         clearTimeout(missTimer.current);
         missTimer.current = setTimeout(() => setMissing(false), 160);
       }
-      if (result === 'sessionDone') {
+      const lost = fight?.state().status === 'lost';
+      if (result === 'sessionDone' || lost) {
         const record = session.toRecord();
+        const rank = fight?.rank() ?? null;
         store.add(record).then(
-          () => navigate(`/result/${record.id}`),
+          () => {
+            if (fight && boss && rank) {
+              recordBossResult(boss.id, rank);
+              const s = fight.state();
+              navigate(`/result/${record.id}`, {
+                state: { boss: { id: boss.id, rank, misses: s.misses, maxCombo: s.maxCombo } },
+              });
+            } else {
+              navigate(`/result/${record.id}`);
+            }
+          },
           (error) => console.error('記録の保存に失敗しました', error),
         );
       }
@@ -136,13 +171,13 @@ export function Play({
       window.removeEventListener('keydown', onKeyDown);
       clearTimeout(missTimer.current);
     };
-  }, [navigate, session, store, sound]);
+  }, [navigate, session, store, sound, boss]);
 
   if (!session) return <p className="p-8 text-text-muted">準備中…</p>;
   const view = session.view();
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-8 p-8">
-      <PageHeading title={HEADINGS[mode ?? ''] ?? '練習'} srOnly />
+      <PageHeading title={boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習')} srOnly />
       <header className="flex items-center justify-between text-text-muted">
         {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
         <div
@@ -170,6 +205,7 @@ export function Play({
           日本語入力がオンのようです。半角/英数モードに切り替えてください。
         </p>
       )}
+      {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} />}
       {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
       <TargetView view={view} missing={missing} />
       {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}

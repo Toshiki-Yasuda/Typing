@@ -1,4 +1,4 @@
-import { contrast, contrastProblems, ThemeSchema } from './theme';
+import { contrast, contrastProblems, FIXED_ON_SURFACE, ThemeSchema } from './theme';
 import { HUNTER_THEME, NEUTRAL_COLORS, NEUTRAL_THEME, THEMES, resolveTheme, themeColors } from './themes';
 import { checkPassword, loadUnlocked, saveUnlocked, sha256Hex } from './unlock';
 
@@ -23,6 +23,17 @@ describe('テーマの定義', () => {
     for (const [token, value] of Object.entries(NEUTRAL_COLORS)) {
       expect(css).toContain(`--color-${token}: ${value};`);
     }
+  });
+
+  it('固定色（--viz-*）の値は index.css と一致する', async () => {
+    const { readFileSync } = await import('node:fs');
+    const css = readFileSync('src/index.css', 'utf8');
+    for (const [name, color] of FIXED_ON_SURFACE) expect(css).toContain(`${name}: ${color};`);
+  });
+
+  it('背景が明るすぎて固定色が読めなくなる配色は検出される', () => {
+    const problems = contrastProblems({ ...NEUTRAL_COLORS, 'surface-raised': '#2a2a3e' });
+    expect(problems.some((p) => p.includes('--viz-muted'))).toBe(true);
   });
 
   it('読めない配色は検出される', () => {
@@ -79,5 +90,31 @@ describe('解除の保存', () => {
     expect(loadUnlocked(store).size).toBe(0);
     mem.set('typing.themes.unlocked.v1', '[1,"a"]');
     expect([...loadUnlocked(store)]).toEqual(['a']);
+  });
+});
+
+describe('ボスの定義', () => {
+  it('HUNTER×HUNTER のボスは検証を通り、章が 1..n の連番で id が重複せず、出題パックが実在する', async () => {
+    const { BUILTIN_PACKS } = await import('@/content');
+    const bosses = HUNTER_THEME.bosses ?? [];
+    expect(bosses.length).toBe(7);
+    expect(bosses.map((b) => b.chapter)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(new Set(bosses.map((b) => b.id)).size).toBe(bosses.length);
+    for (const b of bosses) {
+      const pack = BUILTIN_PACKS.find((p) => p.id === b.packId);
+      expect(pack, `${b.name} のパック ${b.packId}`).toBeDefined();
+      // 出題は重複なしで選ぶので、パックの語数以下でなければならない
+      expect(b.words).toBeLessThanOrEqual(pack?.items.length ?? 0);
+    }
+  });
+
+  it('ボスの画像ファイルが public に実在する', async () => {
+    const { existsSync } = await import('node:fs');
+    for (const b of HUNTER_THEME.bosses ?? []) if (b.image) expect(existsSync(`public/${b.image}`), b.image).toBe(true);
+  });
+
+  it('台詞が足りないボスは不正（フェーズの台詞は3つ）', () => {
+    const boss = { ...(HUNTER_THEME.bosses?.[0] as object), phaseMessages: ['a', 'b'] };
+    expect(ThemeSchema.safeParse({ ...HUNTER_THEME, bosses: [boss] }).success).toBe(false);
   });
 });

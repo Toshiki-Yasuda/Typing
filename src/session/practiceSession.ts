@@ -89,10 +89,15 @@ export class PracticeSession {
     return computeMetrics(this.log, { minKeystrokes: this.minKeystrokesTotal });
   }
 
+  /**
+   * 記録にする。途中で終わった（ボス戦の敗北など）ときは、打ち始めたお題までを targets にする
+   * （打鍵ログと targets の対応を保つため）。
+   */
   toRecord(): SessionRecord {
+    const upTo = this.finished ? this.items.length : Math.min(this.index + 1, this.items.length);
     return {
       ...this.meta,
-      targets: this.items.map((i) => normalizeTarget(i.reading)),
+      targets: this.items.slice(0, upTo).map((i) => normalizeTarget(i.reading)),
       engineVersion: ENGINE_VERSION,
       ruleVersion: RULE_VERSION,
       keystrokes: [...this.log],

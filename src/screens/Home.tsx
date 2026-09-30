@@ -5,6 +5,9 @@ import { computeMetrics, dayKey, summarizeSessions, type SessionRecord, type Ses
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { BossList } from './home/BossList';
+import { resolveTheme } from '@/themes/themes';
+import { loadUnlocked } from '@/themes/unlock';
 import { ThemeSettings } from './home/ThemeSettings';
 import { useSettings } from '@/settings/useSettings';
 import { CustomPacks } from './home/CustomPacks';
@@ -34,6 +37,7 @@ export function Home() {
   const [message, setMessage] = useState('');
   const [settings, updateSettings] = useSettings();
   const custom = useCustomPacks();
+  const bosses = resolveTheme(settings.themeId, loadUnlocked()).bosses;
   const fileInput = useRef<HTMLInputElement>(null);
 
   const reload = () =>
@@ -117,6 +121,8 @@ export function Home() {
       )}
 
       <RankCard summaries={summaries} goalId={settings.goalRank} />
+
+      {bosses && bosses.length > 0 && <BossList bosses={bosses} />}
 
       <ThemeSettings themeId={settings.themeId} sound={settings.sound} update={updateSettings} />
 

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useLocation, useParams } from 'react-router';
 import { minKeystrokes } from '@/engine';
 import { computeMetrics, confusionMatrix, keyStats, summarizeSessions, type Metrics, type SessionRecord, type SessionSummary } from '@/metrics';
 import { useStore } from '@/app/StoreContext';
 import { compareWithBest, type Comparison } from '@/session/retry';
 import { useSettings } from '@/settings/useSettings';
+import { resolveTheme } from '@/themes/themes';
+import { loadUnlocked } from '@/themes/unlock';
+import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
 import { PageHeading } from './PageHeading';
 import { RankPanel } from './RankPanel';
 
@@ -35,6 +38,7 @@ export function Result() {
   const [comparison, setComparison] = useState<Comparison | null>(null);
   const [summaries, setSummaries] = useState<SessionSummary[]>([]);
   const [settings] = useSettings();
+  const location = useLocation();
 
   useEffect(() => {
     let cancelled = false;
@@ -61,6 +65,8 @@ export function Result() {
     );
   }
 
+  const outcome = parseBossOutcome(location.state);
+  const boss = outcome ? resolveTheme(settings.themeId, loadUnlocked()).bosses?.find((b) => b.id === outcome.id) : undefined;
   const m = summarize(record);
   const weak = [...keyStats(record.keystrokes).values()]
     .filter((k) => k.misses > 0)
@@ -75,6 +81,7 @@ export function Result() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <PageHeading title="結果" className="text-2xl font-bold" />
+      {boss && outcome && <BossResultPanel boss={boss} outcome={outcome} />}
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <Stat label="速度（実効）" value={fmt(m.kpm)} unit="打鍵/分" />
         <Stat label="正確率" value={pct(m.accuracy)} />
@@ -117,6 +124,11 @@ export function Result() {
         </p>
       )}
       <nav className="flex flex-wrap gap-4">
+        {boss && (
+          <Link to={`/boss/${boss.id}`} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
+            {boss.name}にもう一度挑戦
+          </Link>
+        )}
         <Link to={`/play?retry=${record.id}`} className="rounded bg-accent px-6 py-3 font-bold text-surface focus-visible:outline-2">
           同じお題でもう一度
         </Link>

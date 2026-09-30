@@ -1,4 +1,5 @@
 import { HashRouter, Route, Routes } from 'react-router';
+import { BossRoute } from '@/screens/BossRoute';
 import { DailyRoute } from '@/screens/DailyRoute';
 import { Home } from '@/screens/Home';
 import { PlayRoute } from '@/screens/PlayRoute';
@@ -14,6 +15,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/play" element={<PlayRoute />} />
+          <Route path="/boss/:id" element={<BossRoute />} />
           <Route path="/daily" element={<DailyRoute />} />
           <Route path="/result/:id" element={<Result />} />
           <Route path="/stats" element={<Stats />} />
