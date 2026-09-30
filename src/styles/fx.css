@@ -3,3 +3,102 @@
 /* F: 打鍵の手応え（U3。TargetView の要素）— 担当F専用の区画 */
 
 /* G: 空気と達成（U5。FxLayer・光の呼吸・レールの進み）— 担当G専用の区画 */
+
+/* G の続き。色は accent から作る（直書きしない）。基本の見た目が最後の姿で、動きは @keyframes と transition で足す */
+.air-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* Backdrop（-1）より後ろの DOM 順で、その上・内容の下 */
+  pointer-events: none;
+  overflow: hidden;
+  --_fx: var(--color-accent);
+}
+/* 光の呼吸: 舞台の後ろの淡い光。明るさ（opacity）だけを --rhythm(0〜1) で変える。色は変えない */
+.fx-glow {
+  position: absolute;
+  inset: 0;
+  opacity: calc(0.3 + 0.7 * var(--rhythm, 0));
+}
+.fx-glow::before,
+.fx-glow__flash {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(48% 36% at 50% 46%, color-mix(in srgb, var(--_fx) 26%, transparent), transparent 72%);
+}
+.fx-glow::before {
+  opacity: 0.6;
+}
+.fx-glow__flash {
+  opacity: 0;
+}
+/* 光のレールの進み: 背景のレール（--stage-rail-y）の上に、進んだ分だけ細い光を重ねる */
+.fx-rail {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: var(--stage-rail-y, 68%);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--_fx) 12%, color-mix(in srgb, var(--_fx) 55%, var(--color-text)));
+  box-shadow: 0 0 14px 1px color-mix(in srgb, var(--_fx) 60%, transparent);
+  transform-origin: left center;
+  transform: scaleX(var(--fx-progress, 0));
+}
+/* 語の完了の縁の光: カードの外側に 1 回だけ。基本は見えない（opacity 0） */
+.fx-edge {
+  position: absolute;
+  border-radius: 1rem;
+  opacity: 0;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--_fx) 70%, transparent),
+    0 0 26px 5px color-mix(in srgb, var(--_fx) 45%, transparent);
+}
+.fx-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 20; /* 内容の手前。pointer-events なし */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: var(--color-accent); /* 粒は currentColor で塗る */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .air-layer[data-level='full'] .fx-glow {
+    transition: opacity 1.6s ease-out;
+  }
+  .air-layer[data-level='full'] .fx-rail {
+    transition: transform 0.5s ease-out;
+  }
+  /* 待機（次の語が出た直後）は 4 秒周期でゆっくり明るさの波。打鍵中は止まって落ち着く */
+  .air-layer[data-level='full'] .fx-glow[data-phase='idle']::before {
+    animation: fx-breathe 4s ease-in-out infinite;
+  }
+  .fx-glow__flash {
+    animation: fx-flash 0.7s ease-out 1;
+  }
+  .fx-edge {
+    animation: fx-edge 0.7s ease-out 1;
+  }
+}
+@keyframes fx-breathe {
+  50% {
+    opacity: 0.85;
+  }
+}
+@keyframes fx-flash {
+  25% {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fx-edge {
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
