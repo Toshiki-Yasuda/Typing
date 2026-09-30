@@ -28,8 +28,18 @@ export function formatElapsed(sec: number): string {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
 
-/** 語ごとの刻み。完了（塗り）・現在（太い枠＋下線）・未来（細い枠）を形で分ける。読み上げ対象外 */
+/** 刻みで並べる語数の上限。これより多いと1つが細くなりすぎるので、連続したバーにする */
+export const MAX_TICKS = 30;
+
+/** 語ごとの刻み。完了（塗り）・現在（太い枠＋下線）・未来（細い枠）を形で分ける。多いときは連続バー。読み上げ対象外 */
 function Ticks({ index, total }: { index: number; total: number }) {
+  if (total > MAX_TICKS) {
+    return (
+      <div aria-hidden className="hud-bar" data-testid="hud-bar">
+        <div className="hud-bar__fill" style={{ width: `${Math.min(100, (index / total) * 100)}%` }} />
+      </div>
+    );
+  }
   return (
     <ol aria-hidden className="hud-ticks">
       {Array.from({ length: total }, (_, i) => (

@@ -93,12 +93,6 @@
   }
 }
 
-/* 1200〜1439px は中央の舞台を確保するため、指の案内（現在は固定幅 610px）を縮めて置く。U4 でキーの大きさを変数化したら置き換える */
-@media (min-width: 1200px) and (max-width: 1439px) {
-  .play-frame__guide {
-    zoom: 0.85;
-  }
-}
 
 .queue-rail {
   display: flex;

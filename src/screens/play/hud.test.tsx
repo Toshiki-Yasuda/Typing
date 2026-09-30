@@ -79,3 +79,16 @@ describe('formatElapsed', () => {
     expect(formatElapsed(sec)).toBe(text);
   });
 });
+
+describe('語数が多いとき', () => {
+  it('30 語までは刻み、31 語以上は連続バー（進み具合は幅で）。進捗の文字と名前は同じ', () => {
+    const { rerender } = render(<HudBar index={9} total={30} remaining={null} />);
+    expect(document.querySelectorAll('.hud-tick')).toHaveLength(30);
+    expect(screen.queryByTestId('hud-bar')).toBeNull();
+    rerender(<HudBar index={10} total={40} remaining={null} />);
+    expect(document.querySelectorAll('.hud-tick')).toHaveLength(0);
+    expect(screen.getByTestId('hud-bar').firstElementChild).toHaveStyle({ width: '25%' });
+    expect(screen.getByRole('progressbar', { name: '進捗' })).toHaveTextContent('11 / 40');
+  });
+});
+

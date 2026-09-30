@@ -36,7 +36,7 @@
   gap: 0.9rem;
   margin: 0;
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
 }
@@ -46,7 +46,7 @@
   gap: 0.3rem;
 }
 .hud-stats dt {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
 }
 .hud-stats dd {
   margin: 0;
@@ -82,4 +82,16 @@ button.hud-abort {
 button.hud-abort:hover {
   color: var(--color-text);
   border-color: var(--color-text);
+}
+
+/* 語数が多いときの連続バー（刻みだと1つが細くなりすぎる） */
+.hud-bar {
+  height: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--color-text) 30%, transparent);
+  overflow: hidden;
+}
+.hud-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
 }

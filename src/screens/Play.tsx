@@ -9,7 +9,7 @@ import { BossFx, type BossFxState } from './boss/BossFx';
 import { FeelHud } from './feel/FeelHud';
 import { useFeel } from './feel/useFeel';
 import { BossHud } from './boss/BossHud';
-import { webglAvailable, type EffectLevel } from '@/effects/level';
+import { webglAvailable, type EffectLevel, resolveEffects, prefersReducedMotion } from '@/effects/level';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
 import { bigramWeakness, keyWeakness, liveMetrics } from '@/metrics';
@@ -31,6 +31,7 @@ import { TargetView } from './TargetView';
 import { HudBar } from './play/HudBar';
 import { PlayFrame } from './play/PlayFrame';
 import { FxLayer } from './play/fx/FxLayer';
+import { finishPeakMs } from './play/peak';
 import { QueueRail } from './play/QueueRail';
 import type { PressFx } from './play/types';
 
@@ -109,6 +110,8 @@ export function Play({
   const [weakKeys, setWeakKeys] = useState<ReadonlySet<string> | null>(null);
   const [remaining, setRemaining] = useState<number | null>(limitMs);
   const finishing = useRef(false);
+  const peakTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(peakTimer.current), []);
   const battle = useRef<BossBattle | null>(null);
   const [bossLine, setBossLine] = useState('');
   const [battleState, setBattleState] = useState<BattleState | null>(null);
@@ -234,13 +237,16 @@ export function Play({
             clearTimeout(fxTimer.current);
             fxTimer.current = setTimeout(go, lvl === 'full' ? FX_MS.finishFull : FX_MS.finishReduced);
           } else {
-            navigate(`/result/${record.id}`);
+            // 打ち終えた達成の演出（レールが端まで走る・粒）を見せてから結果へ。保存は済んでいる。待つ間の入力は受けない（finishing）
+            const wait = finishPeakMs(resolveEffects(settings.effects, prefersReducedMotion()));
+            if (wait === 0) navigate(`/result/${record.id}`);
+            else peakTimer.current = setTimeout(() => navigate(`/result/${record.id}`), wait);
           }
         },
         (error) => console.error('記録の保存に失敗しました', error),
       );
     },
-    [session, store, navigate, boss, showFx, vowCount],
+    [session, store, navigate, boss, showFx, vowCount, settings.effects],
   );
   // 時間切れ。ボス戦は敗北（理由は時間切れ）、修行の練は、そこまでの記録で終える
   const timeUp = useCallback(
@@ -452,7 +458,7 @@ export function Play({
       }
       guide={fingerGuide && !stripped ? <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} press={press} /> : null}
       queue={<QueueRail upcoming={view.upcoming} />}
-      fx={<FxLayer press={press} index={view.index} total={view.total} />}
+      fx={<FxLayer press={press} index={view.finished ? view.total : view.index} total={view.total} />}
     />
   );
 }
