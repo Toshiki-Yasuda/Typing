@@ -79,9 +79,14 @@ export function Stats() {
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <header className="flex items-center justify-between">
         <PageHeading title="統計" className="text-2xl font-bold" />
-        <Link to="/" className="rounded bg-surface-raised px-4 py-2">
-          ホーム
-        </Link>
+        <nav className="flex gap-2">
+          <Link to="/diagnosis" className="rounded bg-surface-raised px-4 py-2">
+            6軸診断
+          </Link>
+          <Link to="/" className="rounded bg-surface-raised px-4 py-2">
+            ホーム
+          </Link>
+        </nav>
       </header>
 
       <div role="group" aria-label="期間" className="flex flex-wrap items-center gap-2">

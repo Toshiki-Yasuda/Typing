@@ -73,6 +73,20 @@ export const HUNTER_THEME: Theme = {
       { at: 50, name: '発' },
     ],
   },
+  // 6 軸診断を「念の六系統」に対応づける（環の並びは原作の六性図と同じ。docs/spec/axes.md）
+  diagnosis: {
+    heading: '念系統診断',
+    intro: 'あなたの打鍵を、念の六系統で読みます。水見式のように、得意と伸びしろを見てみましょう。',
+    axes: {
+      speed: { kind: '強化系', trait: '単純で一途', ritual: '水があふれる' },
+      adapt: { kind: '変化系', trait: '気まぐれ', ritual: '水の味が変わる' },
+      shape: { kind: '具現化系', trait: '神経質', ritual: '水に不純物が出る' },
+      steady: { kind: '特質系', trait: '個人主義者', ritual: '葉が枯れる（その他の変化）' },
+      control: { kind: '操作系', trait: '理屈屋でマイペース', ritual: '葉が動く' },
+      reach: { kind: '放出系', trait: '大雑把', ritual: '水の色が変わる' },
+    },
+    affinity: [100, 80, 60, 40],
+  },
   chapters: HUNTER_CHAPTERS,
   bosses: HUNTER_BOSSES,
 };

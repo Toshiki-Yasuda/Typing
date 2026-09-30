@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { AXIS_IDS } from '@/metrics/axes';
 
 /** テーマが上書きできる色。これ以外は上書きできない（グラフの色などは検証済みの固定値のため） */
 export const COLOR_TOKENS = ['surface', 'surface-raised', 'text', 'text-muted', 'accent', 'success', 'danger'] as const;
@@ -54,6 +55,24 @@ export const ChapterSchema = z.object({
   boss: z.string().min(1).optional(),
 });
 export type Chapter = z.infer<typeof ChapterSchema>;
+
+/** 6 軸診断の、テーマでの見せ方。軸（速さ・制御…）を、作品の言葉（系統など）に対応づける */
+const AxisFlavorSchema = z.object({
+  /** 例: 「強化系」 */
+  kind: z.string().min(1),
+  /** 性格などの傾向（遊びの意匠） */
+  trait: z.string().min(1),
+  /** 儀式（水見式）での反応 */
+  ritual: z.string().min(1),
+});
+export const DiagnosisSchema = z.object({
+  heading: z.string().min(1),
+  intro: z.string().min(1),
+  axes: z.object(Object.fromEntries(AXIS_IDS.map((id) => [id, AxisFlavorSchema])) as Record<(typeof AXIS_IDS)[number], typeof AxisFlavorSchema>),
+  /** 得意な軸から伸ばす軸までの環の距離 0〜3 に対する「伸ばしやすさ」の割合（演出） */
+  affinity: z.tuple([z.number(), z.number(), z.number(), z.number()]),
+});
+export type Diagnosis = z.infer<typeof DiagnosisSchema>;
 
 export const ThemeSchema = z.object({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/),
@@ -113,6 +132,8 @@ export const ThemeSchema = z.object({
         }),
     })
     .optional(),
+  /** 6 軸診断の見せ方（作品の言葉への対応）。無ければ、軸の名前だけで見せる */
+  diagnosis: DiagnosisSchema.optional(),
   /** ステージ選択の章。無ければステージ選択は出ない */
   chapters: z.array(ChapterSchema).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */

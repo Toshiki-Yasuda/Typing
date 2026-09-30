@@ -1,5 +1,5 @@
 // スクリーンショットの場面。追加するときは、1 つの関数で「その画面まで操作して path に撮る」。
-import { newPage, unlockTheme, skipToTitle, typeWord } from './lib/browser.mjs';
+import { newPage, unlockTheme, skipToTitle, typeWord, seedRecords } from './lib/browser.mjs';
 
 async function toTitle({ browser, url }, settings) {
   const page = await newPage(browser, { settings });
@@ -38,7 +38,7 @@ export const SCENARIOS = {
   /** 設定 */
   async settings(ctx) {
     const page = await toTitle(ctx);
-    await page.keyboard.press('5');
+    await page.keyboard.press('6');
     await page.getByRole('heading', { level: 1, name: '設定' }).waitFor();
     await page.screenshot({ path: ctx.path, fullPage: true });
   },
@@ -58,5 +58,18 @@ export const SCENARIOS = {
     await page.getByRole('link', { name: 'ヒソカに挑戦する' }).click();
     await page.getByRole('region', { name: 'お題' }).waitFor();
     await page.screenshot({ path: ctx.path });
+  },
+  /** 念系統診断（かな・英字の記録を入れて、点が求まる状態） */
+  async diagnosis(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 5, { contentId: 'basic', dt: 160, idPrefix: 'a' });
+    await seedRecords(page, 5, { contentId: 'english', dt: 260, idPrefix: 'b' });
+    await unlockTheme(page, ctx.url);
+    await skipToTitle(page);
+    await page.keyboard.press('5');
+    await page.getByRole('heading', { level: 1, name: '念系統診断' }).waitFor();
+    await page.getByRole('img', { name: /^速さ/ }).waitFor();
+    await page.screenshot({ path: ctx.path, fullPage: true });
   },
 };

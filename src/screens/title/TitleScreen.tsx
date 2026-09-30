@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useReducer } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { prefersReducedMotion, resolveEffects, webglAvailable, type EffectLevel } from '@/effects/level';
 import { useSettings } from '@/settings/useSettings';
@@ -15,15 +15,20 @@ import { BURST_MS, initialPhase, nextPhase, type OpeningEvent } from './opening'
 // 3D のカードが弾ける演出は大きいので、オープニングのときだけ読み込む
 const BurstScene = lazy(() => import('../boss/BurstScene'));
 
-/** タイトルメニュー。番号キー（1〜）でも選べる */
-const MENU = [
-  { to: '/play', label: 'はじめる', hint: '弱点を優先した練習' },
-  { to: '/stages', label: 'ステージ選択', hint: '章ごとの語彙・ボス' },
-  { to: '/daily', label: '今日のチャレンジ', hint: '日替わりのお題' },
-  { to: '/stats', label: '統計', hint: '記録の推移・弱点' },
-  { to: '/settings', label: '設定', hint: '音・演出・練習' },
-  { to: '/', label: 'ホーム', hint: 'ボス戦・記録・データ' },
-] as const;
+type MenuItem = { to: string; label: string; hint: string };
+
+/** タイトルメニュー。番号キー（1〜）でも選べる。診断はテーマにあるときだけ */
+function menuFor(theme: Theme): MenuItem[] {
+  return [
+    { to: '/play', label: 'はじめる', hint: '弱点を優先した練習' },
+    { to: '/stages', label: 'ステージ選択', hint: '章ごとの語彙・ボス' },
+    { to: '/daily', label: '今日のチャレンジ', hint: '日替わりのお題' },
+    { to: '/stats', label: '統計', hint: '記録の推移・弱点' },
+    ...(theme.diagnosis ? [{ to: '/diagnosis', label: theme.diagnosis.heading, hint: '得意と伸びしろを 6 軸で' }] : []),
+    { to: '/settings', label: '設定', hint: '音・演出・練習' },
+    { to: '/', label: 'ホーム', hint: 'ボス戦・記録・データ' },
+  ];
+}
 
 /** テーマの入口。ゲート → オープニング → タイトルメニュー。入口の無いテーマなら、ホームへ戻す */
 export function TitleRoute() {
@@ -47,6 +52,7 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
     (l: EffectLevel) => (!replay && entranceSeen() ? 'title' : initialPhase(l)),
   );
   const music = bgmUrl(theme, 'title');
+  const menu = useMemo(() => menuFor(theme), [theme]);
 
   useEffect(() => {
     markEntranceSeen();
@@ -85,8 +91,8 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
       if (phase !== 'title') return; // ゲート・オープニングの Enter/Space は、フォーカス中のボタンが受ける
       // タイトルメニュー: 番号キーで選ぶ。フォーカス中の操作要素の Enter・Space は奪わない
       const n = Number(e.key);
-      if (Number.isInteger(n) && n >= 1 && n <= MENU.length) {
-        navigate(MENU[n - 1]!.to);
+      if (Number.isInteger(n) && n >= 1 && n <= menu.length) {
+        navigate(menu[n - 1]!.to);
         return;
       }
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -99,7 +105,7 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [phase, navigate]);
+  }, [phase, navigate, menu]);
 
   const showBurst3d = phase === 'burst' && level === 'full' && !!theme.hero && webglAvailable();
 
@@ -145,7 +151,7 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
           )}
           <nav aria-label="メニュー" data-menu>
             <ul className="op-menu">
-              {MENU.map((m, i) => (
+              {menu.map((m, i) => (
                 <li key={m.to} style={{ ['--i' as string]: i }}>
                   <Link to={m.to} className="op-menu-item">
                     <span className="op-menu-key" aria-hidden>

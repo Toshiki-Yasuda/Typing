@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { seedRecords } from './helpers';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
 /** 有限のアニメーション（フェードなど）が終わるのを待つ。途中の半透明の色を測って誤検出しないように */
@@ -207,7 +208,7 @@ test.describe('BGM（実際の再生）', () => {
     await spyAudio(page);
     await unlock(page);
     await page.keyboard.press('Escape');
-    await page.keyboard.press('5'); // 設定
+    await page.keyboard.press('6'); // 設定
     await page.getByRole('checkbox', { name: 'BGM を鳴らす' }).uncheck();
     const before = (await plays(page)).length;
     await page.keyboard.press('Escape');
@@ -251,5 +252,45 @@ test.describe('打鍵の手応え', () => {
     await page.getByRole('link', { name: /はじめる/ }).click();
     await expect(page.getByRole('group', { name: 'コンボの段階' })).toBeVisible();
     await expect(page.locator('.feel-aura')).toHaveCount(0);
+  });
+});
+
+test.describe('念系統診断', () => {
+  test('記録が無いうちは診断せず、足りない軸を示す（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('5'); // 念系統診断
+    await expect(page.getByRole('heading', { level: 1, name: '念系統診断' })).toBeVisible();
+    await expect(page.getByRole('region', { name: '診断の結果' })).toContainText('まだ診断できません');
+    await scan(page, '念系統診断（記録なし）');
+  });
+
+  test('記録があれば、六角形のグラフと診断の結果が出る。期間で絞れ、Esc でタイトルへ戻る（axe も通る）', async ({ page }) => {
+    await page.goto('/'); // DB を作らせる
+    await seedRecords(page, 8);
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('5');
+    const result = page.getByRole('region', { name: '診断の結果' });
+    await expect(result).toContainText('得意な軸: 速さ（強化系）');
+    await expect(result).toContainText('伸ばせる軸: 安定（特質系）');
+    await expect(page.getByRole('img', { name: '速さ 100点' })).toBeVisible();
+    await scan(page, '念系統診断（結果あり）');
+
+    await page.getByRole('button', { name: '30日' }).click();
+    await expect(page.getByRole('button', { name: '30日' })).toHaveAttribute('aria-pressed', 'true');
+    // キーボードだけで、点にフォーカスすると値が出る
+    await page.getByRole('img', { name: '速さ 100点' }).focus();
+    await expect(page.getByRole('tooltip')).toContainText('100点');
+
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+  });
+
+  test('統計画面からも診断へ行ける（標準テーマでは、系統の言葉を出さない）', async ({ page }) => {
+    await page.goto('/#/stats');
+    await page.getByRole('link', { name: '6軸診断' }).click();
+    await expect(page.getByRole('heading', { level: 1, name: '6軸診断' })).toBeVisible();
+    await expect(page.getByText('強化系')).toHaveCount(0);
   });
 });

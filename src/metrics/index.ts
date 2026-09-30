@@ -19,3 +19,4 @@ export { bigramWeakness, keyWeakness } from './weakness';
 export type { WeaknessOptions } from './weakness';
 export type { BigramStat, KeyStat } from './stats';
 export type { Keystroke, Metrics, SessionRecord } from './types';
+export * from './axes';

@@ -6,6 +6,7 @@ import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
 import { StageRoute } from '@/screens/stage/StageRoute';
 import { StageSelectRoute } from '@/screens/stage/StageSelect';
+import { DiagnosisScreen } from '@/screens/diagnosis/DiagnosisScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 import { Stats } from '@/screens/Stats';
 import { Entrance } from '@/screens/title/Entrance';
@@ -23,6 +24,7 @@ export function App() {
           <Route path="/" element={<Entrance><Home /></Entrance>} />
           <Route path="/stages" element={<StageSelectRoute />} />
           <Route path="/stage/:id" element={<StageRoute />} />
+          <Route path="/diagnosis" element={<DiagnosisScreen />} />
           <Route path="/settings" element={<SettingsScreen />} />
           <Route path="/title" element={<TitleRoute />} />
           <Route path="/play" element={<PlayRoute />} />

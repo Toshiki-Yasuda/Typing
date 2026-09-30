@@ -74,3 +74,43 @@ export const settle = (page) =>
         .map((a) => a.finished.catch(() => undefined)),
     ),
   );
+
+/**
+ * 打鍵の記録を IndexedDB（typing / sessions）へ直接入れる（e2e/helpers.ts の seedRecords と同じ）。
+ * 先に一度ページを開いてから呼び、呼んだ後にもう一度開く。
+ */
+export async function seedRecords(page, count, { contentId = 'basic', keys = 30, dt = 150, idPrefix = 'seed', expected = 'x' } = {}) {
+  await page.evaluate(
+    async ({ count, contentId, keys, dt, idPrefix, expected }) => {
+      const db = await new Promise((resolve, reject) => {
+        const open = indexedDB.open('typing', 2);
+        open.onupgradeneeded = () => {
+          const d = open.result;
+          if (!d.objectStoreNames.contains('sessions')) d.createObjectStore('sessions', { keyPath: 'id' });
+          if (!d.objectStoreNames.contains('packs')) d.createObjectStore('packs', { keyPath: 'id' });
+        };
+        open.onsuccess = () => resolve(open.result);
+        open.onerror = () => reject(open.error);
+      });
+      const tx = db.transaction('sessions', 'readwrite');
+      for (let i = 0; i < count; i++) {
+        tx.objectStore('sessions').put({
+          id: `${idPrefix}-${i}`,
+          startedAt: Date.now() - i * 60_000,
+          mode: 'practice',
+          contentId,
+          targets: ['x'],
+          engineVersion: '1',
+          ruleVersion: '1',
+          keystrokes: Array.from({ length: keys }, (_, k) => ({ t: (k + 1) * dt, key: expected, code: 'K', expected, correct: true, item: 0 })),
+        });
+      }
+      await new Promise((resolve, reject) => {
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+      db.close();
+    },
+    { count, contentId, keys, dt, idPrefix, expected },
+  );
+}
