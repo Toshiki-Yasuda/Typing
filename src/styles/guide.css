@@ -1,1 +1,167 @@
 /* guide: 練習画面のアップグレード用のスタイル（担当エージェント専用のファイル。計画書 docs/design/agents.md） */
+
+/* U4 運指ガイド */
+.fg {
+  /* 指の色。dataviz の検証済み（暗い面 #1d1f27 上で隣の指の CVD ΔE 8.4 以上・通常視 19.3 以上・コントラスト 3:1 以上）。左小指 → 右小指の順 */
+  --fg-1: #3987e5;
+  --fg-2: #d95926;
+  --fg-3: #199e70;
+  --fg-4: #c98500;
+  --fg-5: #d55181;
+  --fg-6: #008300;
+  --fg-7: #9085e9;
+  --fg-8: #e66767;
+  --fg-gap: 2px;
+}
+.fg-f-L-pinky { --fc: var(--fg-1); }
+.fg-f-L-ring { --fc: var(--fg-2); }
+.fg-f-L-middle { --fc: var(--fg-3); }
+.fg-f-L-index { --fc: var(--fg-4); }
+.fg-f-R-index { --fc: var(--fg-5); }
+.fg-f-R-middle { --fc: var(--fg-6); }
+.fg-f-R-ring { --fc: var(--fg-7); }
+.fg-f-R-pinky { --fc: var(--fg-8); }
+.fg-f-thumb { --fc: var(--viz-muted); }
+
+/* キーの大きさは画面幅に応じて（最大 44px） */
+.fg-board {
+  --key: clamp(28px, 3.2vw, 44px);
+  gap: var(--fg-gap);
+}
+.fg-row {
+  display: flex;
+  gap: var(--fg-gap);
+  margin-left: calc(var(--indent, 0) * (var(--key) + var(--fg-gap)));
+}
+.fg-key {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--key) * var(--w, 1) + var(--fg-gap) * (var(--w, 1) - 1));
+  height: var(--key);
+  border-radius: 4px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(11px, 0.95vw, 15px);
+  color: var(--viz-ink-secondary);
+  box-shadow: inset 0 0 0 1px var(--viz-axis);
+}
+.fg-dim {
+  color: var(--viz-muted);
+}
+/* 指ごとの色分け: 薄い地色 + 上辺の帯 + 左上の頭文字（色だけに頼らない） */
+.fg-key[data-f] {
+  background: color-mix(in srgb, var(--fc) 13%, transparent);
+}
+.fg-key[data-f]::before {
+  content: attr(data-f);
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-family: system-ui, sans-serif;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--viz-muted);
+}
+.fg-key[data-f]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 4px;
+  right: 4px;
+  height: 3px;
+  border-radius: 0 0 2px 2px;
+  background: var(--fc);
+}
+/* 次のキー（強制カラーでは index.css の outline が効く） */
+.fg-key[aria-current='true'] {
+  background: var(--color-accent);
+  color: var(--viz-heat-ink-dark);
+  font-weight: 700;
+  box-shadow: none;
+}
+.fg-key[aria-current='true'][data-f]::before {
+  color: var(--viz-heat-ink-dark);
+}
+.fg-home {
+  position: absolute;
+  bottom: 4px;
+  width: 12px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--viz-muted);
+}
+
+/* 直前の打鍵。基本の見た目が「最後の姿」で、動きは data-fx="full" のときだけ足す */
+.fg-mark {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+}
+.fg-mark-ok {
+  opacity: 0;
+  box-shadow: 0 0 0 2px var(--color-success), 0 0 10px var(--color-success);
+}
+.fg-mark-wrong::before {
+  content: '×';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4em;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--color-danger);
+  text-shadow: 0 0 2px var(--color-surface), 0 0 4px var(--color-surface);
+}
+.fg-mark-wrong {
+  box-shadow: inset 0 0 0 2px var(--color-danger);
+}
+.fg-mark-expected {
+  box-shadow: 0 0 0 2px var(--color-text), inset 0 0 0 1px var(--color-text);
+  outline: 2px dashed var(--color-text);
+  outline-offset: 2px;
+}
+.fg[data-fx='full'] .fg-mark-ok {
+  animation: fg-ok 420ms ease-out;
+}
+.fg[data-fx='full'] .fg-mark-expected {
+  animation: fg-pulse 700ms ease-in-out 2;
+}
+@keyframes fg-ok {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes fg-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--color-text), inset 0 0 0 1px var(--color-text); }
+  50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-text) 45%, transparent), inset 0 0 0 1px var(--color-text); }
+}
+
+/* ホームポジションの手 */
+.fg-hands {
+  align-self: center;
+  width: clamp(200px, 20vw, 300px);
+  margin-top: 6px;
+}
+.fg-palm {
+  stroke: var(--viz-axis);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.fg-fing {
+  stroke: var(--viz-axis);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+g.fg-fing { stroke: none; }
+g.fg-fing line { stroke: var(--viz-axis); stroke-width: 9; stroke-linecap: round; }
+g.fg-colored line { stroke: color-mix(in srgb, var(--fc) 45%, var(--viz-axis)); }
+g.fg-fing-on line { stroke: var(--fc, var(--color-accent)); }
+line.fg-thumb.fg-fing-on { stroke: var(--color-accent); }
+.fg-arrow {
+  fill: var(--color-text);
+  font-size: 22px;
+  font-weight: 700;
+}
