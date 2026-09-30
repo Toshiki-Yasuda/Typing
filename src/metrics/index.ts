@@ -1,4 +1,6 @@
 export { PAUSE_MS, cleanPairs, computeMetrics } from './compute';
+export { liveMetrics } from './live';
+export type { LiveMetrics } from './live';
 export { recordPress } from './recorder';
 export type { RecordedPress } from './recorder';
 export { bigramStats, confusionMatrix, keyStats } from './stats';
