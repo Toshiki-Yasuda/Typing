@@ -21,7 +21,7 @@ describe('設定の読み書き', () => {
 
   it('保存して読み戻せる', () => {
     const storage = memory();
-    const custom = { packId: 'english', count: 20, adaptive: false, goalRank: 'k3', fingerGuide: false, layout: 'us' as const, themeId: 'hunter', sound: false, effects: 'off' as const };
+    const custom = { packId: 'english', count: 20, adaptive: false, goalRank: 'k3', fingerGuide: false, layout: 'us' as const, themeId: 'hunter', sound: false, bgm: false, bgmVolume: 30, sfxVolume: 50, gameBgm: 'all' as const, effects: 'off' as const };
     saveSettings(custom, storage);
     expect(JSON.parse(storage.value as string)).toEqual(custom);
     expect(loadSettings(storage)).toEqual(custom);

@@ -53,6 +53,22 @@ describe('SoundPlayer', () => {
     expect(gains[1]).toBeGreaterThan(gains[0] as number);
   });
 
+  it('効果音の音量の設定が掛かる。範囲外は丸める', async () => {
+    const { ctx, gains } = fakeContext();
+    const p = new SoundPlayer(urls, { createContext: () => ctx, fetchBytes: bytes });
+    await p.preload();
+    p.play('complete');
+    p.setVolume(0.5);
+    p.play('complete');
+    p.setVolume(7);
+    p.play('complete');
+    p.setVolume(-1);
+    p.play('complete');
+    expect(gains[1]).toBeCloseTo((gains[0] as number) * 0.5, 5);
+    expect(gains[2]).toBeCloseTo(gains[0] as number, 5);
+    expect(gains[3]).toBe(0);
+  });
+
   it('読み込み前は鳴らさない（例外にしない）', () => {
     const { ctx, started } = fakeContext();
     const p = new SoundPlayer(urls, { createContext: () => ctx, fetchBytes: bytes });

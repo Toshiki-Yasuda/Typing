@@ -48,6 +48,21 @@ export const ThemeSchema = z.object({
       complete: z.array(z.string().min(1)).min(1),
     })
     .optional(),
+  /** BGM と効果音（アプリからの相対パス）。無ければ無音 */
+  audio: z
+    .object({
+      /** オープニングの爆発の効果音 */
+      stinger: z.string().min(1).optional(),
+      /** 選択・決定の効果音 */
+      confirm: z.string().min(1).optional(),
+      /** オープニング〜タイトルメニューの BGM */
+      title: z.string().min(1).optional(),
+      /** ステージ選択・設定の BGM */
+      stage: z.string().min(1).optional(),
+      /** 練習・ボス戦の BGM */
+      game: z.string().min(1).optional(),
+    })
+    .optional(),
   /** ホームに出す 3D の演出（glTF のモデル。アプリからの相対パス）。無ければ出さない */
   hero: z.object({ centerpiece: z.string().min(1), orbiter: z.string().min(1) }).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */

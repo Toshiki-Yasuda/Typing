@@ -46,6 +46,14 @@ export const HUNTER_THEME: Theme = {
     miss: ['themes/hunter/se-heavy1.mp3'],
     complete: ['themes/hunter/se-complete.mp3'],
   },
+  // BGM は Ver1 の曲を 128kbps に再エンコードしたもの（public/themes/hunter/audio/）
+  audio: {
+    stinger: 'themes/hunter/audio/stinger.mp3',
+    confirm: 'themes/hunter/audio/confirm.mp3',
+    title: 'themes/hunter/audio/opening-bgm.mp3',
+    stage: 'themes/hunter/audio/title-bgm.mp3',
+    game: 'themes/hunter/audio/game-bgm.mp3',
+  },
   // Blender で作ったオリジナルのモデル（art/hunter/build_models.py で生成）
   hero: { centerpiece: 'themes/hunter/models/license.glb', orbiter: 'themes/hunter/models/card.glb' },
   bosses: HUNTER_BOSSES,

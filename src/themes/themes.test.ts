@@ -136,3 +136,22 @@ describe('3D の演出', () => {
     expect(NEUTRAL_THEME.hero).toBeUndefined();
   });
 });
+
+describe('テーマの音', () => {
+  it('HUNTER の音の素材が public に実在し、MP3 として読める。BGM は軽い（128kbps 相当）', async () => {
+    const { readFileSync } = await import('node:fs');
+    const audio = HUNTER_THEME.audio ?? {};
+    expect(Object.keys(audio).sort()).toEqual(['confirm', 'game', 'stage', 'stinger', 'title']);
+    for (const [role, path] of Object.entries(audio)) {
+      const bytes = readFileSync(`public/${path}`);
+      const isMp3 = bytes.subarray(0, 3).toString('ascii') === 'ID3' || (bytes[0] === 0xff && (bytes[1] as number) >= 0xe0);
+      expect(isMp3, `${role}: ${path}`).toBe(true);
+      // 長い曲（BGM）は 6MB 未満に収める（公開サイトの配信量）
+      if (['title', 'stage', 'game'].includes(role)) expect(bytes.length, path).toBeLessThan(6_000_000);
+    }
+  });
+
+  it('標準テーマには音が無い', () => {
+    expect(NEUTRAL_THEME.audio).toBeUndefined();
+  });
+});

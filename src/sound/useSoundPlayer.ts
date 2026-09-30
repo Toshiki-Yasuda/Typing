@@ -15,5 +15,8 @@ export function useSoundPlayer(): SoundPlayer | null {
   useEffect(() => {
     void player?.preload();
   }, [player]);
+  useEffect(() => {
+    player?.setVolume(settings.sfxVolume / 100);
+  }, [player, settings.sfxVolume]);
   return player;
 }

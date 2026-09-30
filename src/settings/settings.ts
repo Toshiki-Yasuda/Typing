@@ -23,6 +23,14 @@ export const SettingsSchema = z.object({
   themeId: z.string().min(1),
   /** テーマに効果音があれば鳴らす（判定・計測には影響しない） */
   sound: z.boolean(),
+  /** BGM を鳴らす（テーマに BGM があるとき） */
+  bgm: z.boolean(),
+  /** BGM の音量 0〜100 */
+  bgmVolume: z.number().int().min(0).max(100),
+  /** 効果音の音量 0〜100 */
+  sfxVolume: z.number().int().min(0).max(100),
+  /** 練習中の BGM。off=鳴らさない / boss=ボス戦だけ / all=すべての練習（集中したいので既定は boss） */
+  gameBgm: z.enum(['off', 'boss', 'all']),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -37,6 +45,10 @@ export const DEFAULT_SETTINGS: Settings = {
   layout: 'jis',
   themeId: 'neutral',
   sound: true,
+  bgm: true,
+  bgmVolume: 60,
+  sfxVolume: 80,
+  gameBgm: 'boss',
   effects: 'full',
 };
 

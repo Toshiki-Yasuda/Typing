@@ -28,11 +28,17 @@ export class SoundPlayer {
   private ctx: AudioContextLike | null = null;
   private readonly buffers = new Map<string, unknown>();
   private readonly cursor: Record<SoundKind, number> = { type: 0, miss: 0, complete: 0 };
+  /** 全体の音量（0〜1）。効果音の音量の設定 */
+  private master = 1;
 
   constructor(
     private readonly urls: SoundUrls,
     private readonly deps: SoundDeps,
   ) {}
+
+  setVolume(v: number): void {
+    this.master = Math.max(0, Math.min(1, v));
+  }
 
   /** 音を読み込む。ユーザー操作の後に呼ぶ（ブラウザが音の開始を許すため） */
   async preload(): Promise<void> {
@@ -63,7 +69,7 @@ export class SoundPlayer {
       const source = ctx.createBufferSource();
       source.buffer = buffer;
       const gain = ctx.createGain();
-      gain.gain.value = VOLUME[kind];
+      gain.gain.value = VOLUME[kind] * this.master;
       source.connect(gain);
       gain.connect(ctx.destination);
       source.start(0);

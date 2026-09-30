@@ -5,10 +5,12 @@ import { Home } from '@/screens/Home';
 import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
 import { Stats } from '@/screens/Stats';
+import { useBgmSync } from '@/sound/useBgmSync';
 import { StoreProvider } from './StoreContext';
 
 /** GitHub Pages で動くよう、URL は `#/...` 形式（ハッシュルーティング）にする */
 export function App() {
+  useBgmSync();
   return (
     <StoreProvider>
       <HashRouter>
