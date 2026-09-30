@@ -65,3 +65,31 @@ test('ヒソカ: 全お題を打てば勝ち、ノーミスならランク S', a
   await expect(page.getByRole('heading', { name: /ヒソカを倒した（ランク S）/ })).toBeVisible();
   await scan(page, 'ボス戦の結果（勝利）');
 });
+
+test.describe('3D の演出（ホーム）', () => {
+  test('テーマを開くと 3D の canvas が出て、演出をオフにすると消える（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    const canvas = page.locator('canvas');
+    await expect(canvas).toBeVisible();
+    // 何かが描かれている: 演出を消したときの同じ領域と、見た目が違う
+    const box = (await canvas.boundingBox())!;
+    const clip = { x: box.x, y: box.y, width: box.width, height: box.height };
+    await page.waitForTimeout(1500); // モデルの読み込みと、フェードインを待つ
+    const withHero = await page.screenshot({ clip });
+    await scan(page, 'ホーム（3D の演出あり）');
+
+    await page.getByRole('combobox', { name: '演出' }).selectOption('off');
+    await expect(canvas).toHaveCount(0);
+    const withoutHero = await page.screenshot({ clip });
+    expect(withHero.equals(withoutHero)).toBe(false);
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'ボス戦' })).toBeVisible();
+    await expect(canvas).toHaveCount(0);
+  });
+
+  test('OS が動きを減らす設定でも、静止した1コマは出る', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await unlock(page);
+    await expect(page.locator('canvas')).toBeVisible();
+  });
+});

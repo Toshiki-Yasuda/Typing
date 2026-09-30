@@ -118,3 +118,21 @@ describe('ボスの定義', () => {
     expect(ThemeSchema.safeParse({ ...HUNTER_THEME, bosses: [boss] }).success).toBe(false);
   });
 });
+
+describe('3D の演出', () => {
+  it('HUNTER のモデルが public に実在し、glTF バイナリ（glTF 2.0）である', async () => {
+    const { readFileSync } = await import('node:fs');
+    const hero = HUNTER_THEME.hero;
+    expect(hero).toBeDefined();
+    for (const path of Object.values(hero ?? {})) {
+      const bytes = readFileSync(`public/${path}`);
+      expect(bytes.subarray(0, 4).toString('ascii'), path).toBe('glTF');
+      expect(bytes.readUInt32LE(4), `${path} の版`).toBe(2);
+      expect(bytes.length, `${path} は軽い（1MB 未満）`).toBeLessThan(1_000_000);
+    }
+  });
+
+  it('標準テーマには 3D の演出が無い', () => {
+    expect(NEUTRAL_THEME.hero).toBeUndefined();
+  });
+});

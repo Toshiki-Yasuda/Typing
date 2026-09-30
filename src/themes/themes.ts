@@ -46,6 +46,8 @@ export const HUNTER_THEME: Theme = {
     miss: ['themes/hunter/se-heavy1.mp3'],
     complete: ['themes/hunter/se-complete.mp3'],
   },
+  // Blender で作ったオリジナルのモデル（art/hunter/build_models.py で生成）
+  hero: { centerpiece: 'themes/hunter/models/license.glb', orbiter: 'themes/hunter/models/card.glb' },
   bosses: HUNTER_BOSSES,
 };
 

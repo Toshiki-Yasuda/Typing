@@ -2,16 +2,18 @@ import { useState, type FormEvent } from 'react';
 import { applyTheme } from '@/themes/apply';
 import { THEMES, resolveTheme } from '@/themes/themes';
 import { checkPassword, loadUnlocked, saveUnlocked } from '@/themes/unlock';
+import { EFFECT_LABELS, EFFECT_LEVELS, type EffectLevel } from '@/effects/level';
 import type { Settings } from '@/settings/settings';
 
 interface Props {
   themeId: string;
   sound: boolean;
+  effects: EffectLevel;
   update: (patch: Partial<Settings>) => void;
 }
 
 /** テーマの選択。ロック中のテーマは、パスワードを入れると選べる */
-export function ThemeSettings({ themeId, sound, update }: Props) {
+export function ThemeSettings({ themeId, sound, effects, update }: Props) {
   const [unlocked, setUnlocked] = useState(() => loadUnlocked());
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -61,6 +63,23 @@ export function ThemeSettings({ themeId, sound, update }: Props) {
           ))}
         </select>
       </label>
+      {current.hero && (
+        <label className="flex items-center gap-2">
+          <span className="text-text-muted">演出</span>
+          <select
+            aria-label="演出"
+            value={effects}
+            onChange={(e) => update({ effects: e.target.value as EffectLevel })}
+            className="rounded bg-surface-raised px-3 py-2"
+          >
+            {EFFECT_LEVELS.map((l) => (
+              <option key={l} value={l}>
+                {EFFECT_LABELS[l]}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       {current.sounds && (
         <label className="flex items-center gap-2">
           <input

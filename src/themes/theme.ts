@@ -48,6 +48,8 @@ export const ThemeSchema = z.object({
       complete: z.array(z.string().min(1)).min(1),
     })
     .optional(),
+  /** ホームに出す 3D の演出（glTF のモデル。アプリからの相対パス）。無ければ出さない */
+  hero: z.object({ centerpiece: z.string().min(1), orbiter: z.string().min(1) }).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */
   bosses: z.array(BossSchema).optional(),
 });

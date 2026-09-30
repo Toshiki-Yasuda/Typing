@@ -5,6 +5,7 @@ import { computeMetrics, dayKey, summarizeSessions, type SessionRecord, type Ses
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { HeroBanner } from './home/HeroBanner';
 import { BossList } from './home/BossList';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
@@ -37,7 +38,8 @@ export function Home() {
   const [message, setMessage] = useState('');
   const [settings, updateSettings] = useSettings();
   const custom = useCustomPacks();
-  const bosses = resolveTheme(settings.themeId, loadUnlocked()).bosses;
+  const theme = resolveTheme(settings.themeId, loadUnlocked());
+  const bosses = theme.bosses;
   const fileInput = useRef<HTMLInputElement>(null);
 
   const reload = () =>
@@ -91,6 +93,7 @@ export function Home() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <PageHeading title="Typing" home className="text-3xl font-bold" />
+      <HeroBanner theme={theme} effects={settings.effects} />
       <Link
         to="/play"
         className="self-start rounded bg-accent px-8 py-4 text-xl font-bold text-surface focus-visible:outline-2"
@@ -124,7 +127,7 @@ export function Home() {
 
       {bosses && bosses.length > 0 && <BossList bosses={bosses} />}
 
-      <ThemeSettings themeId={settings.themeId} sound={settings.sound} update={updateSettings} />
+      <ThemeSettings themeId={settings.themeId} sound={settings.sound} effects={settings.effects} update={updateSettings} />
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

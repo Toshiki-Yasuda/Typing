@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { EFFECT_LEVELS } from '@/effects/level';
 import { GOAL_AUTO } from '@/metrics/rank';
 
 /** 練習の設定。localStorage に保存する（小さな設定値なので。打鍵ログは IndexedDB） */
@@ -22,6 +23,8 @@ export const SettingsSchema = z.object({
   themeId: z.string().min(1),
   /** テーマに効果音があれば鳴らす（判定・計測には影響しない） */
   sound: z.boolean(),
+  /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
+  effects: z.enum(EFFECT_LEVELS),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 
@@ -34,6 +37,7 @@ export const DEFAULT_SETTINGS: Settings = {
   layout: 'jis',
   themeId: 'neutral',
   sound: true,
+  effects: 'full',
 };
 
 /** localStorage を使えない環境（プライベートモード等）でも落ちないようにする */
