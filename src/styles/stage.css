@@ -27,3 +27,109 @@
   padding: 0 0.1em;
 }
 /* B: ここまで */
+
+/* A: 練習画面の3ゾーン（PlayFrame / QueueRail）。B の .target-* ブロックとは区画を分ける */
+.play-frame {
+  position: relative;
+  margin-inline: auto;
+  display: flex;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 48rem; /* 縦1列（1024px 未満）は従来の max-w-3xl */
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+}
+.play-frame__zones {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+.play-frame__center {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2rem;
+}
+.play-frame__guide {
+  min-width: 0;
+}
+/* 1024px 未満は縦1列: 待ち行列は出さない */
+.play-frame__queue {
+  display: none;
+}
+
+/* 1024〜1199px: 左レールを畳み、待ち行列は舞台の上に横並び。指の案内は舞台の下 */
+@media (min-width: 1024px) {
+  .play-frame {
+    max-width: min(90vw, 105rem); /* 1680px */
+    padding-inline: 0;
+  }
+  .play-frame__queue {
+    display: block;
+    order: -1;
+  }
+}
+
+/* 1200px 以上: 左（待ち行列）/ 中央（舞台）/ 右（指の案内） */
+@media (min-width: 1200px) {
+  .play-frame__zones {
+    align-items: center;
+    gap: 1.5rem;
+    grid-template-columns: 10rem minmax(0, 1fr) auto;
+  }
+  .play-frame__zones[data-queue='off'] {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .play-frame__zones[data-guide='off'] {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+  .play-frame__zones[data-guide='off'][data-queue='off'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .play-frame__queue {
+    order: -1;
+  }
+}
+
+/* 1200〜1439px は中央の舞台を確保するため、指の案内（現在は固定幅 610px）を縮めて置く。U4 でキーの大きさを変数化したら置き換える */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .play-frame__guide {
+    zoom: 0.85;
+  }
+}
+
+.queue-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.queue-rail__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+}
+.queue-rail__item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+  background: var(--color-surface-raised);
+  padding: 0.5rem 0.75rem;
+  /* 遠いほど小さく薄く（--i は 0 始まりの順番） */
+  font-size: calc(1.125rem - var(--i) * 0.125rem);
+  opacity: calc(1 - var(--i) * 0.22);
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .queue-rail {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+  .queue-rail__item {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 14rem;
+  }
+}
