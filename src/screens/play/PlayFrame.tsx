@@ -13,6 +13,8 @@ interface Props {
   guide: ReactNode;
   /** 次のお題の待ち行列（QueueRail）。設定 showQueue が false のときは出さない */
   queue?: ReactNode;
+  /** 打鍵に合わせた演出の層（FxLayer）。背景より上・内容より上（pointer-events なし） */
+  fx?: ReactNode;
   /** 画面全体を覆う演出（ボスの登場など）。最前面 */
   overlay?: ReactNode;
   /** 読み上げ用の見出し（sr-only） */
@@ -25,12 +27,13 @@ interface Props {
  *   1200px 以上: 3列 / 1024〜1199px: 待ち行列は上に横並びに畳む / それ未満: 縦1列（待ち行列は出さない）
  * 読み上げの順は DOM の順（見出し → 上部バー → 通知 → お題 → 指の案内 → 次のお題）。
  */
-export function PlayFrame({ hud, notices, stage, guide, queue, overlay, heading }: Props) {
+export function PlayFrame({ hud, notices, stage, guide, queue, fx, overlay, heading }: Props) {
   const [settings] = useSettings();
   const showQueue = settings.showQueue && queue != null;
   return (
     <main className="play-frame">
       <Backdrop />
+      {fx}
       {overlay}
       {heading}
       <div className="play-frame__hud">{hud}</div>

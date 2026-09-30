@@ -81,6 +81,26 @@ for x in a b c d e; do git worktree add -b wave1-$x .claude/worktrees/wave1-$x H
 ### E（U4）運指ガイド
 `FingerGuide` に、指ごとの薄い色分け（`settings.fingerColors` が true のとき。色は `dataviz` の検証で、暗い面でも隣の指が区別できること。**指のラベル（小指・薬指…の頭文字）をキーに併記**）。ホームポジションの手の線画（SVG）と、遠いキーへの移動方向の矢印。キーの大きさを CSS 変数化（最大 44px）。図の下の注記は削除し、`aria-describedby` の説明に移す。**`press`（直前の打鍵）を使い、押したキーの輪郭の光（正）と、押した実キーの×印＋正しいキーの枠の脈打ち（誤）を実装**（U3 ではなくこちらが担当。演出の強さに従う）。**受け入れ**: `layout.test.ts` が通る／色の検証結果を報告／ラベルがあり色だけに頼らない／撮影。
 
+### Wave 2 の指示（F・G）
+**前提**: Wave 1 は統合済み。継ぎ目の追加: `PlayFrame` の `fx` スロット、`play/fx/FxLayer.tsx`（G）、`Play.tsx` が `<FxLayer press index total />` を渡す、設定 `synthSound`（保存・ホームのチェック済み）、`styles/fx.css` の「/* F: */」「/* G: */」区画。
+
+#### F（U3）打鍵の手応え — 所有: `TargetView.tsx`, `targetView.test.tsx`, `styles/fx.css` の F 区画, `styles/stage.css` の B 区画（Wave 1 で完了済みなので編集してよい）
+- **キャレット**: 次の文字へ移るとき、`transform` で 80ms 滑らかに（基本の見た目は移動後の位置。演出「標準」のみ動く）。
+- **正打の微小な反応**: 直前に打った文字（`typed` の最後の1文字）を `press.seq` を key にした span にし、`scale 1.06 → 1` を 100ms（「標準」のみ。「控えめ」は動かさず色/太さだけ）。
+- **ミスを軽く**: カード全体を赤茶色に染めるのをやめる。枠の赤と「ミス」ラベル、**期待した1文字**（`press.expected` または `guide.rest[0]`）への強調（下線の脈打ちは E のキー図が担当なので、ここでは文字の強調だけ）にする。連続ミスで濁らない。揺れは「標準」のみ・2px・120ms（`Play.tsx` の feel の揺れ（テーマの手応え）とは別。二重に揺らさない: `feel` があるときは TargetView は揺らさない）。
+- **語の切り替え**: 別の語に変わるとき、完了した語が薄れ、次の語が下から入る（160ms、`opacity`＋`translateY`。基本の見た目は入った後）。「オフ」では即時。
+- 演出の強さは `useSettings().effects` と `resolveEffects(…, prefersReducedMotion())`。アクセシブルな構造（region「お題」、ローマ字ガイド、次:、data-weak、ミス、隠し表示）は変えない。`missing` prop は残す（Play が渡す）。
+- **受け入れ**: 演出3種で挙動確認（テスト＋撮影の連番）／「動きを減らす」で動かない／`@keyframes` は 1 秒に3回以上の輝度変化を作らない／`targetView.test` の更新と変異／`npm run check`。
+
+#### G（U5）空気と達成 — 所有: `play/fx/*`（新規含む）, `styles/fx.css` の G 区画, `src/sound/synth.ts`（新規）, `src/sound/useSoundPlayer.ts`（最小の編集）と関連テスト
+- **`FxLayer`**: 画面全体に固定の 2D canvas 1 枚（`aria-hidden`, `pointer-events: none`）。正打（`press.result` が ok/wordDone）で、お題の足元（画面中央やや下）から小さな光の粒が数個上がる。語の完了は多め。上限 40 粒。`requestAnimationFrame` は粒が生きているときだけ回す。**演出「標準」のみ**（「控えめ」「オフ」と OS の「動きを減らす」では描かない）。canvas が使えなくても例外にしない。
+- **光の呼吸（リズム）**: 直近の連続正打の数（`press` の流れから FxLayer 内で数える。純関数 `rhythmLevel(streak)` に切り出し、変異テスト）で、舞台の後ろの淡い光の強さをゆっくり変える（`--rhythm` を 0〜1 でセットし、G 区画の `.fx-glow` が使う。明るさだけを変え、色は変えない。1 秒に3回以上の輝度変化を作らない。テーマに `feel` があるときは二重にしない: 設定 `feel` の有無は `resolveTheme(...).feel` で判定）。
+- **光のレールの進み**: `index/total` に応じて、背景の光のレール（`Backdrop` の前景 `.backdrop-near` の位置 `--stage-rail-y`）に沿って、細い進捗の光を伸ばす（`transform: scaleX`）。位置は 3 ゾーンのお題の下端に合わせる（`getBoundingClientRect` で舞台の要素 `.target-card` を測って CSS 変数に入れてよい。リサイズに追従）。
+- **語の完了の縁の光**: 完了した瞬間、`.target-card` の縁が 1 回だけ淡く光って戻る（点滅ではなく 1 回）。
+- **合成音**: `src/sound/synth.ts` に、Web Audio で合成した短い音（打鍵 30ms・ミス 90ms・完了 180ms。音量は設定 `sfxVolume`）。`useSoundPlayer` は、**テーマに効果音があればそれを使い、無くて `settings.synthSound` が true なら合成音**を鳴らす（既定は false）。ブラウザは操作前の音を拒む: `AudioContext` は最初の打鍵（ユーザー操作）で `resume()`。失敗しても練習に影響しない。テストは既存の `playSound.test.tsx` の作法（モック）に従う。
+- **練習完了のピーク**は、`Play.tsx` が完了直後に結果画面へ遷移するため、ここでは作れない。**やらない**。報告に「遷移を 600ms 遅らせれば作れる」と書く。
+- **受け入れ**: 演出3種／`getAnimations` と CPU（常時動くものは無い＝粒が無いとき rAF が止まる）／`rhythmLevel` の表テスト＋変異／FxLayer のテスト（canvas 無し環境でも例外にならない、控えめ/オフで描かない）／synth のテスト（設定・テーマ優先の切り替え）／`npm run check`。
+
 ## 6. 進捗の見方
 - 各エージェントの完了報告（上の 9 項目）を、この文書の末尾の「Wave 記録」に日付つきで残す。
 

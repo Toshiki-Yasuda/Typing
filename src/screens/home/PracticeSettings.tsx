@@ -126,6 +126,15 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
           <span>運指ガイドを指ごとに色分けする</span>
         </label>
         <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={settings.synthSound}
+            onChange={(e) => update({ synthSound: e.target.checked })}
+            className="h-4 w-4 accent-[var(--viz-series-1)]"
+          />
+          <span>効果音を鳴らす（テーマに音が無いとき、控えめな合成音）</span>
+        </label>
+        <label className="flex items-center gap-2">
           <span className="text-text-muted">配列</span>
           <select
             aria-label="運指ガイドの配列"

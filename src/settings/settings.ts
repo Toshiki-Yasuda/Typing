@@ -50,6 +50,8 @@ export const SettingsSchema = z.object({
   liveStats: z.boolean(),
   /** 練習画面: 運指ガイドを指ごとに色分けする（U4。ラベルも併記し、色だけにしない） */
   fingerColors: z.boolean(),
+  /** 標準テーマでも、控えめな合成音（打鍵・ミス・完了）を鳴らす（U5。テーマに効果音があればそちらを使う）。既定はオフ */
+  synthSound: z.boolean(),
   /** 演出の強さ（見た目だけ。判定・計測には影響しない） */
   effects: z.enum(EFFECT_LEVELS),
 });
@@ -77,6 +79,7 @@ export const DEFAULT_SETTINGS: Settings = {
   showQueue: true,
   liveStats: true,
   fingerColors: true,
+  synthSound: false,
   effects: 'full',
 };
 

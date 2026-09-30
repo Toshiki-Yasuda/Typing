@@ -30,6 +30,7 @@ import { PageHeading } from './PageHeading';
 import { TargetView } from './TargetView';
 import { HudBar } from './play/HudBar';
 import { PlayFrame } from './play/PlayFrame';
+import { FxLayer } from './play/fx/FxLayer';
 import { QueueRail } from './play/QueueRail';
 import type { PressFx } from './play/types';
 
@@ -451,6 +452,7 @@ export function Play({
       }
       guide={fingerGuide && !stripped ? <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} press={press} /> : null}
       queue={<QueueRail upcoming={view.upcoming} />}
+      fx={<FxLayer press={press} index={view.index} total={view.total} />}
     />
   );
 }
