@@ -1,0 +1,246 @@
+{
+ "id": "c5s2",
+ "name": "G・I編 2: カード",
+ "items": [
+  {
+   "display": "グリードアイランド",
+   "reading": "ぐりーどあいらんど"
+  },
+  {
+   "display": "カード",
+   "reading": "かーど"
+  },
+  {
+   "display": "スペル",
+   "reading": "すぺる"
+  },
+  {
+   "display": "バインダー",
+   "reading": "ばいんだー"
+  },
+  {
+   "display": "ゲイン",
+   "reading": "げいん"
+  },
+  {
+   "display": "ブック",
+   "reading": "ぶっく"
+  },
+  {
+   "display": "クリア",
+   "reading": "くりあ"
+  },
+  {
+   "display": "しゅうしゅう",
+   "reading": "しゅうしゅう"
+  },
+  {
+   "display": "していポケット",
+   "reading": "していぽけっと"
+  },
+  {
+   "display": "フリーポケット",
+   "reading": "ふりーぽけっと"
+  },
+  {
+   "display": "まほうのじょうげん",
+   "reading": "まほうのじょうげん"
+  },
+  {
+   "display": "カードばんごう",
+   "reading": "かーどばんごう"
+  },
+  {
+   "display": "Sランク",
+   "reading": "えすらんく"
+  },
+  {
+   "display": "Aランク",
+   "reading": "えーらんく"
+  },
+  {
+   "display": "Bランク",
+   "reading": "びーらんく"
+  },
+  {
+   "display": "Cランク",
+   "reading": "しーらんく"
+  },
+  {
+   "display": "げんていまいすう",
+   "reading": "げんていまいすう"
+  },
+  {
+   "display": "ドロップ",
+   "reading": "どろっぷ"
+  },
+  {
+   "display": "もんすたー",
+   "reading": "もんすたー"
+  },
+  {
+   "display": "たおす",
+   "reading": "たおす"
+  },
+  {
+   "display": "ゲット",
+   "reading": "げっと"
+  },
+  {
+   "display": "てにいれる",
+   "reading": "てにいれる"
+  },
+  {
+   "display": "あつめる",
+   "reading": "あつめる"
+  },
+  {
+   "display": "コンプリート",
+   "reading": "こんぷりーと"
+  },
+  {
+   "display": "ぜんぶ",
+   "reading": "ぜんぶ"
+  },
+  {
+   "display": "そろえる",
+   "reading": "そろえる"
+  },
+  {
+   "display": "イベント",
+   "reading": "いべんと"
+  },
+  {
+   "display": "クエスト",
+   "reading": "くえすと"
+  },
+  {
+   "display": "ミッション",
+   "reading": "みっしょん"
+  },
+  {
+   "display": "だいかん",
+   "reading": "だいかん"
+  },
+  {
+   "display": "しゅりょうば",
+   "reading": "しゅりょうば"
+  },
+  {
+   "display": "まち",
+   "reading": "まち"
+  },
+  {
+   "display": "むら",
+   "reading": "むら"
+  },
+  {
+   "display": "ダンジョン",
+   "reading": "だんじょん"
+  },
+  {
+   "display": "もり",
+   "reading": "もり"
+  },
+  {
+   "display": "やま",
+   "reading": "やま"
+  },
+  {
+   "display": "うみ",
+   "reading": "うみ"
+  },
+  {
+   "display": "みずうみ",
+   "reading": "みずうみ"
+  },
+  {
+   "display": "さばく",
+   "reading": "さばく"
+  },
+  {
+   "display": "どうくつ",
+   "reading": "どうくつ"
+  },
+  {
+   "display": "いせき",
+   "reading": "いせき"
+  },
+  {
+   "display": "しろ",
+   "reading": "しろ"
+  },
+  {
+   "display": "とりで",
+   "reading": "とりで"
+  },
+  {
+   "display": "きょてん",
+   "reading": "きょてん"
+  },
+  {
+   "display": "スタートちてん",
+   "reading": "すたーとちてん"
+  },
+  {
+   "display": "ゴール",
+   "reading": "ごーる"
+  },
+  {
+   "display": "ほうしゅう",
+   "reading": "ほうしゅう"
+  },
+  {
+   "display": "しょうひん",
+   "reading": "しょうひん"
+  },
+  {
+   "display": "トロフィー",
+   "reading": "とろふぃー"
+  },
+  {
+   "display": "メダル",
+   "reading": "めだる"
+  },
+  {
+   "display": "じょうほう",
+   "reading": "じょうほう"
+  },
+  {
+   "display": "データ",
+   "reading": "でーた"
+  },
+  {
+   "display": "きろく",
+   "reading": "きろく"
+  },
+  {
+   "display": "せーぶ",
+   "reading": "せーぶ"
+  },
+  {
+   "display": "ろーど",
+   "reading": "ろーど"
+  },
+  {
+   "display": "げーむおーばー",
+   "reading": "げーむおーばー"
+  },
+  {
+   "display": "りせっと",
+   "reading": "りせっと"
+  },
+  {
+   "display": "コンティニュー",
+   "reading": "こんてぃにゅー"
+  },
+  {
+   "display": "すたーと",
+   "reading": "すたーと"
+  },
+  {
+   "display": "げーむクリア",
+   "reading": "げーむくりあ"
+  }
+ ]
+}

@@ -2,7 +2,20 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
+/** 有限のアニメーション（フェードなど）が終わるのを待つ。途中の半透明の色を測って誤検出しないように */
+async function settle(page: Page) {
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => undefined)),
+    ),
+  );
+}
+
 async function scan(page: Page, label: string) {
+  await settle(page);
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   const summary = results.violations.map((v) => ({ id: v.id, help: v.help, nodes: v.nodes.map((n) => n.target.join(' ')) }));
   expect(summary, `${label} の違反:\n${JSON.stringify(summary, null, 2)}`).toEqual([]);
@@ -100,5 +113,45 @@ test.describe('設定画面', () => {
 
     await page.keyboard.press('Escape');
     await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+  });
+});
+
+test.describe('ステージ選択', () => {
+  const typeCurrentWord = async (page: Page) => {
+    const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');
+    for (const key of romaji) await page.keyboard.press(key);
+  };
+
+  test('タイトルからステージ選択へ（axe も通る）。ステージを打ち切るとクリアの印が付く', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2'); // ステージ選択
+    await expect(page.getByRole('heading', { level: 1, name: 'ステージ選択' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: /第1章 ハンター試験編/ })).toBeVisible();
+    await scan(page, 'ステージ選択');
+
+    await page.getByRole('link', { name: /未挑戦/ }).first().click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    for (let i = 1; i <= 10; i++) {
+      await expect(page.getByLabel('進捗')).toHaveText(`${i} / 10`);
+      await typeCurrentWord(page);
+    }
+    await expect(page.getByRole('heading', { level: 2, name: /ステージクリア/ })).toBeVisible();
+    await scan(page, 'ステージの結果');
+
+    await page.getByRole('link', { name: 'ステージ選択へ' }).click();
+    await expect(page.getByText('✓ クリア済み')).toBeVisible();
+    await expect(page.getByText('1 / 5 クリア')).toBeVisible();
+  });
+
+  test('章を切り替えられ、ボスへも進める', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    await page.getByRole('button', { name: /第6章/ }).click();
+    await expect(page.getByRole('heading', { level: 2, name: /第6章 キメラアント編/ })).toBeVisible();
+    await page.getByRole('link', { name: /ボス メルエムに挑戦する/ }).click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect(page.getByText('ミスの余裕 1 回')).toBeVisible();
   });
 });

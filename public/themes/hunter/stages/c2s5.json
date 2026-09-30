@@ -1,0 +1,246 @@
+{
+ "id": "c2s5",
+ "name": "天空闘技場編 5: 応用技",
+ "items": [
+  {
+   "display": "バンジーガム",
+   "reading": "ばんじーがむ"
+  },
+  {
+   "display": "ドッキリテクスチャー",
+   "reading": "どっきりてくすちゃー"
+  },
+  {
+   "display": "ダブル",
+   "reading": "だぶる"
+  },
+  {
+   "display": "ぶんしん",
+   "reading": "ぶんしん"
+  },
+  {
+   "display": "こま",
+   "reading": "こま"
+  },
+  {
+   "display": "むち",
+   "reading": "むち"
+  },
+  {
+   "display": "トランプ",
+   "reading": "とらんぷ"
+  },
+  {
+   "display": "ジャジャンケン",
+   "reading": "じゃじゃんけん"
+  },
+  {
+   "display": "グー",
+   "reading": "ぐー"
+  },
+  {
+   "display": "チー",
+   "reading": "ちー"
+  },
+  {
+   "display": "パー",
+   "reading": "ぱー"
+  },
+  {
+   "display": "さいしょはグー",
+   "reading": "さいしょはぐー"
+  },
+  {
+   "display": "ためる",
+   "reading": "ためる"
+  },
+  {
+   "display": "はなつ",
+   "reading": "はなつ"
+  },
+  {
+   "display": "なぐる",
+   "reading": "なぐる"
+  },
+  {
+   "display": "ける",
+   "reading": "ける"
+  },
+  {
+   "display": "よける",
+   "reading": "よける"
+  },
+  {
+   "display": "うける",
+   "reading": "うける"
+  },
+  {
+   "display": "ガード",
+   "reading": "がーど"
+  },
+  {
+   "display": "カウンター",
+   "reading": "かうんたー"
+  },
+  {
+   "display": "ひっさつわざ",
+   "reading": "ひっさつわざ"
+  },
+  {
+   "display": "とくしゅわざ",
+   "reading": "とくしゅわざ"
+  },
+  {
+   "display": "れんぞくわざ",
+   "reading": "れんぞくわざ"
+  },
+  {
+   "display": "コンボ",
+   "reading": "こんぼ"
+  },
+  {
+   "display": "れんげき",
+   "reading": "れんげき"
+  },
+  {
+   "display": "いちげき",
+   "reading": "いちげき"
+  },
+  {
+   "display": "しょうげき",
+   "reading": "しょうげき"
+  },
+  {
+   "display": "だげき",
+   "reading": "だげき"
+  },
+  {
+   "display": "きりさく",
+   "reading": "きりさく"
+  },
+  {
+   "display": "つきさす",
+   "reading": "つきさす"
+  },
+  {
+   "display": "しめる",
+   "reading": "しめる"
+  },
+  {
+   "display": "なげる",
+   "reading": "なげる"
+  },
+  {
+   "display": "つかむ",
+   "reading": "つかむ"
+  },
+  {
+   "display": "はじく",
+   "reading": "はじく"
+  },
+  {
+   "display": "ゴムのせいしつ",
+   "reading": "ごむのせいしつ"
+  },
+  {
+   "display": "ガムのせいしつ",
+   "reading": "がむのせいしつ"
+  },
+  {
+   "display": "のびちぢみ",
+   "reading": "のびちぢみ"
+  },
+  {
+   "display": "ねんちゃく",
+   "reading": "ねんちゃく"
+  },
+  {
+   "display": "ふっかつ",
+   "reading": "ふっかつ"
+  },
+  {
+   "display": "かいふく",
+   "reading": "かいふく"
+  },
+  {
+   "display": "いやす",
+   "reading": "いやす"
+  },
+  {
+   "display": "なおす",
+   "reading": "なおす"
+  },
+  {
+   "display": "メモリのむだづかい",
+   "reading": "めもりのむだづかい"
+  },
+  {
+   "display": "のうりょくのそうしつ",
+   "reading": "のうりょくのそうしつ"
+  },
+  {
+   "display": "さっかく",
+   "reading": "さっかく"
+  },
+  {
+   "display": "げんわく",
+   "reading": "げんわく"
+  },
+  {
+   "display": "まやかし",
+   "reading": "まやかし"
+  },
+  {
+   "display": "だまし",
+   "reading": "だまし"
+  },
+  {
+   "display": "フェイント",
+   "reading": "ふぇいんと"
+  },
+  {
+   "display": "トリック",
+   "reading": "とりっく"
+  },
+  {
+   "display": "マジック",
+   "reading": "まじっく"
+  },
+  {
+   "display": "きえる",
+   "reading": "きえる"
+  },
+  {
+   "display": "あらわれる",
+   "reading": "あらわれる"
+  },
+  {
+   "display": "しゅんかんいどう",
+   "reading": "しゅんかんいどう"
+  },
+  {
+   "display": "でんこうせっか",
+   "reading": "でんこうせっか"
+  },
+  {
+   "display": "しんそく",
+   "reading": "しんそく"
+  },
+  {
+   "display": "こうそく",
+   "reading": "こうそく"
+  },
+  {
+   "display": "かそく",
+   "reading": "かそく"
+  },
+  {
+   "display": "げんそく",
+   "reading": "げんそく"
+  },
+  {
+   "display": "わざのかんせい",
+   "reading": "わざのかんせい"
+  }
+ ]
+}

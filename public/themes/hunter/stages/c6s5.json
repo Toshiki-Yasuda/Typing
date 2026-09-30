@@ -1,0 +1,242 @@
+{
+ "id": "c6s5",
+ "name": "キメラアント編 5: ゴンの成長",
+ "items": [
+  {
+   "display": "せいちょう",
+   "reading": "せいちょう"
+  },
+  {
+   "display": "おおひとゴン",
+   "reading": "おおひとごん"
+  },
+  {
+   "display": "へんしん",
+   "reading": "へんしん"
+  },
+  {
+   "display": "しんか",
+   "reading": "しんか"
+  },
+  {
+   "display": "かくせい",
+   "reading": "かくせい"
+  },
+  {
+   "display": "いかり",
+   "reading": "いかり"
+  },
+  {
+   "display": "かなしみ",
+   "reading": "かなしみ"
+  },
+  {
+   "display": "ぜつぼう",
+   "reading": "ぜつぼう"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  },
+  {
+   "display": "カイトをすくう",
+   "reading": "かいとをすくう"
+  },
+  {
+   "display": "ぜんりょくのいちげき",
+   "reading": "ぜんりょくのいちげき"
+  },
+  {
+   "display": "だいしょう",
+   "reading": "だいしょう"
+  },
+  {
+   "display": "いのち",
+   "reading": "いのち"
+  },
+  {
+   "display": "みらい",
+   "reading": "みらい"
+  },
+  {
+   "display": "すてる",
+   "reading": "すてる"
+  },
+  {
+   "display": "とりもどす",
+   "reading": "とりもどす"
+  },
+  {
+   "display": "うしなう",
+   "reading": "うしなう"
+  },
+  {
+   "display": "えるもの",
+   "reading": "えるもの"
+  },
+  {
+   "display": "うしなうもの",
+   "reading": "うしなうもの"
+  },
+  {
+   "display": "こうかい",
+   "reading": "こうかい"
+  },
+  {
+   "display": "まんぞく",
+   "reading": "まんぞく"
+  },
+  {
+   "display": "ゆるさない",
+   "reading": "ゆるさない"
+  },
+  {
+   "display": "ぜったいに",
+   "reading": "ぜったいに"
+  },
+  {
+   "display": "かならず",
+   "reading": "かならず"
+  },
+  {
+   "display": "けっして",
+   "reading": "けっして"
+  },
+  {
+   "display": "なにがあっても",
+   "reading": "なにがあっても"
+  },
+  {
+   "display": "どんなことでも",
+   "reading": "どんなことでも"
+  },
+  {
+   "display": "ともだち",
+   "reading": "ともだち"
+  },
+  {
+   "display": "なかま",
+   "reading": "なかま"
+  },
+  {
+   "display": "おや",
+   "reading": "おや"
+  },
+  {
+   "display": "こども",
+   "reading": "こども"
+  },
+  {
+   "display": "かぞく",
+   "reading": "かぞく"
+  },
+  {
+   "display": "きずな",
+   "reading": "きずな"
+  },
+  {
+   "display": "つながり",
+   "reading": "つながり"
+  },
+  {
+   "display": "おもいやり",
+   "reading": "おもいやり"
+  },
+  {
+   "display": "やさしさ",
+   "reading": "やさしさ"
+  },
+  {
+   "display": "つよさ",
+   "reading": "つよさ"
+  },
+  {
+   "display": "よわさ",
+   "reading": "よわさ"
+  },
+  {
+   "display": "あやまち",
+   "reading": "あやまち"
+  },
+  {
+   "display": "ゆるし",
+   "reading": "ゆるし"
+  },
+  {
+   "display": "ちゅうこく",
+   "reading": "ちゅうこく"
+  },
+  {
+   "display": "しんぱい",
+   "reading": "しんぱい"
+  },
+  {
+   "display": "あんしん",
+   "reading": "あんしん"
+  },
+  {
+   "display": "ふあん",
+   "reading": "ふあん"
+  },
+  {
+   "display": "きょうふ",
+   "reading": "きょうふ"
+  },
+  {
+   "display": "ゆうき",
+   "reading": "ゆうき"
+  },
+  {
+   "display": "おくびょう",
+   "reading": "おくびょう"
+  },
+  {
+   "display": "むこう",
+   "reading": "むこう"
+  },
+  {
+   "display": "むぼう",
+   "reading": "むぼう"
+  },
+  {
+   "display": "ぜったいにゆるさない",
+   "reading": "ぜったいにゆるさない"
+  },
+  {
+   "display": "ぼくでよかった",
+   "reading": "ぼくでよかった"
+  },
+  {
+   "display": "おれでよかった",
+   "reading": "おれでよかった"
+  },
+  {
+   "display": "ありがとう",
+   "reading": "ありがとう"
+  },
+  {
+   "display": "ごめんなさい",
+   "reading": "ごめんなさい"
+  },
+  {
+   "display": "さよなら",
+   "reading": "さよなら"
+  },
+  {
+   "display": "またあおう",
+   "reading": "またあおう"
+  },
+  {
+   "display": "きっと",
+   "reading": "きっと"
+  },
+  {
+   "display": "ぜったい",
+   "reading": "ぜったい"
+  },
+  {
+   "display": "やくそくする",
+   "reading": "やくそくする"
+  }
+ ]
+}

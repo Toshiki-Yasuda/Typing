@@ -1,0 +1,246 @@
+{
+ "id": "c4s6",
+ "name": "ヨークシン編 6: ボスステージ",
+ "items": [
+  {
+   "display": "スキルハンター",
+   "reading": "すきるはんたー"
+  },
+  {
+   "display": "とくしゅのうりょく",
+   "reading": "とくしゅのうりょく"
+  },
+  {
+   "display": "ぬすむ",
+   "reading": "ぬすむ"
+  },
+  {
+   "display": "うばう",
+   "reading": "うばう"
+  },
+  {
+   "display": "ほん",
+   "reading": "ほん"
+  },
+  {
+   "display": "みつどもえ",
+   "reading": "みつどもえ"
+  },
+  {
+   "display": "てんさい",
+   "reading": "てんさい"
+  },
+  {
+   "display": "りーだー",
+   "reading": "りーだー"
+  },
+  {
+   "display": "だんちょう",
+   "reading": "だんちょう"
+  },
+  {
+   "display": "げんえいのだんちょう",
+   "reading": "げんえいのだんちょう"
+  },
+  {
+   "display": "ひじょう",
+   "reading": "ひじょう"
+  },
+  {
+   "display": "れいせい",
+   "reading": "れいせい"
+  },
+  {
+   "display": "けいさん",
+   "reading": "けいさん"
+  },
+  {
+   "display": "よち",
+   "reading": "よち"
+  },
+  {
+   "display": "さきをよむ",
+   "reading": "さきをよむ"
+  },
+  {
+   "display": "よそく",
+   "reading": "よそく"
+  },
+  {
+   "display": "しんりせん",
+   "reading": "しんりせん"
+  },
+  {
+   "display": "かけひき",
+   "reading": "かけひき"
+  },
+  {
+   "display": "せんりゃく",
+   "reading": "せんりゃく"
+  },
+  {
+   "display": "せんじゅつ",
+   "reading": "せんじゅつ"
+  },
+  {
+   "display": "ひとじち",
+   "reading": "ひとじち"
+  },
+  {
+   "display": "ゆうかい",
+   "reading": "ゆうかい"
+  },
+  {
+   "display": "こうかん",
+   "reading": "こうかん"
+  },
+  {
+   "display": "こうしょう",
+   "reading": "こうしょう"
+  },
+  {
+   "display": "だんはん",
+   "reading": "だんはん"
+  },
+  {
+   "display": "とりひき",
+   "reading": "とりひき"
+  },
+  {
+   "display": "じょうけん",
+   "reading": "じょうけん"
+  },
+  {
+   "display": "ようきゅう",
+   "reading": "ようきゅう"
+  },
+  {
+   "display": "のぞみ",
+   "reading": "のぞみ"
+  },
+  {
+   "display": "もくてき",
+   "reading": "もくてき"
+  },
+  {
+   "display": "きせい",
+   "reading": "きせい"
+  },
+  {
+   "display": "せいやく",
+   "reading": "せいやく"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  },
+  {
+   "display": "まもる",
+   "reading": "まもる"
+  },
+  {
+   "display": "やぶる",
+   "reading": "やぶる"
+  },
+  {
+   "display": "じゆう",
+   "reading": "じゆう"
+  },
+  {
+   "display": "ふじゆう",
+   "reading": "ふじゆう"
+  },
+  {
+   "display": "ねんふうじ",
+   "reading": "ねんふうじ"
+  },
+  {
+   "display": "ふういん",
+   "reading": "ふういん"
+  },
+  {
+   "display": "かいじょ",
+   "reading": "かいじょ"
+  },
+  {
+   "display": "ねんのうりょく",
+   "reading": "ねんのうりょく"
+  },
+  {
+   "display": "つかえない",
+   "reading": "つかえない"
+  },
+  {
+   "display": "むりょく",
+   "reading": "むりょく"
+  },
+  {
+   "display": "むりょくか",
+   "reading": "むりょくか"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "むだ",
+   "reading": "むだ"
+  },
+  {
+   "display": "こうか",
+   "reading": "こうか"
+  },
+  {
+   "display": "けっか",
+   "reading": "けっか"
+  },
+  {
+   "display": "えいきょう",
+   "reading": "えいきょう"
+  },
+  {
+   "display": "きにゅう",
+   "reading": "きにゅう"
+  },
+  {
+   "display": "かくにん",
+   "reading": "かくにん"
+  },
+  {
+   "display": "じっこう",
+   "reading": "じっこう"
+  },
+  {
+   "display": "せいこう",
+   "reading": "せいこう"
+  },
+  {
+   "display": "しっぱい",
+   "reading": "しっぱい"
+  },
+  {
+   "display": "さいごのたたかい",
+   "reading": "さいごのたたかい"
+  },
+  {
+   "display": "けっちゃく",
+   "reading": "けっちゃく"
+  },
+  {
+   "display": "まけられない",
+   "reading": "まけられない"
+  },
+  {
+   "display": "ぜったいにかつ",
+   "reading": "ぜったいにかつ"
+  },
+  {
+   "display": "ふくしゅうのさき",
+   "reading": "ふくしゅうのさき"
+  },
+  {
+   "display": "あたらしいみらい",
+   "reading": "あたらしいみらい"
+  }
+ ]
+}

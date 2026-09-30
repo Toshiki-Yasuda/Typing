@@ -1,0 +1,246 @@
+{
+ "id": "c6s3",
+ "name": "キメラアント編 3: 討伐隊の能力",
+ "items": [
+  {
+   "display": "ひゃくしきかんのん",
+   "reading": "ひゃくしきかんのん"
+  },
+  {
+   "display": "きっかのせいやく",
+   "reading": "きっかのせいやく"
+  },
+  {
+   "display": "ディープパープル",
+   "reading": "でぃーぷぱーぷる"
+  },
+  {
+   "display": "ハコワレ",
+   "reading": "はこわれ"
+  },
+  {
+   "display": "ポットクリン",
+   "reading": "ぽっとくりん"
+  },
+  {
+   "display": "マンションあんこく",
+   "reading": "まんしょんあんこく"
+  },
+  {
+   "display": "ホテルラフレシア",
+   "reading": "ほてるらふれしあ"
+  },
+  {
+   "display": "かみをすべらす",
+   "reading": "かみをすべらす"
+  },
+  {
+   "display": "あんこくのおに",
+   "reading": "あんこくのおに"
+  },
+  {
+   "display": "かぜつかい",
+   "reading": "かぜつかい"
+  },
+  {
+   "display": "けむり",
+   "reading": "けむり"
+  },
+  {
+   "display": "にんぎょう",
+   "reading": "にんぎょう"
+  },
+  {
+   "display": "そうさ",
+   "reading": "そうさ"
+  },
+  {
+   "display": "ぶんしん",
+   "reading": "ぶんしん"
+  },
+  {
+   "display": "りしゃく",
+   "reading": "りしゃく"
+  },
+  {
+   "display": "かしつけ",
+   "reading": "かしつけ"
+  },
+  {
+   "display": "オーラ",
+   "reading": "おーら"
+  },
+  {
+   "display": "はさん",
+   "reading": "はさん"
+  },
+  {
+   "display": "ゼロ",
+   "reading": "ぜろ"
+  },
+  {
+   "display": "きゅうしゅう",
+   "reading": "きゅうしゅう"
+  },
+  {
+   "display": "ほうしゅつ",
+   "reading": "ほうしゅつ"
+  },
+  {
+   "display": "はいしゅつ",
+   "reading": "はいしゅつ"
+  },
+  {
+   "display": "ためる",
+   "reading": "ためる"
+  },
+  {
+   "display": "はなつ",
+   "reading": "はなつ"
+  },
+  {
+   "display": "かえす",
+   "reading": "かえす"
+  },
+  {
+   "display": "かりる",
+   "reading": "かりる"
+  },
+  {
+   "display": "かす",
+   "reading": "かす"
+  },
+  {
+   "display": "りそく",
+   "reading": "りそく"
+  },
+  {
+   "display": "へいしつ",
+   "reading": "へいしつ"
+  },
+  {
+   "display": "くうかん",
+   "reading": "くうかん"
+  },
+  {
+   "display": "いどう",
+   "reading": "いどう"
+  },
+  {
+   "display": "しゅんかん",
+   "reading": "しゅんかん"
+  },
+  {
+   "display": "とうめい",
+   "reading": "とうめい"
+  },
+  {
+   "display": "めにみえない",
+   "reading": "めにみえない"
+  },
+  {
+   "display": "きえる",
+   "reading": "きえる"
+  },
+  {
+   "display": "あらわれる",
+   "reading": "あらわれる"
+  },
+  {
+   "display": "せんにゅう",
+   "reading": "せんにゅう"
+  },
+  {
+   "display": "ひみつ",
+   "reading": "ひみつ"
+  },
+  {
+   "display": "いんぺい",
+   "reading": "いんぺい"
+  },
+  {
+   "display": "かくれる",
+   "reading": "かくれる"
+  },
+  {
+   "display": "みつける",
+   "reading": "みつける"
+  },
+  {
+   "display": "さがす",
+   "reading": "さがす"
+  },
+  {
+   "display": "おう",
+   "reading": "おう"
+  },
+  {
+   "display": "にげる",
+   "reading": "にげる"
+  },
+  {
+   "display": "かくれんぼ",
+   "reading": "かくれんぼ"
+  },
+  {
+   "display": "おにごっこ",
+   "reading": "おにごっこ"
+  },
+  {
+   "display": "しんりせん",
+   "reading": "しんりせん"
+  },
+  {
+   "display": "よみあい",
+   "reading": "よみあい"
+  },
+  {
+   "display": "たくりゃく",
+   "reading": "たくりゃく"
+  },
+  {
+   "display": "さくりゃく",
+   "reading": "さくりゃく"
+  },
+  {
+   "display": "わな",
+   "reading": "わな"
+  },
+  {
+   "display": "しかける",
+   "reading": "しかける"
+  },
+  {
+   "display": "はまる",
+   "reading": "はまる"
+  },
+  {
+   "display": "ひっかかる",
+   "reading": "ひっかかる"
+  },
+  {
+   "display": "だます",
+   "reading": "だます"
+  },
+  {
+   "display": "だまされる",
+   "reading": "だまされる"
+  },
+  {
+   "display": "ぎわく",
+   "reading": "ぎわく"
+  },
+  {
+   "display": "うたがう",
+   "reading": "うたがう"
+  },
+  {
+   "display": "しんじる",
+   "reading": "しんじる"
+  },
+  {
+   "display": "しんらい",
+   "reading": "しんらい"
+  }
+ ]
+}

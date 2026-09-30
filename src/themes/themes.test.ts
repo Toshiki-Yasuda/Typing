@@ -155,3 +155,29 @@ describe('テーマの音', () => {
     expect(NEUTRAL_THEME.audio).toBeUndefined();
   });
 });
+
+describe('ステージ（チャプター）の定義', () => {
+  it('7 章 × 5 ステージ。id・番号が連番で重複せず、ボスが実在する', () => {
+    const chapters = HUNTER_THEME.chapters ?? [];
+    expect(chapters.map((c) => c.number)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    const stageIds = chapters.flatMap((c) => c.stages.map((s) => s.id));
+    expect(stageIds).toHaveLength(35);
+    expect(new Set(stageIds).size).toBe(35);
+    const bossIds = new Set((HUNTER_THEME.bosses ?? []).map((b) => b.id));
+    for (const c of chapters) expect(bossIds.has(c.boss ?? ''), `第${c.number}章のボス`).toBe(true);
+  });
+
+  it('すべてのステージ・ボスの語彙が実在し、アプリの検証（全語が打てる・重複なし）を通り、出題に足りる', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { loadPack } = await import('@/content');
+    const paths = [
+      ...(HUNTER_THEME.chapters ?? []).flatMap((c) => c.stages.map((s) => ({ what: `${c.number}章 ${s.name}`, path: s.pack, need: 10 }))),
+      ...(HUNTER_THEME.bosses ?? []).map((b) => ({ what: `ボス ${b.name}`, path: b.pack ?? '', need: b.words })),
+    ];
+    for (const { what, path, need } of paths) {
+      expect(path, what).not.toBe('');
+      const pack = loadPack(JSON.parse(readFileSync(`public/${path}`, 'utf8'))); // 不正なら例外
+      expect(pack.items.length, `${what}（${path}）`).toBeGreaterThanOrEqual(need);
+    }
+  });
+});

@@ -1,0 +1,246 @@
+{
+ "id": "c2s1",
+ "name": "天空闘技場編 1: 念の基礎",
+ "items": [
+  {
+   "display": "ねん",
+   "reading": "ねん"
+  },
+  {
+   "display": "オーラ",
+   "reading": "おーら"
+  },
+  {
+   "display": "てん",
+   "reading": "てん"
+  },
+  {
+   "display": "ぜつ",
+   "reading": "ぜつ"
+  },
+  {
+   "display": "れん",
+   "reading": "れん"
+  },
+  {
+   "display": "はつ",
+   "reading": "はつ"
+  },
+  {
+   "display": "ぎょう",
+   "reading": "ぎょう"
+  },
+  {
+   "display": "いん",
+   "reading": "いん"
+  },
+  {
+   "display": "えん",
+   "reading": "えん"
+  },
+  {
+   "display": "しゅう",
+   "reading": "しゅう"
+  },
+  {
+   "display": "こう",
+   "reading": "こう"
+  },
+  {
+   "display": "けん",
+   "reading": "けん"
+  },
+  {
+   "display": "りゅう",
+   "reading": "りゅう"
+  },
+  {
+   "display": "しょうこうけつ",
+   "reading": "しょうこうけつ"
+  },
+  {
+   "display": "ねんのうりょく",
+   "reading": "ねんのうりょく"
+  },
+  {
+   "display": "ねんしゃ",
+   "reading": "ねんしゃ"
+  },
+  {
+   "display": "しゅぎょう",
+   "reading": "しゅぎょう"
+  },
+  {
+   "display": "きほん",
+   "reading": "きほん"
+  },
+  {
+   "display": "おうよう",
+   "reading": "おうよう"
+  },
+  {
+   "display": "かくせい",
+   "reading": "かくせい"
+  },
+  {
+   "display": "さいのう",
+   "reading": "さいのう"
+  },
+  {
+   "display": "ほうしゅつ",
+   "reading": "ほうしゅつ"
+  },
+  {
+   "display": "せいぎょ",
+   "reading": "せいぎょ"
+  },
+  {
+   "display": "しゅうれん",
+   "reading": "しゅうれん"
+  },
+  {
+   "display": "ねんをおぼえる",
+   "reading": "ねんをおぼえる"
+  },
+  {
+   "display": "オーラをだす",
+   "reading": "おーらをだす"
+  },
+  {
+   "display": "せいしんとうち",
+   "reading": "せいしんとうち"
+  },
+  {
+   "display": "しんくう",
+   "reading": "しんくう"
+  },
+  {
+   "display": "みえないちから",
+   "reading": "みえないちから"
+  },
+  {
+   "display": "きゅうしゅう",
+   "reading": "きゅうしゅう"
+  },
+  {
+   "display": "ながれ",
+   "reading": "ながれ"
+  },
+  {
+   "display": "しゅうちゅう",
+   "reading": "しゅうちゅう"
+  },
+  {
+   "display": "まとう",
+   "reading": "まとう"
+  },
+  {
+   "display": "かんじる",
+   "reading": "かんじる"
+  },
+  {
+   "display": "めざめる",
+   "reading": "めざめる"
+  },
+  {
+   "display": "ねんをひらく",
+   "reading": "ねんをひらく"
+  },
+  {
+   "display": "オーラのそうりょう",
+   "reading": "おーらのそうりょう"
+  },
+  {
+   "display": "しはい",
+   "reading": "しはい"
+  },
+  {
+   "display": "コントロール",
+   "reading": "こんとろーる"
+  },
+  {
+   "display": "せいしん",
+   "reading": "せいしん"
+  },
+  {
+   "display": "にくたい",
+   "reading": "にくたい"
+  },
+  {
+   "display": "きたえる",
+   "reading": "きたえる"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "めいそう",
+   "reading": "めいそう"
+  },
+  {
+   "display": "しゅうちゅうりょく",
+   "reading": "しゅうちゅうりょく"
+  },
+  {
+   "display": "おうぎ",
+   "reading": "おうぎ"
+  },
+  {
+   "display": "ひでん",
+   "reading": "ひでん"
+  },
+  {
+   "display": "でんしょう",
+   "reading": "でんしょう"
+  },
+  {
+   "display": "ししょう",
+   "reading": "ししょう"
+  },
+  {
+   "display": "でし",
+   "reading": "でし"
+  },
+  {
+   "display": "けいこ",
+   "reading": "けいこ"
+  },
+  {
+   "display": "くんれん",
+   "reading": "くんれん"
+  },
+  {
+   "display": "じょうたつ",
+   "reading": "じょうたつ"
+  },
+  {
+   "display": "せいちょう",
+   "reading": "せいちょう"
+  },
+  {
+   "display": "かのうせい",
+   "reading": "かのうせい"
+  },
+  {
+   "display": "げんかい",
+   "reading": "げんかい"
+  },
+  {
+   "display": "とっぱ",
+   "reading": "とっぱ"
+  },
+  {
+   "display": "しんか",
+   "reading": "しんか"
+  },
+  {
+   "display": "かくとく",
+   "reading": "かくとく"
+  },
+  {
+   "display": "ねんのきそ",
+   "reading": "ねんのきそ"
+  }
+ ]
+}

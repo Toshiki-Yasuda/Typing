@@ -4,6 +4,8 @@ import { DailyRoute } from '@/screens/DailyRoute';
 import { Home } from '@/screens/Home';
 import { PlayRoute } from '@/screens/PlayRoute';
 import { Result } from '@/screens/Result';
+import { StageRoute } from '@/screens/stage/StageRoute';
+import { StageSelectRoute } from '@/screens/stage/StageSelect';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 import { Stats } from '@/screens/Stats';
 import { Entrance } from '@/screens/title/Entrance';
@@ -19,6 +21,8 @@ export function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Entrance><Home /></Entrance>} />
+          <Route path="/stages" element={<StageSelectRoute />} />
+          <Route path="/stage/:id" element={<StageRoute />} />
           <Route path="/settings" element={<SettingsScreen />} />
           <Route path="/title" element={<TitleRoute />} />
           <Route path="/play" element={<PlayRoute />} />

@@ -1,0 +1,242 @@
+{
+ "id": "c4s2",
+ "name": "ヨークシン編 2: オークション",
+ "items": [
+  {
+   "display": "ヨークシンシティ",
+   "reading": "よーくしんしてぃ"
+  },
+  {
+   "display": "オークション",
+   "reading": "おーくしょん"
+  },
+  {
+   "display": "マフィア",
+   "reading": "まふぃあ"
+  },
+  {
+   "display": "シャドウビースト",
+   "reading": "しゃどうびーすと"
+  },
+  {
+   "display": "じゅうろうとう",
+   "reading": "じゅうろうとう"
+  },
+  {
+   "display": "ぞうひん",
+   "reading": "ぞうひん"
+  },
+  {
+   "display": "さくひん",
+   "reading": "さくひん"
+  },
+  {
+   "display": "ほうせき",
+   "reading": "ほうせき"
+  },
+  {
+   "display": "おおがね",
+   "reading": "おおがね"
+  },
+  {
+   "display": "こうかなもの",
+   "reading": "こうかなもの"
+  },
+  {
+   "display": "きちょうひん",
+   "reading": "きちょうひん"
+  },
+  {
+   "display": "コレクター",
+   "reading": "これくたー"
+  },
+  {
+   "display": "しゅうしゅうか",
+   "reading": "しゅうしゅうか"
+  },
+  {
+   "display": "かいとり",
+   "reading": "かいとり"
+  },
+  {
+   "display": "うりかい",
+   "reading": "うりかい"
+  },
+  {
+   "display": "とりひき",
+   "reading": "とりひき"
+  },
+  {
+   "display": "ばいばい",
+   "reading": "ばいばい"
+  },
+  {
+   "display": "こうにゅう",
+   "reading": "こうにゅう"
+  },
+  {
+   "display": "かう",
+   "reading": "かう"
+  },
+  {
+   "display": "うる",
+   "reading": "うる"
+  },
+  {
+   "display": "にゅうさつ",
+   "reading": "にゅうさつ"
+  },
+  {
+   "display": "らくさつ",
+   "reading": "らくさつ"
+  },
+  {
+   "display": "さいこうねだん",
+   "reading": "さいこうねだん"
+  },
+  {
+   "display": "さいていねだん",
+   "reading": "さいていねだん"
+  },
+  {
+   "display": "そうば",
+   "reading": "そうば"
+  },
+  {
+   "display": "かかく",
+   "reading": "かかく"
+  },
+  {
+   "display": "かち",
+   "reading": "かち"
+  },
+  {
+   "display": "ひょうか",
+   "reading": "ひょうか"
+  },
+  {
+   "display": "かんてい",
+   "reading": "かんてい"
+  },
+  {
+   "display": "ほんもの",
+   "reading": "ほんもの"
+  },
+  {
+   "display": "にせもの",
+   "reading": "にせもの"
+  },
+  {
+   "display": "レプリカ",
+   "reading": "れぷりか"
+  },
+  {
+   "display": "オリジナル",
+   "reading": "おりじなる"
+  },
+  {
+   "display": "きげん",
+   "reading": "きげん"
+  },
+  {
+   "display": "ゆらい",
+   "reading": "ゆらい"
+  },
+  {
+   "display": "れきし",
+   "reading": "れきし"
+  },
+  {
+   "display": "こだい",
+   "reading": "こだい"
+  },
+  {
+   "display": "いせき",
+   "reading": "いせき"
+  },
+  {
+   "display": "ひほう",
+   "reading": "ひほう"
+  },
+  {
+   "display": "おたから",
+   "reading": "おたから"
+  },
+  {
+   "display": "たからもの",
+   "reading": "たからもの"
+  },
+  {
+   "display": "ざいほう",
+   "reading": "ざいほう"
+  },
+  {
+   "display": "きんか",
+   "reading": "きんか"
+  },
+  {
+   "display": "ぎんか",
+   "reading": "ぎんか"
+  },
+  {
+   "display": "ダイヤモンド",
+   "reading": "だいやもんど"
+  },
+  {
+   "display": "ルビー",
+   "reading": "るびー"
+  },
+  {
+   "display": "サファイア",
+   "reading": "さふぁいあ"
+  },
+  {
+   "display": "エメラルド",
+   "reading": "えめらるど"
+  },
+  {
+   "display": "きん",
+   "reading": "きん"
+  },
+  {
+   "display": "ぎん",
+   "reading": "ぎん"
+  },
+  {
+   "display": "どう",
+   "reading": "どう"
+  },
+  {
+   "display": "てつ",
+   "reading": "てつ"
+  },
+  {
+   "display": "きちょう",
+   "reading": "きちょう"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "レア",
+   "reading": "れあ"
+  },
+  {
+   "display": "げんていひん",
+   "reading": "げんていひん"
+  },
+  {
+   "display": "いってん",
+   "reading": "いってん"
+  },
+  {
+   "display": "せかいいち",
+   "reading": "せかいいち"
+  },
+  {
+   "display": "ゆいいつ",
+   "reading": "ゆいいつ"
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "id": "c7s1",
+ "name": "選挙・暗黒大陸編 1: 選挙編キャラ",
+ "items": [
+  {
+   "display": "パリストン",
+   "reading": "ぱりすとん"
+  },
+  {
+   "display": "チードル",
+   "reading": "ちーどる"
+  },
+  {
+   "display": "ジン",
+   "reading": "じん"
+  },
+  {
+   "display": "ミザイストム",
+   "reading": "みざいすとむ"
+  },
+  {
+   "display": "サッチョウ",
+   "reading": "さっちょう"
+  },
+  {
+   "display": "ゲル",
+   "reading": "げる"
+  },
+  {
+   "display": "ピヨン",
+   "reading": "ぴよん"
+  },
+  {
+   "display": "ギンタ",
+   "reading": "ぎんた"
+  },
+  {
+   "display": "カンザイ",
+   "reading": "かんざい"
+  },
+  {
+   "display": "ボトバイ",
+   "reading": "ぼとばい"
+  },
+  {
+   "display": "クラピカ",
+   "reading": "くらぴか"
+  },
+  {
+   "display": "レオリオ",
+   "reading": "れおりお"
+  },
+  {
+   "display": "じゅうにしん",
+   "reading": "じゅうにしん"
+  },
+  {
+   "display": "かいちょうせんきょ",
+   "reading": "かいちょうせんきょ"
+  },
+  {
+   "display": "ハンターきょうかい",
+   "reading": "はんたーきょうかい"
+  },
+  {
+   "display": "とうひょう",
+   "reading": "とうひょう"
+  },
+  {
+   "display": "せんきょ",
+   "reading": "せんきょ"
+  },
+  {
+   "display": "こうほ",
+   "reading": "こうほ"
+  },
+  {
+   "display": "とうせん",
+   "reading": "とうせん"
+  },
+  {
+   "display": "らくせん",
+   "reading": "らくせん"
+  },
+  {
+   "display": "しじ",
+   "reading": "しじ"
+  },
+  {
+   "display": "しじりつ",
+   "reading": "しじりつ"
+  },
+  {
+   "display": "こうやく",
+   "reading": "こうやく"
+  },
+  {
+   "display": "せんきょせん",
+   "reading": "せんきょせん"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "きそく",
+   "reading": "きそく"
+  },
+  {
+   "display": "けってい",
+   "reading": "けってい"
+  },
+  {
+   "display": "かいぎ",
+   "reading": "かいぎ"
+  },
+  {
+   "display": "そうかい",
+   "reading": "そうかい"
+  },
+  {
+   "display": "かけつ",
+   "reading": "かけつ"
+  },
+  {
+   "display": "せいじ",
+   "reading": "せいじ"
+  },
+  {
+   "display": "せんりゃく",
+   "reading": "せんりゃく"
+  },
+  {
+   "display": "かけひき",
+   "reading": "かけひき"
+  },
+  {
+   "display": "たいりつ",
+   "reading": "たいりつ"
+  },
+  {
+   "display": "きょうちょう",
+   "reading": "きょうちょう"
+  },
+  {
+   "display": "きょうりょく",
+   "reading": "きょうりょく"
+  },
+  {
+   "display": "はんたい",
+   "reading": "はんたい"
+  },
+  {
+   "display": "さんせい",
+   "reading": "さんせい"
+  },
+  {
+   "display": "いけん",
+   "reading": "いけん"
+  },
+  {
+   "display": "しゅちょう",
+   "reading": "しゅちょう"
+  },
+  {
+   "display": "ろんそう",
+   "reading": "ろんそう"
+  },
+  {
+   "display": "ぎろん",
+   "reading": "ぎろん"
+  },
+  {
+   "display": "とうろん",
+   "reading": "とうろん"
+  },
+  {
+   "display": "せんたく",
+   "reading": "せんたく"
+  },
+  {
+   "display": "えらぶ",
+   "reading": "えらぶ"
+  },
+  {
+   "display": "きめる",
+   "reading": "きめる"
+  },
+  {
+   "display": "みとめる",
+   "reading": "みとめる"
+  },
+  {
+   "display": "しょうにん",
+   "reading": "しょうにん"
+  },
+  {
+   "display": "しにん",
+   "reading": "しにん"
+  },
+  {
+   "display": "けんげん",
+   "reading": "けんげん"
+  },
+  {
+   "display": "せきにん",
+   "reading": "せきにん"
+  },
+  {
+   "display": "やくしょく",
+   "reading": "やくしょく"
+  },
+  {
+   "display": "かいちょう",
+   "reading": "かいちょう"
+  },
+  {
+   "display": "ふくかいちょう",
+   "reading": "ふくかいちょう"
+  },
+  {
+   "display": "そしき",
+   "reading": "そしき"
+  },
+  {
+   "display": "うんえい",
+   "reading": "うんえい"
+  },
+  {
+   "display": "かんり",
+   "reading": "かんり"
+  },
+  {
+   "display": "とりしまり",
+   "reading": "とりしまり"
+  },
+  {
+   "display": "はいけいしゃ",
+   "reading": "はいけいしゃ"
+  },
+  {
+   "display": "しょうしゃ",
+   "reading": "しょうしゃ"
+  }
+ ]
+}

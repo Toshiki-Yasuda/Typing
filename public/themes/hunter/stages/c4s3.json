@@ -1,0 +1,242 @@
+{
+ "id": "c4s3",
+ "name": "ヨークシン編 3: マフィア",
+ "items": [
+  {
+   "display": "エンペラータイム",
+   "reading": "えんぺらーたいむ"
+  },
+  {
+   "display": "ホーリーチェーン",
+   "reading": "ほーりーちぇーん"
+  },
+  {
+   "display": "チェーンジェイル",
+   "reading": "ちぇーんじぇいる"
+  },
+  {
+   "display": "ダウジングチェーン",
+   "reading": "だうじんぐちぇーん"
+  },
+  {
+   "display": "ジャッジメントチェーン",
+   "reading": "じゃっじめんとちぇーん"
+  },
+  {
+   "display": "ぐきょくのめ",
+   "reading": "ぐきょくのめ"
+  },
+  {
+   "display": "くさり",
+   "reading": "くさり"
+  },
+  {
+   "display": "ぐぐきょう",
+   "reading": "ぐぐきょう"
+  },
+  {
+   "display": "せいやく",
+   "reading": "せいやく"
+  },
+  {
+   "display": "ちかい",
+   "reading": "ちかい"
+  },
+  {
+   "display": "りせい",
+   "reading": "りせい"
+  },
+  {
+   "display": "ふくしゅう",
+   "reading": "ふくしゅう"
+  },
+  {
+   "display": "うらみ",
+   "reading": "うらみ"
+  },
+  {
+   "display": "いかり",
+   "reading": "いかり"
+  },
+  {
+   "display": "かなしみ",
+   "reading": "かなしみ"
+  },
+  {
+   "display": "きょうき",
+   "reading": "きょうき"
+  },
+  {
+   "display": "ひたすら",
+   "reading": "ひたすら"
+  },
+  {
+   "display": "しゅうねん",
+   "reading": "しゅうねん"
+  },
+  {
+   "display": "けついる",
+   "reading": "けついる"
+  },
+  {
+   "display": "ちかう",
+   "reading": "ちかう"
+  },
+  {
+   "display": "しょうじき",
+   "reading": "しょうじき"
+  },
+  {
+   "display": "うそをつく",
+   "reading": "うそをつく"
+  },
+  {
+   "display": "みぬく",
+   "reading": "みぬく"
+  },
+  {
+   "display": "さぐる",
+   "reading": "さぐる"
+  },
+  {
+   "display": "しらべる",
+   "reading": "しらべる"
+  },
+  {
+   "display": "ついせき",
+   "reading": "ついせき"
+  },
+  {
+   "display": "おいつめる",
+   "reading": "おいつめる"
+  },
+  {
+   "display": "とらえる",
+   "reading": "とらえる"
+  },
+  {
+   "display": "こうそく",
+   "reading": "こうそく"
+  },
+  {
+   "display": "しばる",
+   "reading": "しばる"
+  },
+  {
+   "display": "とらわれる",
+   "reading": "とらわれる"
+  },
+  {
+   "display": "かいほう",
+   "reading": "かいほう"
+  },
+  {
+   "display": "じゆう",
+   "reading": "じゆう"
+  },
+  {
+   "display": "そくばく",
+   "reading": "そくばく"
+  },
+  {
+   "display": "げんかい",
+   "reading": "げんかい"
+  },
+  {
+   "display": "りみっと",
+   "reading": "りみっと"
+  },
+  {
+   "display": "だいしょう",
+   "reading": "だいしょう"
+  },
+  {
+   "display": "リスク",
+   "reading": "りすく"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "めいよく",
+   "reading": "めいよく"
+  },
+  {
+   "display": "クルタぞく",
+   "reading": "くるたぞく"
+  },
+  {
+   "display": "ぎゃくさつ",
+   "reading": "ぎゃくさつ"
+  },
+  {
+   "display": "さいご",
+   "reading": "さいご"
+  },
+  {
+   "display": "のこり",
+   "reading": "のこり"
+  },
+  {
+   "display": "いきのこり",
+   "reading": "いきのこり"
+  },
+  {
+   "display": "せめる",
+   "reading": "せめる"
+  },
+  {
+   "display": "まもる",
+   "reading": "まもる"
+  },
+  {
+   "display": "たたかう",
+   "reading": "たたかう"
+  },
+  {
+   "display": "いきる",
+   "reading": "いきる"
+  },
+  {
+   "display": "しぬ",
+   "reading": "しぬ"
+  },
+  {
+   "display": "おぼえる",
+   "reading": "おぼえる"
+  },
+  {
+   "display": "わすれない",
+   "reading": "わすれない"
+  },
+  {
+   "display": "きおく",
+   "reading": "きおく"
+  },
+  {
+   "display": "おもいで",
+   "reading": "おもいで"
+  },
+  {
+   "display": "なかま",
+   "reading": "なかま"
+  },
+  {
+   "display": "かぞく",
+   "reading": "かぞく"
+  },
+  {
+   "display": "ともだち",
+   "reading": "ともだち"
+  },
+  {
+   "display": "きずな",
+   "reading": "きずな"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  }
+ ]
+}

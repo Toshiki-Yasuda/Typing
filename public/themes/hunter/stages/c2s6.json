@@ -1,0 +1,246 @@
+{
+ "id": "c2s6",
+ "name": "天空闘技場編 6: ボスステージ",
+ "items": [
+  {
+   "display": "ヒソカとのたたかい",
+   "reading": "ひそかとのたたかい"
+  },
+  {
+   "display": "にひゃくかいのしれん",
+   "reading": "にひゃくかいのしれん"
+  },
+  {
+   "display": "しょうぶのとき",
+   "reading": "しょうぶのとき"
+  },
+  {
+   "display": "きょうてきにいどむ",
+   "reading": "きょうてきにいどむ"
+  },
+  {
+   "display": "おそれをこえて",
+   "reading": "おそれをこえて"
+  },
+  {
+   "display": "いちげきをくらわせる",
+   "reading": "いちげきをくらわせる"
+  },
+  {
+   "display": "ぜんりょくのこうげき",
+   "reading": "ぜんりょくのこうげき"
+  },
+  {
+   "display": "きょうふにうちかつ",
+   "reading": "きょうふにうちかつ"
+  },
+  {
+   "display": "やくそくをはたす",
+   "reading": "やくそくをはたす"
+  },
+  {
+   "display": "ナンバープレート",
+   "reading": "なんばーぷれーと"
+  },
+  {
+   "display": "かえす",
+   "reading": "かえす"
+  },
+  {
+   "display": "たたかいのおわり",
+   "reading": "たたかいのおわり"
+  },
+  {
+   "display": "せいちょうしたゴン",
+   "reading": "せいちょうしたごん"
+  },
+  {
+   "display": "みとめられた",
+   "reading": "みとめられた"
+  },
+  {
+   "display": "じつりょくのしょうめい",
+   "reading": "じつりょくのしょうめい"
+  },
+  {
+   "display": "かくごをきめる",
+   "reading": "かくごをきめる"
+  },
+  {
+   "display": "ひるまない",
+   "reading": "ひるまない"
+  },
+  {
+   "display": "にげない",
+   "reading": "にげない"
+  },
+  {
+   "display": "たちむかう",
+   "reading": "たちむかう"
+  },
+  {
+   "display": "あきらめない",
+   "reading": "あきらめない"
+  },
+  {
+   "display": "ねんのめざめ",
+   "reading": "ねんのめざめ"
+  },
+  {
+   "display": "しゅぎょうのせいか",
+   "reading": "しゅぎょうのせいか"
+  },
+  {
+   "display": "おおきなかべ",
+   "reading": "おおきなかべ"
+  },
+  {
+   "display": "のりこえる",
+   "reading": "のりこえる"
+  },
+  {
+   "display": "つぎのステージへ",
+   "reading": "つぎのすてーじへ"
+  },
+  {
+   "display": "あらたなるてき",
+   "reading": "あらたなるてき"
+  },
+  {
+   "display": "しんのつよさ",
+   "reading": "しんのつよさ"
+  },
+  {
+   "display": "ゆうじょうのきずな",
+   "reading": "ゆうじょうのきずな"
+  },
+  {
+   "display": "ともにたたかう",
+   "reading": "ともにたたかう"
+  },
+  {
+   "display": "しんらい",
+   "reading": "しんらい"
+  },
+  {
+   "display": "ちからをあわせる",
+   "reading": "ちからをあわせる"
+  },
+  {
+   "display": "むてきのコンビ",
+   "reading": "むてきのこんび"
+  },
+  {
+   "display": "さいこうのパートナー",
+   "reading": "さいこうのぱーとなー"
+  },
+  {
+   "display": "うでをあげる",
+   "reading": "うでをあげる"
+  },
+  {
+   "display": "レベルアップ",
+   "reading": "れべるあっぷ"
+  },
+  {
+   "display": "けいけんち",
+   "reading": "けいけんち"
+  },
+  {
+   "display": "まなんだこと",
+   "reading": "まなんだこと"
+  },
+  {
+   "display": "えたもの",
+   "reading": "えたもの"
+  },
+  {
+   "display": "たいせつなきおく",
+   "reading": "たいせつなきおく"
+  },
+  {
+   "display": "わすれられないしあい",
+   "reading": "わすれられないしあい"
+  },
+  {
+   "display": "ねっとう",
+   "reading": "ねっとう"
+  },
+  {
+   "display": "げきとう",
+   "reading": "げきとう"
+  },
+  {
+   "display": "しとう",
+   "reading": "しとう"
+  },
+  {
+   "display": "けっちゃく",
+   "reading": "けっちゃく"
+  },
+  {
+   "display": "しょうはい",
+   "reading": "しょうはい"
+  },
+  {
+   "display": "いちじんのかぜ",
+   "reading": "いちじんのかぜ"
+  },
+  {
+   "display": "あつきたましい",
+   "reading": "あつきたましい"
+  },
+  {
+   "display": "もえるとうし",
+   "reading": "もえるとうし"
+  },
+  {
+   "display": "けっしょうせんへ",
+   "reading": "けっしょうせんへ"
+  },
+  {
+   "display": "ゆうしょうをめざす",
+   "reading": "ゆうしょうをめざす"
+  },
+  {
+   "display": "てっぺんをとる",
+   "reading": "てっぺんをとる"
+  },
+  {
+   "display": "さいきょうへのみち",
+   "reading": "さいきょうへのみち"
+  },
+  {
+   "display": "つよくなりたい",
+   "reading": "つよくなりたい"
+  },
+  {
+   "display": "もっとうえへ",
+   "reading": "もっとうえへ"
+  },
+  {
+   "display": "たびはつづく",
+   "reading": "たびはつづく"
+  },
+  {
+   "display": "つぎのぼうけん",
+   "reading": "つぎのぼうけん"
+  },
+  {
+   "display": "あたらしいせかい",
+   "reading": "あたらしいせかい"
+  },
+  {
+   "display": "まだみぬてきたち",
+   "reading": "まだみぬてきたち"
+  },
+  {
+   "display": "ちょうせんしゃ",
+   "reading": "ちょうせんしゃ"
+  },
+  {
+   "display": "ステージクリア",
+   "reading": "すてーじくりあ"
+  }
+ ]
+}

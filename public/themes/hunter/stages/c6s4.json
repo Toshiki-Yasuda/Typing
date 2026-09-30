@@ -1,0 +1,246 @@
+{
+ "id": "c6s4",
+ "name": "キメラアント編 4: 宮殿攻略",
+ "items": [
+  {
+   "display": "きゅうでんとつにゅう",
+   "reading": "きゅうでんとつにゅう"
+  },
+  {
+   "display": "さくせんかいし",
+   "reading": "さくせんかいし"
+  },
+  {
+   "display": "ぶんだん",
+   "reading": "ぶんだん"
+  },
+  {
+   "display": "とうばつ",
+   "reading": "とうばつ"
+  },
+  {
+   "display": "せんとう",
+   "reading": "せんとう"
+  },
+  {
+   "display": "ぎせい",
+   "reading": "ぎせい"
+  },
+  {
+   "display": "かくご",
+   "reading": "かくご"
+  },
+  {
+   "display": "けっしん",
+   "reading": "けっしん"
+  },
+  {
+   "display": "おぼえご",
+   "reading": "おぼえご"
+  },
+  {
+   "display": "しぬきかく",
+   "reading": "しぬきかく"
+  },
+  {
+   "display": "とっこう",
+   "reading": "とっこう"
+  },
+  {
+   "display": "かみかぜ",
+   "reading": "かみかぜ"
+  },
+  {
+   "display": "いのちがけ",
+   "reading": "いのちがけ"
+  },
+  {
+   "display": "ぜんりょく",
+   "reading": "ぜんりょく"
+  },
+  {
+   "display": "ほんき",
+   "reading": "ほんき"
+  },
+  {
+   "display": "マジ",
+   "reading": "まじ"
+  },
+  {
+   "display": "しんけん",
+   "reading": "しんけん"
+  },
+  {
+   "display": "しょうぶ",
+   "reading": "しょうぶ"
+  },
+  {
+   "display": "けっとう",
+   "reading": "けっとう"
+  },
+  {
+   "display": "いちだいいち",
+   "reading": "いちだいいち"
+  },
+  {
+   "display": "あいて",
+   "reading": "あいて"
+  },
+  {
+   "display": "てき",
+   "reading": "てき"
+  },
+  {
+   "display": "みかた",
+   "reading": "みかた"
+  },
+  {
+   "display": "ちーむ",
+   "reading": "ちーむ"
+  },
+  {
+   "display": "やくわり",
+   "reading": "やくわり"
+  },
+  {
+   "display": "ぶんたん",
+   "reading": "ぶんたん"
+  },
+  {
+   "display": "にんむ",
+   "reading": "にんむ"
+  },
+  {
+   "display": "せきにん",
+   "reading": "せきにん"
+  },
+  {
+   "display": "はたす",
+   "reading": "はたす"
+  },
+  {
+   "display": "なしとげる",
+   "reading": "なしとげる"
+  },
+  {
+   "display": "せいこう",
+   "reading": "せいこう"
+  },
+  {
+   "display": "しっぱい",
+   "reading": "しっぱい"
+  },
+  {
+   "display": "かのう",
+   "reading": "かのう"
+  },
+  {
+   "display": "ふかのう",
+   "reading": "ふかのう"
+  },
+  {
+   "display": "ちょうせん",
+   "reading": "ちょうせん"
+  },
+  {
+   "display": "むちゃ",
+   "reading": "むちゃ"
+  },
+  {
+   "display": "むぼう",
+   "reading": "むぼう"
+  },
+  {
+   "display": "ゆうき",
+   "reading": "ゆうき"
+  },
+  {
+   "display": "きあい",
+   "reading": "きあい"
+  },
+  {
+   "display": "こんじょう",
+   "reading": "こんじょう"
+  },
+  {
+   "display": "たましい",
+   "reading": "たましい"
+  },
+  {
+   "display": "こころ",
+   "reading": "こころ"
+  },
+  {
+   "display": "いし",
+   "reading": "いし"
+  },
+  {
+   "display": "けつい",
+   "reading": "けつい"
+  },
+  {
+   "display": "つよさ",
+   "reading": "つよさ"
+  },
+  {
+   "display": "よわさ",
+   "reading": "よわさ"
+  },
+  {
+   "display": "げんかい",
+   "reading": "げんかい"
+  },
+  {
+   "display": "こえる",
+   "reading": "こえる"
+  },
+  {
+   "display": "とっぱ",
+   "reading": "とっぱ"
+  },
+  {
+   "display": "かくせい",
+   "reading": "かくせい"
+  },
+  {
+   "display": "にんげんのちから",
+   "reading": "にんげんのちから"
+  },
+  {
+   "display": "しょうりのために",
+   "reading": "しょうりのために"
+  },
+  {
+   "display": "なかまのために",
+   "reading": "なかまのために"
+  },
+  {
+   "display": "せかいのために",
+   "reading": "せかいのために"
+  },
+  {
+   "display": "みらいのために",
+   "reading": "みらいのために"
+  },
+  {
+   "display": "たたかいぬく",
+   "reading": "たたかいぬく"
+  },
+  {
+   "display": "さいごまで",
+   "reading": "さいごまで"
+  },
+  {
+   "display": "あきらめない",
+   "reading": "あきらめない"
+  },
+  {
+   "display": "まけない",
+   "reading": "まけない"
+  },
+  {
+   "display": "かつ",
+   "reading": "かつ"
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "id": "c2s3",
+ "name": "天空闘技場編 3: 系統",
+ "items": [
+  {
+   "display": "ウイング",
+   "reading": "ういんぐ"
+  },
+  {
+   "display": "ズシ",
+   "reading": "ずし"
+  },
+  {
+   "display": "ギド",
+   "reading": "ぎど"
+  },
+  {
+   "display": "サダソ",
+   "reading": "さだそ"
+  },
+  {
+   "display": "リールベルト",
+   "reading": "りーるべると"
+  },
+  {
+   "display": "ヒソカ",
+   "reading": "ひそか"
+  },
+  {
+   "display": "ゴン",
+   "reading": "ごん"
+  },
+  {
+   "display": "キルア",
+   "reading": "きるあ"
+  },
+  {
+   "display": "カストロ",
+   "reading": "かすとろ"
+  },
+  {
+   "display": "ココ",
+   "reading": "ここ"
+  },
+  {
+   "display": "しんりょうちりょうし",
+   "reading": "しんりょうちりょうし"
+  },
+  {
+   "display": "しんぱんいん",
+   "reading": "しんぱんいん"
+  },
+  {
+   "display": "かいせつしゃ",
+   "reading": "かいせつしゃ"
+  },
+  {
+   "display": "かんきゃく",
+   "reading": "かんきゃく"
+  },
+  {
+   "display": "とうぎしゃ",
+   "reading": "とうぎしゃ"
+  },
+  {
+   "display": "たいせんあいて",
+   "reading": "たいせんあいて"
+  },
+  {
+   "display": "ファイター",
+   "reading": "ふぁいたー"
+  },
+  {
+   "display": "チャンピオン",
+   "reading": "ちゃんぴおん"
+  },
+  {
+   "display": "しはんだい",
+   "reading": "しはんだい"
+  },
+  {
+   "display": "もんかせい",
+   "reading": "もんかせい"
+  },
+  {
+   "display": "でし",
+   "reading": "でし"
+  },
+  {
+   "display": "ししょう",
+   "reading": "ししょう"
+  },
+  {
+   "display": "らいばる",
+   "reading": "らいばる"
+  },
+  {
+   "display": "きょうてき",
+   "reading": "きょうてき"
+  },
+  {
+   "display": "しょしんしゃ",
+   "reading": "しょしんしゃ"
+  },
+  {
+   "display": "じょうきゅうしゃ",
+   "reading": "じょうきゅうしゃ"
+  },
+  {
+   "display": "プロ",
+   "reading": "ぷろ"
+  },
+  {
+   "display": "アマチュア",
+   "reading": "あまちゅあ"
+  },
+  {
+   "display": "つわもの",
+   "reading": "つわもの"
+  },
+  {
+   "display": "さいきょう",
+   "reading": "さいきょう"
+  },
+  {
+   "display": "むてき",
+   "reading": "むてき"
+  },
+  {
+   "display": "てんさい",
+   "reading": "てんさい"
+  },
+  {
+   "display": "しゅうねん",
+   "reading": "しゅうねん"
+  },
+  {
+   "display": "どりょく",
+   "reading": "どりょく"
+  },
+  {
+   "display": "こんじょう",
+   "reading": "こんじょう"
+  },
+  {
+   "display": "いし",
+   "reading": "いし"
+  },
+  {
+   "display": "けついのかたまり",
+   "reading": "けついのかたまり"
+  },
+  {
+   "display": "さいのうのめばえ",
+   "reading": "さいのうのめばえ"
+  },
+  {
+   "display": "せんしのこころ",
+   "reading": "せんしのこころ"
+  },
+  {
+   "display": "きおくそうしつ",
+   "reading": "きおくそうしつ"
+  },
+  {
+   "display": "ぎせいしゃ",
+   "reading": "ぎせいしゃ"
+  },
+  {
+   "display": "ひっとうしゃ",
+   "reading": "ひっとうしゃ"
+  },
+  {
+   "display": "むめいせんし",
+   "reading": "むめいせんし"
+  },
+  {
+   "display": "ゆうめいじん",
+   "reading": "ゆうめいじん"
+  },
+  {
+   "display": "きょうふのそんざい",
+   "reading": "きょうふのそんざい"
+  },
+  {
+   "display": "マジシャン",
+   "reading": "まじしゃん"
+  },
+  {
+   "display": "ころしや",
+   "reading": "ころしや"
+  },
+  {
+   "display": "いちりゅう",
+   "reading": "いちりゅう"
+  },
+  {
+   "display": "にりゅう",
+   "reading": "にりゅう"
+  },
+  {
+   "display": "さんりゅう",
+   "reading": "さんりゅう"
+  },
+  {
+   "display": "しんりゅう",
+   "reading": "しんりゅう"
+  },
+  {
+   "display": "ろうれんか",
+   "reading": "ろうれんか"
+  },
+  {
+   "display": "ベテラン",
+   "reading": "べてらん"
+  },
+  {
+   "display": "ルーキー",
+   "reading": "るーきー"
+  },
+  {
+   "display": "エース",
+   "reading": "えーす"
+  },
+  {
+   "display": "きばのぬけたおおかみ",
+   "reading": "きばのぬけたおおかみ"
+  },
+  {
+   "display": "ねんつかい",
+   "reading": "ねんつかい"
+  },
+  {
+   "display": "たたかいをのぞむ",
+   "reading": "たたかいをのぞむ"
+  },
+  {
+   "display": "えものをさがす",
+   "reading": "えものをさがす"
+  },
+  {
+   "display": "しんせだいのほし",
+   "reading": "しんせだいのほし"
+  }
+ ]
+}

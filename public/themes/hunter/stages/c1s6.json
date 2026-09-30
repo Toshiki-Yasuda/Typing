@@ -1,0 +1,246 @@
+{
+ "id": "c1s6",
+ "name": "ハンター試験編 6: ボスステージ",
+ "items": [
+  {
+   "display": "ゾルディックけ",
+   "reading": "ぞるでぃっくけ"
+  },
+  {
+   "display": "ククルーマウンテン",
+   "reading": "くくるーまうんてん"
+  },
+  {
+   "display": "ためしのもん",
+   "reading": "ためしのもん"
+  },
+  {
+   "display": "もん",
+   "reading": "もん"
+  },
+  {
+   "display": "しれんのみち",
+   "reading": "しれんのみち"
+  },
+  {
+   "display": "やしき",
+   "reading": "やしき"
+  },
+  {
+   "display": "あんさつしゃ",
+   "reading": "あんさつしゃ"
+  },
+  {
+   "display": "いちぞく",
+   "reading": "いちぞく"
+  },
+  {
+   "display": "きゅうしゅつ",
+   "reading": "きゅうしゅつ"
+  },
+  {
+   "display": "すくう",
+   "reading": "すくう"
+  },
+  {
+   "display": "シルバ",
+   "reading": "しるば"
+  },
+  {
+   "display": "ゼノ",
+   "reading": "ぜの"
+  },
+  {
+   "display": "キキョウ",
+   "reading": "ききょう"
+  },
+  {
+   "display": "ミルキ",
+   "reading": "みるき"
+  },
+  {
+   "display": "カルト",
+   "reading": "かると"
+  },
+  {
+   "display": "ゴトー",
+   "reading": "ごとー"
+  },
+  {
+   "display": "カナリア",
+   "reading": "かなりあ"
+  },
+  {
+   "display": "ゼブロ",
+   "reading": "ぜぶろ"
+  },
+  {
+   "display": "ミケ",
+   "reading": "みけ"
+  },
+  {
+   "display": "ばんけん",
+   "reading": "ばんけん"
+  },
+  {
+   "display": "おもさ",
+   "reading": "おもさ"
+  },
+  {
+   "display": "トン",
+   "reading": "とん"
+  },
+  {
+   "display": "よんトン",
+   "reading": "よんとん"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "おす",
+   "reading": "おす"
+  },
+  {
+   "display": "ひらく",
+   "reading": "ひらく"
+  },
+  {
+   "display": "とじる",
+   "reading": "とじる"
+  },
+  {
+   "display": "きんとれ",
+   "reading": "きんとれ"
+  },
+  {
+   "display": "トレーニング",
+   "reading": "とれーにんぐ"
+  },
+  {
+   "display": "きたえる",
+   "reading": "きたえる"
+  },
+  {
+   "display": "つよくなる",
+   "reading": "つよくなる"
+  },
+  {
+   "display": "じゅんび",
+   "reading": "じゅんび"
+  },
+  {
+   "display": "にしゅうかん",
+   "reading": "にしゅうかん"
+  },
+  {
+   "display": "まいにち",
+   "reading": "まいにち"
+  },
+  {
+   "display": "どりょく",
+   "reading": "どりょく"
+  },
+  {
+   "display": "せいこう",
+   "reading": "せいこう"
+  },
+  {
+   "display": "しっぱい",
+   "reading": "しっぱい"
+  },
+  {
+   "display": "あきらめない",
+   "reading": "あきらめない"
+  },
+  {
+   "display": "ともだちをたすける",
+   "reading": "ともだちをたすける"
+  },
+  {
+   "display": "ぜったいにあう",
+   "reading": "ぜったいにあう"
+  },
+  {
+   "display": "ようきゅう",
+   "reading": "ようきゅう"
+  },
+  {
+   "display": "こうしょう",
+   "reading": "こうしょう"
+  },
+  {
+   "display": "きょか",
+   "reading": "きょか"
+  },
+  {
+   "display": "きょひ",
+   "reading": "きょひ"
+  },
+  {
+   "display": "めんかい",
+   "reading": "めんかい"
+  },
+  {
+   "display": "でむかえ",
+   "reading": "でむかえ"
+  },
+  {
+   "display": "さいかい",
+   "reading": "さいかい"
+  },
+  {
+   "display": "キルアをつれていく",
+   "reading": "きるあをつれていく"
+  },
+  {
+   "display": "いっしょにでよう",
+   "reading": "いっしょにでよう"
+  },
+  {
+   "display": "そとのせかい",
+   "reading": "そとのせかい"
+  },
+  {
+   "display": "じゆうになる",
+   "reading": "じゆうになる"
+  },
+  {
+   "display": "つぎのぼうけん",
+   "reading": "つぎのぼうけん"
+  },
+  {
+   "display": "てんくうとうぎじょう",
+   "reading": "てんくうとうぎじょう"
+  },
+  {
+   "display": "ねん",
+   "reading": "ねん"
+  },
+  {
+   "display": "あたらしいちから",
+   "reading": "あたらしいちから"
+  },
+  {
+   "display": "しゅぎょう",
+   "reading": "しゅぎょう"
+  },
+  {
+   "display": "めざすもの",
+   "reading": "めざすもの"
+  },
+  {
+   "display": "ちちにあう",
+   "reading": "ちちにあう"
+  },
+  {
+   "display": "ぼうけんはつづく",
+   "reading": "ぼうけんはつづく"
+  },
+  {
+   "display": "いざてんくうへ",
+   "reading": "いざてんくうへ"
+  }
+ ]
+}

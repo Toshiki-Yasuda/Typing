@@ -1,0 +1,246 @@
+{
+ "id": "c3s3",
+ "name": "幻影旅団編 3: 念能力①",
+ "items": [
+  {
+   "display": "スキルハンター",
+   "reading": "すきるはんたー"
+  },
+  {
+   "display": "ぬすんだうでによる",
+   "reading": "ぬすんだうでによる"
+  },
+  {
+   "display": "ねんしじゅう",
+   "reading": "ねんしじゅう"
+  },
+  {
+   "display": "ダブルフェイス",
+   "reading": "だぶるふぇいす"
+  },
+  {
+   "display": "ビッグバンインパクト",
+   "reading": "びっぐばんいんぱくと"
+  },
+  {
+   "display": "メモリーボム",
+   "reading": "めもりーぼむ"
+  },
+  {
+   "display": "ブラックボイス",
+   "reading": "ぶらっくぼいす"
+  },
+  {
+   "display": "ギャラリーフェイク",
+   "reading": "ぎゃらりーふぇいく"
+  },
+  {
+   "display": "インドアフィッシュ",
+   "reading": "いんどあふぃっしゅ"
+  },
+  {
+   "display": "ペインパッカー",
+   "reading": "ぺいんぱっかー"
+  },
+  {
+   "display": "デメちゃん",
+   "reading": "でめちゃん"
+  },
+  {
+   "display": "ねんしをうばう",
+   "reading": "ねんしをうばう"
+  },
+  {
+   "display": "のうりょくをぬすむ",
+   "reading": "のうりょくをぬすむ"
+  },
+  {
+   "display": "じょうけん",
+   "reading": "じょうけん"
+  },
+  {
+   "display": "せいやく",
+   "reading": "せいやく"
+  },
+  {
+   "display": "ちかい",
+   "reading": "ちかい"
+  },
+  {
+   "display": "しばり",
+   "reading": "しばり"
+  },
+  {
+   "display": "リスク",
+   "reading": "りすく"
+  },
+  {
+   "display": "コピー",
+   "reading": "こぴー"
+  },
+  {
+   "display": "ふくせい",
+   "reading": "ふくせい"
+  },
+  {
+   "display": "にせもの",
+   "reading": "にせもの"
+  },
+  {
+   "display": "ほんもの",
+   "reading": "ほんもの"
+  },
+  {
+   "display": "あやつる",
+   "reading": "あやつる"
+  },
+  {
+   "display": "しはいする",
+   "reading": "しはいする"
+  },
+  {
+   "display": "そうさする",
+   "reading": "そうさする"
+  },
+  {
+   "display": "アンテナ",
+   "reading": "あんてな"
+  },
+  {
+   "display": "けいたいでんわ",
+   "reading": "けいたいでんわ"
+  },
+  {
+   "display": "じどうそうさ",
+   "reading": "じどうそうさ"
+  },
+  {
+   "display": "きおく",
+   "reading": "きおく"
+  },
+  {
+   "display": "よみとる",
+   "reading": "よみとる"
+  },
+  {
+   "display": "かこ",
+   "reading": "かこ"
+  },
+  {
+   "display": "げんざい",
+   "reading": "げんざい"
+  },
+  {
+   "display": "みらい",
+   "reading": "みらい"
+  },
+  {
+   "display": "よげん",
+   "reading": "よげん"
+  },
+  {
+   "display": "うんめい",
+   "reading": "うんめい"
+  },
+  {
+   "display": "さだめ",
+   "reading": "さだめ"
+  },
+  {
+   "display": "ほのお",
+   "reading": "ほのお"
+  },
+  {
+   "display": "たいよう",
+   "reading": "たいよう"
+  },
+  {
+   "display": "ライジングサン",
+   "reading": "らいじんぐさん"
+  },
+  {
+   "display": "いかりのちから",
+   "reading": "いかりのちから"
+  },
+  {
+   "display": "はかい",
+   "reading": "はかい"
+  },
+  {
+   "display": "ぜんめつ",
+   "reading": "ぜんめつ"
+  },
+  {
+   "display": "さいきょうのこうげき",
+   "reading": "さいきょうのこうげき"
+  },
+  {
+   "display": "いちげきひっさつ",
+   "reading": "いちげきひっさつ"
+  },
+  {
+   "display": "こぶし",
+   "reading": "こぶし"
+  },
+  {
+   "display": "パンチ",
+   "reading": "ぱんち"
+  },
+  {
+   "display": "なぐりつける",
+   "reading": "なぐりつける"
+  },
+  {
+   "display": "くだく",
+   "reading": "くだく"
+  },
+  {
+   "display": "かたな",
+   "reading": "かたな"
+  },
+  {
+   "display": "けん",
+   "reading": "けん"
+  },
+  {
+   "display": "きる",
+   "reading": "きる"
+  },
+  {
+   "display": "さく",
+   "reading": "さく"
+  },
+  {
+   "display": "そうじき",
+   "reading": "そうじき"
+  },
+  {
+   "display": "すいこむ",
+   "reading": "すいこむ"
+  },
+  {
+   "display": "はきだす",
+   "reading": "はきだす"
+  },
+  {
+   "display": "ねんじゅう",
+   "reading": "ねんじゅう"
+  },
+  {
+   "display": "おんがく",
+   "reading": "おんがく"
+  },
+  {
+   "display": "おと",
+   "reading": "おと"
+  },
+  {
+   "display": "ダンス",
+   "reading": "だんす"
+  },
+  {
+   "display": "バトルダンス",
+   "reading": "ばとるだんす"
+  }
+ ]
+}

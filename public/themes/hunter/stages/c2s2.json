@@ -1,0 +1,246 @@
+{
+ "id": "c2s2",
+ "name": "天空闘技場編 2: 四大行",
+ "items": [
+  {
+   "display": "きょうかけい",
+   "reading": "きょうかけい"
+  },
+  {
+   "display": "へんかけい",
+   "reading": "へんかけい"
+  },
+  {
+   "display": "ほうしゅつけい",
+   "reading": "ほうしゅつけい"
+  },
+  {
+   "display": "ぐげんかけい",
+   "reading": "ぐげんかけい"
+  },
+  {
+   "display": "そうさけい",
+   "reading": "そうさけい"
+  },
+  {
+   "display": "とくしつけい",
+   "reading": "とくしつけい"
+  },
+  {
+   "display": "すいえき",
+   "reading": "すいえき"
+  },
+  {
+   "display": "けいとう",
+   "reading": "けいとう"
+  },
+  {
+   "display": "あいしょう",
+   "reading": "あいしょう"
+  },
+  {
+   "display": "せいやく",
+   "reading": "せいやく"
+  },
+  {
+   "display": "みずけん",
+   "reading": "みずけん"
+  },
+  {
+   "display": "けいとうず",
+   "reading": "けいとうず"
+  },
+  {
+   "display": "せいかく",
+   "reading": "せいかく"
+  },
+  {
+   "display": "てきせい",
+   "reading": "てきせい"
+  },
+  {
+   "display": "ろっかく",
+   "reading": "ろっかく"
+  },
+  {
+   "display": "はんたいけい",
+   "reading": "はんたいけい"
+  },
+  {
+   "display": "となりけい",
+   "reading": "となりけい"
+  },
+  {
+   "display": "しゅとくりつ",
+   "reading": "しゅとくりつ"
+  },
+  {
+   "display": "いでん",
+   "reading": "いでん"
+  },
+  {
+   "display": "てきおう",
+   "reading": "てきおう"
+  },
+  {
+   "display": "ぶんるい",
+   "reading": "ぶんるい"
+  },
+  {
+   "display": "はんだん",
+   "reading": "はんだん"
+  },
+  {
+   "display": "せいしつ",
+   "reading": "せいしつ"
+  },
+  {
+   "display": "とくちょう",
+   "reading": "とくちょう"
+  },
+  {
+   "display": "けいこう",
+   "reading": "けいこう"
+  },
+  {
+   "display": "ぶんせき",
+   "reading": "ぶんせき"
+  },
+  {
+   "display": "のうりょく",
+   "reading": "のうりょく"
+  },
+  {
+   "display": "はってん",
+   "reading": "はってん"
+  },
+  {
+   "display": "みずのはんのう",
+   "reading": "みずのはんのう"
+  },
+  {
+   "display": "ろくしゅるい",
+   "reading": "ろくしゅるい"
+  },
+  {
+   "display": "けいとうしんだん",
+   "reading": "けいとうしんだん"
+  },
+  {
+   "display": "じぶんのけいとう",
+   "reading": "じぶんのけいとう"
+  },
+  {
+   "display": "つよみ",
+   "reading": "つよみ"
+  },
+  {
+   "display": "よわみ",
+   "reading": "よわみ"
+  },
+  {
+   "display": "バランス",
+   "reading": "ばらんす"
+  },
+  {
+   "display": "こうりつ",
+   "reading": "こうりつ"
+  },
+  {
+   "display": "しゅうとく",
+   "reading": "しゅうとく"
+  },
+  {
+   "display": "けいとうをしる",
+   "reading": "けいとうをしる"
+  },
+  {
+   "display": "にがてけいとう",
+   "reading": "にがてけいとう"
+  },
+  {
+   "display": "とくいけいとう",
+   "reading": "とくいけいとう"
+  },
+  {
+   "display": "ぶつりこうげき",
+   "reading": "ぶつりこうげき"
+  },
+  {
+   "display": "へんけい",
+   "reading": "へんけい"
+  },
+  {
+   "display": "とばす",
+   "reading": "とばす"
+  },
+  {
+   "display": "つくりだす",
+   "reading": "つくりだす"
+  },
+  {
+   "display": "あやつる",
+   "reading": "あやつる"
+  },
+  {
+   "display": "とくしゅ",
+   "reading": "とくしゅ"
+  },
+  {
+   "display": "ふしぎなちから",
+   "reading": "ふしぎなちから"
+  },
+  {
+   "display": "けいとうべつ",
+   "reading": "けいとうべつ"
+  },
+  {
+   "display": "わざのタイプ",
+   "reading": "わざのたいぷ"
+  },
+  {
+   "display": "じょうけん",
+   "reading": "じょうけん"
+  },
+  {
+   "display": "しばり",
+   "reading": "しばり"
+  },
+  {
+   "display": "ちかい",
+   "reading": "ちかい"
+  },
+  {
+   "display": "リスク",
+   "reading": "りすく"
+  },
+  {
+   "display": "リターン",
+   "reading": "りたーん"
+  },
+  {
+   "display": "だいしょう",
+   "reading": "だいしょう"
+  },
+  {
+   "display": "こうか",
+   "reading": "こうか"
+  },
+  {
+   "display": "いりょく",
+   "reading": "いりょく"
+  },
+  {
+   "display": "せいやくとちかい",
+   "reading": "せいやくとちかい"
+  },
+  {
+   "display": "のうりょくかいはつ",
+   "reading": "のうりょくかいはつ"
+  },
+  {
+   "display": "けいとうのそうかん",
+   "reading": "けいとうのそうかん"
+  }
+ ]
+}

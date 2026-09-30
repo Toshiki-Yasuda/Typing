@@ -1,0 +1,246 @@
+{
+ "id": "c7s4",
+ "name": "選挙・暗黒大陸編 4: 王位継承戦",
+ "items": [
+  {
+   "display": "カキン",
+   "reading": "かきん"
+  },
+  {
+   "display": "カキンていこく",
+   "reading": "かきんていこく"
+  },
+  {
+   "display": "おういけいしょうせん",
+   "reading": "おういけいしょうせん"
+  },
+  {
+   "display": "ベンジャミン",
+   "reading": "べんじゃみん"
+  },
+  {
+   "display": "カミーラ",
+   "reading": "かみーら"
+  },
+  {
+   "display": "チョウライ",
+   "reading": "ちょうらい"
+  },
+  {
+   "display": "ツェリードニヒ",
+   "reading": "つぇりーどにひ"
+  },
+  {
+   "display": "ツベッパ",
+   "reading": "つべっぱ"
+  },
+  {
+   "display": "タイソン",
+   "reading": "たいそん"
+  },
+  {
+   "display": "ルズールス",
+   "reading": "るずーるす"
+  },
+  {
+   "display": "サレサレ",
+   "reading": "されされ"
+  },
+  {
+   "display": "ハルケンブルグ",
+   "reading": "はるけんぶるぐ"
+  },
+  {
+   "display": "カチョウ",
+   "reading": "かちょう"
+  },
+  {
+   "display": "フウゲツ",
+   "reading": "ふうげつ"
+  },
+  {
+   "display": "マラヤーム",
+   "reading": "まらやーむ"
+  },
+  {
+   "display": "モモゼ",
+   "reading": "ももぜ"
+  },
+  {
+   "display": "ワブル",
+   "reading": "わぶる"
+  },
+  {
+   "display": "おうじ",
+   "reading": "おうじ"
+  },
+  {
+   "display": "だいいちおうじ",
+   "reading": "だいいちおうじ"
+  },
+  {
+   "display": "おう",
+   "reading": "おう"
+  },
+  {
+   "display": "おうい",
+   "reading": "おうい"
+  },
+  {
+   "display": "けいしょう",
+   "reading": "けいしょう"
+  },
+  {
+   "display": "つぐ",
+   "reading": "つぐ"
+  },
+  {
+   "display": "そうぞく",
+   "reading": "そうぞく"
+  },
+  {
+   "display": "せんそう",
+   "reading": "せんそう"
+  },
+  {
+   "display": "あらそい",
+   "reading": "あらそい"
+  },
+  {
+   "display": "きょうそう",
+   "reading": "きょうそう"
+  },
+  {
+   "display": "ライバル",
+   "reading": "らいばる"
+  },
+  {
+   "display": "てき",
+   "reading": "てき"
+  },
+  {
+   "display": "あじ",
+   "reading": "あじ"
+  },
+  {
+   "display": "ねんじゅう",
+   "reading": "ねんじゅう"
+  },
+  {
+   "display": "しもべ",
+   "reading": "しもべ"
+  },
+  {
+   "display": "けらい",
+   "reading": "けらい"
+  },
+  {
+   "display": "ぶか",
+   "reading": "ぶか"
+  },
+  {
+   "display": "ぶしょう",
+   "reading": "ぶしょう"
+  },
+  {
+   "display": "しんえい",
+   "reading": "しんえい"
+  },
+  {
+   "display": "ごえい",
+   "reading": "ごえい"
+  },
+  {
+   "display": "ぼでぃーがーど",
+   "reading": "ぼでぃーがーど"
+  },
+  {
+   "display": "よけんし",
+   "reading": "よけんし"
+  },
+  {
+   "display": "せんこく",
+   "reading": "せんこく"
+  },
+  {
+   "display": "うらない",
+   "reading": "うらない"
+  },
+  {
+   "display": "よげん",
+   "reading": "よげん"
+  },
+  {
+   "display": "みらい",
+   "reading": "みらい"
+  },
+  {
+   "display": "うんめい",
+   "reading": "うんめい"
+  },
+  {
+   "display": "さだめ",
+   "reading": "さだめ"
+  },
+  {
+   "display": "せんたくし",
+   "reading": "せんたくし"
+  },
+  {
+   "display": "しのしあい",
+   "reading": "しのしあい"
+  },
+  {
+   "display": "いのちがけ",
+   "reading": "いのちがけ"
+  },
+  {
+   "display": "ブラックホエールごう",
+   "reading": "ぶらっくほえーるごう"
+  },
+  {
+   "display": "ふね",
+   "reading": "ふね"
+  },
+  {
+   "display": "せん",
+   "reading": "せん"
+  },
+  {
+   "display": "せんない",
+   "reading": "せんない"
+  },
+  {
+   "display": "こうかい",
+   "reading": "こうかい"
+  },
+  {
+   "display": "たび",
+   "reading": "たび"
+  },
+  {
+   "display": "こうろ",
+   "reading": "こうろ"
+  },
+  {
+   "display": "もくてきち",
+   "reading": "もくてきち"
+  },
+  {
+   "display": "しゅっぱつ",
+   "reading": "しゅっぱつ"
+  },
+  {
+   "display": "とうちゃく",
+   "reading": "とうちゃく"
+  },
+  {
+   "display": "かんせい",
+   "reading": "かんせい"
+  },
+  {
+   "display": "ついてる",
+   "reading": "ついてる"
+  }
+ ]
+}

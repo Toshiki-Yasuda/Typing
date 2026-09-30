@@ -1,0 +1,246 @@
+{
+ "id": "c7s3",
+ "name": "選挙・暗黒大陸編 3: 暗黒大陸の脅威",
+ "items": [
+  {
+   "display": "あんこくたいりく",
+   "reading": "あんこくたいりく"
+  },
+  {
+   "display": "ごだいやくさい",
+   "reading": "ごだいやくさい"
+  },
+  {
+   "display": "ブリオン",
+   "reading": "ぶりおん"
+  },
+  {
+   "display": "アイ",
+   "reading": "あい"
+  },
+  {
+   "display": "ヘルベル",
+   "reading": "へるべる"
+  },
+  {
+   "display": "パプ",
+   "reading": "ぱぷ"
+  },
+  {
+   "display": "ゾバエびょう",
+   "reading": "ぞばえびょう"
+  },
+  {
+   "display": "しんたいりく",
+   "reading": "しんたいりく"
+  },
+  {
+   "display": "みちのせかい",
+   "reading": "みちのせかい"
+  },
+  {
+   "display": "たんけん",
+   "reading": "たんけん"
+  },
+  {
+   "display": "ぼうけん",
+   "reading": "ぼうけん"
+  },
+  {
+   "display": "はっけん",
+   "reading": "はっけん"
+  },
+  {
+   "display": "みしょう",
+   "reading": "みしょう"
+  },
+  {
+   "display": "みち",
+   "reading": "みち"
+  },
+  {
+   "display": "ぶっきみ",
+   "reading": "ぶっきみ"
+  },
+  {
+   "display": "おそろしい",
+   "reading": "おそろしい"
+  },
+  {
+   "display": "きょうふ",
+   "reading": "きょうふ"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "きょうい",
+   "reading": "きょうい"
+  },
+  {
+   "display": "いがい",
+   "reading": "いがい"
+  },
+  {
+   "display": "さいがい",
+   "reading": "さいがい"
+  },
+  {
+   "display": "やくさい",
+   "reading": "やくさい"
+  },
+  {
+   "display": "しっぺい",
+   "reading": "しっぺい"
+  },
+  {
+   "display": "びょうき",
+   "reading": "びょうき"
+  },
+  {
+   "display": "かんせん",
+   "reading": "かんせん"
+  },
+  {
+   "display": "でんせんびょう",
+   "reading": "でんせんびょう"
+  },
+  {
+   "display": "うつる",
+   "reading": "うつる"
+  },
+  {
+   "display": "ひろがる",
+   "reading": "ひろがる"
+  },
+  {
+   "display": "ひろめる",
+   "reading": "ひろめる"
+  },
+  {
+   "display": "しぼう",
+   "reading": "しぼう"
+  },
+  {
+   "display": "しぼうりつ",
+   "reading": "しぼうりつ"
+  },
+  {
+   "display": "せいぞんりつ",
+   "reading": "せいぞんりつ"
+  },
+  {
+   "display": "いきのこる",
+   "reading": "いきのこる"
+  },
+  {
+   "display": "たおれる",
+   "reading": "たおれる"
+  },
+  {
+   "display": "めつぼう",
+   "reading": "めつぼう"
+  },
+  {
+   "display": "ぜつめつ",
+   "reading": "ぜつめつ"
+  },
+  {
+   "display": "きょだい",
+   "reading": "きょだい"
+  },
+  {
+   "display": "きょだいせいぶつ",
+   "reading": "きょだいせいぶつ"
+  },
+  {
+   "display": "モンスター",
+   "reading": "もんすたー"
+  },
+  {
+   "display": "ばけもの",
+   "reading": "ばけもの"
+  },
+  {
+   "display": "いきもの",
+   "reading": "いきもの"
+  },
+  {
+   "display": "せいぶつ",
+   "reading": "せいぶつ"
+  },
+  {
+   "display": "しゅぞく",
+   "reading": "しゅぞく"
+  },
+  {
+   "display": "たね",
+   "reading": "たね"
+  },
+  {
+   "display": "しんか",
+   "reading": "しんか"
+  },
+  {
+   "display": "へんい",
+   "reading": "へんい"
+  },
+  {
+   "display": "きせい",
+   "reading": "きせい"
+  },
+  {
+   "display": "きせいちゅう",
+   "reading": "きせいちゅう"
+  },
+  {
+   "display": "しはい",
+   "reading": "しはい"
+  },
+  {
+   "display": "あやつる",
+   "reading": "あやつる"
+  },
+  {
+   "display": "のっとる",
+   "reading": "のっとる"
+  },
+  {
+   "display": "じゆう",
+   "reading": "じゆう"
+  },
+  {
+   "display": "そうさ",
+   "reading": "そうさ"
+  },
+  {
+   "display": "えいきょう",
+   "reading": "えいきょう"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "ちしき",
+   "reading": "ちしき"
+  },
+  {
+   "display": "ちえ",
+   "reading": "ちえ"
+  },
+  {
+   "display": "たいさく",
+   "reading": "たいさく"
+  },
+  {
+   "display": "たいこう",
+   "reading": "たいこう"
+  },
+  {
+   "display": "ちょうせん",
+   "reading": "ちょうせん"
+  }
+ ]
+}

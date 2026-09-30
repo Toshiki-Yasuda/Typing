@@ -1,0 +1,246 @@
+{
+ "id": "c3s6",
+ "name": "幻影旅団編 6: ボスステージ",
+ "items": [
+  {
+   "display": "たたかいのはじまり",
+   "reading": "たたかいのはじまり"
+  },
+  {
+   "display": "バンジーガム",
+   "reading": "ばんじーがむ"
+  },
+  {
+   "display": "ドッキリテクスチャー",
+   "reading": "どっきりてくすちゃー"
+  },
+  {
+   "display": "トランプ",
+   "reading": "とらんぷ"
+  },
+  {
+   "display": "きえるマジック",
+   "reading": "きえるまじっく"
+  },
+  {
+   "display": "ふいうち",
+   "reading": "ふいうち"
+  },
+  {
+   "display": "たたかいのよろこび",
+   "reading": "たたかいのよろこび"
+  },
+  {
+   "display": "きょうてき",
+   "reading": "きょうてき"
+  },
+  {
+   "display": "さいきょう",
+   "reading": "さいきょう"
+  },
+  {
+   "display": "しょうぶ",
+   "reading": "しょうぶ"
+  },
+  {
+   "display": "いのちをかける",
+   "reading": "いのちをかける"
+  },
+  {
+   "display": "きょうふをのりこえる",
+   "reading": "きょうふをのりこえる"
+  },
+  {
+   "display": "つよくなる",
+   "reading": "つよくなる"
+  },
+  {
+   "display": "せいちょうする",
+   "reading": "せいちょうする"
+  },
+  {
+   "display": "こえる",
+   "reading": "こえる"
+  },
+  {
+   "display": "かつ",
+   "reading": "かつ"
+  },
+  {
+   "display": "まける",
+   "reading": "まける"
+  },
+  {
+   "display": "いきのこる",
+   "reading": "いきのこる"
+  },
+  {
+   "display": "しぬ",
+   "reading": "しぬ"
+  },
+  {
+   "display": "ころす",
+   "reading": "ころす"
+  },
+  {
+   "display": "たおす",
+   "reading": "たおす"
+  },
+  {
+   "display": "やぶる",
+   "reading": "やぶる"
+  },
+  {
+   "display": "うちまかす",
+   "reading": "うちまかす"
+  },
+  {
+   "display": "ぜっとう",
+   "reading": "ぜっとう"
+  },
+  {
+   "display": "げきとう",
+   "reading": "げきとう"
+  },
+  {
+   "display": "しとう",
+   "reading": "しとう"
+  },
+  {
+   "display": "けっせん",
+   "reading": "けっせん"
+  },
+  {
+   "display": "さいしゅうけっせん",
+   "reading": "さいしゅうけっせん"
+  },
+  {
+   "display": "ラストバトル",
+   "reading": "らすとばとる"
+  },
+  {
+   "display": "クライマックス",
+   "reading": "くらいまっくす"
+  },
+  {
+   "display": "ちょうじょう",
+   "reading": "ちょうじょう"
+  },
+  {
+   "display": "てっぺん",
+   "reading": "てっぺん"
+  },
+  {
+   "display": "さいこう",
+   "reading": "さいこう"
+  },
+  {
+   "display": "けっか",
+   "reading": "けっか"
+  },
+  {
+   "display": "しょうり",
+   "reading": "しょうり"
+  },
+  {
+   "display": "はいぼく",
+   "reading": "はいぼく"
+  },
+  {
+   "display": "ひきわけ",
+   "reading": "ひきわけ"
+  },
+  {
+   "display": "きまり",
+   "reading": "きまり"
+  },
+  {
+   "display": "おわり",
+   "reading": "おわり"
+  },
+  {
+   "display": "はじまり",
+   "reading": "はじまり"
+  },
+  {
+   "display": "つぎのしょうぶ",
+   "reading": "つぎのしょうぶ"
+  },
+  {
+   "display": "また",
+   "reading": "また"
+  },
+  {
+   "display": "ふたたび",
+   "reading": "ふたたび"
+  },
+  {
+   "display": "さいかい",
+   "reading": "さいかい"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  },
+  {
+   "display": "ちかい",
+   "reading": "ちかい"
+  },
+  {
+   "display": "おもい",
+   "reading": "おもい"
+  },
+  {
+   "display": "きもち",
+   "reading": "きもち"
+  },
+  {
+   "display": "こころ",
+   "reading": "こころ"
+  },
+  {
+   "display": "たましい",
+   "reading": "たましい"
+  },
+  {
+   "display": "せいしん",
+   "reading": "せいしん"
+  },
+  {
+   "display": "いし",
+   "reading": "いし"
+  },
+  {
+   "display": "けつい",
+   "reading": "けつい"
+  },
+  {
+   "display": "かくご",
+   "reading": "かくご"
+  },
+  {
+   "display": "しんねん",
+   "reading": "しんねん"
+  },
+  {
+   "display": "ゆめ",
+   "reading": "ゆめ"
+  },
+  {
+   "display": "もくひょう",
+   "reading": "もくひょう"
+  },
+  {
+   "display": "ゴール",
+   "reading": "ごーる"
+  },
+  {
+   "display": "つぎのステージへ",
+   "reading": "つぎのすてーじへ"
+  },
+  {
+   "display": "ステージクリア",
+   "reading": "すてーじくりあ"
+  }
+ ]
+}

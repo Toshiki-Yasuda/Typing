@@ -1,0 +1,246 @@
+{
+ "id": "c3s1",
+ "name": "幻影旅団編 1: 旅団メンバー",
+ "items": [
+  {
+   "display": "クロロ",
+   "reading": "くろろ"
+  },
+  {
+   "display": "ヒソカ",
+   "reading": "ひそか"
+  },
+  {
+   "display": "マチ",
+   "reading": "まち"
+  },
+  {
+   "display": "フェイタン",
+   "reading": "ふぇいたん"
+  },
+  {
+   "display": "シャルナーク",
+   "reading": "しゃるなーく"
+  },
+  {
+   "display": "フランクリン",
+   "reading": "ふらんくりん"
+  },
+  {
+   "display": "ノブナガ",
+   "reading": "のぶなが"
+  },
+  {
+   "display": "ウボォーギン",
+   "reading": "うぼぉーぎん"
+  },
+  {
+   "display": "パクノダ",
+   "reading": "ぱくのだ"
+  },
+  {
+   "display": "コルトピ",
+   "reading": "こるとぴ"
+  },
+  {
+   "display": "ボノレノフ",
+   "reading": "ぼのれのふ"
+  },
+  {
+   "display": "シズク",
+   "reading": "しずく"
+  },
+  {
+   "display": "カルト",
+   "reading": "かると"
+  },
+  {
+   "display": "だんちょう",
+   "reading": "だんちょう"
+  },
+  {
+   "display": "げんえいりょだん",
+   "reading": "げんえいりょだん"
+  },
+  {
+   "display": "じゅうさんにん",
+   "reading": "じゅうさんにん"
+  },
+  {
+   "display": "くも",
+   "reading": "くも"
+  },
+  {
+   "display": "あし",
+   "reading": "あし"
+  },
+  {
+   "display": "ナンバー",
+   "reading": "なんばー"
+  },
+  {
+   "display": "いれずみ",
+   "reading": "いれずみ"
+  },
+  {
+   "display": "りゅうせいがい",
+   "reading": "りゅうせいがい"
+  },
+  {
+   "display": "メテオシティ",
+   "reading": "めておしてぃ"
+  },
+  {
+   "display": "ぬすっと",
+   "reading": "ぬすっと"
+  },
+  {
+   "display": "とうぞくだん",
+   "reading": "とうぞくだん"
+  },
+  {
+   "display": "さつじんしゅうだん",
+   "reading": "さつじんしゅうだん"
+  },
+  {
+   "display": "Aきゅうしめい",
+   "reading": "えーきゅうしめい"
+  },
+  {
+   "display": "けんじゃ",
+   "reading": "けんじゃ"
+  },
+  {
+   "display": "きょうてき",
+   "reading": "きょうてき"
+  },
+  {
+   "display": "さいあく",
+   "reading": "さいあく"
+  },
+  {
+   "display": "おそろしい",
+   "reading": "おそろしい"
+  },
+  {
+   "display": "ひじょう",
+   "reading": "ひじょう"
+  },
+  {
+   "display": "れいこく",
+   "reading": "れいこく"
+  },
+  {
+   "display": "ざんぎゃく",
+   "reading": "ざんぎゃく"
+  },
+  {
+   "display": "きけんじんぶつ",
+   "reading": "きけんじんぶつ"
+  },
+  {
+   "display": "おたずねもの",
+   "reading": "おたずねもの"
+  },
+  {
+   "display": "ほうしゅうきん",
+   "reading": "ほうしゅうきん"
+  },
+  {
+   "display": "ブラックリスト",
+   "reading": "ぶらっくりすと"
+  },
+  {
+   "display": "しょうたいふめい",
+   "reading": "しょうたいふめい"
+  },
+  {
+   "display": "なぞのしゅうだん",
+   "reading": "なぞのしゅうだん"
+  },
+  {
+   "display": "きょうふのたいしょう",
+   "reading": "きょうふのたいしょう"
+  },
+  {
+   "display": "ちゅうせいしん",
+   "reading": "ちゅうせいしん"
+  },
+  {
+   "display": "けっそく",
+   "reading": "けっそく"
+  },
+  {
+   "display": "だんけつりょく",
+   "reading": "だんけつりょく"
+  },
+  {
+   "display": "なかまいしき",
+   "reading": "なかまいしき"
+  },
+  {
+   "display": "じこぎせい",
+   "reading": "じこぎせい"
+  },
+  {
+   "display": "うらぎりもの",
+   "reading": "うらぎりもの"
+  },
+  {
+   "display": "しけいしっこう",
+   "reading": "しけいしっこう"
+  },
+  {
+   "display": "おきて",
+   "reading": "おきて"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "めいれい",
+   "reading": "めいれい"
+  },
+  {
+   "display": "したがう",
+   "reading": "したがう"
+  },
+  {
+   "display": "そむく",
+   "reading": "そむく"
+  },
+  {
+   "display": "あつまる",
+   "reading": "あつまる"
+  },
+  {
+   "display": "ちらばる",
+   "reading": "ちらばる"
+  },
+  {
+   "display": "かくれる",
+   "reading": "かくれる"
+  },
+  {
+   "display": "ねらう",
+   "reading": "ねらう"
+  },
+  {
+   "display": "うばう",
+   "reading": "うばう"
+  },
+  {
+   "display": "ころす",
+   "reading": "ころす"
+  },
+  {
+   "display": "はかいする",
+   "reading": "はかいする"
+  },
+  {
+   "display": "きょうふをあたえる",
+   "reading": "きょうふをあたえる"
+  }
+ ]
+}

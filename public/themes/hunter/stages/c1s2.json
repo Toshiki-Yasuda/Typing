@@ -1,0 +1,246 @@
+{
+ "id": "c1s2",
+ "name": "ハンター試験編 2: ホームポジション",
+ "items": [
+  {
+   "display": "マラソン",
+   "reading": "まらそん"
+  },
+  {
+   "display": "はしる",
+   "reading": "はしる"
+  },
+  {
+   "display": "たいりょく",
+   "reading": "たいりょく"
+  },
+  {
+   "display": "きょり",
+   "reading": "きょり"
+  },
+  {
+   "display": "ぬまちたい",
+   "reading": "ぬまちたい"
+  },
+  {
+   "display": "ちかどう",
+   "reading": "ちかどう"
+  },
+  {
+   "display": "かいだん",
+   "reading": "かいだん"
+  },
+  {
+   "display": "ゴール",
+   "reading": "ごーる"
+  },
+  {
+   "display": "リタイア",
+   "reading": "りたいあ"
+  },
+  {
+   "display": "だつらく",
+   "reading": "だつらく"
+  },
+  {
+   "display": "ぬまのぬし",
+   "reading": "ぬまのぬし"
+  },
+  {
+   "display": "まねっこ",
+   "reading": "まねっこ"
+  },
+  {
+   "display": "にせもの",
+   "reading": "にせもの"
+  },
+  {
+   "display": "みわける",
+   "reading": "みわける"
+  },
+  {
+   "display": "きり",
+   "reading": "きり"
+  },
+  {
+   "display": "りょうり",
+   "reading": "りょうり"
+  },
+  {
+   "display": "ぶたのまるやき",
+   "reading": "ぶたのまるやき"
+  },
+  {
+   "display": "すし",
+   "reading": "すし"
+  },
+  {
+   "display": "ざいりょう",
+   "reading": "ざいりょう"
+  },
+  {
+   "display": "さかな",
+   "reading": "さかな"
+  },
+  {
+   "display": "グルメハンター",
+   "reading": "ぐるめはんたー"
+  },
+  {
+   "display": "しんさ",
+   "reading": "しんさ"
+  },
+  {
+   "display": "ごうかく",
+   "reading": "ごうかく"
+  },
+  {
+   "display": "ふごうかく",
+   "reading": "ふごうかく"
+  },
+  {
+   "display": "やりなおし",
+   "reading": "やりなおし"
+  },
+  {
+   "display": "やま",
+   "reading": "やま"
+  },
+  {
+   "display": "がけ",
+   "reading": "がけ"
+  },
+  {
+   "display": "たまご",
+   "reading": "たまご"
+  },
+  {
+   "display": "クモワシ",
+   "reading": "くもわし"
+  },
+  {
+   "display": "とぶ",
+   "reading": "とぶ"
+  },
+  {
+   "display": "きんちょう",
+   "reading": "きんちょう"
+  },
+  {
+   "display": "つかれ",
+   "reading": "つかれ"
+  },
+  {
+   "display": "きつい",
+   "reading": "きつい"
+  },
+  {
+   "display": "あきらめない",
+   "reading": "あきらめない"
+  },
+  {
+   "display": "がんばる",
+   "reading": "がんばる"
+  },
+  {
+   "display": "たえる",
+   "reading": "たえる"
+  },
+  {
+   "display": "のりこえる",
+   "reading": "のりこえる"
+  },
+  {
+   "display": "ついていく",
+   "reading": "ついていく"
+  },
+  {
+   "display": "おいつく",
+   "reading": "おいつく"
+  },
+  {
+   "display": "さきにすすむ",
+   "reading": "さきにすすむ"
+  },
+  {
+   "display": "ぼうがい",
+   "reading": "ぼうがい"
+  },
+  {
+   "display": "わな",
+   "reading": "わな"
+  },
+  {
+   "display": "さぎし",
+   "reading": "さぎし"
+  },
+  {
+   "display": "げざいいり",
+   "reading": "げざいいり"
+  },
+  {
+   "display": "ジュース",
+   "reading": "じゅーす"
+  },
+  {
+   "display": "じかん",
+   "reading": "じかん"
+  },
+  {
+   "display": "せいげん",
+   "reading": "せいげん"
+  },
+  {
+   "display": "じょうけん",
+   "reading": "じょうけん"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "クリア",
+   "reading": "くりあ"
+  },
+  {
+   "display": "いちじしけん",
+   "reading": "いちじしけん"
+  },
+  {
+   "display": "しけんかんについてこい",
+   "reading": "しけんかんについてこい"
+  },
+  {
+   "display": "まだまだ",
+   "reading": "まだまだ"
+  },
+  {
+   "display": "ここまでだ",
+   "reading": "ここまでだ"
+  },
+  {
+   "display": "さいごまで",
+   "reading": "さいごまで"
+  },
+  {
+   "display": "かならずうかる",
+   "reading": "かならずうかる"
+  },
+  {
+   "display": "ぜったいにあきらめない",
+   "reading": "ぜったいにあきらめない"
+  },
+  {
+   "display": "みんなでいっしょに",
+   "reading": "みんなでいっしょに"
+  },
+  {
+   "display": "つぎのしけん",
+   "reading": "つぎのしけん"
+  },
+  {
+   "display": "じゅんびはいいか",
+   "reading": "じゅんびはいいか"
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "id": "c5s4",
+ "name": "G・I編 4: 念能力",
+ "items": [
+  {
+   "display": "ボマー",
+   "reading": "ぼまー"
+  },
+  {
+   "display": "いっしょくそくはつ",
+   "reading": "いっしょくそくはつ"
+  },
+  {
+   "display": "しろいゴリラ",
+   "reading": "しろいごりら"
+  },
+  {
+   "display": "くろいゴリラ",
+   "reading": "くろいごりら"
+  },
+  {
+   "display": "ピアノマッサージ",
+   "reading": "ぴあのまっさーじ"
+  },
+  {
+   "display": "マジカルエステ",
+   "reading": "まじかるえすて"
+  },
+  {
+   "display": "クッキーちゃん",
+   "reading": "くっきーちゃん"
+  },
+  {
+   "display": "クレイジースロット",
+   "reading": "くれいじーすろっと"
+  },
+  {
+   "display": "ジャジャンケン",
+   "reading": "じゃじゃんけん"
+  },
+  {
+   "display": "グー",
+   "reading": "ぐー"
+  },
+  {
+   "display": "チー",
+   "reading": "ちー"
+  },
+  {
+   "display": "パー",
+   "reading": "ぱー"
+  },
+  {
+   "display": "きょうかけい",
+   "reading": "きょうかけい"
+  },
+  {
+   "display": "へんかけい",
+   "reading": "へんかけい"
+  },
+  {
+   "display": "ほうしゅつけい",
+   "reading": "ほうしゅつけい"
+  },
+  {
+   "display": "そうさけい",
+   "reading": "そうさけい"
+  },
+  {
+   "display": "ぐげんかけい",
+   "reading": "ぐげんかけい"
+  },
+  {
+   "display": "とくしつけい",
+   "reading": "とくしつけい"
+  },
+  {
+   "display": "ばくだん",
+   "reading": "ばくだん"
+  },
+  {
+   "display": "ばくはつ",
+   "reading": "ばくはつ"
+  },
+  {
+   "display": "タイマー",
+   "reading": "たいまー"
+  },
+  {
+   "display": "じげんばくだん",
+   "reading": "じげんばくだん"
+  },
+  {
+   "display": "しかけ",
+   "reading": "しかけ"
+  },
+  {
+   "display": "きどう",
+   "reading": "きどう"
+  },
+  {
+   "display": "かいじょ",
+   "reading": "かいじょ"
+  },
+  {
+   "display": "ていし",
+   "reading": "ていし"
+  },
+  {
+   "display": "ごりら",
+   "reading": "ごりら"
+  },
+  {
+   "display": "ぐげんかする",
+   "reading": "ぐげんかする"
+  },
+  {
+   "display": "しょうかんする",
+   "reading": "しょうかんする"
+  },
+  {
+   "display": "つくりだす",
+   "reading": "つくりだす"
+  },
+  {
+   "display": "しゅぎょう",
+   "reading": "しゅぎょう"
+  },
+  {
+   "display": "ドッジボール",
+   "reading": "どっじぼーる"
+  },
+  {
+   "display": "しあい",
+   "reading": "しあい"
+  },
+  {
+   "display": "きょうぎ",
+   "reading": "きょうぎ"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "はんそく",
+   "reading": "はんそく"
+  },
+  {
+   "display": "セーフ",
+   "reading": "せーふ"
+  },
+  {
+   "display": "アウト",
+   "reading": "あうと"
+  },
+  {
+   "display": "ボール",
+   "reading": "ぼーる"
+  },
+  {
+   "display": "なげる",
+   "reading": "なげる"
+  },
+  {
+   "display": "うける",
+   "reading": "うける"
+  },
+  {
+   "display": "キャッチ",
+   "reading": "きゃっち"
+  },
+  {
+   "display": "パス",
+   "reading": "ぱす"
+  },
+  {
+   "display": "シュート",
+   "reading": "しゅーと"
+  },
+  {
+   "display": "スパイク",
+   "reading": "すぱいく"
+  },
+  {
+   "display": "いりょく",
+   "reading": "いりょく"
+  },
+  {
+   "display": "はかい",
+   "reading": "はかい"
+  },
+  {
+   "display": "ダメージ",
+   "reading": "だめーじ"
+  },
+  {
+   "display": "しょうげき",
+   "reading": "しょうげき"
+  },
+  {
+   "display": "インパクト",
+   "reading": "いんぱくと"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "スピード",
+   "reading": "すぴーど"
+  },
+  {
+   "display": "テクニック",
+   "reading": "てくにっく"
+  },
+  {
+   "display": "せいど",
+   "reading": "せいど"
+  },
+  {
+   "display": "コントロール",
+   "reading": "こんとろーる"
+  },
+  {
+   "display": "ねらう",
+   "reading": "ねらう"
+  },
+  {
+   "display": "めいちゅう",
+   "reading": "めいちゅう"
+  },
+  {
+   "display": "ヒット",
+   "reading": "ひっと"
+  },
+  {
+   "display": "ミス",
+   "reading": "みす"
+  },
+  {
+   "display": "かわす",
+   "reading": "かわす"
+  }
+ ]
+}

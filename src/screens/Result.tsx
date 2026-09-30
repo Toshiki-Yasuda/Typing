@@ -8,6 +8,7 @@ import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
+import { StageResultPanel } from './stage/StageResultPanel';
 import { PageHeading } from './PageHeading';
 import { RankPanel } from './RankPanel';
 
@@ -68,6 +69,10 @@ export function Result() {
   const outcome = parseBossOutcome(location.state);
   const boss = outcome ? resolveTheme(settings.themeId, loadUnlocked()).bosses?.find((b) => b.id === outcome.id) : undefined;
   const m = summarize(record);
+  const theme = resolveTheme(settings.themeId, loadUnlocked());
+  const stageId = record.mode.startsWith('stage:') ? record.mode.slice('stage:'.length) : null;
+  const stageChapter = stageId ? theme.chapters?.find((c) => c.stages.some((s) => s.id === stageId)) : undefined;
+  const stage = stageChapter?.stages.find((s) => s.id === stageId);
   const weak = [...keyStats(record.keystrokes).values()]
     .filter((k) => k.misses > 0)
     .sort((a, b) => b.misses - a.misses || b.attempts - a.attempts)
@@ -82,6 +87,7 @@ export function Result() {
     <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-8 p-8">
       <PageHeading title="結果" className="text-2xl font-bold" />
       {boss && outcome && <BossResultPanel boss={boss} outcome={outcome} />}
+      {stageChapter && stage && <StageResultPanel chapter={stageChapter} stage={stage} accuracy={m.accuracy} />}
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         <Stat label="速度（実効）" value={fmt(m.kpm)} unit="打鍵/分" />
         <Stat label="正確率" value={pct(m.accuracy)} />

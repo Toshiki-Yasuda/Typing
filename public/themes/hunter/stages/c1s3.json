@@ -1,0 +1,246 @@
+{
+ "id": "c1s3",
+ "name": "ハンター試験編 3: 短い名前",
+ "items": [
+  {
+   "display": "トリックタワー",
+   "reading": "とりっくたわー"
+  },
+  {
+   "display": "とう",
+   "reading": "とう"
+  },
+  {
+   "display": "しゅうじん",
+   "reading": "しゅうじん"
+  },
+  {
+   "display": "たいけつ",
+   "reading": "たいけつ"
+  },
+  {
+   "display": "とうひょう",
+   "reading": "とうひょう"
+  },
+  {
+   "display": "たすうけつ",
+   "reading": "たすうけつ"
+  },
+  {
+   "display": "チームワーク",
+   "reading": "ちーむわーく"
+  },
+  {
+   "display": "きょうりょく",
+   "reading": "きょうりょく"
+  },
+  {
+   "display": "せんたく",
+   "reading": "せんたく"
+  },
+  {
+   "display": "みち",
+   "reading": "みち"
+  },
+  {
+   "display": "ベンドット",
+   "reading": "べんどっと"
+  },
+  {
+   "display": "マジタニ",
+   "reading": "まじたに"
+  },
+  {
+   "display": "セドカン",
+   "reading": "せどかん"
+  },
+  {
+   "display": "レルート",
+   "reading": "れるーと"
+  },
+  {
+   "display": "ジョネス",
+   "reading": "じょねす"
+  },
+  {
+   "display": "かけひき",
+   "reading": "かけひき"
+  },
+  {
+   "display": "しんりせん",
+   "reading": "しんりせん"
+  },
+  {
+   "display": "さくりゃく",
+   "reading": "さくりゃく"
+  },
+  {
+   "display": "しょうぶ",
+   "reading": "しょうぶ"
+  },
+  {
+   "display": "かち",
+   "reading": "かち"
+  },
+  {
+   "display": "まけ",
+   "reading": "まけ"
+  },
+  {
+   "display": "ひきわけ",
+   "reading": "ひきわけ"
+  },
+  {
+   "display": "ろうそく",
+   "reading": "ろうそく"
+  },
+  {
+   "display": "ひ",
+   "reading": "ひ"
+  },
+  {
+   "display": "じかんせいげん",
+   "reading": "じかんせいげん"
+  },
+  {
+   "display": "たいまん",
+   "reading": "たいまん"
+  },
+  {
+   "display": "けんか",
+   "reading": "けんか"
+  },
+  {
+   "display": "あくしゅ",
+   "reading": "あくしゅ"
+  },
+  {
+   "display": "うで",
+   "reading": "うで"
+  },
+  {
+   "display": "ちから",
+   "reading": "ちから"
+  },
+  {
+   "display": "スイッチ",
+   "reading": "すいっち"
+  },
+  {
+   "display": "ボタン",
+   "reading": "ぼたん"
+  },
+  {
+   "display": "Oのみち",
+   "reading": "おーのみち"
+  },
+  {
+   "display": "Xのみち",
+   "reading": "えっくすのみち"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "あんぜん",
+   "reading": "あんぜん"
+  },
+  {
+   "display": "めいろ",
+   "reading": "めいろ"
+  },
+  {
+   "display": "トラップ",
+   "reading": "とらっぷ"
+  },
+  {
+   "display": "おとしあな",
+   "reading": "おとしあな"
+  },
+  {
+   "display": "ひみつ",
+   "reading": "ひみつ"
+  },
+  {
+   "display": "じゅうにじかん",
+   "reading": "じゅうにじかん"
+  },
+  {
+   "display": "しちじゅうにじかん",
+   "reading": "しちじゅうにじかん"
+  },
+  {
+   "display": "たいむりみっと",
+   "reading": "たいむりみっと"
+  },
+  {
+   "display": "のこりじかん",
+   "reading": "のこりじかん"
+  },
+  {
+   "display": "きょうそう",
+   "reading": "きょうそう"
+  },
+  {
+   "display": "しさくをねる",
+   "reading": "しさくをねる"
+  },
+  {
+   "display": "さんせい",
+   "reading": "さんせい"
+  },
+  {
+   "display": "はんたい",
+   "reading": "はんたい"
+  },
+  {
+   "display": "どうする",
+   "reading": "どうする"
+  },
+  {
+   "display": "きめる",
+   "reading": "きめる"
+  },
+  {
+   "display": "しんじる",
+   "reading": "しんじる"
+  },
+  {
+   "display": "まかせる",
+   "reading": "まかせる"
+  },
+  {
+   "display": "ごにんでひとつ",
+   "reading": "ごにんでひとつ"
+  },
+  {
+   "display": "ぜんいんでクリア",
+   "reading": "ぜんいんでくりあ"
+  },
+  {
+   "display": "したにおりる",
+   "reading": "したにおりる"
+  },
+  {
+   "display": "そこをめざす",
+   "reading": "そこをめざす"
+  },
+  {
+   "display": "さいかそう",
+   "reading": "さいかそう"
+  },
+  {
+   "display": "げんかい",
+   "reading": "げんかい"
+  },
+  {
+   "display": "じょうきょう",
+   "reading": "じょうきょう"
+  },
+  {
+   "display": "はんだん",
+   "reading": "はんだん"
+  }
+ ]
+}

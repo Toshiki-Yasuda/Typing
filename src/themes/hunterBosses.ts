@@ -2,7 +2,8 @@ import type { Boss } from './theme';
 
 /**
  * HUNTER×HUNTER テーマのボス（Ver1 の src/constants/bossConfigs.ts から取った名前・台詞）。
- * 出題パック・お題の数・ミスの許容は、Ver1 の難易度（maxMisses）に合わせて、こちらの組み込みパックに割り当てた。
+ * 出題は、Ver1 の各章の最後のステージ（総合チャレンジ）の語彙（pack）。読み込めないときは packId の組み込みパックで代替する。
+ * お題の数・ミスの許容は、Ver1 の難易度（maxMisses）に合わせた。
  * 画像は Ver1 に実物があった 1・2 章だけ（他の章は Ver1 でも仮の画像だったので、使わない）。
  */
 export const HUNTER_BOSSES: Boss[] = [
@@ -14,6 +15,7 @@ export const HUNTER_BOSSES: Boss[] = [
     description: '危険な奇術師。戦いを楽しむ狂戦士。',
     image: 'themes/hunter/bosses/chapter1.png',
     packId: 'basic',
+    pack: 'themes/hunter/stages/c1s6.json',
     words: 10,
     maxMisses: 5,
     intro: '♠ さぁ...殺し合おうか ♣',
@@ -29,6 +31,7 @@ export const HUNTER_BOSSES: Boss[] = [
     description: '天空闘技場でゴンとキルアを狙う3人組の念能力者。',
     image: 'themes/hunter/bosses/chapter2.png',
     packId: 'basic',
+    pack: 'themes/hunter/stages/c2s6.json',
     words: 15,
     maxMisses: 3,
     intro: 'お前たちを始末してやる！',
@@ -43,6 +46,7 @@ export const HUNTER_BOSSES: Boss[] = [
     title: '幻影旅団団長',
     description: '幻影旅団の指導者。冷徹で戦略的。',
     packId: 'english',
+    pack: 'themes/hunter/stages/c3s6.json',
     words: 12,
     maxMisses: 2,
     intro: '盗賊の美学を見せてやろう',
@@ -57,6 +61,7 @@ export const HUNTER_BOSSES: Boss[] = [
     title: '格闘技の達人',
     description: 'G・I島での修行者。強力な念能力者。',
     packId: 'symbols',
+    pack: 'themes/hunter/stages/c4s6.json',
     words: 12,
     maxMisses: 5,
     intro: '修行の時間よ！ついてきなさい！',
@@ -71,6 +76,7 @@ export const HUNTER_BOSSES: Boss[] = [
     title: '究極の修行者',
     description: '若き日のビスケの姿。最強の念能力者。',
     packId: 'phrases',
+    pack: 'themes/hunter/stages/c5s6.json',
     words: 8,
     maxMisses: 3,
     intro: '真の修行を教えてやる',
@@ -85,6 +91,7 @@ export const HUNTER_BOSSES: Boss[] = [
     title: 'キメラアント王',
     description: 'キメラアントの完全な王。最強の存在。',
     packId: 'phrases',
+    pack: 'themes/hunter/stages/c6s6.json',
     words: 12,
     maxMisses: 1,
     intro: '王の前にひざまずけ',
@@ -99,6 +106,7 @@ export const HUNTER_BOSSES: Boss[] = [
     title: '究極の試練',
     description: 'ハンター協会会長。全ての修行の集大成。',
     packId: 'phrases',
+    pack: 'themes/hunter/stages/c7s6.json',
     words: 15,
     maxMisses: 2,
     intro: '百式観音の力を見せよう',

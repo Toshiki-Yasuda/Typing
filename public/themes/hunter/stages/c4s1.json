@@ -1,0 +1,246 @@
+{
+ "id": "c4s1",
+ "name": "ヨークシン編 1: 登場人物",
+ "items": [
+  {
+   "display": "クラピカ",
+   "reading": "くらぴか"
+  },
+  {
+   "display": "センリツ",
+   "reading": "せんりつ"
+  },
+  {
+   "display": "ネオン",
+   "reading": "ねおん"
+  },
+  {
+   "display": "ゼパイル",
+   "reading": "ぜぱいる"
+  },
+  {
+   "display": "ライト",
+   "reading": "らいと"
+  },
+  {
+   "display": "イワレンコフ",
+   "reading": "いわれんこふ"
+  },
+  {
+   "display": "スクワラ",
+   "reading": "すくわら"
+  },
+  {
+   "display": "バショウ",
+   "reading": "ばしょう"
+  },
+  {
+   "display": "シズク",
+   "reading": "しずく"
+  },
+  {
+   "display": "ボノレノフ",
+   "reading": "ぼのれのふ"
+  },
+  {
+   "display": "ノストラード",
+   "reading": "のすとらーど"
+  },
+  {
+   "display": "ゼンジ",
+   "reading": "ぜんじ"
+  },
+  {
+   "display": "リンセン",
+   "reading": "りんせん"
+  },
+  {
+   "display": "ベルゼブブ",
+   "reading": "べるぜぶぶ"
+  },
+  {
+   "display": "ようじんぼう",
+   "reading": "ようじんぼう"
+  },
+  {
+   "display": "ボディーガード",
+   "reading": "ぼでぃーがーど"
+  },
+  {
+   "display": "マフィア",
+   "reading": "まふぃあ"
+  },
+  {
+   "display": "やくざ",
+   "reading": "やくざ"
+  },
+  {
+   "display": "ボス",
+   "reading": "ぼす"
+  },
+  {
+   "display": "おやぶん",
+   "reading": "おやぶん"
+  },
+  {
+   "display": "こぶん",
+   "reading": "こぶん"
+  },
+  {
+   "display": "てした",
+   "reading": "てした"
+  },
+  {
+   "display": "しゅか",
+   "reading": "しゅか"
+  },
+  {
+   "display": "じゅうぞく",
+   "reading": "じゅうぞく"
+  },
+  {
+   "display": "いらいにん",
+   "reading": "いらいにん"
+  },
+  {
+   "display": "クライアント",
+   "reading": "くらいあんと"
+  },
+  {
+   "display": "こよう",
+   "reading": "こよう"
+  },
+  {
+   "display": "けいやく",
+   "reading": "けいやく"
+  },
+  {
+   "display": "ほうしゅう",
+   "reading": "ほうしゅう"
+  },
+  {
+   "display": "きゅうりょう",
+   "reading": "きゅうりょう"
+  },
+  {
+   "display": "しごと",
+   "reading": "しごと"
+  },
+  {
+   "display": "にんむ",
+   "reading": "にんむ"
+  },
+  {
+   "display": "ミッション",
+   "reading": "みっしょん"
+  },
+  {
+   "display": "ごえい",
+   "reading": "ごえい"
+  },
+  {
+   "display": "けいご",
+   "reading": "けいご"
+  },
+  {
+   "display": "まもる",
+   "reading": "まもる"
+  },
+  {
+   "display": "みはる",
+   "reading": "みはる"
+  },
+  {
+   "display": "かんし",
+   "reading": "かんし"
+  },
+  {
+   "display": "ていさつ",
+   "reading": "ていさつ"
+  },
+  {
+   "display": "じょうほう",
+   "reading": "じょうほう"
+  },
+  {
+   "display": "インテリジェンス",
+   "reading": "いんてりじぇんす"
+  },
+  {
+   "display": "うらぎり",
+   "reading": "うらぎり"
+  },
+  {
+   "display": "スパイ",
+   "reading": "すぱい"
+  },
+  {
+   "display": "ないつうしゃ",
+   "reading": "ないつうしゃ"
+  },
+  {
+   "display": "せんにゅう",
+   "reading": "せんにゅう"
+  },
+  {
+   "display": "もぐりこむ",
+   "reading": "もぐりこむ"
+  },
+  {
+   "display": "せんにゅうそうさ",
+   "reading": "せんにゅうそうさ"
+  },
+  {
+   "display": "ぎそう",
+   "reading": "ぎそう"
+  },
+  {
+   "display": "へんそう",
+   "reading": "へんそう"
+  },
+  {
+   "display": "かくす",
+   "reading": "かくす"
+  },
+  {
+   "display": "ひめる",
+   "reading": "ひめる"
+  },
+  {
+   "display": "みやぶる",
+   "reading": "みやぶる"
+  },
+  {
+   "display": "しょうたい",
+   "reading": "しょうたい"
+  },
+  {
+   "display": "ほんとうのすがた",
+   "reading": "ほんとうのすがた"
+  },
+  {
+   "display": "うらのかお",
+   "reading": "うらのかお"
+  },
+  {
+   "display": "にめん",
+   "reading": "にめん"
+  },
+  {
+   "display": "かめん",
+   "reading": "かめん"
+  },
+  {
+   "display": "えんぎ",
+   "reading": "えんぎ"
+  },
+  {
+   "display": "うそ",
+   "reading": "うそ"
+  },
+  {
+   "display": "しんじつ",
+   "reading": "しんじつ"
+  }
+ ]
+}

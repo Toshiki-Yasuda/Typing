@@ -15,8 +15,10 @@ export const BossSchema = z.object({
   description: z.string().min(1),
   /** 画像（アプリからの相対パス）。無ければ文字だけで表示する */
   image: z.string().min(1).optional(),
-  /** 出題に使う組み込みパックの id */
+  /** 出題に使う組み込みパックの id（`pack` が無いときの出題） */
   packId: z.string().min(1),
+  /** テーマ固有の語彙パック（JSON。アプリからの相対パス）。あれば packId より優先する */
+  pack: z.string().min(1).optional(),
   /** 倒すべきお題の数（ボスの HP） */
   words: z.number().int().min(1).max(100),
   /** 許されるミスの数。これを超えるミスで敗北 */
@@ -30,6 +32,28 @@ export const BossSchema = z.object({
   defeat: z.string().min(1),
 });
 export type Boss = z.infer<typeof BossSchema>;
+
+/** ステージ選択の 1 ステージ。語彙パックを打ち切る練習 */
+export const StageSchema = z.object({
+  id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+  name: z.string().min(1),
+  description: z.string().min(1),
+  /** 語彙パック（JSON。アプリからの相対パス）。選んだときに読み込む */
+  pack: z.string().min(1),
+});
+export type Stage = z.infer<typeof StageSchema>;
+
+/** 章: いくつかのステージと、最後のボス */
+export const ChapterSchema = z.object({
+  id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+  number: z.number().int().min(1),
+  title: z.string().min(1),
+  subtitle: z.string().min(1),
+  stages: z.array(StageSchema).min(1),
+  /** この章のボス（`bosses` の id） */
+  boss: z.string().min(1).optional(),
+});
+export type Chapter = z.infer<typeof ChapterSchema>;
 
 export const ThemeSchema = z.object({
   id: z.string().regex(/^[a-z][a-z0-9-]*$/),
@@ -75,6 +99,8 @@ export const ThemeSchema = z.object({
     .optional(),
   /** ホームに出す 3D の演出（glTF のモデル。アプリからの相対パス）。無ければ出さない */
   hero: z.object({ centerpiece: z.string().min(1), orbiter: z.string().min(1) }).optional(),
+  /** ステージ選択の章。無ければステージ選択は出ない */
+  chapters: z.array(ChapterSchema).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */
   bosses: z.array(BossSchema).optional(),
 });

@@ -1,4 +1,5 @@
 import { HUNTER_BOSSES } from './hunterBosses';
+import { HUNTER_CHAPTERS } from './hunterChapters';
 import { ThemeSchema, contrastProblems, type ColorToken, type Theme } from './theme';
 
 /** 中立テーマ。`src/index.css` の @theme と同じ値（常に存在し、他のテーマが不正なときの戻り先） */
@@ -62,6 +63,7 @@ export const HUNTER_THEME: Theme = {
   },
   // Blender で作ったオリジナルのモデル（art/hunter/build_models.py で生成）
   hero: { centerpiece: 'themes/hunter/models/license.glb', orbiter: 'themes/hunter/models/card.glb' },
+  chapters: HUNTER_CHAPTERS,
   bosses: HUNTER_BOSSES,
 };
 

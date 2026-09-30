@@ -1,0 +1,246 @@
+{
+ "id": "c4s4",
+ "name": "ヨークシン編 4: 念能力",
+ "items": [
+  {
+   "display": "げんえいりょだん",
+   "reading": "げんえいりょだん"
+  },
+  {
+   "display": "クロロ",
+   "reading": "くろろ"
+  },
+  {
+   "display": "ウボォーギン",
+   "reading": "うぼぉーぎん"
+  },
+  {
+   "display": "パクノダ",
+   "reading": "ぱくのだ"
+  },
+  {
+   "display": "フランクリン",
+   "reading": "ふらんくりん"
+  },
+  {
+   "display": "マチ",
+   "reading": "まち"
+  },
+  {
+   "display": "フェイタン",
+   "reading": "ふぇいたん"
+  },
+  {
+   "display": "フィンクス",
+   "reading": "ふぃんくす"
+  },
+  {
+   "display": "ノブナガ",
+   "reading": "のぶなが"
+  },
+  {
+   "display": "シャルナーク",
+   "reading": "しゃるなーく"
+  },
+  {
+   "display": "コルトピ",
+   "reading": "こるとぴ"
+  },
+  {
+   "display": "ビッグバンインパクト",
+   "reading": "びっぐばんいんぱくと"
+  },
+  {
+   "display": "ダブルマシンガン",
+   "reading": "だぶるましんがん"
+  },
+  {
+   "display": "ねんいとう",
+   "reading": "ねんいとう"
+  },
+  {
+   "display": "メモリーボム",
+   "reading": "めもりーぼむ"
+  },
+  {
+   "display": "ブラックボイス",
+   "reading": "ぶらっくぼいす"
+  },
+  {
+   "display": "ギャラリーフェイク",
+   "reading": "ぎゃらりーふぇいく"
+  },
+  {
+   "display": "りっとうのいと",
+   "reading": "りっとうのいと"
+  },
+  {
+   "display": "ペインパッカー",
+   "reading": "ぺいんぱっかー"
+  },
+  {
+   "display": "りゅうせいがい",
+   "reading": "りゅうせいがい"
+  },
+  {
+   "display": "きゅうそく",
+   "reading": "きゅうそく"
+  },
+  {
+   "display": "しゅうげき",
+   "reading": "しゅうげき"
+  },
+  {
+   "display": "おそう",
+   "reading": "おそう"
+  },
+  {
+   "display": "まちぶせ",
+   "reading": "まちぶせ"
+  },
+  {
+   "display": "わな",
+   "reading": "わな"
+  },
+  {
+   "display": "トラップ",
+   "reading": "とらっぷ"
+  },
+  {
+   "display": "かくとう",
+   "reading": "かくとう"
+  },
+  {
+   "display": "いちだいいち",
+   "reading": "いちだいいち"
+  },
+  {
+   "display": "けっとう",
+   "reading": "けっとう"
+  },
+  {
+   "display": "しあい",
+   "reading": "しあい"
+  },
+  {
+   "display": "たいけつ",
+   "reading": "たいけつ"
+  },
+  {
+   "display": "ころす",
+   "reading": "ころす"
+  },
+  {
+   "display": "たおす",
+   "reading": "たおす"
+  },
+  {
+   "display": "しとめる",
+   "reading": "しとめる"
+  },
+  {
+   "display": "ほふる",
+   "reading": "ほふる"
+  },
+  {
+   "display": "さつがい",
+   "reading": "さつがい"
+  },
+  {
+   "display": "きょうい",
+   "reading": "きょうい"
+  },
+  {
+   "display": "てきい",
+   "reading": "てきい"
+  },
+  {
+   "display": "さくい",
+   "reading": "さくい"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "にげる",
+   "reading": "にげる"
+  },
+  {
+   "display": "おう",
+   "reading": "おう"
+  },
+  {
+   "display": "ついせき",
+   "reading": "ついせき"
+  },
+  {
+   "display": "とうそう",
+   "reading": "とうそう"
+  },
+  {
+   "display": "かくれる",
+   "reading": "かくれる"
+  },
+  {
+   "display": "みつける",
+   "reading": "みつける"
+  },
+  {
+   "display": "そうさく",
+   "reading": "そうさく"
+  },
+  {
+   "display": "はっけん",
+   "reading": "はっけん"
+  },
+  {
+   "display": "せんりょく",
+   "reading": "せんりょく"
+  },
+  {
+   "display": "じつりょく",
+   "reading": "じつりょく"
+  },
+  {
+   "display": "せんとうりょく",
+   "reading": "せんとうりょく"
+  },
+  {
+   "display": "ちからくらべ",
+   "reading": "ちからくらべ"
+  },
+  {
+   "display": "ゆうせい",
+   "reading": "ゆうせい"
+  },
+  {
+   "display": "れっせい",
+   "reading": "れっせい"
+  },
+  {
+   "display": "つよさ",
+   "reading": "つよさ"
+  },
+  {
+   "display": "よわさ",
+   "reading": "よわさ"
+  },
+  {
+   "display": "かつ",
+   "reading": "かつ"
+  },
+  {
+   "display": "まける",
+   "reading": "まける"
+  },
+  {
+   "display": "しょうり",
+   "reading": "しょうり"
+  },
+  {
+   "display": "はいぼく",
+   "reading": "はいぼく"
+  }
+ ]
+}

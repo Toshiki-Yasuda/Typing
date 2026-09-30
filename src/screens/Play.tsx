@@ -39,6 +39,8 @@ interface Props {
   fingerGuide?: { layout: LayoutId } | null;
   /** 並走させる過去の記録 */
   ghost?: { ghost: Ghost; label: string } | null;
+  /** 画面の見出し（読み上げ用）。省略ならモードから決める */
+  title?: string;
   /** ボス戦。指定すると、ボスの HP・ミスの許容・台詞が加わる（判定・計測は通常の練習と同じ） */
   boss?: Boss;
   /** ボス戦の演出。省略なら演出なし（待ち時間もない）。level が off も同じ */
@@ -54,6 +56,7 @@ export function Play({
   mode,
   ghost = null,
   fingerGuide = null,
+  title,
   boss,
   effects,
   random,
@@ -236,7 +239,7 @@ export function Play({
       {fx && boss && level !== 'off' && (
         <BossFx boss={boss} fx={fx} level={level} cardModel={cardModel} onSkip={() => skip.current?.()} />
       )}
-      <PageHeading title={boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習')} srOnly />
+      <PageHeading title={title ?? (boss ? `ボス戦: ${boss.name}` : (HEADINGS[mode ?? ''] ?? '練習'))} srOnly />
       <header className="flex items-center justify-between text-text-muted">
         {/* 進捗バーの役割は、見える文字（1 / 10）を持つ要素に付ける。バーそのものは装飾 */}
         <div

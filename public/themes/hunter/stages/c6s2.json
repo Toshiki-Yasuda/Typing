@@ -1,0 +1,246 @@
+{
+ "id": "c6s2",
+ "name": "キメラアント編 2: キメラアント用語",
+ "items": [
+  {
+   "display": "キメラアント",
+   "reading": "きめらあんと"
+  },
+  {
+   "display": "NGL",
+   "reading": "えぬじーえる"
+  },
+  {
+   "display": "ひがしゴルトー",
+   "reading": "ひがしごるとー"
+  },
+  {
+   "display": "きゅうでん",
+   "reading": "きゅうでん"
+  },
+  {
+   "display": "す",
+   "reading": "す"
+  },
+  {
+   "display": "りょういき",
+   "reading": "りょういき"
+  },
+  {
+   "display": "なわばり",
+   "reading": "なわばり"
+  },
+  {
+   "display": "せいそく",
+   "reading": "せいそく"
+  },
+  {
+   "display": "ぐんせい",
+   "reading": "ぐんせい"
+  },
+  {
+   "display": "きせいちゅう",
+   "reading": "きせいちゅう"
+  },
+  {
+   "display": "しょくりょう",
+   "reading": "しょくりょう"
+  },
+  {
+   "display": "えさ",
+   "reading": "えさ"
+  },
+  {
+   "display": "かり",
+   "reading": "かり"
+  },
+  {
+   "display": "しゅうかく",
+   "reading": "しゅうかく"
+  },
+  {
+   "display": "せんべつ",
+   "reading": "せんべつ"
+  },
+  {
+   "display": "えらぶ",
+   "reading": "えらぶ"
+  },
+  {
+   "display": "ころす",
+   "reading": "ころす"
+  },
+  {
+   "display": "いかす",
+   "reading": "いかす"
+  },
+  {
+   "display": "しはい",
+   "reading": "しはい"
+  },
+  {
+   "display": "ふくじゅう",
+   "reading": "ふくじゅう"
+  },
+  {
+   "display": "したがう",
+   "reading": "したがう"
+  },
+  {
+   "display": "さからう",
+   "reading": "さからう"
+  },
+  {
+   "display": "はんこう",
+   "reading": "はんこう"
+  },
+  {
+   "display": "むほん",
+   "reading": "むほん"
+  },
+  {
+   "display": "ちゅうせい",
+   "reading": "ちゅうせい"
+  },
+  {
+   "display": "うらぎり",
+   "reading": "うらぎり"
+  },
+  {
+   "display": "かいしゅ",
+   "reading": "かいしゅ"
+  },
+  {
+   "display": "にんげんがり",
+   "reading": "にんげんがり"
+  },
+  {
+   "display": "さつりく",
+   "reading": "さつりく"
+  },
+  {
+   "display": "ぎゃくさつ",
+   "reading": "ぎゃくさつ"
+  },
+  {
+   "display": "ひがい",
+   "reading": "ひがい"
+  },
+  {
+   "display": "ぎせいしゃ",
+   "reading": "ぎせいしゃ"
+  },
+  {
+   "display": "ししゃ",
+   "reading": "ししゃ"
+  },
+  {
+   "display": "せいぞんしゃ",
+   "reading": "せいぞんしゃ"
+  },
+  {
+   "display": "すくう",
+   "reading": "すくう"
+  },
+  {
+   "display": "まもる",
+   "reading": "まもる"
+  },
+  {
+   "display": "たすける",
+   "reading": "たすける"
+  },
+  {
+   "display": "にげる",
+   "reading": "にげる"
+  },
+  {
+   "display": "たたかう",
+   "reading": "たたかう"
+  },
+  {
+   "display": "ていこう",
+   "reading": "ていこう"
+  },
+  {
+   "display": "せんそう",
+   "reading": "せんそう"
+  },
+  {
+   "display": "へいわ",
+   "reading": "へいわ"
+  },
+  {
+   "display": "きょうぞん",
+   "reading": "きょうぞん"
+  },
+  {
+   "display": "てき",
+   "reading": "てき"
+  },
+  {
+   "display": "みかた",
+   "reading": "みかた"
+  },
+  {
+   "display": "あくま",
+   "reading": "あくま"
+  },
+  {
+   "display": "かいぶつ",
+   "reading": "かいぶつ"
+  },
+  {
+   "display": "ばけもの",
+   "reading": "ばけもの"
+  },
+  {
+   "display": "きょうい",
+   "reading": "きょうい"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "めつぼう",
+   "reading": "めつぼう"
+  },
+  {
+   "display": "ほろびる",
+   "reading": "ほろびる"
+  },
+  {
+   "display": "きえる",
+   "reading": "きえる"
+  },
+  {
+   "display": "のこる",
+   "reading": "のこる"
+  },
+  {
+   "display": "つづく",
+   "reading": "つづく"
+  },
+  {
+   "display": "おわる",
+   "reading": "おわる"
+  },
+  {
+   "display": "はじまる",
+   "reading": "はじまる"
+  },
+  {
+   "display": "ぜんめつ",
+   "reading": "ぜんめつ"
+  },
+  {
+   "display": "せいふく",
+   "reading": "せいふく"
+  },
+  {
+   "display": "しはいする",
+   "reading": "しはいする"
+  }
+ ]
+}

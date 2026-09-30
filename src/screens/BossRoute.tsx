@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { BUILTIN_PACKS } from '@/content';
+import { useThemePack } from '@/content/themePack';
 import { prefersReducedMotion, resolveEffects } from '@/effects/level';
 import { useSettings } from '@/settings/useSettings';
 import { resolveTheme } from '@/themes/themes';
@@ -13,8 +14,12 @@ export function BossRoute() {
   const [settings] = useSettings();
   const theme = resolveTheme(settings.themeId, loadUnlocked());
   const boss = theme.bosses?.find((b) => b.id === id);
-  const pack = boss ? BUILTIN_PACKS.find((p) => p.id === boss.packId) : undefined;
+  // ボス専用の語彙（テーマのパック）があれば優先。読み込めなければ組み込みパックで代替する
+  const themed = useThemePack(boss?.pack);
+  const builtin = boss ? BUILTIN_PACKS.find((p) => p.id === boss.packId) : undefined;
+  const pack = themed.status === 'ready' ? themed.pack : builtin;
 
+  if (boss && themed.status === 'loading') return <p className="p-8 text-text-muted">準備中…</p>;
   if (!boss || !pack) {
     return (
       <main className="mx-auto max-w-3xl p-8">

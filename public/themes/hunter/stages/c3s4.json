@@ -1,0 +1,246 @@
+{
+ "id": "c3s4",
+ "name": "幻影旅団編 4: 念能力②",
+ "items": [
+  {
+   "display": "こうげき",
+   "reading": "こうげき"
+  },
+  {
+   "display": "ぼうぎょ",
+   "reading": "ぼうぎょ"
+  },
+  {
+   "display": "かいひ",
+   "reading": "かいひ"
+  },
+  {
+   "display": "けっちゃく",
+   "reading": "けっちゃく"
+  },
+  {
+   "display": "しとう",
+   "reading": "しとう"
+  },
+  {
+   "display": "かくとう",
+   "reading": "かくとう"
+  },
+  {
+   "display": "ひっさつわざ",
+   "reading": "ひっさつわざ"
+  },
+  {
+   "display": "れんげき",
+   "reading": "れんげき"
+  },
+  {
+   "display": "カウンター",
+   "reading": "かうんたー"
+  },
+  {
+   "display": "フェイント",
+   "reading": "ふぇいんと"
+  },
+  {
+   "display": "たいけつ",
+   "reading": "たいけつ"
+  },
+  {
+   "display": "しょうぶ",
+   "reading": "しょうぶ"
+  },
+  {
+   "display": "せんとう",
+   "reading": "せんとう"
+  },
+  {
+   "display": "バトル",
+   "reading": "ばとる"
+  },
+  {
+   "display": "ファイト",
+   "reading": "ふぁいと"
+  },
+  {
+   "display": "しょうり",
+   "reading": "しょうり"
+  },
+  {
+   "display": "はいぼく",
+   "reading": "はいぼく"
+  },
+  {
+   "display": "かつ",
+   "reading": "かつ"
+  },
+  {
+   "display": "まける",
+   "reading": "まける"
+  },
+  {
+   "display": "ひく",
+   "reading": "ひく"
+  },
+  {
+   "display": "たいきゃく",
+   "reading": "たいきゃく"
+  },
+  {
+   "display": "てっしゅう",
+   "reading": "てっしゅう"
+  },
+  {
+   "display": "とつげき",
+   "reading": "とつげき"
+  },
+  {
+   "display": "しゅうげき",
+   "reading": "しゅうげき"
+  },
+  {
+   "display": "きゅうしゅう",
+   "reading": "きゅうしゅう"
+  },
+  {
+   "display": "ふいうち",
+   "reading": "ふいうち"
+  },
+  {
+   "display": "まちぶせ",
+   "reading": "まちぶせ"
+  },
+  {
+   "display": "おとり",
+   "reading": "おとり"
+  },
+  {
+   "display": "さくせん",
+   "reading": "さくせん"
+  },
+  {
+   "display": "ぐんりゃく",
+   "reading": "ぐんりゃく"
+  },
+  {
+   "display": "ぜんりょく",
+   "reading": "ぜんりょく"
+  },
+  {
+   "display": "ほんき",
+   "reading": "ほんき"
+  },
+  {
+   "display": "てかげん",
+   "reading": "てかげん"
+  },
+  {
+   "display": "よゆう",
+   "reading": "よゆう"
+  },
+  {
+   "display": "しんけん",
+   "reading": "しんけん"
+  },
+  {
+   "display": "ひっし",
+   "reading": "ひっし"
+  },
+  {
+   "display": "けつい",
+   "reading": "けつい"
+  },
+  {
+   "display": "かくご",
+   "reading": "かくご"
+  },
+  {
+   "display": "いのちがけ",
+   "reading": "いのちがけ"
+  },
+  {
+   "display": "しょうしのかくご",
+   "reading": "しょうしのかくご"
+  },
+  {
+   "display": "うでまえ",
+   "reading": "うでまえ"
+  },
+  {
+   "display": "じつりょく",
+   "reading": "じつりょく"
+  },
+  {
+   "display": "せんりょく",
+   "reading": "せんりょく"
+  },
+  {
+   "display": "ゆうい",
+   "reading": "ゆうい"
+  },
+  {
+   "display": "ふり",
+   "reading": "ふり"
+  },
+  {
+   "display": "さ",
+   "reading": "さ"
+  },
+  {
+   "display": "きょり",
+   "reading": "きょり"
+  },
+  {
+   "display": "まあい",
+   "reading": "まあい"
+  },
+  {
+   "display": "タイミング",
+   "reading": "たいみんぐ"
+  },
+  {
+   "display": "スピード",
+   "reading": "すぴーど"
+  },
+  {
+   "display": "パワー",
+   "reading": "ぱわー"
+  },
+  {
+   "display": "テクニック",
+   "reading": "てくにっく"
+  },
+  {
+   "display": "スタミナ",
+   "reading": "すたみな"
+  },
+  {
+   "display": "けいけん",
+   "reading": "けいけん"
+  },
+  {
+   "display": "カン",
+   "reading": "かん"
+  },
+  {
+   "display": "よそく",
+   "reading": "よそく"
+  },
+  {
+   "display": "はんだん",
+   "reading": "はんだん"
+  },
+  {
+   "display": "はんのう",
+   "reading": "はんのう"
+  },
+  {
+   "display": "しゅんぱつりょく",
+   "reading": "しゅんぱつりょく"
+  },
+  {
+   "display": "きょうさ",
+   "reading": "きょうさ"
+  }
+ ]
+}

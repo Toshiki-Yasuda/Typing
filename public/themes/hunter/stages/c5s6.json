@@ -1,0 +1,246 @@
+{
+ "id": "c5s6",
+ "name": "G・I編 6: ボスステージ",
+ "items": [
+  {
+   "display": "ボマーとのたいけつ",
+   "reading": "ぼまーとのたいけつ"
+  },
+  {
+   "display": "まけられないたたかい",
+   "reading": "まけられないたたかい"
+  },
+  {
+   "display": "みぎてのけが",
+   "reading": "みぎてのけが"
+  },
+  {
+   "display": "さくせんせいこう",
+   "reading": "さくせんせいこう"
+  },
+  {
+   "display": "しょうりをつかむ",
+   "reading": "しょうりをつかむ"
+  },
+  {
+   "display": "ジャジャンケン",
+   "reading": "じゃじゃんけん"
+  },
+  {
+   "display": "いのちがけのこうげき",
+   "reading": "いのちがけのこうげき"
+  },
+  {
+   "display": "ぜったいにまけない",
+   "reading": "ぜったいにまけない"
+  },
+  {
+   "display": "なかまをまもる",
+   "reading": "なかまをまもる"
+  },
+  {
+   "display": "クリアおめでとう",
+   "reading": "くりあおめでとう"
+  },
+  {
+   "display": "さいしゅうけっせん",
+   "reading": "さいしゅうけっせん"
+  },
+  {
+   "display": "てき",
+   "reading": "てき"
+  },
+  {
+   "display": "みかた",
+   "reading": "みかた"
+  },
+  {
+   "display": "しょうぶ",
+   "reading": "しょうぶ"
+  },
+  {
+   "display": "けっちゃく",
+   "reading": "けっちゃく"
+  },
+  {
+   "display": "あとがない",
+   "reading": "あとがない"
+  },
+  {
+   "display": "せとぎわ",
+   "reading": "せとぎわ"
+  },
+  {
+   "display": "ぎりぎり",
+   "reading": "ぎりぎり"
+  },
+  {
+   "display": "ピンチ",
+   "reading": "ぴんち"
+  },
+  {
+   "display": "チャンス",
+   "reading": "ちゃんす"
+  },
+  {
+   "display": "ぎゃくてん",
+   "reading": "ぎゃくてん"
+  },
+  {
+   "display": "けいせい",
+   "reading": "けいせい"
+  },
+  {
+   "display": "ゆうり",
+   "reading": "ゆうり"
+  },
+  {
+   "display": "ふり",
+   "reading": "ふり"
+  },
+  {
+   "display": "たいせい",
+   "reading": "たいせい"
+  },
+  {
+   "display": "じょうきょう",
+   "reading": "じょうきょう"
+  },
+  {
+   "display": "はんだん",
+   "reading": "はんだん"
+  },
+  {
+   "display": "けつだん",
+   "reading": "けつだん"
+  },
+  {
+   "display": "せんたく",
+   "reading": "せんたく"
+  },
+  {
+   "display": "えらぶ",
+   "reading": "えらぶ"
+  },
+  {
+   "display": "きめる",
+   "reading": "きめる"
+  },
+  {
+   "display": "うごく",
+   "reading": "うごく"
+  },
+  {
+   "display": "こうげき",
+   "reading": "こうげき"
+  },
+  {
+   "display": "ぼうぎょ",
+   "reading": "ぼうぎょ"
+  },
+  {
+   "display": "かいひ",
+   "reading": "かいひ"
+  },
+  {
+   "display": "カウンター",
+   "reading": "かうんたー"
+  },
+  {
+   "display": "はんげき",
+   "reading": "はんげき"
+  },
+  {
+   "display": "ついげき",
+   "reading": "ついげき"
+  },
+  {
+   "display": "とどめ",
+   "reading": "とどめ"
+  },
+  {
+   "display": "フィニッシュ",
+   "reading": "ふぃにっしゅ"
+  },
+  {
+   "display": "しょうり",
+   "reading": "しょうり"
+  },
+  {
+   "display": "かち",
+   "reading": "かち"
+  },
+  {
+   "display": "まけ",
+   "reading": "まけ"
+  },
+  {
+   "display": "けっか",
+   "reading": "けっか"
+  },
+  {
+   "display": "おわり",
+   "reading": "おわり"
+  },
+  {
+   "display": "はじまり",
+   "reading": "はじまり"
+  },
+  {
+   "display": "つぎのステージ",
+   "reading": "つぎのすてーじ"
+  },
+  {
+   "display": "げーむクリア",
+   "reading": "げーむくりあ"
+  },
+  {
+   "display": "じんをさがす",
+   "reading": "じんをさがす"
+  },
+  {
+   "display": "ちちおや",
+   "reading": "ちちおや"
+  },
+  {
+   "display": "めざすもの",
+   "reading": "めざすもの"
+  },
+  {
+   "display": "ゆめのさき",
+   "reading": "ゆめのさき"
+  },
+  {
+   "display": "しんのはんたー",
+   "reading": "しんのはんたー"
+  },
+  {
+   "display": "でんせつ",
+   "reading": "でんせつ"
+  },
+  {
+   "display": "ぼうけんしゃ",
+   "reading": "ぼうけんしゃ"
+  },
+  {
+   "display": "えいゆう",
+   "reading": "えいゆう"
+  },
+  {
+   "display": "さいきょう",
+   "reading": "さいきょう"
+  },
+  {
+   "display": "さいこう",
+   "reading": "さいこう"
+  },
+  {
+   "display": "つぎのぼうけんへ",
+   "reading": "つぎのぼうけんへ"
+  },
+  {
+   "display": "あたらしいたび",
+   "reading": "あたらしいたび"
+  }
+ ]
+}

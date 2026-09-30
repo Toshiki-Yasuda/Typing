@@ -18,6 +18,7 @@ const BurstScene = lazy(() => import('../boss/BurstScene'));
 /** タイトルメニュー。番号キー（1〜）でも選べる */
 const MENU = [
   { to: '/play', label: 'はじめる', hint: '弱点を優先した練習' },
+  { to: '/stages', label: 'ステージ選択', hint: '章ごとの語彙・ボス' },
   { to: '/daily', label: '今日のチャレンジ', hint: '日替わりのお題' },
   { to: '/stats', label: '統計', hint: '記録の推移・弱点' },
   { to: '/settings', label: '設定', hint: '音・演出・練習' },

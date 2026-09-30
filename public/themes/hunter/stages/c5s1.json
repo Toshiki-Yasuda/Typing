@@ -1,0 +1,246 @@
+{
+ "id": "c5s1",
+ "name": "G・I編 1: GIキャラ",
+ "items": [
+  {
+   "display": "ビスケ",
+   "reading": "びすけ"
+  },
+  {
+   "display": "レイザー",
+   "reading": "れいざー"
+  },
+  {
+   "display": "ゲンスルー",
+   "reading": "げんするー"
+  },
+  {
+   "display": "ツェズゲラ",
+   "reading": "つぇずげら"
+  },
+  {
+   "display": "ゴレイヌ",
+   "reading": "ごれいぬ"
+  },
+  {
+   "display": "アベンガネ",
+   "reading": "あべんがね"
+  },
+  {
+   "display": "バラ",
+   "reading": "ばら"
+  },
+  {
+   "display": "サブ",
+   "reading": "さぶ"
+  },
+  {
+   "display": "ジン",
+   "reading": "じん"
+  },
+  {
+   "display": "カイト",
+   "reading": "かいと"
+  },
+  {
+   "display": "プーハット",
+   "reading": "ぷーはっと"
+  },
+  {
+   "display": "ニッケス",
+   "reading": "にっけす"
+  },
+  {
+   "display": "モタリケ",
+   "reading": "もたりけ"
+  },
+  {
+   "display": "チンポ",
+   "reading": "ちんぽ"
+  },
+  {
+   "display": "イータ",
+   "reading": "いーた"
+  },
+  {
+   "display": "エレナ",
+   "reading": "えれな"
+  },
+  {
+   "display": "リスト",
+   "reading": "りすと"
+  },
+  {
+   "display": "ウォンク",
+   "reading": "うぉんく"
+  },
+  {
+   "display": "ゼホ",
+   "reading": "ぜほ"
+  },
+  {
+   "display": "ボポボ",
+   "reading": "ぼぽぼ"
+  },
+  {
+   "display": "バテラ",
+   "reading": "ばてら"
+  },
+  {
+   "display": "げーむますたー",
+   "reading": "げーむますたー"
+  },
+  {
+   "display": "プレイヤー",
+   "reading": "ぷれいやー"
+  },
+  {
+   "display": "さんかしゃ",
+   "reading": "さんかしゃ"
+  },
+  {
+   "display": "クリアしゃ",
+   "reading": "くりあしゃ"
+  },
+  {
+   "display": "ししょう",
+   "reading": "ししょう"
+  },
+  {
+   "display": "でし",
+   "reading": "でし"
+  },
+  {
+   "display": "しんでん",
+   "reading": "しんでん"
+  },
+  {
+   "display": "しゅぎょう",
+   "reading": "しゅぎょう"
+  },
+  {
+   "display": "とっくん",
+   "reading": "とっくん"
+  },
+  {
+   "display": "れんしゅう",
+   "reading": "れんしゅう"
+  },
+  {
+   "display": "きたえる",
+   "reading": "きたえる"
+  },
+  {
+   "display": "つよくなる",
+   "reading": "つよくなる"
+  },
+  {
+   "display": "せいちょう",
+   "reading": "せいちょう"
+  },
+  {
+   "display": "じょうたつ",
+   "reading": "じょうたつ"
+  },
+  {
+   "display": "レベルアップ",
+   "reading": "れべるあっぷ"
+  },
+  {
+   "display": "ちょうじん",
+   "reading": "ちょうじん"
+  },
+  {
+   "display": "プロ",
+   "reading": "ぷろ"
+  },
+  {
+   "display": "ベテラン",
+   "reading": "べてらん"
+  },
+  {
+   "display": "しょしんしゃ",
+   "reading": "しょしんしゃ"
+  },
+  {
+   "display": "ルーキー",
+   "reading": "るーきー"
+  },
+  {
+   "display": "チーム",
+   "reading": "ちーむ"
+  },
+  {
+   "display": "パーティー",
+   "reading": "ぱーてぃー"
+  },
+  {
+   "display": "グループ",
+   "reading": "ぐるーぷ"
+  },
+  {
+   "display": "ぎるど",
+   "reading": "ぎるど"
+  },
+  {
+   "display": "どうめい",
+   "reading": "どうめい"
+  },
+  {
+   "display": "きょうりょく",
+   "reading": "きょうりょく"
+  },
+  {
+   "display": "たすけあい",
+   "reading": "たすけあい"
+  },
+  {
+   "display": "なかま",
+   "reading": "なかま"
+  },
+  {
+   "display": "あいぼう",
+   "reading": "あいぼう"
+  },
+  {
+   "display": "パートナー",
+   "reading": "ぱーとなー"
+  },
+  {
+   "display": "ともだち",
+   "reading": "ともだち"
+  },
+  {
+   "display": "しんらい",
+   "reading": "しんらい"
+  },
+  {
+   "display": "きずな",
+   "reading": "きずな"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  },
+  {
+   "display": "めざす",
+   "reading": "めざす"
+  },
+  {
+   "display": "ついきゅう",
+   "reading": "ついきゅう"
+  },
+  {
+   "display": "もくひょう",
+   "reading": "もくひょう"
+  },
+  {
+   "display": "たっせい",
+   "reading": "たっせい"
+  },
+  {
+   "display": "かんせい",
+   "reading": "かんせい"
+  }
+ ]
+}

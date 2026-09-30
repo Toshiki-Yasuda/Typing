@@ -1,0 +1,246 @@
+{
+ "id": "c3s5",
+ "name": "幻影旅団編 5: 名セリフ",
+ "items": [
+  {
+   "display": "にひゃくじゅっかい",
+   "reading": "にひゃくじゅっかい"
+  },
+  {
+   "display": "フロアマスター",
+   "reading": "ふろあますたー"
+  },
+  {
+   "display": "しあいかいし",
+   "reading": "しあいかいし"
+  },
+  {
+   "display": "しんぱん",
+   "reading": "しんぱん"
+  },
+  {
+   "display": "かんきゃく",
+   "reading": "かんきゃく"
+  },
+  {
+   "display": "ぼうとう",
+   "reading": "ぼうとう"
+  },
+  {
+   "display": "ファイター",
+   "reading": "ふぁいたー"
+  },
+  {
+   "display": "チャンピオン",
+   "reading": "ちゃんぴおん"
+  },
+  {
+   "display": "けっしょう",
+   "reading": "けっしょう"
+  },
+  {
+   "display": "ゆうしょう",
+   "reading": "ゆうしょう"
+  },
+  {
+   "display": "じょうかい",
+   "reading": "じょうかい"
+  },
+  {
+   "display": "しょうきん",
+   "reading": "しょうきん"
+  },
+  {
+   "display": "ランキング",
+   "reading": "らんきんぐ"
+  },
+  {
+   "display": "じゅんい",
+   "reading": "じゅんい"
+  },
+  {
+   "display": "トップ",
+   "reading": "とっぷ"
+  },
+  {
+   "display": "ナンバーワン",
+   "reading": "なんばーわん"
+  },
+  {
+   "display": "さいきょう",
+   "reading": "さいきょう"
+  },
+  {
+   "display": "むはい",
+   "reading": "むはい"
+  },
+  {
+   "display": "れんしょう",
+   "reading": "れんしょう"
+  },
+  {
+   "display": "れんぱい",
+   "reading": "れんぱい"
+  },
+  {
+   "display": "さいせん",
+   "reading": "さいせん"
+  },
+  {
+   "display": "リベンジ",
+   "reading": "りべんじ"
+  },
+  {
+   "display": "リマッチ",
+   "reading": "りまっち"
+  },
+  {
+   "display": "ちょうせん",
+   "reading": "ちょうせん"
+  },
+  {
+   "display": "うけてたつ",
+   "reading": "うけてたつ"
+  },
+  {
+   "display": "ことわる",
+   "reading": "ことわる"
+  },
+  {
+   "display": "うける",
+   "reading": "うける"
+  },
+  {
+   "display": "にげる",
+   "reading": "にげる"
+  },
+  {
+   "display": "たたかう",
+   "reading": "たたかう"
+  },
+  {
+   "display": "まつ",
+   "reading": "まつ"
+  },
+  {
+   "display": "じゅんび",
+   "reading": "じゅんび"
+  },
+  {
+   "display": "トレーニング",
+   "reading": "とれーにんぐ"
+  },
+  {
+   "display": "しゅぎょう",
+   "reading": "しゅぎょう"
+  },
+  {
+   "display": "くんれん",
+   "reading": "くんれん"
+  },
+  {
+   "display": "きたえる",
+   "reading": "きたえる"
+  },
+  {
+   "display": "つよくなる",
+   "reading": "つよくなる"
+  },
+  {
+   "display": "せいちょう",
+   "reading": "せいちょう"
+  },
+  {
+   "display": "しんか",
+   "reading": "しんか"
+  },
+  {
+   "display": "レベルアップ",
+   "reading": "れべるあっぷ"
+  },
+  {
+   "display": "アップグレード",
+   "reading": "あっぷぐれーど"
+  },
+  {
+   "display": "かいきゅう",
+   "reading": "かいきゅう"
+  },
+  {
+   "display": "クラス",
+   "reading": "くらす"
+  },
+  {
+   "display": "ランク",
+   "reading": "らんく"
+  },
+  {
+   "display": "グレード",
+   "reading": "ぐれーど"
+  },
+  {
+   "display": "しょうかく",
+   "reading": "しょうかく"
+  },
+  {
+   "display": "こうかく",
+   "reading": "こうかく"
+  },
+  {
+   "display": "のぼる",
+   "reading": "のぼる"
+  },
+  {
+   "display": "おちる",
+   "reading": "おちる"
+  },
+  {
+   "display": "いじする",
+   "reading": "いじする"
+  },
+  {
+   "display": "キープ",
+   "reading": "きーぷ"
+  },
+  {
+   "display": "ほしゅ",
+   "reading": "ほしゅ"
+  },
+  {
+   "display": "ぼうえい",
+   "reading": "ぼうえい"
+  },
+  {
+   "display": "タイトル",
+   "reading": "たいとる"
+  },
+  {
+   "display": "めいよ",
+   "reading": "めいよ"
+  },
+  {
+   "display": "プライド",
+   "reading": "ぷらいど"
+  },
+  {
+   "display": "ほこり",
+   "reading": "ほこり"
+  },
+  {
+   "display": "えいこう",
+   "reading": "えいこう"
+  },
+  {
+   "display": "でんせつ",
+   "reading": "でんせつ"
+  },
+  {
+   "display": "れきし",
+   "reading": "れきし"
+  },
+  {
+   "display": "しんわ",
+   "reading": "しんわ"
+  }
+ ]
+}

@@ -1,0 +1,246 @@
+{
+ "id": "c4s5",
+ "name": "ヨークシン編 5: 名場面",
+ "items": [
+  {
+   "display": "ぐきょくのめ",
+   "reading": "ぐきょくのめ"
+  },
+  {
+   "display": "グリードアイランド",
+   "reading": "ぐりーどあいらんど"
+  },
+  {
+   "display": "ゲーム",
+   "reading": "げーむ"
+  },
+  {
+   "display": "おんがくひん",
+   "reading": "おんがくひん"
+  },
+  {
+   "display": "やみのフルート",
+   "reading": "やみのふるーと"
+  },
+  {
+   "display": "ソナタ",
+   "reading": "そなた"
+  },
+  {
+   "display": "がっき",
+   "reading": "がっき"
+  },
+  {
+   "display": "おんがく",
+   "reading": "おんがく"
+  },
+  {
+   "display": "えんそう",
+   "reading": "えんそう"
+  },
+  {
+   "display": "フルート",
+   "reading": "ふるーと"
+  },
+  {
+   "display": "じょしょう",
+   "reading": "じょしょう"
+  },
+  {
+   "display": "いじょう",
+   "reading": "いじょう"
+  },
+  {
+   "display": "のろい",
+   "reading": "のろい"
+  },
+  {
+   "display": "まほう",
+   "reading": "まほう"
+  },
+  {
+   "display": "ふしぎ",
+   "reading": "ふしぎ"
+  },
+  {
+   "display": "おそろしい",
+   "reading": "おそろしい"
+  },
+  {
+   "display": "きみょう",
+   "reading": "きみょう"
+  },
+  {
+   "display": "あやしい",
+   "reading": "あやしい"
+  },
+  {
+   "display": "きたい",
+   "reading": "きたい"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "こうげきてき",
+   "reading": "こうげきてき"
+  },
+  {
+   "display": "ぼうぎょてき",
+   "reading": "ぼうぎょてき"
+  },
+  {
+   "display": "とくべつ",
+   "reading": "とくべつ"
+  },
+  {
+   "display": "きちょう",
+   "reading": "きちょう"
+  },
+  {
+   "display": "レア",
+   "reading": "れあ"
+  },
+  {
+   "display": "いってんもの",
+   "reading": "いってんもの"
+  },
+  {
+   "display": "こせい",
+   "reading": "こせい"
+  },
+  {
+   "display": "ぶき",
+   "reading": "ぶき"
+  },
+  {
+   "display": "ぼうぐ",
+   "reading": "ぼうぐ"
+  },
+  {
+   "display": "どうぐ",
+   "reading": "どうぐ"
+  },
+  {
+   "display": "かざりもの",
+   "reading": "かざりもの"
+  },
+  {
+   "display": "アクセサリー",
+   "reading": "あくせさりー"
+  },
+  {
+   "display": "ゆびわ",
+   "reading": "ゆびわ"
+  },
+  {
+   "display": "くびかざり",
+   "reading": "くびかざり"
+  },
+  {
+   "display": "うでわ",
+   "reading": "うでわ"
+  },
+  {
+   "display": "かんむり",
+   "reading": "かんむり"
+  },
+  {
+   "display": "おうしゃく",
+   "reading": "おうしゃく"
+  },
+  {
+   "display": "つぼ",
+   "reading": "つぼ"
+  },
+  {
+   "display": "え",
+   "reading": "え"
+  },
+  {
+   "display": "ちょうこく",
+   "reading": "ちょうこく"
+  },
+  {
+   "display": "かいが",
+   "reading": "かいが"
+  },
+  {
+   "display": "びじゅつひん",
+   "reading": "びじゅつひん"
+  },
+  {
+   "display": "こっとうひん",
+   "reading": "こっとうひん"
+  },
+  {
+   "display": "こだいのもの",
+   "reading": "こだいのもの"
+  },
+  {
+   "display": "ねだん",
+   "reading": "ねだん"
+  },
+  {
+   "display": "かかく",
+   "reading": "かかく"
+  },
+  {
+   "display": "おくえん",
+   "reading": "おくえん"
+  },
+  {
+   "display": "ひゃくおく",
+   "reading": "ひゃくおく"
+  },
+  {
+   "display": "ちょうえん",
+   "reading": "ちょうえん"
+  },
+  {
+   "display": "きんがく",
+   "reading": "きんがく"
+  },
+  {
+   "display": "しきん",
+   "reading": "しきん"
+  },
+  {
+   "display": "おかね",
+   "reading": "おかね"
+  },
+  {
+   "display": "ざいさん",
+   "reading": "ざいさん"
+  },
+  {
+   "display": "もちもの",
+   "reading": "もちもの"
+  },
+  {
+   "display": "しょゆう",
+   "reading": "しょゆう"
+  },
+  {
+   "display": "かいしゅう",
+   "reading": "かいしゅう"
+  },
+  {
+   "display": "とりもどす",
+   "reading": "とりもどす"
+  },
+  {
+   "display": "ぬすむ",
+   "reading": "ぬすむ"
+  },
+  {
+   "display": "うばう",
+   "reading": "うばう"
+  },
+  {
+   "display": "てにいれる",
+   "reading": "てにいれる"
+  }
+ ]
+}

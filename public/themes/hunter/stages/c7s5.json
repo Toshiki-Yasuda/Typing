@@ -1,0 +1,246 @@
+{
+ "id": "c7s5",
+ "name": "選挙・暗黒大陸編 5: 旅団追加メンバー",
+ "items": [
+  {
+   "display": "ボノレノフ",
+   "reading": "ぼのれのふ"
+  },
+  {
+   "display": "コルトピ",
+   "reading": "こるとぴ"
+  },
+  {
+   "display": "イルミ",
+   "reading": "いるみ"
+  },
+  {
+   "display": "カルト",
+   "reading": "かると"
+  },
+  {
+   "display": "ギャラリーフェイク",
+   "reading": "ぎゃらりーふぇいく"
+  },
+  {
+   "display": "せんりつのかめん",
+   "reading": "せんりつのかめん"
+  },
+  {
+   "display": "ゆびを",
+   "reading": "ゆびを"
+  },
+  {
+   "display": "かめん",
+   "reading": "かめん"
+  },
+  {
+   "display": "ぶぞく",
+   "reading": "ぶぞく"
+  },
+  {
+   "display": "せんし",
+   "reading": "せんし"
+  },
+  {
+   "display": "ダンサー",
+   "reading": "だんさー"
+  },
+  {
+   "display": "おどり",
+   "reading": "おどり"
+  },
+  {
+   "display": "おんがく",
+   "reading": "おんがく"
+  },
+  {
+   "display": "がっき",
+   "reading": "がっき"
+  },
+  {
+   "display": "えんそう",
+   "reading": "えんそう"
+  },
+  {
+   "display": "ひびき",
+   "reading": "ひびき"
+  },
+  {
+   "display": "ねいろ",
+   "reading": "ねいろ"
+  },
+  {
+   "display": "おと",
+   "reading": "おと"
+  },
+  {
+   "display": "こぴー",
+   "reading": "こぴー"
+  },
+  {
+   "display": "ふくせい",
+   "reading": "ふくせい"
+  },
+  {
+   "display": "もほう",
+   "reading": "もほう"
+  },
+  {
+   "display": "にせもの",
+   "reading": "にせもの"
+  },
+  {
+   "display": "ほんもの",
+   "reading": "ほんもの"
+  },
+  {
+   "display": "つくる",
+   "reading": "つくる"
+  },
+  {
+   "display": "うみだす",
+   "reading": "うみだす"
+  },
+  {
+   "display": "せいぞう",
+   "reading": "せいぞう"
+  },
+  {
+   "display": "ざいりょう",
+   "reading": "ざいりょう"
+  },
+  {
+   "display": "げんりょう",
+   "reading": "げんりょう"
+  },
+  {
+   "display": "かず",
+   "reading": "かず"
+  },
+  {
+   "display": "りょう",
+   "reading": "りょう"
+  },
+  {
+   "display": "たいりょう",
+   "reading": "たいりょう"
+  },
+  {
+   "display": "しょうりょう",
+   "reading": "しょうりょう"
+  },
+  {
+   "display": "むげん",
+   "reading": "むげん"
+  },
+  {
+   "display": "げんかい",
+   "reading": "げんかい"
+  },
+  {
+   "display": "せいやく",
+   "reading": "せいやく"
+  },
+  {
+   "display": "じょうけん",
+   "reading": "じょうけん"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "やくそく",
+   "reading": "やくそく"
+  },
+  {
+   "display": "あんさつ",
+   "reading": "あんさつ"
+  },
+  {
+   "display": "ころしや",
+   "reading": "ころしや"
+  },
+  {
+   "display": "きょうだいあい",
+   "reading": "きょうだいあい"
+  },
+  {
+   "display": "かぞくあい",
+   "reading": "かぞくあい"
+  },
+  {
+   "display": "いもうと",
+   "reading": "いもうと"
+  },
+  {
+   "display": "あに",
+   "reading": "あに"
+  },
+  {
+   "display": "げんえいりょだん",
+   "reading": "げんえいりょだん"
+  },
+  {
+   "display": "だんいん",
+   "reading": "だんいん"
+  },
+  {
+   "display": "なかま",
+   "reading": "なかま"
+  },
+  {
+   "display": "そしき",
+   "reading": "そしき"
+  },
+  {
+   "display": "グループ",
+   "reading": "ぐるーぷ"
+  },
+  {
+   "display": "チーム",
+   "reading": "ちーむ"
+  },
+  {
+   "display": "いっしんどうたい",
+   "reading": "いっしんどうたい"
+  },
+  {
+   "display": "きずな",
+   "reading": "きずな"
+  },
+  {
+   "display": "つながり",
+   "reading": "つながり"
+  },
+  {
+   "display": "しんらい",
+   "reading": "しんらい"
+  },
+  {
+   "display": "ちゅうせい",
+   "reading": "ちゅうせい"
+  },
+  {
+   "display": "うらぎり",
+   "reading": "うらぎり"
+  },
+  {
+   "display": "しんにゅう",
+   "reading": "しんにゅう"
+  },
+  {
+   "display": "はいる",
+   "reading": "はいる"
+  },
+  {
+   "display": "かわり",
+   "reading": "かわり"
+  },
+  {
+   "display": "こうたい",
+   "reading": "こうたい"
+  }
+ ]
+}

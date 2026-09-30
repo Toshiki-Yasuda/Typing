@@ -124,7 +124,7 @@ describe('テーマの入口', () => {
     key('ArrowUp');
     key('ArrowUp'); // 先頭から上で末尾へ
     expect(links.at(-1)).toHaveFocus();
-    key('2');
+    key('3');
     expect(await screen.findByText('デイリー画面')).toBeInTheDocument();
   });
 

@@ -1,0 +1,246 @@
+{
+ "id": "c1s4",
+ "name": "ハンター試験編 4: 主要キャラ",
+ "items": [
+  {
+   "display": "ゼビルとう",
+   "reading": "ぜびるとう"
+  },
+  {
+   "display": "プレート",
+   "reading": "ぷれーと"
+  },
+  {
+   "display": "ターゲット",
+   "reading": "たーげっと"
+  },
+  {
+   "display": "さばいばる",
+   "reading": "さばいばる"
+  },
+  {
+   "display": "しま",
+   "reading": "しま"
+  },
+  {
+   "display": "もり",
+   "reading": "もり"
+  },
+  {
+   "display": "かくれる",
+   "reading": "かくれる"
+  },
+  {
+   "display": "さがす",
+   "reading": "さがす"
+  },
+  {
+   "display": "うばう",
+   "reading": "うばう"
+  },
+  {
+   "display": "まもる",
+   "reading": "まもる"
+  },
+  {
+   "display": "てき",
+   "reading": "てき"
+  },
+  {
+   "display": "みかた",
+   "reading": "みかた"
+  },
+  {
+   "display": "ひとり",
+   "reading": "ひとり"
+  },
+  {
+   "display": "いっしゅうかん",
+   "reading": "いっしゅうかん"
+  },
+  {
+   "display": "ろくてん",
+   "reading": "ろくてん"
+  },
+  {
+   "display": "さんてん",
+   "reading": "さんてん"
+  },
+  {
+   "display": "いってん",
+   "reading": "いってん"
+  },
+  {
+   "display": "ばんごう",
+   "reading": "ばんごう"
+  },
+  {
+   "display": "ついせき",
+   "reading": "ついせき"
+  },
+  {
+   "display": "にげる",
+   "reading": "にげる"
+  },
+  {
+   "display": "ヒソカをおう",
+   "reading": "ひそかをおう"
+  },
+  {
+   "display": "きけんなあいて",
+   "reading": "きけんなあいて"
+  },
+  {
+   "display": "つりざお",
+   "reading": "つりざお"
+  },
+  {
+   "display": "どく",
+   "reading": "どく"
+  },
+  {
+   "display": "ヘビ",
+   "reading": "へび"
+  },
+  {
+   "display": "クモ",
+   "reading": "くも"
+  },
+  {
+   "display": "しぜん",
+   "reading": "しぜん"
+  },
+  {
+   "display": "どうぶつ",
+   "reading": "どうぶつ"
+  },
+  {
+   "display": "かんさつ",
+   "reading": "かんさつ"
+  },
+  {
+   "display": "まつ",
+   "reading": "まつ"
+  },
+  {
+   "display": "ねらう",
+   "reading": "ねらう"
+  },
+  {
+   "display": "しかける",
+   "reading": "しかける"
+  },
+  {
+   "display": "パンチ",
+   "reading": "ぱんち"
+  },
+  {
+   "display": "かおにいっぱつ",
+   "reading": "かおにいっぱつ"
+  },
+  {
+   "display": "バッジ",
+   "reading": "ばっじ"
+  },
+  {
+   "display": "あつめる",
+   "reading": "あつめる"
+  },
+  {
+   "display": "きおく",
+   "reading": "きおく"
+  },
+  {
+   "display": "けいけん",
+   "reading": "けいけん"
+  },
+  {
+   "display": "せいちょう",
+   "reading": "せいちょう"
+  },
+  {
+   "display": "つよくなる",
+   "reading": "つよくなる"
+  },
+  {
+   "display": "シュウ",
+   "reading": "しゅう"
+  },
+  {
+   "display": "ゲリラ",
+   "reading": "げりら"
+  },
+  {
+   "display": "しゅうげき",
+   "reading": "しゅうげき"
+  },
+  {
+   "display": "ふいうち",
+   "reading": "ふいうち"
+  },
+  {
+   "display": "きづく",
+   "reading": "きづく"
+  },
+  {
+   "display": "かんじる",
+   "reading": "かんじる"
+  },
+  {
+   "display": "けはい",
+   "reading": "けはい"
+  },
+  {
+   "display": "さっき",
+   "reading": "さっき"
+  },
+  {
+   "display": "いきのこる",
+   "reading": "いきのこる"
+  },
+  {
+   "display": "しょうりしゃ",
+   "reading": "しょうりしゃ"
+  },
+  {
+   "display": "ろくにんめ",
+   "reading": "ろくにんめ"
+  },
+  {
+   "display": "ごうりゅう",
+   "reading": "ごうりゅう"
+  },
+  {
+   "display": "でむかえ",
+   "reading": "でむかえ"
+  },
+  {
+   "display": "しゅうりょう",
+   "reading": "しゅうりょう"
+  },
+  {
+   "display": "よんじしけん",
+   "reading": "よんじしけん"
+  },
+  {
+   "display": "いきのびる",
+   "reading": "いきのびる"
+  },
+  {
+   "display": "あいてをたおす",
+   "reading": "あいてをたおす"
+  },
+  {
+   "display": "プレートをうばう",
+   "reading": "ぷれーとをうばう"
+  },
+  {
+   "display": "もくひょうたっせい",
+   "reading": "もくひょうたっせい"
+  },
+  {
+   "display": "さいしゅうしけんへ",
+   "reading": "さいしゅうしけんへ"
+  }
+ ]
+}

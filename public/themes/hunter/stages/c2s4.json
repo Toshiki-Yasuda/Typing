@@ -1,0 +1,246 @@
+{
+ "id": "c2s4",
+ "name": "天空闘技場編 4: 闘技場用語",
+ "items": [
+  {
+   "display": "てんくうとうぎじょう",
+   "reading": "てんくうとうぎじょう"
+  },
+  {
+   "display": "にひゃくじゅっかい",
+   "reading": "にひゃくじゅっかい"
+  },
+  {
+   "display": "フロアマスター",
+   "reading": "ふろあますたー"
+  },
+  {
+   "display": "バトルオリンピア",
+   "reading": "ばとるおりんぴあ"
+  },
+  {
+   "display": "しあい",
+   "reading": "しあい"
+  },
+  {
+   "display": "ポイント",
+   "reading": "ぽいんと"
+  },
+  {
+   "display": "しょうり",
+   "reading": "しょうり"
+  },
+  {
+   "display": "はいぼく",
+   "reading": "はいぼく"
+  },
+  {
+   "display": "ひきわけ",
+   "reading": "ひきわけ"
+  },
+  {
+   "display": "ノックアウト",
+   "reading": "のっくあうと"
+  },
+  {
+   "display": "テクニカル",
+   "reading": "てくにかる"
+  },
+  {
+   "display": "ダウン",
+   "reading": "だうん"
+  },
+  {
+   "display": "クリーンヒット",
+   "reading": "くりーんひっと"
+  },
+  {
+   "display": "クリティカル",
+   "reading": "くりてぃかる"
+  },
+  {
+   "display": "しょうきん",
+   "reading": "しょうきん"
+  },
+  {
+   "display": "ランキング",
+   "reading": "らんきんぐ"
+  },
+  {
+   "display": "じゅんい",
+   "reading": "じゅんい"
+  },
+  {
+   "display": "しょうかく",
+   "reading": "しょうかく"
+  },
+  {
+   "display": "こうかく",
+   "reading": "こうかく"
+  },
+  {
+   "display": "かい",
+   "reading": "かい"
+  },
+  {
+   "display": "ステージ",
+   "reading": "すてーじ"
+  },
+  {
+   "display": "リング",
+   "reading": "りんぐ"
+  },
+  {
+   "display": "アリーナ",
+   "reading": "ありーな"
+  },
+  {
+   "display": "ラウンド",
+   "reading": "らうんど"
+  },
+  {
+   "display": "じかんぎれ",
+   "reading": "じかんぎれ"
+  },
+  {
+   "display": "せいげんじかん",
+   "reading": "せいげんじかん"
+  },
+  {
+   "display": "リタイア",
+   "reading": "りたいあ"
+  },
+  {
+   "display": "きけん",
+   "reading": "きけん"
+  },
+  {
+   "display": "しっかく",
+   "reading": "しっかく"
+  },
+  {
+   "display": "はんそく",
+   "reading": "はんそく"
+  },
+  {
+   "display": "ルール",
+   "reading": "るーる"
+  },
+  {
+   "display": "とうろく",
+   "reading": "とうろく"
+  },
+  {
+   "display": "エントリー",
+   "reading": "えんとりー"
+  },
+  {
+   "display": "よせん",
+   "reading": "よせん"
+  },
+  {
+   "display": "ほんせん",
+   "reading": "ほんせん"
+  },
+  {
+   "display": "けっしょうせん",
+   "reading": "けっしょうせん"
+  },
+  {
+   "display": "じゅんけっしょう",
+   "reading": "じゅんけっしょう"
+  },
+  {
+   "display": "トーナメント",
+   "reading": "とーなめんと"
+  },
+  {
+   "display": "リーグせん",
+   "reading": "りーぐせん"
+  },
+  {
+   "display": "しあいかいし",
+   "reading": "しあいかいし"
+  },
+  {
+   "display": "しあいしゅうりょう",
+   "reading": "しあいしゅうりょう"
+  },
+  {
+   "display": "せんしゅこうたい",
+   "reading": "せんしゅこうたい"
+  },
+  {
+   "display": "にゅうじょうりょう",
+   "reading": "にゅうじょうりょう"
+  },
+  {
+   "display": "しせき",
+   "reading": "しせき"
+  },
+  {
+   "display": "きゃくせき",
+   "reading": "きゃくせき"
+  },
+  {
+   "display": "とくとうせき",
+   "reading": "とくとうせき"
+  },
+  {
+   "display": "ひかえしつ",
+   "reading": "ひかえしつ"
+  },
+  {
+   "display": "いしつ",
+   "reading": "いしつ"
+  },
+  {
+   "display": "きゅうけいしつ",
+   "reading": "きゅうけいしつ"
+  },
+  {
+   "display": "ロビー",
+   "reading": "ろびー"
+  },
+  {
+   "display": "エレベーター",
+   "reading": "えれべーたー"
+  },
+  {
+   "display": "こうそうビル",
+   "reading": "こうそうびる"
+  },
+  {
+   "display": "てんぼうだい",
+   "reading": "てんぼうだい"
+  },
+  {
+   "display": "さいじょうかい",
+   "reading": "さいじょうかい"
+  },
+  {
+   "display": "ちかいっかい",
+   "reading": "ちかいっかい"
+  },
+  {
+   "display": "かくとうぎ",
+   "reading": "かくとうぎ"
+  },
+  {
+   "display": "ぶとうかい",
+   "reading": "ぶとうかい"
+  },
+  {
+   "display": "しんけんしょうぶ",
+   "reading": "しんけんしょうぶ"
+  },
+  {
+   "display": "いっきうちあがり",
+   "reading": "いっきうちあがり"
+  },
+  {
+   "display": "れんしょう",
+   "reading": "れんしょう"
+  }
+ ]
+}
