@@ -4,7 +4,20 @@ import { expect, test, type Page } from '@playwright/test';
 /** WCAG 2.0/2.1/2.2 の A・AA と、ベストプラクティスを検査する */
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'];
 
+/** 有限のアニメーション（語の切り替えの薄れなど）が終わるのを待つ。途中の半透明の色を測って誤検出しないように */
+async function settle(page: Page) {
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => undefined)),
+    ),
+  );
+}
+
 async function scan(page: Page, label: string) {
+  await settle(page);
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   const summary = results.violations.map((v) => ({
     id: v.id,
