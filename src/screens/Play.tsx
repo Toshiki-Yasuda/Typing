@@ -374,7 +374,7 @@ export function Play({
       if (result === 'miss') {
         setMissing(true);
         clearTimeout(missTimer.current);
-        missTimer.current = setTimeout(() => setMissing(false), 160);
+        missTimer.current = setTimeout(() => setMissing(false), 700);
       }
       const lost = fight?.state().status === 'lost';
       if (result === 'sessionDone' || lost) conclude(fight);

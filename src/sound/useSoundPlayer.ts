@@ -21,7 +21,8 @@ export function useSoundPlayer(): KindPlayer | null {
     () => (settings.sound ? resolveTheme(settings.themeId, loadUnlocked()).sounds : undefined),
     [settings.sound, settings.themeId],
   );
-  const synth = !sounds && settings.synthSound;
+  // 「効果音を鳴らす」がオフなら、合成音も鳴らさない
+  const synth = settings.sound && !sounds && settings.synthSound;
   const player = useMemo<KindPlayer | null>(
     () => (sounds ? new SoundPlayer(sounds, browserSoundDeps()) : synth ? new SynthPlayer(browserSynthDeps()) : null),
     [sounds, synth],

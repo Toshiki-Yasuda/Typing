@@ -25,7 +25,7 @@ function measureCard(): CardRect | null {
 /** 光のレールを、お題の下端の少し下に置く */
 const RAIL_GAP_PX = 14;
 /** 語の完了の光の最短間隔。これより速い連続では光らせない（1 秒に 3 回以上の明滅を作らない） */
-const FLASH_GAP_MS = 400;
+const FLASH_GAP_MS = 500;
 
 /**
  * 打鍵に合わせた演出の層（U5）。画面全体の上に重ねる（position: fixed; inset: 0; pointer-events: none; aria-hidden）。

@@ -34,4 +34,9 @@ describe('useSoundPlayer（テーマの音か、合成音か）', () => {
     const { result } = renderHook(() => useSoundPlayer());
     expect(result.current).toBeNull();
   });
+  it('「効果音を鳴らす」がオフなら、synthSound が true でも何も鳴らさない', () => {
+    withSettings({ sound: false, themeId: 'neutral', synthSound: true });
+    const { result } = renderHook(() => useSoundPlayer());
+    expect(result.current).toBeNull();
+  });
 });

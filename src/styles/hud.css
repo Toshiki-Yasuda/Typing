@@ -27,7 +27,7 @@
   background: transparent;
 }
 .hud-tick[data-state='todo'] {
-  opacity: 0.55;
+  opacity: 0.75;
 }
 
 /* 数字: 等幅・小さめ・補助色。視線を奪わない */
@@ -94,4 +94,9 @@ button.hud-abort:hover {
 .hud-bar__fill {
   height: 100%;
   background: var(--color-accent);
+}
+.hud-stats dt,
+.hud-stats dd,
+.hud-abort {
+  white-space: nowrap;
 }

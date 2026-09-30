@@ -61,7 +61,7 @@ export function HudBar({ index, total, label, remaining, stats, showStats = true
   );
   return (
     <>
-      <header className="flex items-center justify-between gap-3 text-text-muted">
+      <header className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-text-muted">
         {/* 進捗の役割は、見える文字（1 / 10）を持つ要素に付ける。刻みは装飾で、文字を含めない */}
         <div
           role="progressbar"

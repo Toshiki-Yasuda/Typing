@@ -28,6 +28,12 @@
   --key: clamp(28px, 3.2vw, 44px);
   gap: var(--fg-gap);
 }
+/* 3ゾーンの幅では、主役の舞台を広く取るため図を小さめにする（H1） */
+@media (min-width: 1200px) {
+  .fg-board {
+    --key: clamp(24px, 2.1vw, 36px);
+  }
+}
 .fg-row {
   display: flex;
   gap: var(--fg-gap);

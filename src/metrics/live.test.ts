@@ -12,24 +12,33 @@ describe('liveMetrics', () => {
     expect(liveMetrics([k(100)], 1000)).toEqual({ kpm: null, accuracy: 1, misses: 0, elapsedSec: 1 });
   });
 
-  it('全部正打: 3 間隔 1500ms → 3 / 0.025 分 = 120', () => {
-    const r = liveMetrics([k(0), k(500), k(1000), k(1500)], 2000);
+  it('全部正打: 5 打・4 間隔 2000ms → 4 / (2/60 分) = 120（出し始めの境界）', () => {
+    const r = liveMetrics([k(0), k(500), k(1000), k(1500), k(2000)], 2500);
     expect(r.kpm).toBeCloseTo(120, 9);
     expect(r.accuracy).toBe(1);
     expect(r.misses).toBe(0);
   });
 
+  it('正打が 4 つでは速さを出さない（間隔が長くても）', () => {
+    expect(liveMetrics([k(0), k(1000), k(2000), k(3000)], 3500).kpm).toBeNull();
+  });
+
+  it('実効時間が 2000ms 未満では速さを出さない（正打は 5 つ）', () => {
+    // 4 間隔 × 499ms = 1996ms
+    expect(liveMetrics([k(0), k(499), k(998), k(1497), k(1996)], 2500).kpm).toBeNull();
+  });
+
   it('ミスは正確率とミス数に出て、速さは正打で終わる間隔だけ数える', () => {
-    // 5 打鍵中 2 ミス。間隔 4 つ（各 500ms、計 2000ms）のうち正打で終わるのは 2 つ → 2 / (2/60) = 60
-    const r = liveMetrics([k(0), k(500, false), k(1000), k(1500, false), k(2000)], 2500);
+    // 7 打鍵中 2 ミス（正打 5）。間隔 6 つ（各 500ms、計 3000ms）のうち正打で終わるのは 4 つ → 4 / (3/60) = 80
+    const r = liveMetrics([k(0), k(500, false), k(1000), k(1500), k(2000, false), k(2500), k(3000)], 3500);
     expect(r.misses).toBe(2);
-    expect(r.accuracy).toBeCloseTo(0.6, 9);
-    expect(r.kpm).toBeCloseTo(60, 9);
+    expect(r.accuracy).toBeCloseTo(5 / 7, 9);
+    expect(r.kpm).toBeCloseTo(80, 9);
   });
 
   it('お題をまたぐ間隔と休止（3 秒超）は速さに入れない', () => {
-    // 間隔: 0→500 (同お題, 500ms), 500→9000 (お題をまたぐ), 9000→9500 (500ms) → 2 / (1000ms) = 120
-    const r = liveMetrics([k(0), k(500), k(9000, true, 1), k(9500, true, 1)], 10000);
+    // 同お題の間隔 500ms が 4 つ（計 2000ms）と、お題をまたぐ 1 間隔（除外）→ 4 / (2/60) = 120
+    const r = liveMetrics([k(0), k(500), k(1000), k(9000, true, 1), k(9500, true, 1), k(10000, true, 1)], 10500);
     expect(r.kpm).toBeCloseTo(120, 9);
   });
 
