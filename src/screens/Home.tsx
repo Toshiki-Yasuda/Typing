@@ -5,6 +5,7 @@ import { computeMetrics, dayKey, summarizeSessions, type SessionRecord, type Ses
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { ThemeSettings } from './home/ThemeSettings';
 import { useSettings } from '@/settings/useSettings';
 import { CustomPacks } from './home/CustomPacks';
 import { PracticeSettings } from './home/PracticeSettings';
@@ -116,6 +117,8 @@ export function Home() {
       )}
 
       <RankCard summaries={summaries} goalId={settings.goalRank} />
+
+      <ThemeSettings themeId={settings.themeId} update={updateSettings} />
 
       <PracticeSettings settings={settings} update={updateSettings} customPacks={custom.packs} />
 

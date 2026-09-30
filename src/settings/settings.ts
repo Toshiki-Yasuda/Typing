@@ -18,6 +18,8 @@ export const SettingsSchema = z.object({
   fingerGuide: z.boolean(),
   /** 運指ガイドのキー配列（表示だけ。判定には影響しない） */
   layout: z.enum(['us', 'jis']),
+  /** テーマの id（ロック中・不明なら中立テーマになる。記録には持たせない） */
+  themeId: z.string().min(1),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 
@@ -28,6 +30,7 @@ export const DEFAULT_SETTINGS: Settings = {
   goalRank: GOAL_AUTO,
   fingerGuide: true,
   layout: 'jis',
+  themeId: 'neutral',
 };
 
 /** localStorage を使えない環境（プライベートモード等）でも落ちないようにする */
