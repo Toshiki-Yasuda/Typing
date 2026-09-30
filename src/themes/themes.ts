@@ -63,6 +63,16 @@ export const HUNTER_THEME: Theme = {
   },
   // Blender で作ったオリジナルのモデル（art/hunter/build_models.py で生成）
   hero: { centerpiece: 'themes/hunter/models/license.glb', orbiter: 'themes/hunter/models/card.glb' },
+  // 念の段階（Ver1 の念レベル）: 連続正打が増えるほど、念が高まる
+  feel: {
+    levels: [
+      { at: 0, name: '念' },
+      { at: 5, name: '纏' },
+      { at: 10, name: '絶' },
+      { at: 20, name: '練' },
+      { at: 50, name: '発' },
+    ],
+  },
   chapters: HUNTER_CHAPTERS,
   bosses: HUNTER_BOSSES,
 };

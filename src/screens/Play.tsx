@@ -1,9 +1,13 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState, type CSSProperties } from 'react';
 import { useNavigate } from 'react-router';
 import { BossBattle, type BattleState } from '@/session/bossBattle';
 import { recordBossResult } from '@/session/bossProgress';
 import type { Boss } from '@/themes/theme';
+import { playOnce } from '@/sound/oneshot';
+import { ComboTracker, levelAt } from '@/session/combo';
 import { BossFx, type BossFxState } from './boss/BossFx';
+import { FeelHud } from './feel/FeelHud';
+import { useFeel } from './feel/useFeel';
 import { BossHud } from './boss/BossHud';
 import { webglAvailable, type EffectLevel } from '@/effects/level';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
@@ -83,6 +87,17 @@ export function Play({
     void import('./boss/BurstScene');
     fetch(new URL(cardModel, document.baseURI)).catch(() => {});
   }, [boss, level, cardModel]);
+  // 打鍵の手応え（コンボの段階）。描画・効果音だけで、判定・計測には関わらない
+  const feel = useFeel();
+  const feelRef = useRef(feel);
+  useEffect(() => {
+    feelRef.current = feel;
+  }, [feel]);
+  const tracker = useRef<ComboTracker | null>(null);
+  const [combo, setCombo] = useState(0);
+  const [pop, setPop] = useState<{ name: string; n: number } | null>(null);
+  const popTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(popTimer.current), []);
   const [fx, setFx] = useState<BossFxState | null>(null);
   // 練習中の BGM（設定に従う）。決着の演出に入ったらフェードアウト
   useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: fx?.kind === 'won' || fx?.kind === 'lost' });
@@ -108,6 +123,8 @@ export function Play({
         (weakness.size > 0
           ? pickAdaptive(pack.items, count, weakness, { bigrams, random })
           : pickItems(pack.items, count, random));
+      tracker.current = feelRef.current ? new ComboTracker(feelRef.current.levels) : null;
+      setCombo(0);
       battle.current = boss ? new BossBattle({ words: items.length, maxMisses: boss.maxMisses }) : null;
       setBossLine(boss?.intro ?? '');
       setBattleState(battle.current?.state() ?? null);
@@ -172,6 +189,18 @@ export function Play({
       if (battle.current && battle.current.state().status === 'lost') return;
       const result = session.press({ key: e.key, code: e.code }, e.timeStamp);
       const fight = battle.current;
+      const f = feelRef.current;
+      if (tracker.current && f) {
+        const { entered } = tracker.current.apply(result);
+        setCombo(tracker.current.combo);
+        // 段階が上がった瞬間: 名前を出し、決定音を 1 回鳴らす（演出オフでは出さない）
+        if (entered && f.effect !== 'off') {
+          setPop((prev) => ({ name: entered.name, n: (prev?.n ?? 0) + 1 }));
+          clearTimeout(popTimer.current);
+          popTimer.current = setTimeout(() => setPop(null), 1400);
+          if (f.cue) playOnce(f.cue.url, f.cue.volume);
+        }
+      }
       if (fight && boss) {
         const { phaseChanged } = fight.apply(result);
         setBattleState(fight.state());
@@ -260,6 +289,13 @@ export function Play({
       <div aria-hidden className="h-1 rounded bg-surface-raised">
         <div className="h-1 rounded bg-accent" style={{ width: `${(view.index / view.total) * 100}%` }} />
       </div>
+      {feel && (
+        <FeelHud
+          combo={combo}
+          info={levelAt(feel.levels, combo)}
+          reached={pop ? { name: pop.name, animate: feel.effect === 'full' } : null}
+        />
+      )}
       {!focused && (
         <p role="status" className="rounded bg-surface-raised p-3 text-sm">
           ウィンドウがアクティブではありません。画面をクリックすると、続きから打てます。
@@ -272,7 +308,13 @@ export function Play({
       )}
       {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} />}
       {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
-      <TargetView view={view} missing={missing} />
+      <div
+        className={feel && feel.effect !== 'off' ? `feel-aura ${missing && feel.effect === 'full' ? 'feel-shake' : ''}` : ''}
+        data-effect={feel?.effect}
+        style={feel ? ({ '--aura': levelAt(feel.levels, combo).index / Math.max(1, feel.levels.length - 1) } as CSSProperties) : undefined}
+      >
+        <TargetView view={view} missing={missing} />
+      </div>
       {fingerGuide && <FingerGuide next={view.guide.rest[0]} layout={fingerGuide.layout} />}
     </main>
   );

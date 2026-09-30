@@ -181,3 +181,24 @@ describe('ステージ（チャプター）の定義', () => {
     }
   });
 });
+
+describe('打鍵の手応え（コンボの段階）の定義', () => {
+  it('HUNTER は念の 5 段階（念・纏・絶・練・発）。0 から始まり昇順', () => {
+    const levels = HUNTER_THEME.feel?.levels ?? [];
+    expect(levels.map((l) => l.name)).toEqual(['念', '纏', '絶', '練', '発']);
+    expect(levels.map((l) => l.at)).toEqual([0, 5, 10, 20, 50]);
+  });
+
+  it('段階が 0 から始まらない・昇順でないテーマは不正', () => {
+    const bad = (levels: { at: number; name: string }[]) => ThemeSchema.safeParse({ ...HUNTER_THEME, feel: { levels } }).success;
+    expect(bad([{ at: 0, name: 'a' }, { at: 5, name: 'b' }])).toBe(true);
+    expect(bad([{ at: 1, name: 'a' }])).toBe(false);
+    expect(bad([{ at: 0, name: 'a' }, { at: 5, name: 'b' }, { at: 5, name: 'c' }])).toBe(false);
+    expect(bad([{ at: 0, name: 'a' }, { at: 9, name: 'b' }, { at: 4, name: 'c' }])).toBe(false);
+    expect(bad([])).toBe(false);
+  });
+
+  it('標準テーマには無い', () => {
+    expect(NEUTRAL_THEME.feel).toBeUndefined();
+  });
+});

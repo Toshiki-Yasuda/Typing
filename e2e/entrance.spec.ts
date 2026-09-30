@@ -25,6 +25,8 @@ async function unlock(page: Page) {
   await page.goto('/');
   await page.getByLabel(/パスワードで新しいテーマを開く/).fill('SAKI');
   await page.getByRole('button', { name: '開く' }).click();
+  // ゲートの準備（キー受付・フォーカス）が済むのを待つ。早すぎる Esc は取りこぼされる
+  await expect(page.getByRole('button', { name: /スタート/ })).toBeFocused();
 }
 
 test.describe('テーマの入口', () => {
@@ -212,5 +214,42 @@ test.describe('BGM（実際の再生）', () => {
     await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
     await page.waitForTimeout(500);
     expect((await plays(page)).length).toBe(before);
+  });
+});
+
+test.describe('打鍵の手応え', () => {
+  test('コンボが増えると段階が上がり、お題の周りが光る。ミスで戻る（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('1'); // はじめる
+    const hud = page.getByRole('group', { name: 'コンボの段階' });
+    await expect(hud).toContainText('0 連続');
+    await scan(page, '練習（手応えの表示・開始直後）');
+
+    // 5 連続を超えるまで、お題を 1 語ずつ最後まで打つ（語の途中で止めると、次の語で誤入力になる）
+    const combo = async () => Number((await hud.locator('.feel-count strong').textContent()) ?? '0');
+    for (let words = 0; words < 6 && (await combo()) < 6; words++) {
+      const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');
+      for (const key of romaji) await page.keyboard.press(key);
+      await page.waitForTimeout(50);
+    }
+    expect(await combo()).toBeGreaterThanOrEqual(5); // 少なくとも 5 連続 → 纏
+    await expect(hud.locator('.feel-badge')).not.toHaveText('念'); // 纏以上（長い語だと一気に進むこともある）
+    await scan(page, '練習（段階が上がった状態）');
+
+    await page.keyboard.press('1'); // ミス
+    await expect(hud).toContainText('0 連続');
+    await expect(hud.locator('.feel-badge')).toHaveText('念');
+  });
+
+  test('演出オフでも、コンボの文字は出る（光は出ない）', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => localStorage.setItem('typing.settings.v1', JSON.stringify({ effects: 'off' })));
+    await page.reload();
+    await page.getByLabel(/パスワードで新しいテーマを開く/).fill('SAKI');
+    await page.getByRole('button', { name: '開く' }).click();
+    await page.getByRole('link', { name: /はじめる/ }).click();
+    await expect(page.getByRole('group', { name: 'コンボの段階' })).toBeVisible();
+    await expect(page.locator('.feel-aura')).toHaveCount(0);
   });
 });

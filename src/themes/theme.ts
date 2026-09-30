@@ -99,6 +99,20 @@ export const ThemeSchema = z.object({
     .optional(),
   /** ホームに出す 3D の演出（glTF のモデル。アプリからの相対パス）。無ければ出さない */
   hero: z.object({ centerpiece: z.string().min(1), orbiter: z.string().min(1) }).optional(),
+  /**
+   * 打鍵の手応え（コンボの段階）。連続正打の数で段階が上がり、お題の周りの光が強くなる。
+   * 無ければ出さない。`at` は 0 から始まり、昇順。
+   */
+  feel: z
+    .object({
+      levels: z
+        .array(z.object({ at: z.number().int().min(0), name: z.string().min(1) }))
+        .min(1)
+        .refine((l) => l[0]?.at === 0 && l.every((x, i) => i === 0 || x.at > (l[i - 1]?.at ?? 0)), {
+          message: '段階は 0 から始まり、昇順であること',
+        }),
+    })
+    .optional(),
   /** ステージ選択の章。無ければステージ選択は出ない */
   chapters: z.array(ChapterSchema).optional(),
   /** ボス戦のボス。無ければボス戦は出ない */
