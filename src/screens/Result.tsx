@@ -5,6 +5,7 @@ import { computeMetrics, confusionMatrix, keyStats, summarizeSessions, type Metr
 import { useStore } from '@/app/StoreContext';
 import { compareWithBest, type Comparison } from '@/session/retry';
 import { useSettings } from '@/settings/useSettings';
+import { useSceneBgm } from '@/sound/useSceneBgm';
 import { resolveTheme } from '@/themes/themes';
 import { loadUnlocked } from '@/themes/unlock';
 import { BossResultPanel, parseBossOutcome } from './boss/BossResultPanel';
@@ -40,6 +41,7 @@ export function Result() {
   const [summaries, setSummaries] = useState<SessionSummary[]>([]);
   const [settings] = useSettings();
   const location = useLocation();
+  useSceneBgm(null); // 結果は静か（練習中の曲は決着でフェードアウト済み）
 
   useEffect(() => {
     let cancelled = false;

@@ -16,6 +16,7 @@ import type { LayoutId } from '@/fingering';
 import { FingerGuide } from './FingerGuide';
 import { GhostBar } from './GhostBar';
 import { useStore } from '@/app/StoreContext';
+import { useGameBgm } from '@/sound/useGameBgm';
 import { useSoundPlayer } from '@/sound/useSoundPlayer';
 import { PageHeading } from './PageHeading';
 import { TargetView } from './TargetView';
@@ -83,6 +84,8 @@ export function Play({
     fetch(new URL(cardModel, document.baseURI)).catch(() => {});
   }, [boss, level, cardModel]);
   const [fx, setFx] = useState<BossFxState | null>(null);
+  // 練習中の BGM（設定に従う）。決着の演出に入ったらフェードアウト
+  useGameBgm({ isBoss: !!boss, phase: battleState?.phase ?? null, ended: fx?.kind === 'won' || fx?.kind === 'lost' });
   const fxTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   /** 決着の演出を閉じて先へ進む関数（決着の演出中だけ入る） */
   const skip = useRef<(() => void) | null>(null);

@@ -20,6 +20,7 @@ export function useSceneBgm(role: BgmRole | null): void {
   const [settings] = useSettings();
   const url = bgmUrl(resolveTheme(settings.themeId, loadUnlocked()), role);
   useEffect(() => {
+    getBgm().setScale(1); // 練習中に下げた音量の倍率を戻す
     getBgm().play(url);
   }, [url]);
 }

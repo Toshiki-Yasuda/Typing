@@ -31,6 +31,10 @@ src/fingering キー配列(US/JIS)と運指（どの指でどのキーか）。�
 src/input     KeyboardEvent の除外判定（repeat / IME 中 / 修飾キー併用）
 src/screens   画面（Home / Play / Result / Stats）。src/screens/stats はグラフ部品
 src/app       ルーティングと保存先の提供
+src/themes    テーマ（配色・文言・音・3D・ボス・ステージ）の定義と検証。標準テーマは常に存在。コアは import しない
+src/effects   演出の強さ（標準/控えめ/オフ）と、three.js の 3D シーン。描画だけ
+src/sound     効果音（SoundPlayer）と BGM（BgmManager）。画面ごとの曲は useSceneBgm / useGameBgm
+art/          3D モデルと語彙の元データを作るスクリプト（Blender は bpy）。README に手順
 e2e/          Playwright
 ```
 依存は `engine ← metrics ← session / storage ← screens`。**engine から上位層を import しない。**
@@ -74,6 +78,13 @@ e2e/          Playwright
 - デイリーのお題は日付だけから決まる。**`Math.random` を使わない**（`seededRandom` を使う）。同じ日は、いつ・誰が開いても同じお題であること。
 - ゴーストが有効なのは、**お題の並びが完全に一致**する記録だけ（`findBestRecord`）。比較は位置（お題の何個分）と到達時刻で行い、打鍵数では比べない（経路が違うと打鍵数が変わるため）。
 - 「先行/遅れ」は色だけで示さない（符号と語を必ず付ける）。
+
+### テーマ・演出・音
+- 作品の名称・台詞・画像・音は `src/themes/` と `public/themes/<テーマ>/` に置く。コア（engine / metrics / session の計算）に入れない。詳細は `docs/adr/0001`（テーマ）と `0002`（入口・BGM・ステージ）。
+- 演出は**描画だけ**で、打鍵の判定・計測に関わらない。強さ（標準/控えめ/オフ）と OS の「動きを減らす」に従い、基本の見た目を「最後の姿」にして動きを @keyframes で足す。点滅させない。飾りは `aria-hidden`、同じ内容は文字でも伝える。
+- ブラウザは、ユーザー操作の前の音を拒む。BGM は入口のゲートの操作から流し、拒まれても例外にせず `unlock()` で再試行する。テーマを選んでも、標準テーマの配信量を増やさない（3D・BGM・語彙は選んだときだけ読み込む）。
+- 3D の見た目の確認は、ヘッドレスではソフトウェア描画で遅い。演出中に画面が切り替わって撮れないことがある。`page.evaluate` でタイマーを全消去しない（Suspense の表示が止まる）。遷移だけ止める（`history.pushState` を無効化）。
+- ステージの語彙は `GEN_STAGES` の生成ツールで作る（手で編集しない）。`hunterChapters.ts` は生成物。
 
 ### コアに固有名詞を置かない
 原作・既存作品の名称、台詞、画像、音源をコアに入れない。世界観は「テーマパック」として分離する（`task.md` P2）。

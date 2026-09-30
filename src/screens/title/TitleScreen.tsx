@@ -54,7 +54,9 @@ function TitleScreen({ theme, level }: { theme: Theme; level: EffectLevel }) {
 
   // 曲は、ゲートを抜けてから流す（ゲートの操作が、ブラウザに音の再生を許してもらう操作）
   useEffect(() => {
-    if (phase !== 'gate') getBgm().play(music);
+    if (phase === 'gate') return;
+    getBgm().setScale(1);
+    getBgm().play(music);
   }, [phase, music]);
 
   // 段階が替わるたびに、操作の起点（ゲート/スキップのボタン、メニューの最初の項目）へフォーカス。

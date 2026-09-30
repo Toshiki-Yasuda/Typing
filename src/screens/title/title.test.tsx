@@ -11,7 +11,7 @@ import { entranceSeen } from './entrance';
 import { BURST_MS } from './opening';
 import { TitleRoute } from './TitleScreen';
 
-const bgm = { play: vi.fn(), unlock: vi.fn(), stop: vi.fn() };
+const bgm = { play: vi.fn(), unlock: vi.fn(), stop: vi.fn(), setScale: vi.fn() };
 const playOnce = vi.fn();
 vi.mock('@/sound/bgm', () => ({ getBgm: () => bgm }));
 vi.mock('@/sound/oneshot', () => ({ playOnce: (...a: unknown[]) => playOnce(...a) }));

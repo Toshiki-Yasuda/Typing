@@ -155,3 +155,62 @@ test.describe('ステージ選択', () => {
     await expect(page.getByText('ミスの余裕 1 回')).toBeVisible();
   });
 });
+
+test.describe('BGM（実際の再生）', () => {
+  /** <audio> の再生を記録する（どの曲を、どの音量で頼んだか） */
+  async function spyAudio(page: Page) {
+    await page.addInitScript(() => {
+      const w = window as unknown as { __plays: { src: string; volume: number }[] };
+      w.__plays = [];
+      const original = HTMLMediaElement.prototype.play;
+      HTMLMediaElement.prototype.play = function (this: HTMLMediaElement) {
+        w.__plays.push({ src: this.src.split('/').pop() ?? '', volume: this.volume });
+        return original.call(this);
+      };
+    });
+  }
+  const plays = (page: Page) =>
+    page.evaluate(() => (window as unknown as { __plays: { src: string }[] }).__plays.map((p) => p.src));
+  test('ゲートの前は無音。スタートでタイトルの曲、ボス戦でゲームの曲。設定でオフにすると止まる', async ({ page }) => {
+    await spyAudio(page);
+    await unlock(page);
+    await expect(page.getByRole('button', { name: /スタート/ })).toBeVisible();
+    expect(await plays(page)).toEqual([]); // ゲートの前は再生を頼まない
+
+    await page.getByRole('button', { name: /スタート/ }).click();
+    await expect.poll(() => plays(page)).toContain('opening-bgm.mp3'); // タイトルの曲
+    await page.keyboard.press('Escape'); // オープニングを飛ばす
+    await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+
+    // ステージ選択の曲へ
+    await page.keyboard.press('2');
+    await expect.poll(() => plays(page)).toContain('title-bgm.mp3');
+    // ボス戦: ゲームの曲（既定は「ボス戦だけ」）
+    await page.getByRole('link', { name: /ボス ヒソカに挑戦する/ }).click();
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await expect.poll(() => plays(page)).toContain('game-bgm.mp3');
+  });
+
+  test('通常の練習には、既定では曲を流さない', async ({ page }) => {
+    await spyAudio(page);
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('1'); // はじめる（通常の練習）
+    await expect(page.getByRole('region', { name: 'お題' })).toBeVisible();
+    await page.waitForTimeout(500);
+    expect(await plays(page)).not.toContain('game-bgm.mp3');
+  });
+
+  test('BGM をオフにすると、タイトルに戻っても曲を頼まない', async ({ page }) => {
+    await spyAudio(page);
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('5'); // 設定
+    await page.getByRole('checkbox', { name: 'BGM を鳴らす' }).uncheck();
+    const before = (await plays(page)).length;
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('navigation', { name: 'メニュー' })).toBeVisible();
+    await page.waitForTimeout(500);
+    expect((await plays(page)).length).toBe(before);
+  });
+});

@@ -14,7 +14,7 @@ import { Result } from '../Result';
 import { StageRoute } from './StageRoute';
 import { StageSelectRoute } from './StageSelect';
 
-vi.mock('@/sound/bgm', () => ({ getBgm: () => ({ play: vi.fn(), unlock: vi.fn(), stop: vi.fn(), setEnabled: vi.fn(), setVolume: vi.fn() }) }));
+vi.mock('@/sound/bgm', () => ({ getBgm: () => ({ play: vi.fn(), unlock: vi.fn(), stop: vi.fn(), setEnabled: vi.fn(), setVolume: vi.fn(), setScale: vi.fn() }) }));
 
 const chapters = HUNTER_THEME.chapters ?? [];
 const record = (stageId: string, correct: number, misses: number, id = `${stageId}-${correct}-${misses}`): SessionRecord => {
