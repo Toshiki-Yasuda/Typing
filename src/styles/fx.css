@@ -82,6 +82,7 @@
   position: absolute;
   inset: 0;
   opacity: calc(0.3 + 0.7 * var(--rhythm, 0));
+  will-change: opacity; /* 全画面の光は別レイヤーにして、明るさの変化で描き直さない */
 }
 .fx-glow::before,
 .fx-glow__flash {
@@ -136,7 +137,7 @@
   }
   /* 待機（次の語が出た直後）は 4 秒周期でゆっくり明るさの波。打鍵中は止まって落ち着く */
   .air-layer[data-level='full'] .fx-glow[data-phase='idle']::before {
-    animation: fx-breathe 4s ease-in-out infinite;
+    animation: fx-breathe 4s ease-in-out 3; /* 放置で合成し続けないよう 3 回で止める（止まった姿が基本の見た目） */
   }
   .fx-glow__flash {
     animation: fx-flash 0.7s ease-out 1;

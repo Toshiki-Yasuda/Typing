@@ -10,7 +10,10 @@ async function settle(page: Page) {
     Promise.all(
       document
         .getAnimations()
-        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .filter((a) => {
+          const t = a.effect?.getComputedTiming();
+          return t?.iterations !== Infinity && Number(t?.endTime ?? 0) <= 3000; // 装飾の長い呼吸などは待たない
+        })
         .map((a) => a.finished.catch(() => undefined)),
     ),
   );

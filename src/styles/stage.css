@@ -77,10 +77,10 @@
   .play-frame__zones {
     align-items: center;
     gap: 1.5rem;
-    grid-template-columns: 9rem minmax(24rem, 1fr) auto;
+    grid-template-columns: 9rem minmax(0, 1fr) auto;
   }
   .play-frame__zones[data-queue='off'] {
-    grid-template-columns: minmax(24rem, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
   .play-frame__zones[data-guide='off'] {
     grid-template-columns: 9rem minmax(0, 1fr);
