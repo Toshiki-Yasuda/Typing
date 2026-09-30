@@ -5,6 +5,8 @@ import { computeMetrics, currentStreak, dayKey, rankStatus, summarizeSessions, t
 import { todaysChallenge } from '@/session/daily';
 import { ImportError, exportSessions, parseExport } from '@/storage';
 import { useStore } from '@/app/StoreContext';
+import { isOpen } from '@/session/stageUnlock';
+import { useUnlock } from './stage/useUnlock';
 import { AudioSettings } from './home/AudioSettings';
 import { HeroBanner } from './home/HeroBanner';
 import { BossList } from './home/BossList';
@@ -47,6 +49,7 @@ export function Home() {
   const custom = useCustomPacks();
   const theme = resolveTheme(settings.themeId, loadUnlocked());
   const bosses = theme.bosses;
+  const unlock = useUnlock(theme);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const reload = () =>
@@ -194,7 +197,7 @@ export function Home() {
           <RankCard summaries={summaries} goalId={settings.goalRank} />
         </div>
 
-        {bosses && bosses.length > 0 && <BossList bosses={bosses} />}
+        {bosses && bosses.length > 0 && <BossList bosses={bosses} isOpen={(id) => !unlock.ready || isOpen(unlock.state, 'boss', id)} />}
 
         <section aria-labelledby="history" className="card flex flex-col gap-3">
           <h2 id="history" className="card-title">

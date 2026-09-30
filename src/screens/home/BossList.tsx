@@ -6,7 +6,7 @@ import { VowsPicker } from '../vows/VowsPicker';
 import type { Boss } from '@/themes/theme';
 
 /** ボス戦の一覧。戦績（挑戦回数・最高ランク）を文字で示す */
-export function BossList({ bosses }: { bosses: readonly Boss[] }) {
+export function BossList({ bosses, isOpen }: { bosses: readonly Boss[]; isOpen: (bossId: string) => boolean }) {
   const [progress] = useState(() => loadBossProgress());
   return (
     <section aria-labelledby="bosses" className="card flex flex-col gap-3">
@@ -34,13 +34,19 @@ export function BossList({ bosses }: { bosses: readonly Boss[] }) {
                   {b.skill ? `・技「${b.skill.name}」` : ''}
                 </p>
               </div>
-              <Link
-                to={`/boss/${b.id}`}
-                aria-label={`${b.name}に挑戦する`}
-                className="rounded bg-accent px-4 py-2 font-bold text-surface"
-              >
-                挑戦する
-              </Link>
+              {isOpen(b.id) ? (
+                <Link
+                  to={`/boss/${b.id}`}
+                  aria-label={`${b.name}に挑戦する`}
+                  className="rounded bg-accent px-4 py-2 font-bold text-surface"
+                >
+                  挑戦する
+                </Link>
+              ) : (
+                <span aria-disabled="true" className="rounded border border-dashed border-text-muted/40 px-4 py-2 text-sm text-text-muted">
+                  🔒 その章のステージをすべてクリアで開く
+                </span>
+              )}
             </li>
           );
         })}

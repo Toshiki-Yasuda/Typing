@@ -217,6 +217,27 @@ test.describe('ステージ選択', () => {
     await expect(page.getByText(/縛り付きの記録 1 件は、この統計に含めていません/)).toBeVisible();
   });
 
+  test('順番解放: オンにすると 2 つ目以降とボスが閉じる。ホームのボス一覧も従う。直接開いても入れない（axe も通る）', async ({ page }) => {
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('2');
+    await page.getByRole('checkbox', { name: /ステージを順番に開放する/ }).check();
+    await expect(page.getByText('🔒 閉じています')).toHaveCount(5);
+    await expect(page.getByRole('link', { name: /未挑戦/ })).toHaveCount(1);
+    await scan(page, 'ステージ選択（順番解放）');
+
+    await page.goto('/#/stage/c1s2');
+    await expect(page.getByText(/前のステージをクリアすると開きます/)).toBeVisible();
+    await page.goto('/#/boss/chapter1');
+    await expect(page.getByText(/この章のステージをすべてクリアすると開きます/)).toBeVisible();
+
+    await page.goto('/#/');
+    await expect(page.getByRole('heading', { name: 'ボス戦' })).toBeVisible();
+    await expect(page.getByText('🔒 その章のステージをすべてクリアで開く')).toHaveCount(7);
+    await expect(page.getByRole('link', { name: /に挑戦する/ })).toHaveCount(0);
+    await scan(page, 'ホーム（ボス一覧が閉じている）');
+  });
+
   test('章を切り替えられ、ボスへも進める', async ({ page }) => {
     await unlock(page);
     await page.keyboard.press('Escape');

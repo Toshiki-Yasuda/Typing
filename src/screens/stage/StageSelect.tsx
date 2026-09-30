@@ -4,6 +4,7 @@ import { useStore } from '@/app/StoreContext';
 import type { SessionRecord } from '@/metrics';
 import { loadBossProgress } from '@/session/bossProgress';
 import { MEDAL_LABEL, medalText } from '@/session/vows';
+import { isOpen, unlockState } from '@/session/stageUnlock';
 import { STAGE_CLEAR_ACCURACY, stageMedal, stageProgress } from '@/session/stageProgress';
 import { useSettings } from '@/settings/useSettings';
 import { useSceneBgm } from '@/sound/useSceneBgm';
@@ -50,6 +51,12 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
   const progressOf = useMemo(
     () => (stageId: string) => stageProgress(records ?? [], stageId),
     [records],
+  );
+
+  const [settings, updateSettings] = useSettings();
+  const unlock = useMemo(
+    () => unlockState(chapters, settings.stageUnlock, (id) => progressOf(id).cleared),
+    [chapters, settings.stageUnlock, progressOf],
   );
 
   // 初めて開いたときは、まだ終えていないステージがある最初の章を開く
@@ -100,6 +107,19 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
 
       <VowsPicker />
 
+      <label className="card flex items-start gap-2 !p-3">
+        <input
+          type="checkbox"
+          checked={settings.stageUnlock === 'sequential'}
+          onChange={(e) => updateSettings({ stageUnlock: e.target.checked ? 'sequential' : 'all' })}
+          className="mt-1 h-4 w-4 accent-[var(--viz-series-1)]"
+        />
+        <span>
+          ステージを順番に開放する
+          <span className="block text-sm text-text-muted">前のステージをクリアすると次が開き、章のボスは、その章のステージをすべてクリアすると開きます。</span>
+        </span>
+      </label>
+
       <section aria-labelledby="chapter" className="flex flex-col gap-3">
         <h2 id="chapter" className="text-xl font-bold">
           第{chapter.number}章 {chapter.title}
@@ -111,6 +131,23 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
         <ul className="flex flex-col gap-2">
           {chapter.stages.map((s, i) => {
             const p = progressOf(s.id);
+            if (!isOpen(unlock, 'stage', s.id)) {
+              return (
+                <li key={s.id}>
+                  <div
+                    aria-disabled="true"
+                    className="grid grid-cols-[2rem_1fr_auto] items-center gap-x-3 rounded-lg border border-dashed border-text-muted/40 p-3 text-text-muted"
+                  >
+                    <span className="row-span-2 text-center font-mono" aria-hidden>
+                      {i + 1}
+                    </span>
+                    <span className="font-bold">{s.name}</span>
+                    <span className="text-sm">🔒 閉じています</span>
+                    <span className="text-sm">前のステージをクリアで開く</span>
+                  </div>
+                </li>
+              );
+            }
             return (
               <li key={s.id}>
                 <Link
@@ -134,7 +171,22 @@ function StageSelect({ theme, chapters }: { theme: Theme; chapters: readonly Cha
               </li>
             );
           })}
-          {boss && (
+          {boss && !isOpen(unlock, 'boss', boss.id) && (
+            <li>
+              <div
+                aria-disabled="true"
+                className="grid grid-cols-[2rem_1fr_auto] items-center gap-x-3 rounded-lg border border-dashed border-text-muted/40 p-3 text-text-muted"
+              >
+                <span className="row-span-2 text-center" aria-hidden>
+                  ★
+                </span>
+                <span className="font-bold">ボス: {boss.name}</span>
+                <span className="text-sm">🔒 閉じています</span>
+                <span className="text-sm">この章のステージをすべてクリアで開く</span>
+              </div>
+            </li>
+          )}
+          {boss && isOpen(unlock, 'boss', boss.id) && (
             <li>
               <Link
                 to={`/boss/${boss.id}`}

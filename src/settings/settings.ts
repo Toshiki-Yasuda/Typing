@@ -38,6 +38,8 @@ export const SettingsSchema = z.object({
   aidEn: z.boolean(),
   /** 縛り（制約と誓約）。ステージ・ボス戦に適用する。仕様は docs/spec/vows.md */
   vows: z.array(z.enum(VOW_IDS)),
+  /** ステージの解放。all=すべて開いている（既定）/ sequential=前のステージのクリアで次が開く。docs/spec/unlock.md */
+  stageUnlock: z.enum(['all', 'sequential']),
   /** ハンターネーム（マイライセンスに表示。12 文字まで）。docs/spec/license.md */
   hunterName: z.string().max(12),
   /** ボスの技を使う（表示と敗北条件にだけ作用する。無効にできる）。docs/spec/boss.md */
@@ -65,6 +67,7 @@ export const DEFAULT_SETTINGS: Settings = {
   vows: [],
   bossSkills: true,
   hunterName: '',
+  stageUnlock: 'all',
   effects: 'full',
 };
 

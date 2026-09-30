@@ -10,6 +10,7 @@ import { SETTINGS_KEY } from '@/settings/settings';
 import { createMemoryStore, type SessionStore } from '@/storage';
 import { HUNTER_THEME } from '@/themes/themes';
 import { UNLOCK_KEY } from '@/themes/unlock';
+import { BossRoute } from '../BossRoute';
 import { Result } from '../Result';
 import { StageRoute } from './StageRoute';
 import { StageSelectRoute } from './StageSelect';
@@ -31,6 +32,7 @@ function app(initial: string, store: SessionStore = createMemoryStore()) {
           <Route path="/stages" element={<StageSelectRoute />} />
           <Route path="/stage/:id" element={<StageRoute />} />
           <Route path="/boss/:id" element={<p>ボス画面</p>} />
+          <Route path="/bossx/:id" element={<BossRoute />} />
           <Route path="/result/:id" element={<Result />} />
           <Route path="/title" element={<p>タイトル画面</p>} />
           <Route path="/" element={<p>ホーム画面</p>} />
@@ -116,6 +118,105 @@ describe('ステージ選択', () => {
     setup({ themeId: 'neutral' });
     app('/stages');
     expect(await screen.findByText('ホーム画面')).toBeInTheDocument();
+  });
+});
+
+describe('順番解放（stageUnlock）', () => {
+  const seq = { stageUnlock: 'sequential' };
+  const ids = chapters[0]!.stages.map((s) => s.id);
+
+  it('既定（all）では、すべて開いていて、鍵は出ない', async () => {
+    setup();
+    app('/stages');
+    await screen.findAllByText('0 / 5 クリア');
+    expect(screen.queryByText(/🔒/)).toBeNull();
+    expect(screen.getAllByRole('link', { name: /未挑戦/ })).toHaveLength(5);
+  });
+
+  it('sequential: 最初のステージだけ開き、残りとボスは鍵つきの無効項目（理由を文字で）', async () => {
+    setup(seq);
+    app('/stages');
+    await screen.findAllByText('0 / 5 クリア');
+    expect(screen.getAllByRole('link', { name: /未挑戦/ })).toHaveLength(1);
+    const locked = screen.getAllByText('🔒 閉じています');
+    expect(locked).toHaveLength(5); // ステージ 4 つ + ボス
+    for (const el of locked) expect(el.closest('[aria-disabled="true"]')).not.toBeNull();
+    expect(screen.getAllByText('前のステージをクリアで開く')).toHaveLength(4);
+    expect(screen.getByText('この章のステージをすべてクリアで開く')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /ボス .*に挑戦する/ })).toBeNull();
+  });
+
+  it('クリアすると次が開き、全ステージのクリアでボスが開く', async () => {
+    setup(seq);
+    const store = createMemoryStore();
+    await store.add(record(ids[0]!, 10, 0));
+    app('/stages', store);
+    await screen.findByText('1 / 5 クリア');
+    expect(screen.getAllByText('🔒 閉じています')).toHaveLength(4); // 3 ステージ + ボス
+    cleanup();
+    const all = createMemoryStore();
+    for (const id of ids) await all.add(record(id, 10, 0));
+    app('/stages', all);
+    await screen.findByText('5 / 5 クリア');
+    expect(screen.queryByText(/🔒/)).toBeNull();
+    expect(screen.getByRole('link', { name: /ボス .*に挑戦する/ })).toBeInTheDocument();
+  });
+
+  it('画面のチェックで切り替えると、設定に保存される', async () => {
+    setup();
+    app('/stages');
+    await screen.findAllByText('0 / 5 クリア');
+    fireEvent.click(screen.getByRole('checkbox', { name: /ステージを順番に開放する/ }));
+    expect(JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}').stageUnlock).toBe('sequential');
+    expect(await screen.findAllByText('🔒 閉じています')).toHaveLength(5);
+  });
+
+  it('URL を直接開いても、閉じているステージは練習できない（案内が出る）。開いていれば練習できる', async () => {
+    setup(seq);
+    app(`/stage/${ids[1]}`);
+    expect(await screen.findByText(/前のステージをクリアすると開きます/)).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'お題' })).toBeNull();
+    expect(screen.getByRole('link', { name: 'ステージ選択へ' })).toBeInTheDocument();
+    cleanup();
+    app(`/stage/${ids[0]}`);
+    expect(await screen.findByRole('region', { name: 'お題' })).toBeInTheDocument();
+  });
+
+  it('クリア済みの記録があれば、次のステージは直接開いても練習できる。記録を読むまでは「閉じている」と誤って出さない', async () => {
+    setup(seq);
+    const store = createMemoryStore();
+    await store.add(record(ids[0]!, 10, 0));
+    const list = store.list.bind(store);
+    store.list = () => new Promise((resolve) => setTimeout(() => resolve(list()), 60)); // 記録の読み込みが遅い
+    app(`/stage/${ids[1]}`, store);
+    expect(screen.getByText('準備中…')).toBeInTheDocument();
+    expect(screen.queryByText(/前のステージをクリアすると開きます/)).toBeNull();
+    expect(await screen.findByRole('region', { name: 'お題' })).toBeInTheDocument();
+    expect(screen.queryByText(/前のステージをクリアすると開きます/)).toBeNull();
+  });
+
+  it('ボス戦: 閉じている間は戦えない（案内）。章のステージをすべてクリアすれば戦える', async () => {
+    setup(seq);
+    app('/bossx/chapter1');
+    expect(await screen.findByText(/この章のステージをすべてクリアすると開きます/)).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'お題' })).toBeNull();
+    cleanup();
+    const all = createMemoryStore();
+    for (const id of ids) await all.add(record(id, 10, 0));
+    app('/bossx/chapter1', all);
+    expect(await screen.findByRole('region', { name: 'お題' })).toBeInTheDocument();
+  });
+
+  it('ボス戦: all のときは、いつでも戦える', async () => {
+    setup();
+    app('/bossx/chapter1');
+    expect(await screen.findByRole('region', { name: 'お題' })).toBeInTheDocument();
+  });
+
+  it('all のときは、URL を直接開けば練習できる', async () => {
+    setup();
+    app(`/stage/${ids[3]}`);
+    expect(await screen.findByRole('region', { name: 'お題' })).toBeInTheDocument();
   });
 });
 
