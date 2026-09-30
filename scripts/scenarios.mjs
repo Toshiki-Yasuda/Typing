@@ -158,4 +158,25 @@ export const SCENARIOS = {
     await page.waitForTimeout(2500);
     await page.screenshot({ path: ctx.path });
   },
+  /** ベースの練習画面（標準テーマ）: 開始直後・入力の途中・ミス直後を 3 枚 */
+  async playBase(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(`${ctx.url}#/play`);
+    await page.getByRole('region', { name: 'お題' }).waitFor();
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: ctx.path.replace('.png', '-1start.png') });
+    const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');
+    for (const key of romaji.slice(0, Math.max(2, Math.floor(romaji.length / 2)))) await page.keyboard.press(key);
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: ctx.path.replace('.png', '-2mid.png') });
+    await page.keyboard.press('1');
+    await page.waitForTimeout(60);
+    await page.screenshot({ path: ctx.path.replace('.png', '-3miss.png') });
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: ctx.path.replace('.png', '-4wide.png') });
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.waitForTimeout(300);
+    await page.screenshot({ path: ctx.path });
+  },
 };
