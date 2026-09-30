@@ -13,7 +13,12 @@ npm run dev            # 開発サーバー
 npm run check          # lint → 型 → テスト(カバレッジ閾値つき) → ビルド。CI と同じ。push 前に必ず通す
 npm test               # ユニット/コンポーネントテスト（vitest）
 npm run e2e            # 実ブラウザの E2E（Playwright）。ローカルでは CHROMIUM_PATH を指定することがある
+npm run budget         # 配信量の予算（docs/budget.json）。check に含まれる
+scripts/verify.sh      # check + E2E（push 前・main 反映前）
+scripts/mutate.sh      # 変異テスト 1 件（KILLED / SURVIVED）
+node scripts/shot.mjs  # 画面のスクリーンショット（場面は scripts/scenarios.mjs）
 ```
+**進め方は `docs/WORKFLOW.md`**（スライスのサイクル・定義・実ブラウザ確認の作法・長時間作業）。プロジェクトのスキル `typing-dev`（`.claude/skills/`）に要点がある。
 - ローカルの Chromium が Playwright の期待と違うとき: `CHROMIUM_PATH=/opt/pw-browsers/chromium npm run e2e`（CI は標準ブラウザ）。
 - E2E は `npm run build` した `dist` を配信する。**ソースを変えたら E2E の前にビルドし直す**（`playwright.config.ts` の webServer が実行する）。
 

@@ -18,4 +18,6 @@ export default tseslint.config(
     },
   },
   { files: ['*.config.{js,ts}'], languageOptions: { globals: globals.node } },
+  // 開発用の道具（Node で動き、page.evaluate の中ではブラウザの変数も使う）。コンソール出力が目的
+  { files: ['scripts/**/*.mjs'], languageOptions: { globals: { ...globals.node, ...globals.browser } }, rules: { 'no-console': 'off' } },
 );

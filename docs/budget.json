@@ -1,0 +1,7 @@
+{
+  "_comment": "配信量の予算。scripts/check-budget.mjs が検査する。増やすときは理由をコミットメッセージに書く。2026-09-30 の実測: メイン 144KB / 3D の遅延チャンク 155KB / CSS 5KB / テーマの素材 約 13MB",
+  "mainJsGzipKB": 175,
+  "lazyChunkGzipKB": 190,
+  "cssGzipKB": 12,
+  "themesMB": 24
+}
