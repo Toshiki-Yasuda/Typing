@@ -6,3 +6,6 @@ coverage
 test-results
 playwright-report
 .venv-art/
+
+# 複数エージェントの作業コピー（git worktree）。コミットしない
+.claude/worktrees/
