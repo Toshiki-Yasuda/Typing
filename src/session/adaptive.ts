@@ -20,24 +20,32 @@ export function keysOfTarget(reading: string): string[] {
 export interface AdaptiveOptions {
   /** 重みの下限。弱点がまったく無いお題も、この確率で選ばれる（単調な練習を避ける） */
   floor?: number;
+  /** 連接（直前のキー→今のキー。例 `ka`）ごとの弱さ。無ければキー単位の弱点だけで選ぶ */
+  bigrams?: ReadonlyMap<string, number>;
   random?: () => number;
 }
 
 /**
  * 弱いキーを多く含むお題ほど選ばれやすいように、重み付きで重複なく n 個選ぶ。
  * weakness に無いキーの弱さは 0 として扱う。
+ * bigrams があれば、お題の連接ごとの弱さの平均も重みに足す（無い連接は 0）。
  */
 export function pickAdaptive<T extends { reading: string }>(
   items: readonly T[],
   n: number,
   weakness: ReadonlyMap<string, number>,
-  { floor = 0.2, random = Math.random }: AdaptiveOptions = {},
+  { floor = 0.2, bigrams, random = Math.random }: AdaptiveOptions = {},
 ): T[] {
   const weights = items.map((item) => {
     const keys = keysOfTarget(item.reading);
     if (keys.length === 0) return floor;
     const mean = keys.reduce((s, k) => s + (weakness.get(k) ?? 0), 0) / keys.length;
-    return floor + mean;
+    let pairMean = 0;
+    if (bigrams && keys.length > 1) {
+      for (let i = 1; i < keys.length; i++) pairMean += bigrams.get((keys[i - 1] as string) + (keys[i] as string)) ?? 0;
+      pairMean /= keys.length - 1;
+    }
+    return floor + mean + pairMean;
   });
 
   const pool = items.map((item, i) => ({ item, weight: weights[i] as number }));

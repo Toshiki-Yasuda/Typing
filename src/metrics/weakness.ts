@@ -1,5 +1,5 @@
-import { mergeKeyStats } from './history';
-import { keyStats, type KeyStat } from './stats';
+import { mergeBigramStats, mergeKeyStats } from './history';
+import { bigramStats, keyStats, type KeyStat } from './stats';
 import type { Keystroke } from './types';
 
 /**
@@ -44,6 +44,36 @@ export function keyWeakness(
     }
     // ミスは強く効かせる（練習では正確さを優先する）
     result.set(k.key, missRate * 10 + Math.max(0, latencyRatio - 1));
+  }
+  return result;
+}
+
+export interface BigramWeaknessOptions {
+  /** 何回分の「平均的な連接」を事前に持たせるか。大きいほど、少ない試行の影響が小さくなる */
+  priorCount?: number;
+}
+
+/**
+ * 連接（直前のキー→今のキー。例 `ka`）ごとの「弱さ」（0 以上。大きいほど、その連接が遅い）。
+ * 連接にはミスの記録が無い（ミス直後の打鍵は除かれる）ので、全連接の平均遅延に対する超過の比だけで求める。
+ * 試行の少ない連接は、全体の平均に寄せる（縮小推定）。
+ * @param sessions セッションごとの打鍵ログ。連接はセッションごとに求めて合算する（境界で偽の連接ができないように）
+ */
+export function bigramWeakness(
+  sessions: readonly (readonly Keystroke[])[],
+  { priorCount = 5 }: BigramWeaknessOptions = {},
+): Map<string, number> {
+  const stats = [...mergeBigramStats(sessions.map((s) => bigramStats(s))).values()];
+  if (stats.length === 0) return new Map();
+
+  const total = stats.reduce((s, b) => s + b.count, 0);
+  const globalLatency = stats.reduce((s, b) => s + b.meanLatencyMs * b.count, 0) / total;
+  if (!(globalLatency > 0)) return new Map();
+
+  const result = new Map<string, number>();
+  for (const b of stats) {
+    const mean = (b.meanLatencyMs * b.count + globalLatency * priorCount) / (b.count + priorCount);
+    result.set(b.bigram, Math.max(0, mean / globalLatency - 1));
   }
   return result;
 }

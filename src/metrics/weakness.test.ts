@@ -1,4 +1,4 @@
-import { keyWeakness } from './weakness';
+import { bigramWeakness, keyWeakness } from './weakness';
 import type { Keystroke } from './types';
 
 let clock = 0;
@@ -58,5 +58,43 @@ describe('keyWeakness', () => {
       { t: 5000, key: 'k', code: '', expected: 'k', correct: true, item: 0 },
     ];
     expect(keyWeakness([log]).get('k') as number).toBeGreaterThan(0);
+  });
+});
+
+/** 期待キーを順に、それぞれ直前から dt ms 後に正打する（同じお題内） */
+function typed(keys: string, dt: number[], start = 0): Keystroke[] {
+  let t = start;
+  return [...keys].map((expected, i) => {
+    t += dt[i] ?? 100;
+    return { t, key: expected, code: '', expected, correct: true, item: 0 };
+  });
+}
+
+describe('bigramWeakness', () => {
+  it('ログが空なら空', () => {
+    expect(bigramWeakness([]).size).toBe(0);
+  });
+
+  it('遅い連接ほど弱く、速い連接は 0', () => {
+    // ka: 300ms を 30 回、sa: 100ms を 30 回（ka の前後は別セッションで区切る）
+    const sessions = [];
+    for (let i = 0; i < 30; i++) sessions.push(typed('ka', [0, 300]), typed('sa', [0, 100]));
+    const w = bigramWeakness(sessions);
+    expect(w.get('ka') as number).toBeGreaterThan(0.3);
+    expect(w.get('sa')).toBe(0);
+  });
+
+  it('試行が少ない連接は、多い場合より極端な値にならない（縮小推定）', () => {
+    const base = [];
+    for (let i = 0; i < 30; i++) base.push(typed('sa', [0, 100]));
+    const few = bigramWeakness([...base, typed('ka', [0, 400])]);
+    const many = bigramWeakness([...base, ...Array.from({ length: 30 }, () => typed('ka', [0, 400]))]);
+    expect(few.get('ka') as number).toBeGreaterThan(0);
+    expect(few.get('ka') as number).toBeLessThan(many.get('ka') as number);
+  });
+
+  it('セッションの境界では連接を作らない', () => {
+    const w = bigramWeakness([typed('a', [0]), typed('b', [0])]);
+    expect(w.size).toBe(0);
   });
 });

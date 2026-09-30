@@ -2,7 +2,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { BASIC_PACK, type ContentItem, type ContentPack } from '@/content';
 import { isGameKey } from '@/input/keyFilter';
-import { keyWeakness } from '@/metrics';
+import { bigramWeakness, keyWeakness } from '@/metrics';
 import { pickAdaptive } from '@/session/adaptive';
 import type { Ghost } from '@/session/ghost';
 import { PracticeSession, pickItems } from '@/session/practiceSession';
@@ -52,9 +52,12 @@ export function Play({
     store.list().then((records) => {
       if (cancelled) return;
       const weakness = adaptive ? keyWeakness(records.map((r) => r.keystrokes)) : new Map<string, number>();
+      const bigrams = adaptive ? bigramWeakness(records.map((r) => r.keystrokes)) : undefined;
       const items =
         fixedItems ??
-        (weakness.size > 0 ? pickAdaptive(pack.items, count, weakness, { random }) : pickItems(pack.items, count, random));
+        (weakness.size > 0
+          ? pickAdaptive(pack.items, count, weakness, { bigrams, random })
+          : pickItems(pack.items, count, random));
       setSession(
         new PracticeSession(items, performance.now(), {
           id: crypto.randomUUID(),
