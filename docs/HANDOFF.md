@@ -31,7 +31,7 @@
 ## 4b. テーマ（2026-09-30 追加）
 - ホームの「テーマ」でパスワード `SAKI` を入れると HUNTER×HUNTER が開く（ソースを読めば分かる目隠しで、鍵ではない）。開くと入口（ゲート → オープニング → タイトルメニュー）へ。
 - 入口 `/title`、ステージ選択 `/stages`、設定 `/settings`、ボス戦 `/boss/:id`、ステージ `/stage/:id`。BGM は Ver1 の曲（128kbps）。3D は Blender（`art/`）で作ったオリジナルの小道具。設計は `docs/adr/0001`・`0002`。
-- 診断 `/diagnosis`（6 軸・水見式の 3D）、修行 `/train`・`/train/:kind`（絶・練・発、記録のモードは `train:<型>`、補助の凝・円は設定）。深掘りの設計は `docs/adr/0003`、仕様は `docs/spec/axes.md`・`training.md`。バックログは task.md の先頭（N1〜N3 は完了、N4 練習の推奨・N5 制約と誓約も完了。N6a ボス戦の拡張（時間制限・ボスの技・メダル、`docs/spec/boss.md`）も完了。N7 図鑑（`docs/spec/codex.md`、`/codex`）も完了。次は N6b 攻撃予告、N8 マイライセンス、N9 順番解放）。縛り（`docs/spec/vows.md`）付きの記録は `vows` を持ち、級位・統計・診断・推奨・弱点・ゴーストに数えない（`plainRecords`）。保存形式の版は 2。
+- 診断 `/diagnosis`（6 軸・水見式の 3D）、修行 `/train`・`/train/:kind`（絶・練・発、記録のモードは `train:<型>`、補助の凝・円は設定）。深掘りの設計は `docs/adr/0003`、仕様は `docs/spec/axes.md`・`training.md`。バックログは task.md の先頭（N1〜N3 は完了、N4 練習の推奨・N5 制約と誓約も完了。N6a ボス戦の拡張（時間制限・ボスの技・メダル、`docs/spec/boss.md`）も完了。N7 図鑑（`docs/spec/codex.md`、`/codex`）も完了。N8 マイライセンス（`docs/spec/license.md`、`/license`）も完了。次は N6b 攻撃予告、N9 順番解放、N10 配色・小道具・音）。縛り（`docs/spec/vows.md`）付きの記録は `vows` を持ち、級位・統計・診断・推奨・弱点・ゴーストに数えない（`plainRecords`）。保存形式の版は 2。
 - **実機（音の出る環境・GPU）での確認が未**: 自動再生、音量バランス、3D の滑らかさ、ボス戦・ステージの難しさ、ランク/クリア基準（仮）。
 
 - ホーム（`src/screens/Home.tsx`）は、見出し → はじめる（CTA・修行・統計）→ 状況タイル → 提案 → チャレンジ/級位 → ボス → 記録 → 設定とデータ の順。共通の見た目は `src/index.css` の `.card` `.btn-primary` `.tile-link` `.stat-tile` `.rank-badge`（色はトークンから作る）。320px 幅のはみ出し確認は `node scripts/overflow.mjs 320 /`。

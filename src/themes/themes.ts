@@ -93,6 +93,7 @@ export const HUNTER_THEME: Theme = {
     path: 'themes/hunter/codex.json',
     categories: { character: '人物', ability: '能力', item: '道具', location: '場所', organization: '組織' },
   },
+  license: { heading: 'ライセンス', cardTitle: 'HUNTER LICENSE', unnamed: '（ハンターネーム未設定）' },
   vowsHeading: '制約と誓約',
   train: { names: { zetsu: '絶', ren: '練', hatsu: '発' }, aids: { gyo: '凝', en: '円' } },
   chapters: HUNTER_CHAPTERS,

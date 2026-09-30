@@ -141,6 +141,26 @@ test.describe('図鑑', () => {
   });
 });
 
+test.describe('マイライセンス', () => {
+  test('タイトルから開ける。ハンターネームを入れるとカードに出て、再読み込みしても残る（axe も通る）', async ({ page }) => {
+    await page.goto('/');
+    await seedRecords(page, 8, { idPrefix: 'lic' });
+    await unlock(page);
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('9'); // ライセンス
+    await expect(page.getByRole('heading', { level: 1, name: 'ライセンス' })).toBeVisible();
+    const card = page.getByRole('region', { name: 'HUNTER LICENSE' });
+    await expect(card).toContainText('（ハンターネーム未設定）');
+    await expect(card).toContainText(/星 \d つ・/);
+    await page.getByLabel('ハンターネーム').fill('ゴン');
+    await expect(card).toContainText('ゴン');
+    await page.reload();
+    await expect(page.getByRole('region', { name: 'HUNTER LICENSE' })).toContainText('ゴン');
+    await page.waitForTimeout(700);
+    await scan(page, 'マイライセンス');
+  });
+});
+
 test.describe('ステージ選択', () => {
   const typeCurrentWord = async (page: Page) => {
     const romaji = ((await page.getByLabel('ローマ字ガイド').textContent()) ?? '').replaceAll('␣', ' ');

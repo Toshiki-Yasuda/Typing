@@ -656,3 +656,28 @@ body {
 .card button:not(.btn-primary):not(.tile-link) {
   border: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
 }
+
+/* マイライセンスのカード。地は濃紺、縁と文字はアクセント色（テーマで変わる） */
+.license-card {
+  position: relative;
+  border-radius: 1.1rem;
+  padding: 1.5rem;
+  border: 2px solid color-mix(in srgb, var(--color-accent) 85%, transparent);
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 60%),
+    linear-gradient(155deg, color-mix(in srgb, var(--color-surface) 70%, #0b1030), color-mix(in srgb, var(--color-surface) 92%, black));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent), 0 20px 40px -20px rgb(0 0 0 / 0.8);
+}
+.license-card::after {
+  content: '';
+  position: absolute;
+  inset: 0.45rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  pointer-events: none;
+}
+.license-stars {
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+}

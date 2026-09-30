@@ -158,6 +158,8 @@ export const ThemeSchema = z.object({
       categories: z.object(Object.fromEntries(CODEX_CATEGORIES.map((c) => [c, z.string().min(1)])) as Record<(typeof CODEX_CATEGORIES)[number], z.ZodString>),
     })
     .optional(),
+  /** マイライセンス（docs/spec/license.md）。カードの見出しと、ネーム未設定のときの表示 */
+  license: z.object({ heading: z.string().min(1), cardTitle: z.string().min(1), unnamed: z.string().min(1) }).optional(),
   /** 縛りの見出し（無ければ「縛り」） */
   vowsHeading: z.string().min(1).optional(),
   /** 修行の型（絶・練・発）と補助（凝・円）の呼び名 */

@@ -28,6 +28,7 @@ function menuFor(theme: Theme): MenuItem[] {
     { to: '/settings', label: '設定', hint: '音・演出・練習' },
     { to: '/train', label: '修行', hint: '静寂・速さ・弱点の型' },
     ...(theme.codex ? [{ to: '/codex', label: theme.codex.heading, hint: '出会った語と習熟' }] : []),
+    ...(theme.license ? [{ to: '/license', label: theme.license.heading, hint: '名前・級位・戦績のカード' }] : []),
     { to: '/', label: 'ホーム', hint: 'ボス戦・記録・データ' },
   ];
 }

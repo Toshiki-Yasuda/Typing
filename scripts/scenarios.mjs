@@ -141,4 +141,21 @@ export const SCENARIOS = {
     await page.waitForTimeout(500);
     await page.screenshot({ path: ctx.path, fullPage: false });
   },
+  /** マイライセンス */
+  async license(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 8, { idPrefix: 'lic' });
+    await unlockTheme(page, ctx.url);
+    await page.evaluate(() => {
+      const raw = JSON.parse(localStorage.getItem('typing.settings.v1') ?? '{}');
+      localStorage.setItem('typing.settings.v1', JSON.stringify({ ...raw, hunterName: 'ゴン' }));
+    });
+    await page.reload();
+    await skipToTitle(page);
+    await page.keyboard.press('9');
+    await page.getByRole('region', { name: 'HUNTER LICENSE' }).waitFor();
+    await page.waitForTimeout(2500);
+    await page.screenshot({ path: ctx.path });
+  },
 };
