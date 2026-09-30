@@ -145,6 +145,15 @@ describe('3D の演出', () => {
     expect(bosses.filter((b) => b.skill).map((b) => [b.chapter, b.skill?.kind])).toEqual([[1, 'hide'], [3, 'strip'], [4, 'stamina']]);
   });
 
+  it('ボスの攻撃予告は章 2 と 5 だけで、猶予は 5 秒以上・予告の語が 1 つ以上ある', () => {
+    const bosses = HUNTER_THEME.bosses ?? [];
+    expect(bosses.filter((b) => b.attacks).map((b) => b.chapter)).toEqual([2, 5]);
+    for (const b of bosses) {
+      if (!b.attacks) continue;
+      expect(b.words, `${b.name} の語数で予告が 1 回は来る`).toBeGreaterThanOrEqual(b.attacks.everyWords);
+    }
+  });
+
   it('標準テーマには 3D の演出が無い', () => {
     expect(NEUTRAL_THEME.hero).toBeUndefined();
   });

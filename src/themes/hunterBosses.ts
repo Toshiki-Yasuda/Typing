@@ -35,6 +35,7 @@ export const HUNTER_BOSSES: Boss[] = [
     pack: 'themes/hunter/stages/c2s6.json',
     words: 15,
     maxMisses: 3,
+    attacks: { everyWords: 3, windowSec: 8 }, // 値は仮（実機で調整）
     intro: 'お前たちを始末してやる！',
     dialogues: ['お前たちを倒せば200階に行ける', '舐めるな小僧！', '俺たちの連携を見せてやる', 'この勝負、もらった！'],
     phaseMessages: ['連携を強化するぞ！', 'もう手加減はしない！', '最終手段だ...覚悟しろ！'],
@@ -83,6 +84,7 @@ export const HUNTER_BOSSES: Boss[] = [
     words: 8,
     maxMisses: 3,
     timeLimitSec: 75,
+    attacks: { everyWords: 4, windowSec: 15 }, // 値は仮。長文の語なので猶予を長く
     intro: '真の修行を教えてやる',
     dialogues: ['本当の修行が始まる', '甘い', '形態を変える', '究極の力を見せる'],
     phaseMessages: ['形態を変えるぞ...ついてこい', '究極の念を見せてやろう', '限界突破...これが本当の力だ！'],

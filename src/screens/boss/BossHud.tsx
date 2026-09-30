@@ -11,10 +11,12 @@ interface Props {
   skill?: Boss['skill'];
   /** この語に技が働いているときの説明 */
   note?: string | null;
+  /** 攻撃予告の残り（ミリ秒）。予告の語でなければ null、攻撃予告が無いボスなら undefined */
+  attackLeftMs?: number | null;
 }
 
 /** ボス戦の表示。HP・フェーズ・ミスの残りは、色だけでなく文字でも示す */
-export function BossHud({ boss, state, line, skill, note }: Props) {
+export function BossHud({ boss, state, line, skill, note, attackLeftMs }: Props) {
   const ratio = state.bossRemaining / state.bossTotal;
   return (
     <section aria-label="ボス" className="flex items-center gap-4 rounded-lg bg-surface-raised p-4">
@@ -55,6 +57,14 @@ export function BossHud({ boss, state, line, skill, note }: Props) {
             <span className="font-bold">技「{skill.name}」</span>
             <span className="text-text-muted">：{skill.text}</span>
             {note && <strong className="ml-2">◆ {note}</strong>}
+          </p>
+        )}
+        {attackLeftMs !== undefined && (
+          <p className="text-sm text-text-muted">
+            攻撃予告：
+            {attackLeftMs === null
+              ? '（この語は予告なし）'
+              : <strong className="text-text"> 残り {(attackLeftMs / 1000).toFixed(1)} 秒（間に合わないとミス扱い）</strong>}
           </p>
         )}
         <p role="status" className="min-h-6">

@@ -16,6 +16,7 @@ import { bigramWeakness, keyWeakness, liveMetrics } from '@/metrics';
 import { useSettings } from '@/settings/useSettings';
 import { pickAdaptive } from '@/session/adaptive';
 import { hideActive, skillRules, stripActive } from '@/session/bossSkills';
+import { attackLanded, attackRemaining, type AttackRule } from '@/session/bossAttacks';
 import { parseVows, plainRecords, vowEffects } from '@/session/vows';
 import { REN_LIMIT_MS, remainingMs, type TrainKind } from '@/session/training';
 import type { Ghost } from '@/session/ghost';
@@ -102,6 +103,16 @@ export function Play({
   const limitMs = train?.kind === 'ren' ? (train.limitMs ?? REN_LIMIT_MS) : bossLimitMs;
   const skill = boss && skillsOn ? boss.skill : undefined;
   const skillKind = skill?.kind;
+  // 攻撃予告（設定 bossSkills でオフにできる。技と同じ扱い）
+  const attackEverySec = boss && skillsOn ? boss.attacks : undefined;
+  const attackRule = useMemo<AttackRule | null>(
+    () => (attackEverySec ? { everyWords: attackEverySec.everyWords, windowMs: attackEverySec.windowSec * 1000 } : null),
+    [attackEverySec],
+  );
+  const [attackLeft, setAttackLeft] = useState<number | null>(null);
+  // 今の語が出た時刻（セッション開始からのミリ秒）と、当たった語の番号
+  const wordStart = useRef(0);
+  const landedIndex = useRef(-1);
   const vowKey = (vows ?? []).join(',');
   const eff = useMemo(() => vowEffects(vowKey ? vowKey.split(',') : []), [vowKey]);
   const silent = !eff.sound;
@@ -181,6 +192,9 @@ export function Play({
             ...(bossLimitMs ? { timeLimitMs: bossLimitMs } : {}),
             ...skillRules(skillKind),
           }) : null;
+      wordStart.current = 0;
+      landedIndex.current = -1;
+      setAttackLeft(null);
       setBossLine(boss?.intro ?? '');
       setBattleState(battle.current?.state() ?? null);
       setSession(
@@ -270,6 +284,27 @@ export function Play({
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [session]);
+
+  // ボスの攻撃予告: 予告の語が出てから猶予が尽きたら、戦闘のミスを 1 回受ける（打鍵ログは変えない）
+  useEffect(() => {
+    if (!session || !attackRule) return;
+    const id = setInterval(() => {
+      const fight = battle.current;
+      if (finishing.current || !fight || fight.state().status !== 'fighting') return;
+      const view = session.view();
+      if (view.finished) return;
+      const since = session.elapsedMs(performance.now()) - wordStart.current;
+      setAttackLeft(attackRemaining(attackRule, view.index, since));
+      if (attackLanded(attackRule, view.index, since) && landedIndex.current !== view.index) {
+        landedIndex.current = view.index;
+        fight.apply('miss');
+        setBattleState(fight.state());
+        setBossLine('攻撃を受けた！（間に合わず、ミス扱い）');
+        if (fight.state().status === 'lost') conclude(fight);
+      }
+    }, 200);
+    return () => clearInterval(id);
+  }, [session, attackRule, conclude]);
 
   // 練: 制限時間。残りは注入した経過時間（セッション開始からの経過）から求める。0 になったら、そこまでの記録で終える
   useEffect(() => {
@@ -376,6 +411,10 @@ export function Play({
         clearTimeout(missTimer.current);
         missTimer.current = setTimeout(() => setMissing(false), 700);
       }
+      if (result === 'wordDone') {
+        wordStart.current = session.elapsedMs(performance.now());
+        setAttackLeft(null);
+      }
       const lost = fight?.state().status === 'lost';
       if (result === 'sessionDone' || lost) conclude(fight);
       rerender();
@@ -436,7 +475,7 @@ export function Play({
               日本語入力がオンのようです。半角/英数モードに切り替えてください。
             </p>
           )}
-          {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} skill={skill} note={skillNote} />}
+          {boss && battleState && <BossHud boss={boss} state={battleState} line={bossLine} skill={skill} note={skillNote} attackLeftMs={attackRule ? attackLeft : undefined} />}
           {ghost && <GhostBar ghost={ghost.ghost} session={session} label={ghost.label} />}
         </>
       }

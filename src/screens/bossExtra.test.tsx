@@ -81,6 +81,78 @@ describe('ボス戦: 時間制限', () => {
   });
 });
 
+describe('ボス戦: 攻撃予告', () => {
+  // 2 語ごとに 1 語が予告（1 番目＝うみ）。猶予 5 秒
+  const attacker = () => ({ ...boss('chapter2'), attacks: { everyWords: 2, windowSec: 5 } });
+
+  it('予告の語では残り時間を文字で出し、予告の無い語ではそう書く', async () => {
+    renderBoss(attacker());
+    await ready();
+    expect(screen.getByText(/この語は予告なし/)).toBeInTheDocument();
+    typeKeys('kaki');
+    expect(await screen.findByText(/残り [45]\.\d 秒（間に合わないとミス扱い）/)).toBeInTheDocument();
+  });
+
+  it('猶予が尽きると、戦闘のミスを 1 回だけ受ける。打鍵の記録は変わらない', async () => {
+    const store = renderBoss(attacker());
+    await ready();
+    typeKeys('kaki');
+    await screen.findByText(/残り [45]\.\d 秒/);
+    expect(screen.getByText(/ミスの余裕 3 回/)).toBeInTheDocument();
+    const spy = vi.spyOn(performance, 'now').mockReturnValue(performance.now() + 6000);
+    expect(await screen.findByText(/攻撃を受けた/, {}, { timeout: 2000 })).toBeInTheDocument();
+    expect(screen.getByText(/ミスの余裕 2 回/)).toBeInTheDocument();
+    await act(async () => void (await new Promise((r) => setTimeout(r, 700)))); // さらに待っても、同じ語では 2 回目を受けない
+    expect(screen.getByText(/ミスの余裕 2 回/)).toBeInTheDocument();
+    spy.mockRestore();
+    typeKeys('umineko');
+    await vi.waitFor(async () => expect(await store.list()).toHaveLength(1), { timeout: 3000 });
+    const rec = (await store.list())[0];
+    expect(rec?.keystrokes).toHaveLength(11); // kaki + umi + neko。攻撃のミスは打鍵ログに入らない
+    expect(rec?.keystrokes.every((k) => k.correct)).toBe(true);
+  });
+
+  it('猶予の内に打ち終えれば、ミスは受けない', async () => {
+    renderBoss(attacker());
+    await ready();
+    typeKeys('kaki');
+    await screen.findByText(/残り [45]\.\d 秒/);
+    const spy = vi.spyOn(performance, 'now').mockReturnValue(performance.now() + 3000);
+    typeKeys('umi');
+    spy.mockRestore();
+    await act(async () => void (await new Promise((r) => setTimeout(r, 500))));
+    expect(screen.queryByText(/攻撃を受けた/)).toBeNull();
+    expect(screen.getByText(/ミスの余裕 3 回/)).toBeInTheDocument();
+  });
+
+  it('猶予は、予告の語が出た時点から数える（前の語に時間をかけても、その分は引かれない）', async () => {
+    renderBoss(attacker());
+    await ready();
+    const t0 = performance.now();
+    const spy = vi.spyOn(performance, 'now').mockReturnValue(t0 + 3000);
+    typeKeys('kaki'); // 1 語目に 3 秒かけた → 予告の語は「3 秒時点」から数える
+    await screen.findByText(/残り [45]\.\d 秒/);
+    spy.mockReturnValue(t0 + 6000); // 予告の語が出て 3 秒 < 猶予 5 秒
+    await act(async () => void (await new Promise((r) => setTimeout(r, 700))));
+    spy.mockRestore();
+    expect(screen.queryByText(/攻撃を受けた/)).toBeNull();
+  });
+
+  it('設定 bossSkills をオフにすると、攻撃予告も出ない', async () => {
+    renderBoss(attacker(), { skillsOn: false });
+    await ready();
+    typeKeys('kaki');
+    await act(async () => void (await new Promise((r) => setTimeout(r, 500))));
+    expect(screen.queryByText(/攻撃予告/)).toBeNull();
+  });
+
+  it('攻撃予告の無いボスには出ない', async () => {
+    renderBoss(boss('chapter1'));
+    await ready();
+    expect(screen.queryByText(/攻撃予告/)).toBeNull();
+  });
+});
+
 describe('ボスの技', () => {
   it('hide（ヒソカ）: 3 つ目のお題だけ、ローマ字の残りが隠れる（打った分は見える）。技を切れば隠れない', async () => {
     renderBoss(boss('chapter1'));

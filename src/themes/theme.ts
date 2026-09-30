@@ -28,6 +28,8 @@ export const BossSchema = z.object({
   maxMisses: z.number().int().min(0).max(100),
   /** 時間制限（秒）。無ければ無制限。上位の章だけに付ける（docs/spec/boss.md） */
   timeLimitSec: z.number().int().min(10).max(600).optional(),
+  /** 攻撃予告。everyWords 語ごとの 1 語が予告になり、windowSec 秒以内に打ち終えないとミス扱い（docs/spec/boss.md） */
+  attacks: z.object({ everyWords: z.number().int().min(2).max(20), windowSec: z.number().int().min(5).max(120) }).optional(),
   /** ボスの技。判定は変えず、表示と敗北条件にだけ作用する。名前と説明はテーマの言葉 */
   skill: z.object({ kind: z.enum(SKILL_KINDS), name: z.string().min(1), text: z.string().min(1) }).optional(),
   intro: z.string().min(1),
