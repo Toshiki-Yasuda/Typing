@@ -16,7 +16,20 @@ describe('QueueRail', () => {
   it('次のお題を、渡された順に並べる（現在の語は含まない）', () => {
     render(<QueueRail upcoming={items} />);
     const rail = screen.getByRole('complementary', { name: '次のお題' });
-    expect(within(rail).getAllByText(/[猫犬鳥]/).map((e) => e.textContent)).toEqual(['猫', '犬', '鳥']);
+    expect(within(rail).getAllByText(/[猫犬鳥]/).map((e) => e.firstChild?.textContent)).toEqual(['猫', '犬', '鳥']);
+  });
+
+  it('読みは先頭の 2 語だけに添える（遠い語は小さく薄いので付けない）', () => {
+    render(<QueueRail upcoming={items} />);
+    const rail = screen.getByRole('complementary', { name: '次のお題' });
+    expect(within(rail).queryByText('ねこ')).toBeInTheDocument();
+    expect(within(rail).queryByText('いぬ')).toBeInTheDocument();
+    expect(within(rail).queryByText('とり')).not.toBeInTheDocument();
+  });
+
+  it('表記と読みが同じ語（かな）には読みを重ねない', () => {
+    render(<QueueRail upcoming={[{ display: 'ねこ', reading: 'ねこ' }]} />);
+    expect(screen.getAllByText('ねこ')).toHaveLength(1);
   });
 
   it('遠い語ほど小さく薄くなる（順番 --i を各語に持たせる。CSS が大きさと濃さを決める）', () => {

@@ -74,16 +74,19 @@
 
 /* 1200px 以上: 左（待ち行列）/ 中央（舞台）/ 右（指の案内） */
 @media (min-width: 1200px) {
+  .play-frame {
+    padding-bottom: 8vh; /* 視覚の中心を少し上（画面の 4 割あたり）へ */
+  }
   .play-frame__zones {
     align-items: center;
     gap: 1.5rem;
-    grid-template-columns: 9rem minmax(0, 1fr) auto;
+    grid-template-columns: clamp(7rem, 12vw, 9rem) minmax(0, 1fr) auto; /* vw 基準: 文字を拡大しても中央の舞台を潰さない */
   }
   .play-frame__zones[data-queue='off'] {
     grid-template-columns: minmax(0, 1fr) auto;
   }
   .play-frame__zones[data-guide='off'] {
-    grid-template-columns: 9rem minmax(0, 1fr);
+    grid-template-columns: clamp(7rem, 12vw, 9rem) minmax(0, 1fr);
   }
   .play-frame__zones[data-guide='off'][data-queue='off'] {
     grid-template-columns: minmax(0, 1fr);
@@ -125,5 +128,37 @@
     min-width: 0;
     flex: 0 1 auto;
     max-width: 14rem;
+  }
+}
+
+/* 1024〜1199px で縦が短いとき（1024x768 など）: 手の絵を畳んで、キーボード図が画面内に収まるようにする */
+@media (min-width: 1024px) and (max-width: 1199px) and (max-height: 820px) {
+  .play-frame {
+    gap: 1.25rem;
+    padding-block: 1rem;
+  }
+  .play-frame__center {
+    gap: 1rem;
+  }
+  .fg-hands {
+    display: none;
+  }
+}
+
+/* 待ち行列の読み（先頭の 2 語だけ。小さく補助色） */
+.queue-rail__reading {
+  display: block;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 強制カラー（Windows ハイコントラスト）: 塗りや影が消えるので、ミスは枠線で残す */
+@media (forced-colors: active) {
+  .target-card.ring-danger,
+  .target-expected {
+    outline: 2px solid CanvasText;
   }
 }
