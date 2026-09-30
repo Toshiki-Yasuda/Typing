@@ -5,6 +5,7 @@
 - コアはテーマ非依存。モチーフ・世界観は「テーマパック」として別に用意する
 - 詳細な方針とロードマップは [docs/PLAN.md](docs/PLAN.md)、今後のタスクは [task.md](task.md)
 - 仕様: [docs/spec/](docs/spec/)（入力ルール・計測）。実機確認: [docs/manual-check.md](docs/manual-check.md)
+- **引き継ぎ・現在の状態: [docs/HANDOFF.md](docs/HANDOFF.md)**（新しいセッションはここから）
 - 開発者・AI 向けの作業ルール: [CLAUDE.md](CLAUDE.md)
 
 ## 遊ぶ

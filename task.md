@@ -1,6 +1,6 @@
 # 今後のタスク
 
-最終更新: 2026-09-29。方針・設計は [docs/PLAN.md](docs/PLAN.md)、仕様は [docs/spec/](docs/spec/)、実機確認の手順は [docs/manual-check.md](docs/manual-check.md)。
+最終更新: 2026-09-30。現在の状態と運用ルールは [docs/HANDOFF.md](docs/HANDOFF.md)。方針・設計は [docs/PLAN.md](docs/PLAN.md)、仕様は [docs/spec/](docs/spec/)、実機確認の手順は [docs/manual-check.md](docs/manual-check.md)。
 
 **凡例**: `[ ]` 未着手 / `[~]` 着手中 / `[x]` 完了。優先度は P0（次にやる）→ P1 → P2 → P3（余裕があれば）。
 各タスクの「完了条件」を満たしたら `[x]` にする。仕様やスキーマを変えるタスクは、仕様書・テスト・版（`ENGINE_VERSION` / `RULE_VERSION` / `CURRENT_SCHEMA_VERSION`）の更新までが完了条件。
@@ -24,9 +24,8 @@
 ## P0: 次にやる
 
 ### 運用
-- [ ] **作業ブランチを `main` に取り込む**
-  積み重なったブランチ（`docs/spec-v1` → … → `feat/stats` → `docs/tasks-claude-md`）を整理する。PR にするか fast-forward するかはオーナーが決める。
-  完了条件: `main` が最新の機能を含み、CI（check・e2e）が緑。
+- [x] **作業ブランチを `main` に取り込む**
+  機能ごとにブランチを切り、CI 緑を確認して、オーナーの指示で fast-forward している（運用は `docs/HANDOFF.md`）。
 - [~] **実機のIME・OS・配列を確認する**（オーナーの手元で実施）
   2026-09-29: オーナーがテストプレイし「問題なし」。ただし `manual-check.md` の10項目ごとの記録は未記入。
   [docs/manual-check.md](docs/manual-check.md) の10項目。結果を同ファイルの表に記入する。
