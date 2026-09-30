@@ -68,11 +68,18 @@ export function RankPanel({ summaries, currentId, goalId }: { summaries: readonl
 export function RankCard({ summaries, goalId }: { summaries: readonly SessionSummary[]; goalId: string }) {
   const status = rankStatus(summaries);
   return (
-    <section aria-labelledby="rank-card" className="flex flex-col gap-2 rounded-lg bg-surface-raised p-4">
-      <h2 id="rank-card" className="text-lg font-bold">
+    <section aria-labelledby="rank-card" className="card flex flex-col gap-3">
+      <h2 id="rank-card" className="card-title">
         級位と目標
       </h2>
-      <StatusLines status={status} goal={goalProgress(status, goalId)} />
+      <div className="flex items-center gap-4">
+        <span aria-hidden className="rank-badge">
+          {status.rank ? status.rank.label : '—'}
+        </span>
+        <div className="flex flex-col gap-1">
+          <StatusLines status={status} goal={goalProgress(status, goalId)} />
+        </div>
+      </div>
       <Link to="/stats" className="self-start text-sm text-accent underline">
         級位の推移を統計で見る
       </Link>

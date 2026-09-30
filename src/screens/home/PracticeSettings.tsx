@@ -20,8 +20,8 @@ export function PracticeSettings({ settings, update, customPacks }: Props) {
   const aidNames = trainLabels(resolveTheme(settings.themeId, loadUnlocked())).aids;
 
   return (
-    <section aria-labelledby="settings" className="flex flex-col gap-3">
-      <h2 id="settings" className="text-lg font-bold">
+    <section aria-labelledby="settings" className="card flex flex-col gap-3">
+      <h2 id="settings" className="card-title">
         練習の設定
       </h2>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">

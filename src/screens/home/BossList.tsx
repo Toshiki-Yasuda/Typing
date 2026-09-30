@@ -9,8 +9,8 @@ import type { Boss } from '@/themes/theme';
 export function BossList({ bosses }: { bosses: readonly Boss[] }) {
   const [progress] = useState(() => loadBossProgress());
   return (
-    <section aria-labelledby="bosses" className="flex flex-col gap-3">
-      <h2 id="bosses" className="text-lg font-bold">
+    <section aria-labelledby="bosses" className="card flex flex-col gap-3">
+      <h2 id="bosses" className="card-title">
         ボス戦
       </h2>
       <p className="text-sm text-text-muted">

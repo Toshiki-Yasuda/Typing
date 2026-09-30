@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { StoreProvider } from '@/app/StoreContext';
 import type { ContentItem } from '@/content';
@@ -58,16 +58,17 @@ describe('練習中の BGM', () => {
     start({}, true, 'full');
     await ready();
     type('kakiumi');
-    expect(await screen.findByText('撃破')).toBeInTheDocument();
-    expect(bgm.play).toHaveBeenLastCalledWith(null, END_FADE_MS);
+    expect(await screen.findByText('撃破', {}, { timeout: 4000 })).toBeInTheDocument();
+    // 画面の更新の直後は、effect（曲を止める）がまだ動いていないことがある
+    await waitFor(() => expect(bgm.play).toHaveBeenLastCalledWith(null, END_FADE_MS));
     cleanup();
     bgm.play.mockClear();
 
     start({}, true, 'full');
     await ready();
     for (let i = 0; i < 6; i++) type('1'); // ミスが許容（5 回）を超える
-    expect(await screen.findByText('敗北')).toBeInTheDocument();
-    expect(bgm.play).toHaveBeenLastCalledWith(null, END_FADE_MS);
+    expect(await screen.findByText('敗北', {}, { timeout: 4000 })).toBeInTheDocument();
+    await waitFor(() => expect(bgm.play).toHaveBeenLastCalledWith(null, END_FADE_MS));
   });
 
   it('既定（ボス戦だけ）では、通常の練習に曲は流さない（前の画面の曲は止める）', async () => {

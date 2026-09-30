@@ -50,8 +50,8 @@ function Volume({
 /** 音の設定（BGM・効果音の入切と音量、練習中の BGM）。テーマに音があるときだけ出す */
 export function AudioSettings({ settings, update, audio }: Props) {
   return (
-    <section aria-labelledby="audio" className="flex flex-col gap-3">
-      <h2 id="audio" className="text-lg font-bold">
+    <section aria-labelledby="audio" className="card flex flex-col gap-3">
+      <h2 id="audio" className="card-title">
         音
       </h2>
       <label className="flex items-center gap-2">

@@ -18,7 +18,7 @@ export function RecommendationNote({ summaries, current }: { summaries: readonly
   if (current && current.accuracy >= RANK_MIN_ACCURACY) return null;
   const name = trainLabels(resolveTheme(settings.themeId, loadUnlocked())).names[rec.train];
   return (
-    <section aria-label="練習の提案" className="flex flex-col gap-1 rounded-lg border border-accent bg-surface-raised p-4">
+    <section aria-label="練習の提案" className="card flex flex-col gap-1 !border-accent">
       <p>
         <span className="mr-2 font-bold">{rec.kind === 'careful' ? '提案：丁寧に' : '提案：速さに挑戦'}</span>
         {rec.message}

@@ -6,6 +6,8 @@ const executablePath = process.env.CHROMIUM_PATH || undefined;
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
+  // ソフトウェア描画の 3D（ボス戦・ホーム）が並列で CPU を使うと、画面の出現が 5 秒を超えることがある
+  expect: { timeout: 10_000 },
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
   use: {

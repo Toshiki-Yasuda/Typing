@@ -15,8 +15,8 @@ const MAX_PROBLEMS = 10;
 export function CustomPacks({ packs, state, onImport, onRemove }: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
   return (
-    <section aria-labelledby="custom-packs" className="flex flex-col gap-2">
-      <h2 id="custom-packs" className="text-lg font-bold">
+    <section aria-labelledby="custom-packs" className="card flex flex-col gap-2">
+      <h2 id="custom-packs" className="card-title">
         自作パック
       </h2>
       <p className="text-sm text-text-muted">

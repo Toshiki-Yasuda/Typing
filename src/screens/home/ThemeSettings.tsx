@@ -49,8 +49,8 @@ export function ThemeSettings({ themeId, effects, onChosen, update }: Props) {
   };
 
   return (
-    <section aria-labelledby="theme" className="flex flex-col gap-3">
-      <h2 id="theme" className="text-lg font-bold">
+    <section aria-labelledby="theme" className="card flex flex-col gap-3">
+      <h2 id="theme" className="card-title">
         テーマ
       </h2>
       {current.strings.tagline && <p className="text-text-muted">{current.strings.tagline}</p>}

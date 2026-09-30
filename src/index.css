@@ -534,3 +534,125 @@ body {
   25% { transform: translateX(-3px); }
   75% { transform: translateX(3px); }
 }
+
+/*
+ * ホーム画面の見た目（カード・光・ボタン）。色は @theme のトークンから作るので、テーマで配色が変わっても追従する。
+ * 動きは使わない（ホバーの色の変化だけ）。飾りの光は背景で、文字の背後の色は暗いまま保つ。
+ */
+.home-bg {
+  background:
+    radial-gradient(70% 45% at 50% -5%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 70%),
+    radial-gradient(40% 30% at 100% 30%, color-mix(in srgb, var(--color-accent) 7%, transparent), transparent 70%),
+    var(--color-surface);
+}
+.card {
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-text) 9%, transparent);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--color-surface-raised) 100%, white 3%),
+    color-mix(in srgb, var(--color-surface-raised) 100%, black 12%)
+  );
+  box-shadow: 0 1px 0 color-mix(in srgb, white 5%, transparent) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  padding: 1.25rem;
+}
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.card-title::before {
+  content: '';
+  width: 0.25rem;
+  height: 1.1em;
+  border-radius: 2px;
+  background: var(--color-accent);
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 0.9rem;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-surface);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 100%, white 22%), var(--color-accent));
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--color-accent) 70%, transparent), 0 1px 0 rgb(255 255 255 / 0.35) inset;
+  transition: filter 0.15s;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+.tile-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-text) 9%, transparent);
+  background: color-mix(in srgb, var(--color-surface-raised) 100%, white 2%);
+  padding: 0.9rem 1rem;
+  transition: border-color 0.15s, background 0.15s;
+}
+.tile-link:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 60%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface-raised));
+}
+.tile-link small {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+.stat-tile {
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+  background: color-mix(in srgb, var(--color-surface-raised) 100%, black 8%);
+  padding: 0.8rem 1rem;
+}
+.stat-tile dt {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+.stat-tile dd {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.rank-badge {
+  display: grid;
+  place-items: center;
+  min-width: 4.5rem;
+  height: 4.5rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  border: 2px solid var(--color-accent);
+  font-size: 1.35rem;
+  font-weight: 800;
+  background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--color-accent) 35%, transparent), transparent 70%);
+  box-shadow: 0 0 24px -6px color-mix(in srgb, var(--color-accent) 60%, transparent);
+}
+.kpm-bar {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+  overflow: hidden;
+}
+.kpm-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 60%, transparent), var(--color-accent));
+}
+
+/* カードの中の入力欄・選択肢: 面より少し暗くして、枠で見つけやすくする */
+.card select,
+.card input:not([type='checkbox']):not([type='range']):not([type='file']) {
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-text) 16%, transparent);
+  background-color: color-mix(in srgb, var(--color-surface) 70%, black);
+}
+.card button:not(.btn-primary):not(.tile-link) {
+  border: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent);
+}

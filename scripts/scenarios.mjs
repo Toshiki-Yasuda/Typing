@@ -104,4 +104,26 @@ export const SCENARIOS = {
     await page.waitForTimeout(600);
     await page.screenshot({ path: ctx.path, fullPage: true });
   },
+  /** ホーム（記録あり）。標準テーマ */
+  async homeRich(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 6, { contentId: 'basic', dt: 170, idPrefix: 'h', missEvery: 40 });
+    await page.reload();
+    await page.getByRole('heading', { name: 'Typing' }).waitFor();
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: ctx.path, fullPage: true });
+  },
+  /** ホーム（記録あり）。HUNTER テーマ */
+  async homeHunter(ctx) {
+    const page = await newPage(ctx.browser);
+    await page.goto(ctx.url);
+    await seedRecords(page, 6, { contentId: 'basic', dt: 170, idPrefix: 'h', missEvery: 40 });
+    await unlockTheme(page, ctx.url);
+    await skipToTitle(page);
+    await page.getByRole('link', { name: 'ホーム' }).click();
+    await page.getByRole('heading', { name: 'ボス戦' }).waitFor();
+    await page.waitForTimeout(2500);
+    await page.screenshot({ path: ctx.path, fullPage: true });
+  },
 };
